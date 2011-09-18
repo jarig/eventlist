@@ -1,0 +1,35 @@
+{% extends 'publisher/publisher.html' %}
+
+{% block includes %}
+    {{ block.super }}
+    <link href="{{ STATIC_PREFIX }}css/publisher_request.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="requestBox">
+        {% if not requestMessage %}
+        <h1>Become Publisher!</h1>
+        <h4>Description</h4>
+        <div class="requestForm">
+            <form action="{% url publisher.views.publisherRequest %}" method="POST">
+                {{ requestForm.requestMessage }}
+                <div class="errors">
+                    {{ requestForm.requestMessage.errors }}
+                </div>
+                <div class="submitRequest">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+          </div>
+
+         {% else %}
+         <div class="thankYouForm">
+            <h1>Thank You For Your's Interest!</h1>
+            <div class="requestThanks">
+                We will contact you as soon as possible.
+            </div>
+            <a href="#">Edit Request</a>
+         </div>
+         {% endif %}
+    </div>
+{% endblock %}

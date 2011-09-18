@@ -1,0 +1,19 @@
+{% extends 'blogs/blogs_publisher.html' %}
+
+{% block includes %}
+   {{ block.super }}
+   <link href="{{ STATIC_PREFIX }}css/blogs_manage.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <div id="blogs_container">
+        <div class="blog">
+            <a href="{% url blogs.views.create %}" id="manageButton">+Blog</a>
+        </div>
+        {% for blog in blogs %}
+            <div class="blog">
+                {{ blog.name }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

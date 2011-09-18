@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% load static %}
+{% load i18n %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link href="{{ STATIC_PREFIX }}common/css/style.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+<link href="{{ STATIC_PREFIX }}common/css/jqueryUI.css/jquery-ui.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+<link href="{{ STATIC_PREFIX }}css/menu_login.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+<link href="{{ STATIC_PREFIX }}css/menu_topmenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+<link href="{{ STATIC_PREFIX }}css/menu_submenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+
+<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/common.js"></script>
+<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/base.js"></script>
+<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery-1.4.2.js"></script>
+<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery.labelify.js"></script>
+<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jqueryUI.js/jquery-ui.js"></script>
+<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/socialInitScripts.js"></script>
+<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/socialScripts.js"></script>
+<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/init.js"></script>
+<script type="text/javascript" src="{{ STATIC_PREFIX }}js/menu_login.js"></script>
+{% block includes %}
+    
+{% endblock %}
+
+<link rel="shortcut icon" href="" />
+<title>{% block title %}EventsList{% endblock %}</title>
+</head>
+
+<body>
+<div id="fb-root" style="display: none;"></div>
+<div id="vk_api_transport" style="display: none;"></div>
+
+<script type="text/javascript">
+    {% if user.is_authenticated %}
+        Init.apiInit("{{ user.get_profile.provider }}");
+    {% else %}
+        Init.apiInit("all");
+    {% endif %}
+    Base.init();
+</script>
+{% block scripts %}{% endblock %}
+{% block top %}{% endblock %}
+
+<!-- Begin Container -->
+
+<div id="wrapper">
+    <div id="container">
+     <div id="container_wrap1">
+      <div id="container_wrap2" style="margin-top: 0px;">
+        <div id="header">
+            <div class="topMenu">
+                {% block topmenu %}
+
+                        <div class="topButton" style="float: left; ">
+                            <a href="/" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Events" %}</a>
+                        </div>
+                        <div class="topButton" style="float: left; ">
+                            <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Recent events" %}</a>
+                        </div>
+                        <div id="signin" class="topButton">
+                        {% if not user.is_authenticated %}
+                                <a href="#" onclick="User.openLoginBox(); return false;">{% trans "Sign in" %}</a>
+                        {% else %}
+                                <img class="logoutLogo" src="{{ STATIC_PREFIX }}common/images/{{ user.get_profile.provider }}LogoSmall.png"/>
+                                <a href="#" onclick="Base.toggle_profileBox('#profileBox'); return false;" >{% trans "Profile" %}</a>
+                        {%  endif %}
+                        </div>
+                {% endblock topmenu %}
+                {% block userButtons %}
+                {% endblock userButtons %}
+            </div>
+
+            {% block header %}
+            {% endblock %}
+        </div>
+        <div id="content" class="fillSpace">
+        <table id="contentTable" cellpadding="0" cellspacing="0">
+            <tr>
+                <td id="column_left">
+                    <div class="fillSpace">
+                        {% block leftcolumn %}
+                        {% endblock %}
+                    </div>
+                </td>
+                <td id="content_container">
+                    <div  class="fillSpace">
+                        <div class="messages">
+                            {% block messages %}
+                                {% for message in messages %}
+                                    <div class="{{ message.tags }}">{{ message }}</div>
+                                {% endfor %}
+                            {% endblock %}
+                        </div>
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </td>
+                <td id="rightColumnToggleBar" onclick="BaseGUI.toggleRightColumn();">
+                    <p><img src="{{ STATIC_PREFIX }}common/images/base/base_toggleArrow.png"></p>
+                </td>
+                <td id="column_right">
+                    <div class="fillSpace">
+                        {% block rightcolumn %}
+                        {% endblock %}
+                    </div>
+                </td>
+            </tr>
+        </table>
+        </div>
+        <!-- Begin Footer -->
+        <div id="footer">
+
+            {% block footer %}{% endblock %}
+            <div class="footerInfo">
+                <div class="infoColumn">
+                    <p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url accounts.views.logoutProfile %}">{% trans "Sign out"%}</a>
+                    {% else %}
+                        <a href="#" onclick="User.openLoginBox();">{% trans "Sign in"%}</a>
+                    {% endif %}
+                    </p>
+                </div>
+                <div class="infoColumn">
+                    {% if user.is_authenticated %}
+                        {% if not perms.publisher %}
+                            <p><a href="{% url publisher.views.publisherRequest %}">Become Publisher</a></p>
+                        {% endif %}
+                    {% endif %}
+                    <p><a href="#">Invest</a></p>
+                </div>
+                <div class="infoColumn">
+                    <p><a href="#">FAQ</a></p>
+                    <p><a href="#">About us</a></p>
+                    <p><a href="#">Contact</a></p>
+                </div>
+            </div>
+            <div style="position: relative; width: 380px; margin: auto; ">
+                <p style="text-align: center;"><span lang="ru">Все права защищены(?).</span>
+                <span lang="ru">Пишите, жалуйтесь - </span>
+                <a href="mailto:contact@eventlist.ee">contact@eventlist.ee</a></p>
+            </div>
+        </div>
+        <!-- End Footer -->
+        {% block tail %}{% endblock %}
+      </div>
+     </div>
+    </div>
+</div>
+
+<div id="rightSwitchBar">
+    {% if perms.publisher %}
+        <div class="sideSwitcher">
+             <div class="sideSwitchButton">
+                 <a href="/" onclick="Base.switchMode('/','user','publish')">
+                     <img src="{{ STATIC_PREFIX }}common/images/base/base_profileSwitch.png">
+                 </a>
+             </div>
+             <div class="sideSwitchButton">
+                 <a href="#" onclick="Base.switchMode('{% url publisher.views.index %}','publish','user')">
+                     <img src="{{ STATIC_PREFIX }}common/images/base/base_publisherSwitch.png">
+                 </a>
+             </div>
+        </div>
+    {% endif %}
+</div>
+
+{% if not user.is_authenticated %}
+    {% include "common/popups/signinPopup.html" %}
+{% endif %}
+
+<div id="debug" style="clear:both; width: 75%; margin: 10px auto 0 auto;">
+{% block debug %}{% endblock %}
+</div>
+</body>
+
+</html>

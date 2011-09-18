@@ -6,7 +6,12 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'main.views.index'),
+    url(r'^blog/', include('blogs.urls')),
+    url(r'^accounts/', include('accounts.urls')),
+    url(r'^rest/', include('rest.urls')),
+    url(r'^publisher/', include('publisher.urls')),
+    url(r'^', include('events.urls')),
+    # url(r'^publish/', include('publish.urls')),
     # url(r'^eventlist/', include('eventlist.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

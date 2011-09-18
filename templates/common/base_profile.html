@@ -1,0 +1,40 @@
+{% extends 'common/base.html' %}
+{% load i18n %}
+{% load menu_builder %}
+
+{% block includes %}
+    <link href="{{ STATIC_PREFIX }}css/menu_sidemenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+{% endblock %}
+
+
+{% block userButtons %}
+    {% if user.is_authenticated %}
+        <div id="publish" class="topButton">
+            <a href="{% url rest.views.findPlace %}" title="Find Where To Rest!">{% trans "Rest!" %}</a>
+        </div>
+    {% endif %}
+{% endblock userButtons %}
+
+{% block rightcolumn %}
+    {% if user.is_authenticated %}
+    <div id="profileBox">
+        <div id="avatarBox">
+            <div id="avatar">
+                <img src="{{ user.get_profile.avatar }}" />
+            </div>
+            <div id="profileInfo">
+                <div id="name">{{ user.first_name }} {{ user.last_name }}</div>
+                <div id="profileLink"><a href="{% url accounts.views.edit %}">Edit Profile</a></div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% sidemenu %}
+    {%  for item in menuItems %}
+        {% if item.enabled %}
+            <div class="sideMenuItem">
+                <a href="{{ item.url }}">{{ item.title }}</a>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

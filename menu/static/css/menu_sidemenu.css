@@ -1,0 +1,62 @@
+
+#profileBox
+{
+    float:left;
+    width:100%;
+    display: block;
+}
+
+#avatarBox
+{
+    margin-bottom: 5px;
+    float:left;
+    width:100%;
+}
+#avatarBox #avatar
+{
+    float:left;
+    margin-right: 10px;
+    
+}
+
+#avatarBox #profileInfo
+{
+    padding-top: 14px;
+}
+
+#avatar img
+{
+    width: 64px;
+    height: 64px;
+}
+.sideMenuItem
+{
+    text-align:center;
+    float:left;
+    width:100%;
+    text-decoration: none;
+}
+.selected a
+{
+    text-decoration: none;
+    background-color: #708090;
+    color: white;
+}
+
+.sideMenuItem a
+{
+    cursor: pointer;
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+    text-decoration: none;
+}
+
+
+.sideMenuItem:hover
+{
+    background-color: #e6e6fa;
+    text-decoration: none;
+}

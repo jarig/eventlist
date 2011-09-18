@@ -1,0 +1,36 @@
+
+
+.requestBox
+{
+    clear: both;
+    padding-left: 20%;
+}
+
+.requestForm textarea
+{
+    width: 70%;
+    clear: both;
+}
+
+.requestForm .errors
+{
+    
+}
+
+.thankYouForm
+{
+    width: 100%;
+    clear: both;
+    margin-top: 30%;
+    position: relative;
+}
+.requestThanks
+{
+    clear: both;
+    margin-bottom: 20px;
+}
+
+.submitRequest
+{
+    clear: both;
+}

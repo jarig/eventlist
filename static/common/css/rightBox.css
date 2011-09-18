@@ -1,0 +1,56 @@
+﻿#modules
+{
+	padding-top: 10px;
+	padding-left: 10px;
+}
+
+#profileBox
+{
+	height: auto;
+	width: 100%;
+	padding-left: 0px;
+	border-bottom: 1px #F1F3F3 solid;
+	display: none;
+	float: none;
+}
+
+#profileAvatar
+{
+	height: auto;
+	float: none;
+}
+#profileInfo
+{
+   width: 100%;
+}
+#profileInfo ol
+{
+    padding: 0;
+    margin: 0;	
+    list-style: none;
+}
+#profileInfo li
+{
+	display: list-item;
+	border: 1px;
+	border-top: 1px solid white;
+	padding: 3px 3px 3px 2px;
+	margin: 0;
+	height: 20px;
+}
+#profileInfo li a:hover {
+	background: #069;
+	border-top: 1px solid #C4C5D2;
+	color: white;
+	text-decoration: none;
+}
+
+#profileInfo li a
+{
+	background: white;
+	border: 1px;
+	border-top: 1px solid white;
+	display: block;
+	padding: 3px 3px 3px 16px;
+	text-decoration: none;
+}

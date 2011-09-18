@@ -1,0 +1,55 @@
+
+.subMenu .subMenuHeader
+{
+    float: left;
+    width: auto;
+    margin-right: 10px;
+    height: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    padding-top: 6px;
+}
+.subMenu
+{
+    width: 100%;
+    clear: both;
+    display: inline-block;
+    height: 50px;
+}
+
+.subMenu ul
+{
+    float:left;
+    margin: 0 auto;
+    padding: 0;
+}
+.subMenu li
+{
+    display: inline-block;
+    margin-right: 10px;
+    text-align: center;
+    padding: 0;
+}
+
+.subMenu li a
+{
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    padding: 7px;
+    width: 100%;
+    height: 100%;
+}
+
+.subMenu li a.selected
+{
+    text-decoration: none;
+    background-color: #dcdcdc;
+}
+
+.subMenu li a:hover
+{
+    background-color: #e6e6fa;
+    text-decoration: none;
+    cursor: pointer;
+}

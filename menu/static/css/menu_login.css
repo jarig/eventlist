@@ -1,0 +1,88 @@
+#register {
+	clear: both;
+	width: 100%;
+	margin-top: 10px;
+}
+
+#signinPopup {
+	display: none;
+	background-color: white;
+	padding: 8px;
+	float: none;
+}
+
+.forSignin:hover
+{
+	background-color: #EAEEF3;
+    cursor: pointer;
+    display: block;
+}
+#fbLoggedIn
+{
+	display: block;
+	width: 100%;
+	overflow: hidden;
+}
+#vkLoggedIn
+{
+	display: block;
+	width: 100%;
+	overflow: hidden;
+}
+#fbSignin
+{
+	margin-top: 10px;
+	width: 49%;
+	float:left;
+}
+
+#vkSignin
+{
+   margin-top: 10px; 
+   width: 49%;
+   float:left;
+}
+
+.signinAvatar
+{
+   overflow: hidden;
+   height: 120px;
+   margin-left: auto;
+   margin-right: auto;
+   text-align: center;
+   width: 100%;
+}
+.signName
+{
+	float:left;
+	text-align:center;
+	width: 100%;
+}
+#loginBox
+{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	float: left;
+	text-align:center;
+}
+#loginBox a
+{
+	width: 50px;
+	height: 20px;
+	font-size: 9px;
+	font-family: Tahoma;
+	padding: 7px;
+
+}
+#loginBox a:hover
+{
+  background-color:#9999FF;
+}
+
+.logoutLogo
+{
+    float:left;
+    width: 24px;
+    height: 24px;
+    
+}

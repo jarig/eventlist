@@ -1,0 +1,16 @@
+{% extends 'common/base_profile.html' %}
+{% load i18n %}
+{% load menu_builder %}
+
+{% block includes %}
+    {{ block.super }}
+    <script src="{{ STATIC_PREFIX }}js/rest.js" type="text/javascript"></script>
+    <link href="{{ STATIC_PREFIX }}css/rest.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <div class="restHeader">
+        <div class="headerName"><h1>{% trans "Find Where To Rest!" %}</h1></div>
+        {% subMenu subMenuItems %}
+    </div>
+{% endblock %}

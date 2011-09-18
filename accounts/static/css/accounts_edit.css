@@ -1,0 +1,66 @@
+
+#editProfileTable
+{
+
+}
+#editProfileTable td
+{
+    vertical-align: top;
+}
+
+#editAvatar
+{
+    float:left;
+    margin-right: 10px;
+    width: 200px;
+    height: 256px;
+}
+#editAvatar avatarImage
+{
+    max-width: 256px;
+    max-height: 200px;
+    margin:  3px;
+}
+
+#editAccountBox
+{
+}
+
+.formField
+{
+    float:left;
+    width: 70%;
+}
+
+
+.fieldError
+{
+    float:left;
+    width: 100%;
+}
+
+.fieldInput
+{
+    float: left;
+    width: 70%;
+}
+
+.fieldInput input
+{
+    width: 100%;
+}
+
+.fieldLabel
+{
+    text-align: right;
+    min-width: 100px;
+    width: 20%;
+    margin-right: 15px;
+    float: left;
+}
+
+#submitButton
+{
+    float: left;
+    clear: both;
+}

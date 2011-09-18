@@ -1,0 +1,30 @@
+
+#blogs_container
+{
+    padding: 40px;
+    float: left;
+    display: table;
+}
+.blog #manageButton
+{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.blog
+{
+    float:left;
+    width: 150px;
+    height: 125px;
+    margin: 15px;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    border: solid #d3d3d3 1px;
+}
+
+.blog:hover
+{
+    background-color: #ffffe0;
+}
