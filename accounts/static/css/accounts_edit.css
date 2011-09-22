@@ -26,39 +26,6 @@
 {
 }
 
-.formField
-{
-    float:left;
-    width: 70%;
-}
-
-
-.fieldError
-{
-    float:left;
-    width: 100%;
-}
-
-.fieldInput
-{
-    float: left;
-    width: 70%;
-}
-
-.fieldInput input
-{
-    width: 100%;
-}
-
-.fieldLabel
-{
-    text-align: right;
-    min-width: 100px;
-    width: 20%;
-    margin-right: 15px;
-    float: left;
-}
-
 #submitButton
 {
     float: left;

@@ -134,15 +134,17 @@
 
 #content_container {
 	background-color:#FFFFFF;
+    vertical-align: top;
 	padding: 0;
 	margin: 0 0 0 0;
 	height: 100%;
-	width: 100%;
+    width: 100%;
 }
 
 #column_left {
 	display: none;
     width: 203px;
+    min-width: 203px;
     border-right: dotted #f5f5dc 1px;
     vertical-align: top;
 	padding-left: 0;

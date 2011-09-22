@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
@@ -10,7 +11,7 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('accounts.urls')),
     url(r'^rest/', include('rest.urls')),
     url(r'^publisher/', include('publisher.urls')),
-    url(r'^', include('events.urls')),
+    url(r'^', include('event.urls')),
     # url(r'^publish/', include('publish.urls')),
     # url(r'^eventlist/', include('eventlist.foo.urls')),
 
@@ -20,3 +21,10 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+   )

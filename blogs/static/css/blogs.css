@@ -1,0 +1,111 @@
+
+.blogSection
+{
+    display: block;
+    text-decoration: none;
+    text-align: left;
+    width: 100%;
+    float: left;
+}
+
+/* Left Side */
+.generalInfoLeftColumn
+{
+    float:left;
+    margin-right: 10px;
+    height: 100%;
+    border: solid #e6e6fa 1px;
+}
+
+.blog_leftLogo
+{
+    min-height: 128px;
+    min-width: 128px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.blog_menu
+{
+    display: block;
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+
+/* Main Page */
+.blogInfoDivider
+{
+    border-bottom: solid #e6e6fa 1px;
+    width: 100%;
+    height: 1px;
+    float:left;
+}
+
+.blogTopImages
+{
+    width: 100%;
+    float:left;
+    min-height: 30px;
+    border: solid #e6e6fa 1px;
+}
+
+.blogInfoContent
+{
+    float:left;
+    border: solid #e6e6fa 1px;
+    width:100%;
+}
+.blogContent
+{
+    width: 100%;
+}
+.blogSectionName
+{
+    margin: 0;
+    padding-left:  15px;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    background: #E1E7ED;
+    color: black;
+    font-size: 13px;
+    border-top: 1px solid #D3DAE0;
+    border-bottom: 1px solid #D8DFE5;
+    font-weight: bold;
+    outline: none;
+    clear: both;
+}
+
+#generalLogo
+{
+    margin: 2px;
+    padding: 0;
+    text-align: center;
+    margin-top: 0px;
+}
+#logoWrapper
+{
+    width: 100%;
+    min-height: 150px;
+    border: solid #e6e6fa 1px;
+}
+#blogLogoSrc
+{
+    max-width: 197px;
+    max-height: 190px;
+}
+
+#blogTypes
+{
+    float: left;
+    clear: both;
+    width: 100%;
+}
+/* Details*/
+
+.addressForm
+{
+    width: 80%;
+}
+
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^ */

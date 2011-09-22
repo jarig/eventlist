@@ -75,7 +75,7 @@ var BaseGUI =
     {
         $(function()
         {
-            $("#column_left").css('display','block');
+            $("#column_left").show();
         });
         return false;
     }
