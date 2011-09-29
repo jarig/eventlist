@@ -31,8 +31,10 @@
 {
     float:left;
     width: 100%;
-    margin-top: 20px;
-    border-top: solid #e6e6fa 1px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-bottom: solid #e6e6fa 1px;
+    background-color: #ffffe0;
 }
 
 
@@ -40,6 +42,7 @@
 {
     display: none;
 }
+
 #uploadDialog
 {
     width: 400px;
@@ -50,7 +53,10 @@
 {
     border: none;
 }
-
+.blogInput
+{
+    
+}
 .blogButton
 {
     float:left;

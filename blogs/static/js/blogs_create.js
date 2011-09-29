@@ -2,16 +2,43 @@
 
 var BlogForm =
 {
-    init: function()
+    initCreate: function()
     {
        $(function()
        { //dom ready
            $("input[type=submit]","#createBlogBox").button();
+           $("input").labelify({ labelledClass: "helpLabel" });
+           $("textarea").labelify({ labelledClass: "helpLabel" });
+           //types select
+           $("#id_types").multiselect(
+               {
+                   header: false,
+                   noneSelectedText: 'Select blog types',
+                   selectedList: 4,
+                   multiselectclick: function(event, ui)
+                   {
+                       /*
+                       ui.value: value of the checkbox
+                        ui.text: text of the checkbox
+                        ui.checked: whether or not the input was checked
+                        or unchecked (boolean)
+                       */
+                       
+                   },
+                   beforeopen: function()
+                   {
+                       $(".ui-multiselect-checkboxes").css("min-width",$(".ui-multiselect").width());
+                   }
+           }).multiselectfilter();
+           $(".ui-multiselect").css("width","100%");
+
        });
     },
-    submit: function()
+    submit: function(form)
     {
-        
+        //gather data
+        $(form).submit();
+        return false;
     }
 };
 
@@ -32,7 +59,10 @@ var BlogGUI =
                              {
                                 var imgUrl = $("#uploadLogoFrame").contents().find("#imageUrl").val();
                                 if (imgUrl != "False")
+                                {
                                     $("#blogLogoSrc").attr("src",imgUrl);
+                                    $("#uploadDialog").dialog("close");
+                                }
                              });
                          $("#uploadLogoFrame").contents().find("form").submit();
                   },
@@ -42,7 +72,8 @@ var BlogGUI =
                   }
               }
           }
-      );
+        );
+        return false;
     },
     initMenu: function(menuIdent, defaultSelected)
     {

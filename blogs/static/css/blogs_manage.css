@@ -1,11 +1,12 @@
 
 #blogs_container
 {
-    padding: 40px;
+    padding-left: 40px;
+    padding-top: 20px;
     float: left;
     display: table;
 }
-.blog #manageButton
+.blog .manageButton
 {
     display: block;
     width: 100%;

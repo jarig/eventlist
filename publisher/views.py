@@ -13,8 +13,9 @@ from publisher.models import PublisherRequest
 
 @login_required
 def index(request):
-    
-    return render_to_response('blogs/blogs_publisher.html',
+    request.session["publishMode"] = True
+    print request.session["publishMode"]
+    return render_to_response('blogs/blogs.html',
                               {
                               },
                               context_instance=RequestContext(request))

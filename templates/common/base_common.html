@@ -1,0 +1,81 @@
+{% extends 'common/base.html' %}
+{% load i18n %}
+{% load menu_builder %}
+
+{% block includes %}
+    <link href="{{ STATIC_PREFIX }}css/menu_sidemenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    {% if request.session.publishMode %}
+        <link href="{{ STATIC_PREFIX }}css/base_publisher.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    {% endif %}
+{% endblock %}
+
+{% block topmenu %}
+    {% if request.session.publishMode %}
+            <div class="topButton" style="float: left; ">
+                <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Publications" %}</a>
+            </div>
+            <div class="topButton" style="float: left; ">
+                <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Statistics" %}</a>
+            </div>
+            <div id="signin" class="topButton">
+            {% if not user.is_authenticated %}
+                    <a href="#" onclick="User.openLoginBox(); return false;">{% trans "Sign in" %}</a>
+            {% else %}
+                    <img class="logoutLogo" src="{{ STATIC_PREFIX }}common/images/{{ user.get_profile.provider }}LogoSmall.png"/>
+                    <a href="#" onclick="Base.toggle_profileBox('#profileBox'); return false;" >{% trans "Profile" %}</a>
+            {%  endif %}
+        </div>
+    {% else %}
+        {{ block.super }}
+    {% endif %}
+{% endblock topmenu %}
+
+{% block userButtons %}
+    {% if user.is_authenticated %}
+        {% if request.session.publishMode %}
+            <div class="topButton">
+                <a href="{% url blogs.views.manage %}" title="Publish!">{% trans "Publish!" %}</a>
+            </div>
+        {% else %}
+            <div id="publish" class="topButton">
+                <a href="{% url rest.views.findPlace %}" title="Find Where To Rest!">{% trans "Rest!" %}</a>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+
+
+{% block rightcolumn %}
+    {% if user.is_authenticated %}
+        <div id="profileBox" style="display: none;">
+            <div id="avatarBox">
+                <div id="avatar">
+                    <img src="{{ user.get_profile.avatar }}" />
+                </div>
+                <div id="profileInfo">
+                    <div id="name">{{ user.first_name }} {{ user.last_name }}</div>
+                    <div id="profileLink"><a href="{% url accounts.views.edit %}">Edit Profile</a></div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if request.session.publishMode %}
+            <div class="sideMenuItem">
+                <a href="#">Blogs</a>
+            </div>
+            <div class="sideMenuItem">
+                <a href="#">Requests</a>
+            </div>
+    {% else %}
+        {% sidemenu %}
+        {%  for item in menuItems %}
+            {% if item.enabled %}
+                <div class="sideMenuItem">
+                    <a href="{{ item.url }}">{{ item.title }}</a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+

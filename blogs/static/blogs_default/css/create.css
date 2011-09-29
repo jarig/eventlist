@@ -1,0 +1,38 @@
+
+.blogTypesForm
+{
+    display: none;
+}
+
+.helpLabel
+{
+    color: graytext;
+}
+
+.errors
+{
+    color: #f08080;
+    text-align: center;
+    font-size: 12px;
+}
+.errors:hover
+{
+    cursor: default;
+}
+
+.blogNameHeader input
+{
+    border: none;
+    width: 99%;
+}
+
+.blogDescription textarea
+{
+    width: 93%;
+    border: none;
+    padding: 10px;
+}
+.blogDescription textarea:hover
+{
+    
+}

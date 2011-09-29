@@ -10,10 +10,8 @@ def create(request):
     return HttpResponse("Create Event")
 
 def main(request):
-    test = "testVar, REQUEST: "
-    for var in request.REQUEST:
-        test += var + "="+ request.REQUEST[var]
-
+    if request.user.is_authenticated():
+        request.session["publishMode"] = False
     return render_to_response("events/events_main.html",
                               {
                               },

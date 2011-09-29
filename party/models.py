@@ -4,17 +4,18 @@ from django.db import models
 # Create your models here.
 
 class Party(models.Model):
-    ROLES = (
+    ROLE = (
         (u'O',u'organizer'),
         (u'P',u'participant'),
     )
     participant = models.ManyToManyField(User, through='Participation')
-    role = models.CharField(max_length=1, choices=ROLES, default='P')
+    role = models.CharField(max_length=1, choices=ROLE, default='P')
     
     pass #party model
 
 
 class Participation(models.Model):
+
     party = models.ForeignKey(Party)
     user = models.ForeignKey(User)
     

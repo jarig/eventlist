@@ -12,8 +12,7 @@ class Account(models.Model):
 
     identity = models.CharField(max_length=128, default="")
     provider = models.CharField(max_length=128, default="")
-    avatar = models.CharField(max_length=255)
-    customAvatar = models.ImageField(upload_to=globalSettings.MEDIA_ROOT, blank=True, max_length=255)
+    avatar = models.ImageField(upload_to='avatar/',blank=True, max_length=255)
     rating = models.FloatField(default=0)
 
 

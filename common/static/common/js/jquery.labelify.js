@@ -59,8 +59,9 @@ jQuery.fn.labelify = function(settings) {
         $(this).removeClass(settings.labelledClass);
       }
     }).blur(function(){
-      if (this.value === this.defaultValue) {
+      if ($.trim(this.value) === "") {
         this.value = $(this).data("label");
+        this.defaultValue = "";
         $(this).addClass(settings.labelledClass);
       }
     });
@@ -80,6 +81,10 @@ jQuery.fn.labelify = function(settings) {
     if (this.value !== this.defaultValue) {
       // user already started typing; don't overwrite their work!
       return;
+    }
+    if (this.value !== "")
+    {
+        return;
     }
     // actually set the value
     this.value = $(this).data("label");

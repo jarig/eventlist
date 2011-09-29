@@ -12,9 +12,10 @@ class EditForm(forms.Form):
         first_name = self.cleaned_data["first_name"]
         last_name = self.cleaned_data["last_name"]
         avatar = self.cleaned_data["avatar"]
+        
         if avatar is not None:
-            profile.customAvatar.save(
-                'test',
+            profile.avatar.save(
+                'avatar_'+str(request.user.id),
                 avatar,
                 save=False
             )
