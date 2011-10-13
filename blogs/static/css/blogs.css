@@ -75,6 +75,11 @@
     text-align: center;
     margin-top: 0px;
 }
+
+.logoBottom
+{
+    min-height: 15px;
+}
 #logoWrapper
 {
     width: 100%;
@@ -87,7 +92,7 @@
     max-height: 190px;
 }
 
-#blogTypes
+#blogFacilities
 {
     float: left;
     clear: both;

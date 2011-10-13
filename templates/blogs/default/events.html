@@ -1,0 +1,60 @@
+{% extends 'blogs/default/design.html' %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+{% load field_renderer %}
+{% load i18n %}
+
+
+{% block includes %}
+   {{ block.super }}
+   <link href="{{ STATIC_PREFIX }}blogs_default/css/event.css" rel="stylesheet" type="text/css">
+   <link href="{{ STATIC_PREFIX }}css/blogs_create.css" rel="stylesheet" type="text/css">
+   <script type="text/javascript" src="{{ STATIC_PREFIX }}blogs_default/js/create_event.js"></script>
+   <link href="{{ STATIC_PREFIX }}blogs_default/css/create.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block blogContent %}
+    <table style="vertical-align: top; width: 100%;">
+    <tr>
+        <td>
+            <div id="buttonPane">
+                <span>
+                    <a href="#" onclick="BlogEvent.toggleCreateBox(this,
+                                        '#eventContentBox',
+                                        '#createEventBox',
+                                        '{% url event.views.create blog.id %}',
+                                        '{% trans 'Show Events' %}');">
+                        {% trans 'Create New Event' %}
+                    </a>
+                </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id='eventContentBox'>
+                <div class="blogSectionName">
+                    Events:
+                </div>
+                <div class="eventList">
+                    Events here
+                </div>
+            </div>
+            <div id='createEventBox' >
+                {# create event form here #}
+                <form id='eventForm' action="{% url event.views.create blog.id %}" method="POST" enctype="multipart/form-data">
+                    <div id='loadContent'>
+                    </div>
+                </form>
+                <div>
+                    <a href="#" onclick="BlogEvent.submitForm('#loadContent','#eventForm');">Submit</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+    </table>
+{% endblock %}
+
+{% block hiddenContent %}
+
+{% endblock %}

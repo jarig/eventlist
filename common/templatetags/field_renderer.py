@@ -1,16 +1,29 @@
 from django import template
-
 register = template.Library()
 
-@register.simple_tag
-def field(boundfield, attrs):
-    attrs = attrs.split(",")
-    att = {}
-    for attr in attrs:
-        splitted = attr.split("=")
-        att[splitted[0]] = ""
-        if len(splitted) > 1: att[splitted[0]] = splitted[1]
+class RenderFieldNode(template.Node):
+    def __init__(self, field, options):
+        self.field = template.Variable(field)
+        self.options = options
 
-    if boundfield.field.show_hidden_initial:
-        return boundfield.as_widget(attrs=att) + boundfield.as_hidden(only_initial=True)
-    return boundfield.as_widget(attrs=att)
+    def render(self, context):
+        try:
+            bField = self.field.resolve(context)
+            att = {}
+            for attr in self.options:
+                splitted = attr.strip("'\"").split("=")
+                att[splitted[0]] = ""
+                if len(splitted) > 1: att[splitted[0]] = splitted[1]
+            if bField.field.show_hidden_initial:
+                return bField.as_widget(attrs=att) + bField.as_hidden(only_initial=True)
+            return bField.as_widget(attrs=att)
+        except template.VariableDoesNotExist:
+            return ''
+
+def field(parser, token):
+    contents = token.split_contents()
+    field = contents[1]
+    options = contents[2:]
+    return RenderFieldNode(field, options)
+
+register.tag('field', field)

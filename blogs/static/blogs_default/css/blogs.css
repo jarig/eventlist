@@ -1,4 +1,13 @@
 
+
+.blogType
+{
+    width: 24px;
+    height: 24px;
+    float:left;
+    display: block;
+    margin: 5px;
+}
 .blogNameHeader
 {
     font-size: 25px;
@@ -9,6 +18,8 @@
 {
     font-size: 15px;
     font-family: arial;
+    padding-left: 10px;
+    width: 95%;
 }
 .generalInfoLeftColumn
 {

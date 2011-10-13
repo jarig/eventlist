@@ -1,0 +1,157 @@
+{% extends 'blogs/default/design.html' %}
+{% load i18n %}
+{% load field_renderer %}
+
+{% block includes %}
+   {{ block.super }}
+   <link href="{{ STATIC_PREFIX }}css/blogs_create.css" rel="stylesheet" type="text/css">
+   <script src="{{ STATIC_PREFIX }}js/blogs_create.js" type="text/javascript"></script>
+   <link href="{{ STATIC_PREFIX }}blogs_default/css/create.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        {% if mode != 'view' and accessType >= accessTypes.ADMIN %}
+            BlogForm.initCreate();
+        {% endif %}
+    </script>
+{% endblock %}
+
+{% block logoBottom %}
+    {% if mode != 'view' %}
+        <a href="#" onclick="BlogGUI.openUploadWindow();">Upload</a>
+    {% endif %}
+{% endblock logoBottom%}
+
+{% block hiddenContent %}
+    <div id="uploadDialog">
+        <iframe src="{% url blogs.views.uploadTempImage %}" id="uploadLogoFrame" width="100%" height="100%">
+        </iframe>
+    </div>
+{% endblock %}
+
+
+{% block formDefinition %}
+        {% if mode != 'view' and accessLevel >= accessLevels.ADMIN  %}
+        <form id="blogData"
+              {% if mode == 'edit' %}
+              action="{% url blogs.views.edit  blogForm.instance.id None %}"
+              {% else %}
+              action="{% url blogs.views.create %}"
+              {% endif %}
+        enctype="multipart/form-data" method="POST">
+    
+        <input type="hidden" id="blog_id" value="{{ blogForm.instance.id }}">
+        <div id="buttonPane">
+            <span>
+            <a href="#" onclick="BlogForm.submit('#blogData');">
+                {% if mode == 'edit' %}
+                    {% trans 'Save' %}
+                {% else %}
+                    {% trans 'Create' %}
+                {% endif %}
+            </a>
+            </span>
+
+            {% if mode == 'edit' %}
+                <span>
+                    <a href="{% url blogs.views.view  blogForm.instance.id page %}" target="_blank">View Blog</a>
+                </span>
+            {% endif %}
+
+            <div style="float:right; ">
+                <a href="#">Blog Style</a> |
+                {{ blogForm.style }}
+            </div>
+        </div>
+        {% endif %}
+{% endblock %}
+
+{% block blogNameHeader %}
+    {% if mode != 'view' and accessLevel >= accessLevels.ADMIN %}
+        <div class="divButton blogNameHeader">
+            {% field blogForm.name 'title=Blog Name' 'class=blogNameHeader'%}
+        </div>
+        <div class="errors">
+            {{ blogForm.name.errors }}
+        </div>
+    {% else %}
+        <div class="blogNameHeader">
+            <div class='blogNameHeader'>{{ blog.name }}</div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block blogHeaderImages %}
+    <!--div class="divButton" onclick="" style="line-height: 60px;">
+        <h3>Add here few images</h3>
+    </div-->
+{% endblock %}
+
+{% block blogModule_1 %}
+    <div class="divButton" style="line-height: 60px;">
+        Custom module
+    </div>
+{% endblock %}
+
+{% block blogDescription %}
+    {% if mode != 'view' and accessLevel >= accessLevels.ADMIN %}
+        <div class="divButton" style="line-height: 60px;">
+            {% field blogForm.description 'title=Add short description of your blog' 'class=blogDescription'%}
+        </div>
+        <div class="errors">
+            {{ blogForm.description.errors }}
+        </div>
+    {% else %}
+        {# view mode #}
+        <div class="blogDescription" >
+            <p>
+                {{ blog.description|escape|linebreaksbr }}
+            </p>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block blogFacilities %}
+
+    {% if mode != 'view' and accessLevel >= accessLevels.ADMIN %}
+        <div class="formField">
+            <div class="fieldLabel">{% trans 'Facilities' %}:</div>
+            <div class="fieldInput">
+                {{ blogForm.facilities }}
+            </div>
+            <div class="fieldRight">
+                <a href="#" id="addNewBlogType">Add New</a>
+            </div>
+            <div class="fieldError errors">
+                {{ blogForm.facilities.errors }}
+            </div>
+        </div>
+    {% else %}
+        {# if in view mode #}
+        {% for type in blog.facilities.all %}
+            <div class="blogType">
+                {{ type.name }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+
+{% block blogNews %}
+    <div id="blogNews">
+        News Here
+        {{ blogForm.errors }}
+    </div>
+{% endblock %}
+
+
+
+{% block formEnd %}
+    {% if mode != 'view' and accessLevel >= accessLevels.ADMIN %}
+        </form>
+    {% endif %}
+{% endblock %}

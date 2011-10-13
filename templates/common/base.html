@@ -158,12 +158,12 @@
     {% if perms.publisher %}
         <div class="sideSwitcher">
              <div class="sideSwitchButton">
-                 <a href="/" onclick="Base.switchMode('/','user','publish')">
+                 <a href="{% url common.views.userMode %}">
                      <img src="{{ STATIC_PREFIX }}common/images/base/base_profileSwitch.png">
                  </a>
              </div>
              <div class="sideSwitchButton">
-                 <a href="#" onclick="Base.switchMode('{% url publisher.views.index %}','publish','user')">
+                 <a href="{% url common.views.publisherMode %}" >
                      <img src="{{ STATIC_PREFIX }}common/images/base/base_publisherSwitch.png">
                  </a>
              </div>

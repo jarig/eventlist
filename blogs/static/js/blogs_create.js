@@ -10,10 +10,10 @@ var BlogForm =
            $("input").labelify({ labelledClass: "helpLabel" });
            $("textarea").labelify({ labelledClass: "helpLabel" });
            //types select
-           $("#id_types").multiselect(
+           $("#id_facilities").multiselect(
                {
-                   header: false,
-                   noneSelectedText: 'Select blog types',
+                   header: "",
+                   noneSelectedText: 'Select facility types',
                    selectedList: 4,
                    multiselectclick: function(event, ui)
                    {
@@ -27,11 +27,11 @@ var BlogForm =
                    },
                    beforeopen: function()
                    {
-                       $(".ui-multiselect-checkboxes").css("min-width",$(".ui-multiselect").width());
+                       $(".ui-multiselect-menu").css("width",$(".ui-multiselect").width());
                    }
            }).multiselectfilter();
+           //$(".ui-helper-reset").hide();
            $(".ui-multiselect").css("width","100%");
-
        });
     },
     submit: function(form)

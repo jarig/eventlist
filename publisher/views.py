@@ -2,6 +2,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Permission
+from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -14,12 +15,7 @@ from publisher.models import PublisherRequest
 @login_required
 def index(request):
     request.session["publishMode"] = True
-    print request.session["publishMode"]
-    return render_to_response('blogs/blogs.html',
-                              {
-                              },
-                              context_instance=RequestContext(request))
-
+    return HttpResponseRedirect(reverse('blogs.views.manage'))
 
 
 @login_required

@@ -2,12 +2,12 @@ from django.contrib import admin
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.safestring import mark_safe
-from blogs.models import Types
+from blogs.models import FacilityType
 
-class BlogTypesAdmin(admin.ModelAdmin):
+class FacilityTypeAdmin(admin.ModelAdmin):
     pass
 
 
 
-admin.site.register(Types, BlogTypesAdmin)
+admin.site.register(FacilityType, FacilityTypeAdmin)
   

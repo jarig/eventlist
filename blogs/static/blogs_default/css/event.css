@@ -1,0 +1,24 @@
+
+.eventHeader
+{
+    width: 100%;
+    margin-bottom: 10px;
+    border-bottom: solid #e6e6fa 1px;
+    padding-left: 7px;
+}
+
+.eventList
+{
+    width: 100%;
+}
+
+/* Create Event */
+#eventContentBox
+{
+
+}
+#createEventBox
+{
+    width: 100%;
+    display: none;
+}

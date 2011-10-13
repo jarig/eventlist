@@ -12,14 +12,14 @@ class Menu:
         self.current_path = template.resolve_variable('request.path', self.context)
         self.user = template.resolve_variable('request.user', self.context)
 
-    def addItem(self, label, view='', show=True, enabled=True):
-        item = MenuItem(label, view, show, enabled)
+    def addItem(self, label, view='',viewArgs=None, show=True, enabled=True):
+        item = MenuItem(label, view, viewArgs, show, enabled)
         self.items.append(item)
 
     def getMenu(self):
         for item in self.items:
-            match = resolve(self.current_path)
-            if re.match(match.url_name, item.view):
+            #match = resolve(self.current_path)
+            if self.current_path == item.url:
                 item.selected = True
             else:
                 item.selected = False
@@ -43,9 +43,10 @@ class Menu:
             ]
 
 class MenuItem:
-    def __init__(self,label, view='', show=True, enabled=True):
+    def __init__(self,label, view='', viewArgs=None, show=True, enabled=True):
         self.label = label
-        self.url = reverse(view)
+        self.url = reverse(view, args=viewArgs)
+        self.viewArgs = viewArgs
         self.view = view
         self.show = show
         self.enabled = enabled

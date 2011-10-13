@@ -4,13 +4,13 @@
 
 {% block includes %}
     <link href="{{ STATIC_PREFIX }}css/menu_sidemenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-    {% if request.session.publishMode %}
+    {% if request.session.mode == 'publish' %}
         <link href="{{ STATIC_PREFIX }}css/base_publisher.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     {% endif %}
 {% endblock %}
 
 {% block topmenu %}
-    {% if request.session.publishMode %}
+    {% if request.session.mode == 'publish' %}
             <div class="topButton" style="float: left; ">
                 <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Publications" %}</a>
             </div>
@@ -32,7 +32,7 @@
 
 {% block userButtons %}
     {% if user.is_authenticated %}
-        {% if request.session.publishMode %}
+        {% if request.session.mode == 'publish' %}
             <div class="topButton">
                 <a href="{% url blogs.views.manage %}" title="Publish!">{% trans "Publish!" %}</a>
             </div>
@@ -48,10 +48,10 @@
 
 {% block rightcolumn %}
     {% if user.is_authenticated %}
-        <div id="profileBox" style="display: none;">
+        <div id="profileBox" >
             <div id="avatarBox">
                 <div id="avatar">
-                    <img src="{{ user.get_profile.avatar }}" />
+                        <img src="{{ user.get_profile.avatar }}" />
                 </div>
                 <div id="profileInfo">
                     <div id="name">{{ user.first_name }} {{ user.last_name }}</div>
@@ -60,7 +60,7 @@
             </div>
         </div>
     {% endif %}
-    {% if request.session.publishMode %}
+    {% if request.session.mode == 'publish' %}
             <div class="sideMenuItem">
                 <a href="#">Blogs</a>
             </div>

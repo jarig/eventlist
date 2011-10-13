@@ -3,17 +3,38 @@
 
 {% block includes %}
    {{ block.super }}
-   <link href="{{ STATIC_PREFIX }}blogs_{{ blogStyle }}/css/blogs.css" rel="stylesheet" type="text/css">
+   <link href="{{ STATIC_PREFIX }}blogs_default/css/blogs.css" rel="stylesheet" type="text/css">
    {% include "jquery.multiselect.html" %}
 {% endblock %}
 
 
+
+{% block blogMenu %}
+    {% for item in menu %}
+        {% if item.enabled and item.show %}
+            <div class="sideMenuItem {% if item.selected %} selected {% endif %}">
+                <a href="{{ item.url }}">{{ item.label }}</a>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
 {% block leftLogo %}
     <div class="blog_leftLogo">
         <div id="generalLogo">
-            {% block leftLogoWrapper %}
-                
+            <div id="logoWrapper">
+                {% block logoSrc %}
+                    {% if blog != None and blog.logo != None and blog.logo != '' %}
+                        <img id="blogLogoSrc" src="{{ STATIC_PREFIX }}{{ blog.logo }}">
+                    {% else %}
+                        <img id="blogLogoSrc" src="{{ STATIC_PREFIX }}images/blogs_logoStub.png">
+                    {% endif %}
+                {% endblock %}
+            </div>
+            <div class='logoBottom'>
+            {% block logoBottom %}
             {% endblock %}
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -24,17 +45,13 @@
         <div id="managePane">
 
         </div>
-
-        <div id="blogContent">
-
-        </div>
-
         {# Hidden content #}
         <div id="blogPageBlocks">
             {% block hiddenContent %}
             {% endblock %}
-            
-            <div id="generalInfo" class="blogContent">
+        </div>
+
+        <div id="blogContent">
                 {% block formDefinition %}
                 {% endblock %}
                     <table style="width:100%;">
@@ -46,20 +63,20 @@
                             {% endblock %}
                         </div>
 
-                        <div class="blogTopImages">
+                        <!--div class="blogTopImages">
                             <div class="blogSection" >
                                 {% block blogHeaderImages %}
                                 
                                 {% endblock %}
                             </div>
-                        </div>
+                        </div-->
                         </td>
                     </tr>
                     <tr>
                         <td width="250px" style="vertical-align: top;">
                             <div class="generalInfoLeftColumn">
                                 <div class="blogSection"  >
-                                    {% block blogMap %}
+                                    {% block blogModule_1 %}
                                         
                                     {% endblock %}
                                 </div>
@@ -73,8 +90,8 @@
                                         {% endblock %}
                                     </div>
                                     <div class="blogInfoDivider"></div>
-                                    <div id="blogTypes">
-                                        {% block blogTypes %}
+                                    <div id="blogFacilities">
+                                        {% block blogFacilities %}
                                         
                                         {% endblock %}
                                     </div>
@@ -96,7 +113,5 @@
                 
                 {% endblock %}
             </div>
-
-        </div>
 </div>
 {% endblock blogContent %}

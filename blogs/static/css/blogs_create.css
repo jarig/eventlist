@@ -36,6 +36,16 @@
     border-bottom: solid #e6e6fa 1px;
     background-color: #ffffe0;
 }
+#buttonPane .button
+{
+    
+}
+
+#buttonPane a
+{
+    margin-left: 10px;
+}
+
 
 
 #blogPageBlocks

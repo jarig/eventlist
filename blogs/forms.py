@@ -2,27 +2,29 @@ from django import forms
 from django.db import transaction
 from django.forms.models import ModelForm
 from django.utils.translation import ugettext as _
-from blogs.models import Types, Blog, BlogAccess
+from blogs.models import Blog, BlogAccess, FacilityType
 
 
 class NewBlogForm(ModelForm):
-    types = forms.ModelMultipleChoiceField(widget=forms.SelectMultiple,
-                                           queryset=Types.objects.all().order_by("name"),
+    facilities = forms.ModelMultipleChoiceField(widget=forms.SelectMultiple,
+                                           queryset=FacilityType.objects.all().order_by("name"),
                                            error_messages={'list':_('At least 1 type required')})
 
     @transaction.commit_on_success
-    def create_blog(self, request):#create new blog
+    def submit_blog(self, request):#create new blog
+        bId = self.instance.id
+
         newBlog = self.save(commit=False)
         #add info
-
-        newBlog.save()
         
+        newBlog.save()
+
         #access to blog
-        bAccess = BlogAccess(blog=newBlog, user=request.user, access='OW')
-        bAccess.save()
+        if bId is None: #new blog
+            bAccess = BlogAccess(blog=newBlog, user=request.user, access=BlogAccess.OWNER)
+            bAccess.save()
 
         self.save()
-        
         return newBlog
 
 

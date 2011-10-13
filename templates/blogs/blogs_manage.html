@@ -1,4 +1,5 @@
 {% extends 'blogs/blogs.html' %}
+{% load i18n %}
 
 {% block includes %}
    {{ block.super }}
@@ -7,12 +8,20 @@
 
 {% block content %}
     <div id="blogs_container">
-        <div class="blog">
+    <div class='managementHeader'>
+        <h1>{% trans 'Rest Management' %}</h1>
+        <span><a href="{% url blogs.views.create %}" class="manageButton">Create</a></span>
+        <span><a href="{% url blogs.views.create %}" class="manageButton">Find Blog</a></span>
+        {# register/add an organizer #}
+        <span><a href="{% url blogs.views.create %}" class="manageButton">Register Organizer</a></span>
+    </div>
+
+        <!--div class="blog">
             <a href="{% url blogs.views.create %}" class="manageButton">+Blog</a>
-        </div>
-        {% for blog in blogs %}
+        </div-->
+        {% for blog in myBlogs %}
             <div class="blog">
-                <a href="{% url blogs.views.edit blog.id %}" class="manageButton">{{ blog.name }}</a>
+                <a href="{% url blogs.views.edit blog.id None%}" class="manageButton">{{ blog.name }}</a>
             </div>
         {% endfor %}
     </div>

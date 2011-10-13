@@ -1,17 +1,38 @@
+import datetime
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render_to_response
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
 from django.template.context import RequestContext
+from blogs.models import Blog
+from event.forms import NewEventForm
 
 
+@login_required
+@permission_required('publisher.publish')
+def create(request, blogId):
 
-def create(request):
-    return HttpResponse("Create Event")
+    blog = Blog.objects.get(pk=blogId)
+
+    if request.method == "POST":
+        eventForm = NewEventForm(request.POST, request.FILES)
+        if eventForm.is_valid():
+            eventForm.save()
+            #redirect to show event
+    else:
+        eventForm = NewEventForm(initial={'blogId':blog.id,
+                                          'dateFrom':datetime.datetime.today()})
+    
+    return render_to_response("events/events_create.html",
+                                  {
+                                    "blog": blog,
+                                    "eventForm": eventForm,
+                                  },
+                                  context_instance=RequestContext(request)
+                                  )
+
 
 def main(request):
-    if request.user.is_authenticated():
-        request.session["publishMode"] = False
     return render_to_response("events/events_main.html",
                               {
                               },

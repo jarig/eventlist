@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><component name="dataSourceStorage">
+  <data-source source="LOCAL" name="Django default" product="MySQL" version="5.1.58-community" jdbc-version="4.0" driver-version="mysql-connector-java-5.1.16 ( Revision: ${bzr.revision-id} )" uuid="3cbe4a83-8cb1-4597-8d11-80b7c766ecfe">
+    <extra-name-characters>#@</extra-name-characters>
+    <identifier-quote-string>`</identifier-quote-string>
+    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+    <jdbc-url>jdbc:mysql:///eventlist</jdbc-url>
+    <user-name>root</user-name>
+    <user-password>dfdbdf9b</user-password>
+    <libraries>
+      <library>
+        <url>jar://$APPLICATION_HOME_DIR$/mysql-connector-java-5.1.16-bin.jar!/</url>
+      </library>
+    </libraries>
+  </data-source>
+</component>

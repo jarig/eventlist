@@ -9,26 +9,14 @@ var Base =
         {
             try
             {
-                prBoxId = $.cookie('profileBoxId');
-                prBoxVisible = $.cookie('profileBoxStatus');
+                var prBoxId = $.cookie('profileBoxId');
+                var prBoxVisible = $.cookie('profileBoxStatus');
                 if(typeof(prBoxId) != "undefined" && prBoxVisible == "false")
                     $(prBoxId).hide();
             }catch(e)
             {
             }
         });
-    },
-    switchMode: function(url, cMode, fromMode)
-    {
-        /*toPage = $.cookie(cMode+'lastPage');
-        $.cookie(cMode+'lastPage', document.URL, {path: '/'}); //save current mode page as last one
-        if( typeof(toPage) != "undefined" && toPage != null)
-        {
-            window.location = toPage;
-            return false;
-        }*/
-        window.location = url;
-        return false;
     },
     toggle_profileBox: function(profileContainer)
     {
