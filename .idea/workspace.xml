@@ -2,56 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15c00d32-0869-4b62-90ae-1fe290c99aa9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/eventlist.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/blogs/sql/facilitytype.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/blogs/static/blogs_default/css/event.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/blogs/static/blogs_default/js/create_event.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/templatetags/filters.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/urls.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/event/forms.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/event/static/css/event_create.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/event/static/js/event_create.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/blogs/default/events.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/blogs/default/general.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/blogs/default/settings.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/events/events_create.html" />
-      <change type="DELETED" beforePath="E:\Projects\eventlist\templates\blogs\default\create.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/admin.py" afterPath="$PROJECT_DIR$/blogs/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/forms.py" afterPath="$PROJECT_DIR$/blogs/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/models.py" afterPath="$PROJECT_DIR$/blogs/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/static/blogs_default/css/blogs.css" afterPath="$PROJECT_DIR$/blogs/static/blogs_default/css/blogs.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/static/css/blogs.css" afterPath="$PROJECT_DIR$/blogs/static/css/blogs.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/static/css/blogs_create.css" afterPath="$PROJECT_DIR$/blogs/static/css/blogs_create.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/static/css/blogs_manage.css" afterPath="$PROJECT_DIR$/blogs/static/css/blogs_manage.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/static/js/blogs_create.js" afterPath="$PROJECT_DIR$/blogs/static/js/blogs_create.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/urls.py" afterPath="$PROJECT_DIR$/blogs/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/views.py" afterPath="$PROJECT_DIR$/blogs/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models.py" afterPath="$PROJECT_DIR$/common/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/static/common/js/base.js" afterPath="$PROJECT_DIR$/common/static/common/js/base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/templatetags/field_renderer.py" afterPath="$PROJECT_DIR$/common/templatetags/field_renderer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/views.py" afterPath="$PROJECT_DIR$/common/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/event/models.py" afterPath="$PROJECT_DIR$/event/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/event/urls.py" afterPath="$PROJECT_DIR$/event/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/event/views.py" afterPath="$PROJECT_DIR$/event/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/menu/models.py" afterPath="$PROJECT_DIR$/menu/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/menu/templatetags/menu_builder.py" afterPath="$PROJECT_DIR$/menu/templatetags/menu_builder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/publisher/urls.py" afterPath="$PROJECT_DIR$/publisher/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/publisher/views.py" afterPath="$PROJECT_DIR$/publisher/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/blogs/blogs_baseDesign.html" afterPath="$PROJECT_DIR$/templates/blogs/blogs_baseDesign.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/blogs/blogs_manage.html" afterPath="$PROJECT_DIR$/templates/blogs/blogs_manage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/blogs/default/design.html" afterPath="$PROJECT_DIR$/templates/blogs/default/design.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/common/base.html" afterPath="$PROJECT_DIR$/templates/common/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/common/base_common.html" afterPath="$PROJECT_DIR$/templates/common/base_common.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/urls.py" afterPath="$PROJECT_DIR$/urls.py" />
+      <change type="DELETED" beforePath="E:\Projects\rest\.idea\eventlist.iml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
-    <ignored path="eventlist.iws" />
+    <ignored path="rest.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,27 +24,18 @@
     <disable_hints />
   </component>
   <component name="DatabaseView">
-    <flatten value="false" />
-    <groupTables value="false" />
+    <flatten value="true" />
+    <groupTables value="true" />
   </component>
   <component name="FavoritesManager">
-    <favorites_list name="eventlist" />
+    <favorites_list name="rest" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="create_event.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/blogs/static/blogs_default/js/create_event.js">
+      <file leaf-file-name="event_create.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/event/static/css/event_create.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="46" selection-start="376" selection-end="376" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/event/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="9" selection-start="679" selection-end="679" vertical-scroll-proportion="0.0">
+            <state line="32" column="24" selection-start="340" selection-end="340" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -97,34 +44,16 @@
       <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blogs/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="5" selection-start="895" selection-end="895" vertical-scroll-proportion="0.0">
+            <state line="9" column="37" selection-start="393" selection-end="393" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/blogs/views.py">
+      <file leaf-file-name="events_event.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/events/events_event.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="31" selection-start="3879" selection-end="3879" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="events_create.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/events/events_create.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="34" selection-start="378" selection-end="378" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="blogs_manage.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/blogs/blogs_manage.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="39" selection-start="557" selection-end="557" vertical-scroll-proportion="0.40625">
+            <state line="46" column="26" selection-start="1824" selection-end="1824" vertical-scroll-proportion="0.59358287">
               <folding />
             </state>
           </provider>
@@ -133,16 +62,16 @@
       <file leaf-file-name="general.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/blogs/default/general.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="27" selection-start="593" selection-end="593" vertical-scroll-proportion="0.0">
+            <state line="28" column="20" selection-start="882" selection-end="882" vertical-scroll-proportion="-9.807693">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event_create.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/event/static/js/event_create.js">
+      <file leaf-file-name="common.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common/static/common/js/common.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="1" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
+            <state line="40" column="19" selection-start="1113" selection-end="1113" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -151,16 +80,16 @@
       <file leaf-file-name="forms.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/event/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="64" selection-start="420" selection-end="420" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event_create.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/event/static/css/event_create.css">
+      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/event/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="16" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -185,22 +114,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/blogs/views.py" />
-        <option value="$PROJECT_DIR$/common/templatetags/filters.py" />
-        <option value="$PROJECT_DIR$/common/models.py" />
-        <option value="$PROJECT_DIR$/event/models.py" />
-        <option value="$PROJECT_DIR$/blogs/static/css/blogs_create.css" />
-        <option value="$PROJECT_DIR$/blogs/static/blogs_default/css/event.css" />
-        <option value="$PROJECT_DIR$/urls.py" />
-        <option value="$PROJECT_DIR$/event/urls.py" />
-        <option value="$PROJECT_DIR$/event/forms.py" />
-        <option value="$PROJECT_DIR$/event/static/css/event_create.css" />
-        <option value="$PROJECT_DIR$/templates/blogs/default/events.html" />
-        <option value="$PROJECT_DIR$/event/views.py" />
-        <option value="$PROJECT_DIR$/templates/events/events_create.html" />
-        <option value="$PROJECT_DIR$/event/static/js/event_create.js" />
-        <option value="$PROJECT_DIR$/blogs/static/blogs_default/js/create_event.js" />
         <option value="$PROJECT_DIR$/templates/blogs/blogs_manage.html" />
+        <option value="$PROJECT_DIR$/common/static/common/css/style.css" />
+        <option value="$PROJECT_DIR$/templates/events/events_create.html" />
+        <option value="$PROJECT_DIR$/blogs/views.py" />
+        <option value="$PROJECT_DIR$/blogs/urls.py" />
+        <option value="$PROJECT_DIR$/common/urls.py" />
+        <option value="$PROJECT_DIR$/blogs/static/js/blogs_create.js" />
+        <option value="$PROJECT_DIR$/templates/blogs/default/general.html" />
+        <option value="$PROJECT_DIR$/templates/common/uploadTempImage.html" />
+        <option value="$PROJECT_DIR$/common/static/common/js/common.js" />
+        <option value="$PROJECT_DIR$/common/views.py" />
+        <option value="$PROJECT_DIR$/templates/blogs/default/design.html" />
+        <option value="$PROJECT_DIR$/blogs/static/css/blogs_create.css" />
+        <option value="$PROJECT_DIR$/common/static/common/css/forms.css" />
+        <option value="$PROJECT_DIR$/event/static/css/event_create.css" />
+        <option value="$PROJECT_DIR$/templates/events/events_event.html" />
       </list>
     </option>
   </component>
@@ -259,6 +188,36 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rest">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rest">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT=".idea">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="All">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="rest">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -266,32 +225,14 @@
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="rest" />
@@ -300,11 +241,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -314,11 +255,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -332,11 +273,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -350,11 +291,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -368,11 +309,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -390,29 +331,29 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="event" />
+              <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="event" />
+              <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -420,25 +361,29 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
+              <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="event" />
+              <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -448,11 +393,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -462,11 +407,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
+              <option name="myItemId" value="rest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -475,102 +420,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blogs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blogs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blogs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blogs_default" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eventlist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blogs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blogs_default" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -581,30 +430,62 @@
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="options.lastSelected" value="Errors" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="Database.TableEditor.Splitter" value="0.9" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
+  </component>
+  <component name="PublishConfig" serverName="Rest" serverId="5983ab5d-cdc1-4b16-a92f-e1bce4122f58" overwriteAll="false" preserveTimestamps="false" exclude=".svn;.cvs;.idea;.DS_Store;.git;.pyc">
+    <servers>
+      <server id="5983ab5d-cdc1-4b16-a92f-e1bce4122f58">
+        <serverdata>
+          <mappings>
+            <mapping deploy="wsgi" local="$PROJECT_DIR$/apache" web="/wsgi" />
+            <mapping deploy="rest" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </server>
+    </servers>
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\Projects\eventlist\common" />
-      <recent name="E:\Projects\eventlist\templates\common" />
-      <recent name="E:\Projects\eventlist\templates\blogs" />
-      <recent name="E:\Projects\eventlist\blogs" />
-      <recent name="E:\Projects\eventlist\common\static\common\css\jquery.multiselect" />
+      <recent name="E:\Projects\rest" />
+      <recent name="E:\Projects\rest\rest" />
+      <recent name="E:\Projects\rest\common" />
+      <recent name="E:\Projects\rest\templates\common" />
+      <recent name="E:\Projects\rest\templates\blogs" />
     </key>
   </component>
-  <component name="RunManager" selected="Django server.eventlist">
+  <component name="RunManager" selected="Django server.dev.rest">
     <configuration default="false" name="Default" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console" temporary="true">
       <option name="VM_PARAMETERS" value="" />
       <option name="USER_CFG_CLASS" />
       <option name="CONTEXT_PROVIDER" />
       <RunnerSettings RunnerId="Basic" />
       <ConfigurationWrapper RunnerId="Basic" />
+      <method />
+    </configuration>
+    <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <module name="rest" />
+      <option name="TARGET" value="" />
+      <option name="SETTINGS_FILE" value="" />
       <method />
     </configuration>
     <configuration default="true" type="PythonUnitTestConfigurationType" factoryName="Python's unittest">
@@ -614,7 +495,7 @@
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
-      <module name="eventlist" />
+      <module name="rest" />
       <option name="SCRIPT_NAME" value="" />
       <option name="CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
@@ -631,7 +512,7 @@
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
-      <module name="eventlist" />
+      <module name="rest" />
       <option name="browserUrl" value="" />
       <option name="additionalOptions" value="" />
       <method />
@@ -645,7 +526,7 @@
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
-      <module name="eventlist" />
+      <module name="rest" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
       <method />
@@ -659,7 +540,7 @@
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
-      <module name="eventlist" />
+      <module name="rest" />
       <option name="port" value="8000" />
       <option name="host" value="" />
       <option name="additionalOptions" value="" />
@@ -677,7 +558,7 @@
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
-      <module name="eventlist" />
+      <module name="rest" />
       <option name="SCRIPT_NAME" value="" />
       <option name="CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
@@ -692,18 +573,18 @@
       <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
-    <configuration default="false" name="eventlist" type="Python.DjangoServer" factoryName="Django server">
+    <configuration default="false" name="dev.rest" type="Python.DjangoServer" factoryName="Django server">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <module name="eventlist" />
-      <option name="port" value="8000" />
-      <option name="host" value="eventlist.ee" />
+      <option name="SDK_HOME" value="E:/Program Files/Python27/python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <module name="rest" />
+      <option name="port" value="80" />
+      <option name="host" value="dev.rest.ee" />
       <option name="additionalOptions" value="" />
       <option name="browserUrl" value="" />
       <option name="runTestServer" value="false" />
@@ -718,7 +599,7 @@
     </configuration>
     <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Query Language Console.Default" />
-      <item index="1" class="java.lang.String" itemvalue="Django server.eventlist" />
+      <item index="1" class="java.lang.String" itemvalue="Django server.dev.rest" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -769,23 +650,25 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19863532" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19939348" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30228758" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284553" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284553" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297953" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5996732" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284553" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22744504" sideWeight="0.5918699" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21379833" sideWeight="0.6977124" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20773312" sideWeight="0.64715445" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35284552" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="23" y="255" width="1319" height="217" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3691057" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="23" y="255" width="1319" height="217" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284553" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -816,7 +699,7 @@
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="create/edit blog" />
+    <option name="LAST_COMMIT_MESSAGE" value="event creation" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -832,93 +715,123 @@
     <MESSAGE value="major changes" />
     <MESSAGE value="new files" />
     <MESSAGE value="create/edit blog" />
+    <MESSAGE value="nothing interesting" />
+    <MESSAGE value="event creation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/blogs/static/blogs_default/css/event.css">
+    <entry file="file://$PROJECT_DIR$/common/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="18" selection-start="249" selection-end="249" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blogs/static/js/blogs_create.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="25" selection-start="311" selection-end="311" vertical-scroll-proportion="0.23129252" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/static/common/js/jquery.labelify.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="15" selection-start="1083" selection-end="1084" vertical-scroll-proportion="-0.38245615" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/static/common/js/jquery-1.4.2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="0" selection-start="54777" selection-end="54777" vertical-scroll-proportion="0.51526034" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/event/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="41" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/blogs/default/events.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="57" selection-start="1895" selection-end="1895" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blogs/static/blogs_default/js/create_event.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="46" selection-start="376" selection-end="376" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/event/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="9" selection-start="679" selection-end="679" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blogs/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="5" selection-start="895" selection-end="895" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blogs/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="31" selection-start="3879" selection-end="3879" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/events/events_create.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="34" selection-start="378" selection-end="378" vertical-scroll-proportion="0.0">
+        <state line="6" column="41" selection-start="237" selection-end="237" vertical-scroll-proportion="0.1734694">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/blogs/blogs_manage.html">
+    <entry file="file://$PROJECT_DIR$/blogs/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="39" selection-start="557" selection-end="557" vertical-scroll-proportion="0.40625">
+        <state line="6" column="51" selection-start="272" selection-end="272" vertical-scroll-proportion="0.1734694">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/blogs/blogs_baseDesign.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="33" selection-start="380" selection-end="380" vertical-scroll-proportion="0.34375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blogs/static/js/blogs_create.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="28" selection-start="1389" selection-end="1389" vertical-scroll-proportion="0.54931974">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/common/uploadTempImage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="31" selection-start="215" selection-end="215" vertical-scroll-proportion="0.3024911">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/event/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blogs/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="37" selection-start="393" selection-end="393" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/event/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="46" selection-start="1937" selection-end="1937" vertical-scroll-proportion="0.4506803">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/static/common/js/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="19" selection-start="1113" selection-end="1113" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/blogs/default/design.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="93" selection-start="1031" selection-end="1031" vertical-scroll-proportion="0.6494662">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/static/common/css/forms.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="1" selection-start="16" selection-end="16" vertical-scroll-proportion="0.05782313">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blogs/static/css/blogs_create.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="0" selection-start="561" selection-end="561" vertical-scroll-proportion="0.56632656">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/blogs/default/general.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="27" selection-start="593" selection-end="593" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/event/static/js/event_create.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="1" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/event/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="64" selection-start="420" selection-end="420" vertical-scroll-proportion="0.0" />
+        <state line="28" column="20" selection-start="882" selection-end="882" vertical-scroll-proportion="-9.807693">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/event/static/css/event_create.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="16" selection-start="182" selection-end="182" vertical-scroll-proportion="0.0" />
+        <state line="32" column="24" selection-start="340" selection-end="340" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/events/events_event.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="26" selection-start="1824" selection-end="1824" vertical-scroll-proportion="0.59358287">
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>
