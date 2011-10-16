@@ -10,12 +10,42 @@ var Common =
 			$("#debug").append(msg+"<br/>");
 		});
 	}
-
 };
 
 
 var CommonGUI =
 {
+    openUploadWindow: function(dialogId, logoSrcId)
+    {
+      $(dialogId).dialog(
+          {
+              title: "Upload Logo",
+              height: "150",
+              width: "150",
+              modal: true,
+              buttons: {
+                  submit: function()
+                  {
+                         $("iframe",dialogId).load(function()
+                             {
+                                var imgUrl = $("iframe",dialogId).contents().find("#imageUrl").val();
+                                if (imgUrl != "False")
+                                {
+                                    $(logoSrcId).attr("src",imgUrl);
+                                    $(dialogId).dialog("close");
+                                }
+                             });
+                         $('iframe',dialogId).contents().find("form").submit();
+                  },
+                  cancel: function()
+                  {
+                    $(this).dialog("close");
+                  }
+              }
+          }
+        );
+        return false;
+    },
     uploadButton: function(ident, labelText, inputForm)
     {
         $(function()

@@ -17,7 +17,7 @@
     <table style="vertical-align: top; width: 100%;">
     <tr>
         <td>
-            <div id="buttonPane">
+            <!--div id="buttonPane">
                 <span>
                     <a href="#" onclick="BlogEvent.toggleCreateBox(this,
                                         '#eventContentBox',
@@ -27,7 +27,7 @@
                         {% trans 'Create New Event' %}
                     </a>
                 </span>
-            </div>
+            </div-->
         </td>
     </tr>
     <tr>
@@ -38,16 +38,6 @@
                 </div>
                 <div class="eventList">
                     Events here
-                </div>
-            </div>
-            <div id='createEventBox' >
-                {# create event form here #}
-                <form id='eventForm' action="{% url event.views.create blog.id %}" method="POST" enctype="multipart/form-data">
-                    <div id='loadContent'>
-                    </div>
-                </form>
-                <div>
-                    <a href="#" onclick="BlogEvent.submitForm('#loadContent','#eventForm');">Submit</a>
                 </div>
             </div>
         </td>

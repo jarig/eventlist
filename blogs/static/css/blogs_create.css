@@ -53,16 +53,8 @@
     display: none;
 }
 
-#uploadDialog
-{
-    width: 400px;
-    height: 200px;
-    text-align: center;
-}
-#uploadDialog iframe
-{
-    border: none;
-}
+
+
 .blogInput
 {
     

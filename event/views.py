@@ -10,9 +10,11 @@ from event.forms import NewEventForm
 
 @login_required
 @permission_required('publisher.publish')
-def create(request, blogId):
+def create(request, blogId=None):
 
-    blog = Blog.objects.get(pk=blogId)
+    blog = None
+    if blogId is not None:
+        blog = Blog.objects.get(pk=blogId)
 
     if request.method == "POST":
         eventForm = NewEventForm(request.POST, request.FILES)
@@ -20,10 +22,10 @@ def create(request, blogId):
             eventForm.save()
             #redirect to show event
     else:
-        eventForm = NewEventForm(initial={'blogId':blog.id,
+        eventForm = NewEventForm(initial={'blogId':0,
                                           'dateFrom':datetime.datetime.today()})
     
-    return render_to_response("events/events_create.html",
+    return render_to_response("events/events_event.html",
                                   {
                                     "blog": blog,
                                     "eventForm": eventForm,

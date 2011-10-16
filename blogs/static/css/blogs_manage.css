@@ -9,13 +9,21 @@
 
 .managementHeader
 {
-    margin-left: 20px;
+    margin-left: 55px;
+    margin-top: 25px;
 }
 .blog .manageButton
 {
     display: block;
     width: 100%;
     height: 100%;
+}
+
+.blogsHeader
+{
+    width: 100%;
+    border-bottom: solid purple 1px;
+    margin-top: 10px;
 }
 
 .blog

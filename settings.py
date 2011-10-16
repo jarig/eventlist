@@ -1,25 +1,12 @@
-# Django settings for eventlist project.
+# Django settings for Rest project.
 import os
-
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+import sys
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Jaroslav', 'j.gorjatsev@gmail.com'),
 )
 
-MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'eventlist',                      # Or path to database file if using sqlite3.
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': 'q1',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
+MANAGERS = ()
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -28,7 +15,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'Europe/Estonia'
+TIME_ZONE = 'Europe/Tallinn'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -49,30 +36,6 @@ USE_I18N = True
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
 USE_L10N = True
-
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.abspath(".")+'/media/'
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = '/media/'
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
-
-# URL prefix for admin static files -- CSS, JavaScript and images.
-# Make sure to use a trailing slash.
-# Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -97,7 +60,7 @@ SECRET_KEY = 'fgxa6hve-u+oa&k8u)a_=n8de#-8_7+kw*8&m#oy&r2szg5zh7'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+#   'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -116,7 +79,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-ROOT_URLCONF = 'eventlist.urls'
+ROOT_URLCONF = 'rest.urls'
+
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -128,7 +92,8 @@ TEMPLATE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
-    #'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.media',
 )
 
 INSTALLED_APPS = (
@@ -148,7 +113,7 @@ INSTALLED_APPS = (
     'menu',
     'accounts',
     'jquery',
-    'rest',
+    'search',
     'publisher',
     'album',
     'south'
@@ -176,3 +141,10 @@ LOGGING = {
         },
     }
 }
+
+if os.environ.has_key("PRODUCTION"):
+    from settings_production import *
+else:
+    print >> sys.stdout, "Developer Mode"
+    print "Developer mode"
+    from settings_dev import  *

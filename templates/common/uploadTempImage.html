@@ -8,7 +8,7 @@
 <body>
 
 {% if not imageUrl %}
-    <form action="{% url blogs.views.uploadTempImage %}" enctype="multipart/form-data" method="POST" id="uploadForm">
+    <form action="{% url common.views.uploadTempImage %}" enctype="multipart/form-data" method="POST" id="uploadForm">
          <input type="file" name="file" >
     </form>
 {% endif %}

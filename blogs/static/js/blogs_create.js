@@ -45,36 +45,6 @@ var BlogForm =
 var BlogGUI =
 {
     selectedMenuItem : null,
-    openUploadWindow: function()
-    {
-      $("#uploadDialog").dialog(
-          {
-              title: "Upload Logo",
-              height: "150",
-              modal: true,
-              buttons: {
-                  submit: function()
-                  {
-                         $("#uploadLogoFrame").load(function()
-                             {
-                                var imgUrl = $("#uploadLogoFrame").contents().find("#imageUrl").val();
-                                if (imgUrl != "False")
-                                {
-                                    $("#blogLogoSrc").attr("src",imgUrl);
-                                    $("#uploadDialog").dialog("close");
-                                }
-                             });
-                         $("#uploadLogoFrame").contents().find("form").submit();
-                  },
-                  cancel: function()
-                  {
-                    $(this).dialog("close");
-                  }
-              }
-          }
-        );
-        return false;
-    },
     initMenu: function(menuIdent, defaultSelected)
     {
         $(function()

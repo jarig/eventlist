@@ -10,7 +10,7 @@ from menu.models import Menu
 
 @login_required
 def findPlace(request):
-    return render_to_response("rest/rest_find.html",
+    return render_to_response("search/search_find.html",
                           {#data here
                             "subMenuItems": generateMenu(request)
                           },
@@ -18,7 +18,7 @@ def findPlace(request):
                           )
 @login_required
 def findParty(request):
-    return render_to_response("rest/rest_find.html",
+    return render_to_response("search/search_find.html",
                           {#data here
                             "subMenuItems": generateMenu(request)
                           },
@@ -27,6 +27,6 @@ def findParty(request):
 
 def generateMenu(request):
     menu = Menu(RequestContext(request))
-    menu.addItem('Place','rest.views.findPlace')
-    menu.addItem('Party','rest.views.findParty')
+    menu.addItem('Place','search.views.findPlace')
+    menu.addItem('Party','search.views.findParty')
     return menu.getMenu()

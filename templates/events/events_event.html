@@ -1,0 +1,61 @@
+{% extends 'events/events.html' %}
+{% load i18n %}
+{% load field_renderer %}
+
+{% block includes %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}common/css/forms.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/event_create.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/event_create.js"></script>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        CreateEvent.init();
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="createEventContainer">
+        <form action="" method="POST" enctype="multipart/form-data">
+        <table id="eventDataTable" >
+            <tr>
+                <td colspan="2">
+                    <div class="divButton eventName">
+                        {% field eventForm.name 'title=Event Name' %}
+                    </div>
+                    <div class="errors">
+                        {{ eventForm.name.errors }}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="256px">
+                    <div class='divButton eventLogo'>
+                        <div onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc');">
+                            <img id='eventLogoSrc' src="{{ STATIC_URL }}common/images/logoStub.png">
+                        </div>
+                    </div>
+                    <div class='eventLogoUpload'>
+                        <a href="#" onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc');">Upload</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="divButton eventDescr">
+                        {% field eventForm.descr 'title=Event Description' %}
+                    </div>
+                </td>
+            </tr>
+        </table>
+            <div class='divButton' style="width: 128px; height: 32px;">Submit</div>
+        </form>
+        {{ eventForm.errors }}
+    </div>
+    <div style="display: none">
+        <div id="uploadDialog">
+            <iframe src="{% url common.views.uploadTempImage %}" id="uploadLogoFrame" width="100%" height="100%">
+            </iframe>
+        </div>
+    </div>
+{% endblock %}

@@ -27,7 +27,7 @@
                     {% if blog != None and blog.logo != None and blog.logo != '' %}
                         <img id="blogLogoSrc" src="{{ STATIC_PREFIX }}{{ blog.logo }}">
                     {% else %}
-                        <img id="blogLogoSrc" src="{{ STATIC_PREFIX }}images/blogs_logoStub.png">
+                        <img id="blogLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png">
                     {% endif %}
                 {% endblock %}
             </div>

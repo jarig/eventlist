@@ -16,3 +16,19 @@
     text-align: center;
     font-size: 30px;
 }
+
+.eventDescr textarea
+{
+    width: 97%;
+}
+
+#eventDataTable
+{
+    vertical-align: top;
+    width: 100%;
+}
+
+#eventDataTable td
+{
+    vertical-align: top;
+}

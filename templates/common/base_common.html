@@ -34,11 +34,11 @@
     {% if user.is_authenticated %}
         {% if request.session.mode == 'publish' %}
             <div class="topButton">
-                <a href="{% url blogs.views.manage %}" title="Publish!">{% trans "Publish!" %}</a>
+                <a href="{% url event.views.create %}" title="Publish!">{% trans "Publish!" %}</a>
             </div>
         {% else %}
             <div id="publish" class="topButton">
-                <a href="{% url rest.views.findPlace %}" title="Find Where To Rest!">{% trans "Rest!" %}</a>
+                <a href="{% url search.views.findPlace %}" title="Find Where To Rest!">{% trans "Rest!" %}</a>
             </div>
         {% endif %}
     {% endif %}
@@ -62,10 +62,10 @@
     {% endif %}
     {% if request.session.mode == 'publish' %}
             <div class="sideMenuItem">
-                <a href="#">Blogs</a>
+                <a href="{% url blogs.views.manage %}">Pages</a>
             </div>
             <div class="sideMenuItem">
-                <a href="#">Requests</a>
+                <a href="#">Organizations</a>
             </div>
     {% else %}
         {% sidemenu %}

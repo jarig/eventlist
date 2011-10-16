@@ -1,5 +1,7 @@
 {% extends 'blogs/blogs.html' %}
 {% load i18n %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
 
 {% block includes %}
    {{ block.super }}
@@ -7,15 +9,19 @@
 {% endblock %}
 
 {% block content %}
-    <div id="blogs_container">
     <div class='managementHeader'>
         <h1>{% trans 'Rest Management' %}</h1>
-        <span><a href="{% url blogs.views.create %}" class="manageButton">Create</a></span>
-        <span><a href="{% url blogs.views.create %}" class="manageButton">Find Blog</a></span>
-        {# register/add an organizer #}
-        <span><a href="{% url blogs.views.create %}" class="manageButton">Register Organizer</a></span>
+        <div class='subMenu'>
+            <ul>
+                <li><a href="{% url blogs.views.create %}" class="manageButton">Create Page</a></li>
+                <li><a href="{% url blogs.views.create %}" class="manageButton">Find Page</a></li>
+                {#TODO move to sep. template register/add an organizer #}
+                <li><a href="{% url blogs.views.create %}" class="manageButton">Register Organizer</a></li>
+            </ul>
+        </div>
     </div>
-
+    <!--div class='blogsHeader'><span style="padding-left: 55px;">Your Pages:</span></div-->
+    <div id="blogs_container">
         <!--div class="blog">
             <a href="{% url blogs.views.create %}" class="manageButton">+Blog</a>
         </div-->

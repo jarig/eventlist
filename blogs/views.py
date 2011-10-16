@@ -19,7 +19,6 @@ from menu.models import Menu
 @login_required
 #@permission_required("publisher.manage")
 def manage(request):
-    print "Manage"
     userBlogs = Blog.objects.filter(managers=request.user)
     return render_to_response("blogs/blogs_manage.html",
                               {
@@ -123,24 +122,5 @@ def create(request):
 
 
 
-@login_required
-@permission_required("publisher.publish")
-def uploadTempImage(request):
-    imageUrl=False
-    if request.method == "POST":
-        file = request.FILES["file"]
-        print "Content type: " + file.content_type
-        basename, extension = os.path.splitext(file.name)
-        filename = "temp_"+request.user.first_name + extension
-        dest = open(settings.MEDIA_ROOT+ filename,"wb+")
-        for chunk in file.chunks():
-            dest.write(chunk)
-        dest.close()
-        imageUrl = settings.MEDIA_URL +filename
-    return render_to_response("blogs/blogs_uploadTempImage.html",
-                              {
-                                "imageUrl": imageUrl
-                              },
-                              context_instance=RequestContext(request)
-                              )
+
 

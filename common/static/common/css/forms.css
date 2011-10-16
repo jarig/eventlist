@@ -1,4 +1,18 @@
 
+#uploadDialog
+{
+    text-align: center;
+}
+
+#uploadDialog iframe
+{
+    border: none;
+}
+
+.helpLabel
+{
+    color: graytext;
+}
 
 .formField
 {
