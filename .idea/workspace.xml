@@ -2,50 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15c00d32-0869-4b62-90ae-1fe290c99aa9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/admin.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/fixtures/city.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/fixtures/country.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/forms.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/sql/country.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/static/address/address.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/static/common/css/jqueryUI.css/jquery-ui-timeentry.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/static/common/js/social/likeButtons/buttons.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/templates/common_address.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/templates/jquery.timeentry.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/event/admin.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/event/static/css/event.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/event/templates/event_address.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organization/forms.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organization/static/css/organization_page.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organization/static/js/organization.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organization/urls.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/organization/organization_page.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/forms.py" afterPath="$PROJECT_DIR$/blogs/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/models.py" afterPath="$PROJECT_DIR$/blogs/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/static/css/blogs_create.css" afterPath="$PROJECT_DIR$/blogs/static/css/blogs_create.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/urls.py" afterPath="$PROJECT_DIR$/blogs/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blogs/views.py" afterPath="$PROJECT_DIR$/blogs/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models.py" afterPath="$PROJECT_DIR$/common/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/static/common/css/forms.css" afterPath="$PROJECT_DIR$/common/static/common/css/forms.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/static/common/css/style.css" afterPath="$PROJECT_DIR$/common/static/common/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/static/common/js/common.js" afterPath="$PROJECT_DIR$/common/static/common/js/common.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/urls.py" afterPath="$PROJECT_DIR$/common/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/views.py" afterPath="$PROJECT_DIR$/common/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/event/forms.py" afterPath="$PROJECT_DIR$/event/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/event/models.py" afterPath="$PROJECT_DIR$/event/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/event/static/css/event_create.css" afterPath="$PROJECT_DIR$/event/static/css/event_create.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/event/static/js/event_create.js" afterPath="$PROJECT_DIR$/event/static/js/event_create.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/event/urls.py" afterPath="$PROJECT_DIR$/event/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/event/views.py" afterPath="$PROJECT_DIR$/event/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/blogs/blogs_manage.html" afterPath="$PROJECT_DIR$/templates/blogs/blogs_manage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/blogs/default/general.html" afterPath="$PROJECT_DIR$/templates/blogs/default/general.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/common/base.html" afterPath="$PROJECT_DIR$/templates/common/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/common/base_common.html" afterPath="$PROJECT_DIR$/templates/common/base_common.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/events/events_event.html" afterPath="$PROJECT_DIR$/templates/events/events_event.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/events/events_main.html" afterPath="$PROJECT_DIR$/templates/events/events_main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/urls.py" afterPath="$PROJECT_DIR$/urls.py" />
     </list>
     <ignored path="rest.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -673,7 +630,7 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
+    <property name="options.lastSelected" value="settings.github" />
     <property name="recentsLimit" value="5" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="last_opened_file_path" value="E:/Program Files/Python27/Lib/site-packages/fabric-1.2.2-py2.7.egg/fabric" />
@@ -933,9 +890,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26666668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19939348" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -951,7 +909,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3284553" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3987441" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -982,7 +939,7 @@
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="idea files" />
+    <option name="LAST_COMMIT_MESSAGE" value="add files" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1001,6 +958,8 @@
     <MESSAGE value="nothing interesting" />
     <MESSAGE value="event creation" />
     <MESSAGE value="idea files" />
+    <MESSAGE value="init" />
+    <MESSAGE value="add files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
