@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from common.models import Address
 
 
 class FacilityType(models.Model):
@@ -41,6 +42,10 @@ class Blog(models.Model):
     rating = models.PositiveIntegerField(default=0) #blogs rating
     style = models.ForeignKey(BlogStyle, default=1)
     facilities = models.ManyToManyField(FacilityType)
+    addresses = models.ManyToManyField(Address, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
 
 #which users has access to this blog
 class BlogAccess(models.Model):

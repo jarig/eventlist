@@ -1,0 +1,48 @@
+.logo
+{
+    width: 128px;
+}
+
+.address
+{
+    width: 100%;
+}
+
+.address select
+{
+    width: 97%;
+}
+
+.address input
+{
+    width: 97%;
+}
+
+.address .adr_city
+{
+    width: 98%;
+}
+
+.address .adr_country
+{
+    width: 98%;
+}
+
+.orgName input
+{
+    width: 100%;
+    font-size: 17px;
+    text-align: center;
+}
+.orgDescr textarea
+{
+    width: 97%;
+    font-size: 13px;
+    font-family: tahoma;
+}
+
+.orgDescr
+{
+    font-size: 13px;
+    font-family: tahoma;
+}

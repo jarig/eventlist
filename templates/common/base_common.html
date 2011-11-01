@@ -2,13 +2,6 @@
 {% load i18n %}
 {% load menu_builder %}
 
-{% block includes %}
-    <link href="{{ STATIC_PREFIX }}css/menu_sidemenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-    {% if request.session.mode == 'publish' %}
-        <link href="{{ STATIC_PREFIX }}css/base_publisher.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-    {% endif %}
-{% endblock %}
-
 {% block topmenu %}
     {% if request.session.mode == 'publish' %}
             <div class="topButton" style="float: left; ">

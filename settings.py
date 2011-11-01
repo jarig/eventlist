@@ -116,6 +116,7 @@ INSTALLED_APPS = (
     'search',
     'publisher',
     'album',
+    'organization',
     'south'
 )
 

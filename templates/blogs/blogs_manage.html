@@ -10,13 +10,13 @@
 
 {% block content %}
     <div class='managementHeader'>
-        <h1>{% trans 'Rest Management' %}</h1>
+        <h1>{% trans 'Page Management' %}</h1>
         <div class='subMenu'>
             <ul>
                 <li><a href="{% url blogs.views.create %}" class="manageButton">Create Page</a></li>
                 <li><a href="{% url blogs.views.create %}" class="manageButton">Find Page</a></li>
                 {#TODO move to sep. template register/add an organizer #}
-                <li><a href="{% url blogs.views.create %}" class="manageButton">Register Organizer</a></li>
+                <li><a href="{% url organization.views.create %}" class="manageButton">Register Organizer</a></li>
             </ul>
         </div>
     </div>

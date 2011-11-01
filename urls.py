@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^publisher/', include('publisher.urls')),
     url(r'^common/', include('common.urls')),
     url(r'^event/', include('event.urls')),
+    url(r'^organization/', include('organization.urls')),
     url(r'^$', 'common.views.index'),
 
     # Uncomment the admin/doc line below to enable admin documentation:

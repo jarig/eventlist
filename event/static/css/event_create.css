@@ -17,9 +17,31 @@
     font-size: 30px;
 }
 
+.eventDate
+{
+    float:left;
+}
+.eventTime
+{
+    width: 40px;
+}
+.eventAddresses
+{
+    margin-top: 15px;
+}
 .eventDescr textarea
 {
     width: 97%;
+}
+
+.eventDescr .errorlist
+{
+    margin: 0;
+}
+
+.eventLogoUpload
+{
+    text-align: center;
 }
 
 #eventDataTable

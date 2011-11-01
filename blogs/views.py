@@ -3,6 +3,8 @@ import os
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.core import serializers
+from django.core.serializers import json
 from django.core.urlresolvers import reverse
 from django.db.models.query_utils import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -13,6 +15,7 @@ from django.template.context import RequestContext
 from django.utils.translation import ugettext as _
 from blogs.forms import NewBlogForm
 from blogs.models import Blog, BlogStyle, BlogAccess, getMaxPermission
+from common.models import Country
 from menu.models import Menu
 
 
@@ -122,5 +125,13 @@ def create(request):
 
 
 
-
-
+@login_required
+@permission_required("publisher.publish")
+def getBlogAddress(request):
+    blogId = request.REQUEST["blogId"]
+    blog = Blog.objects.get(pk=blogId)
+    addresses = blog.addresses.select_related('country').all()
+    json_serializer = json.Serializer()
+    data= json_serializer.serialize(addresses, ensure_ascii=False, use_natural_keys=True)
+    return HttpResponse(data)
+    pass

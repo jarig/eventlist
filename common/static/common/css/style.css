@@ -63,25 +63,3 @@ a:hover {
 	font-style: italic;
 }
 
-.divButton
-{
-    display: block;
-    text-decoration: none;
-    text-align: center;
-    cursor: pointer;
-    border: solid #e6e6fa 1px;
-}
-
-.divButton input
-{
-    border: none;
-}
-.divButton textarea
-{
-    border: none;
-}
-
-.divButton:hover
-{
-    background-color: #e6e6fa;
-}

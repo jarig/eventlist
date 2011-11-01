@@ -1,5 +1,43 @@
 {% extends 'events/events.html' %}
 
+{% block includes %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}common/js/social/likeButtons/buttons.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{ STATIC_URL }}common/js/social/likeButtons/buttons.js"></script>
+    <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(function(){
+            $('.like').socialButton();
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
-    {{ request.get_full_path }}
+
+    <div class="event-container" id="event_5">
+        <h2>Название материала</h2>
+        <div class="summary">
+            <p>
+                Текст материала
+            </p>
+        </div>
+        <div class="likes-block">
+            <a href="?hash=event_5" class="like l-fb">
+                <i class="l-ico"></i>
+                <span class="l-count"></span>
+            </a>
+            <a href="?hash=event_5" class="like l-vk">
+                <i class="l-ico"></i>
+                <span class="l-count"></span>
+            </a>
+            <a href="?hash=event_5" class="like l-tw">
+                <i class="l-ico"></i>
+                <span class="l-count"></span>
+            </a>
+        </div>
+    </div>
+
 {% endblock content %}

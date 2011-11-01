@@ -27,25 +27,6 @@
     width: 100%;
 }
 
-#buttonPane
-{
-    float:left;
-    width: 100%;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border-bottom: solid #e6e6fa 1px;
-    background-color: #ffffe0;
-}
-#buttonPane .button
-{
-    
-}
-
-#buttonPane a
-{
-    margin-left: 10px;
-}
-
 
 
 #blogPageBlocks

@@ -15,6 +15,22 @@ var Common =
 
 var CommonGUI =
 {
+    loadingWindow: '',
+    showLoading: function()
+    {
+        CommonGUI.loadingWindow = $('<div>Loading...</div>');
+        $(CommonGUI.loadingWindow).dialog({
+            title: "Loading...",
+            height: "80",
+            width: "150",
+            modal: true
+        });
+    },
+    hideLoading: function()
+    {
+        $(CommonGUI.loadingWindow).dialog("close");
+        $(CommonGUI.loadingWindow).remove();
+    },
     openUploadWindow: function(dialogId, logoSrcId)
     {
       $(dialogId).dialog(
@@ -26,16 +42,26 @@ var CommonGUI =
               buttons: {
                   submit: function()
                   {
-                         $("iframe",dialogId).load(function()
-                             {
-                                var imgUrl = $("iframe",dialogId).contents().find("#imageUrl").val();
-                                if (imgUrl != "False")
+
+                     $("iframe",dialogId).load(function()
+                         {
+                            var imgUrl = $("iframe",dialogId).contents().find("#imageUrl").val();
+                            if (imgUrl != "False")
+                            {
+                                CommonGUI.showLoading();
+                                $(logoSrcId).load(function()
                                 {
-                                    $(logoSrcId).attr("src",imgUrl);
-                                    $(dialogId).dialog("close");
-                                }
-                             });
-                         $('iframe',dialogId).contents().find("form").submit();
+                                   //hide loading
+                                   CommonGUI.hideLoading();
+                                   $(this).unbind('load');
+                                });
+                                $(logoSrcId).attr("src",imgUrl);
+                                $(dialogId).dialog("close");
+                            }
+                            $(this).unbind('load');
+                         });
+                     $('iframe',dialogId).contents().find("form").submit();
+                     $(this).dialog("close");
                   },
                   cancel: function()
                   {

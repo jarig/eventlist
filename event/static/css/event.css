@@ -1,0 +1,70 @@
+
+.eventLogoBox
+{
+    
+}
+.eventDescr
+{
+    font-family: arial;
+    font-size: 15px;
+}
+.eventActivities
+{
+    
+}
+.eventLocations
+{
+
+}
+
+.address
+{
+    margin-top: 10px;
+    padding-left: 7px;
+    margin-bottom: 10px;
+}
+
+.address .addressHeader
+{
+    width: 100%;
+    float: left;
+    border-bottom: solid #e6e6fa 1px;
+}
+.addressHeader .adr_name
+{
+    float: left;
+}
+.addressHeader .deleteAddressButton
+{
+    float: right;
+}
+
+
+.eventLogo img
+{
+    height: 178px;
+}
+
+.eventLogo
+{
+    width: 256px;
+    height: 178px;
+}
+
+.eventDates
+{
+    /*border-bottom: solid #79B7E7 1px;*/
+    float:left;
+    width: 100%;
+}
+
+.event-container
+{
+    border: solid #e6e6fa 1px;
+    margin: 30px;
+}
+
+.event-container h2
+{
+    padding-left: 10px;
+}

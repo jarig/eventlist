@@ -2,11 +2,15 @@
 {% load i18n %}
 {% load field_renderer %}
 
+
 {% block includes %}
     {{ block.super }}
     <link href="{{ STATIC_URL }}common/css/forms.css" rel="stylesheet" type="text/css">
     <link href="{{ STATIC_URL }}css/event_create.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{{ STATIC_URL }}js/event_create.js"></script>
+    {% include "jquery.multiselect.html" %}
+    {% include "jquery.timeentry.html" %}
 {% endblock %}
 
 {% block scripts %}
@@ -18,7 +22,11 @@
 
 {% block content %}
     <div class="createEventContainer">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form id="eventDataForm" action="{% url event.views.create %}" method="POST" enctype="multipart/form-data">
+            
+            <div class="buttonPane">
+                <a href="#" onclick="CreateEvent.submitForm('#eventDataForm');return false;">Submit</a>
+            </div>
         <table id="eventDataTable" >
             <tr>
                 <td colspan="2">
@@ -32,25 +40,87 @@
             </tr>
             <tr>
                 <td width="256px">
-                    <div class='divButton eventLogo'>
-                        <div onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc');">
-                            <img id='eventLogoSrc' src="{{ STATIC_URL }}common/images/logoStub.png">
+                    <div class="eventLogoBox">
+                        <div class='divButton eventLogo'>
+                            <div onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc');">
+                                <img id='eventLogoSrc' src="{{ STATIC_URL }}common/images/logoStub.png">
+                            </div>
                         </div>
-                    </div>
-                    <div class='eventLogoUpload'>
-                        <a href="#" onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc');">Upload</a>
+                        <div class='eventLogoUpload'>
+                                <a href="#" onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc');">Upload</a>
+                        </div>
                     </div>
                 </td>
                 <td>
+                    <div class="eventDates">
+                        <div class="eventDate">
+                            {{ eventForm.dateFrom }}
+                            {% field eventForm.timeFrom 'class=eventTime' %}
+                            <div class="errors">
+                                {{ eventForm.dateFrom.errors }}
+                            </div>
+                        </div>
+                        <div class="eventDate" style="float:right">
+                            {{ eventForm.dateTo }}
+                            {% field eventForm.timeTo 'class=eventTime' %}
+                            <div class="errors">
+                                {{ eventForm.dateTo.errors }}
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="divButton eventDescr">
-                        {% field eventForm.descr 'title=Event Description' %}
+                        {% field eventForm.descr 'title=Event Description' 'class=eventDescr' %}
+                        <div class="errors">
+                            {{ eventForm.descr.errors }}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="vertical-align: top;">
+                <td>
+                    <div class="eventLocations">
+                        <div class="eventBlogs">
+                            <div class='eventBlogsSelection'>
+                                {{ eventForm.blogs }}
+                            </div>
+                            <div class="errors">
+                                {{ eventForm.blogs.errors }}
+                            </div>
+                        </div>
+                        <div class="eventAddresses" id="eventAddresses">
+                            {% for address in addresses %}
+                                <div class="address" id="{{ address.id }}">
+                                    {% include 'event_address.html' %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <input type="hidden" value="{% url blogs.views.getBlogAddress %}" id="getAddressURL">
+                        <a href="#">Add Custom Address</a>
+                        <div class="address" id="addressTemplate" style="display: none">
+                            {% include 'event_address.html' %}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="eventActivities">
+                       <div class="formField">
+                            <div class="fieldLabel">{% trans 'Event Activities' %}:</div>
+                            <div class="fieldInput">
+                                {{ eventForm.activities }}
+                            </div>
+                            <div class="fieldRight">
+                                <a href="#" id="addNewEventType">Add New</a>
+                            </div>
+                            <div class="fieldError errors">
+                                {{ eventForm.activities.errors }}
+                            </div>
+                        </div>
                     </div>
                 </td>
             </tr>
         </table>
-            <div class='divButton' style="width: 128px; height: 32px;">Submit</div>
         </form>
-        {{ eventForm.errors }}
     </div>
     <div style="display: none">
         <div id="uploadDialog">

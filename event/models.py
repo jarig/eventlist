@@ -2,25 +2,47 @@ from django.contrib.auth.models import User
 from django.db import models
 from blogs.models import Blog
 from common.models import Address
+from organization.models import Organization
 
 
-class EventType(models.Model):
+class EventActivity(models.Model):
     name = models.CharField(max_length=128)
+    icon = models.ImageField(upload_to="event/event_type/icon/", blank=True)
+    thumbnail = models.ImageField(upload_to="event/event_type/thumb/", blank=True)
+    confirmed = models.BooleanField(default=False)
+    
+    def __unicode__(self):
+        return self.name
 
 
 class Event(models.Model):
     name = models.CharField(max_length=255)
-    blogId = models.ForeignKey(Blog) #indicates to which blog this event belongs to
-    type = models.ManyToManyField(EventType)
-    locations = models.ManyToManyField(Address, blank=True, null=True) #locations where this event will be held
+    author = models.ForeignKey(User)
+    blogs = models.ManyToManyField(Blog) #indicates to which blogs this event belongs to
+    activities = models.ManyToManyField(EventActivity, blank=True, null=True)
+    addresses = models.ManyToManyField(Address, blank=True, null=True) #locations where this event will be held
+    organizer = models.ForeignKey(Organization)
     descr = models.TextField() #event description (BB code)
     rating = models.FloatField(default=0) #event rating
-    dateFrom = models.DateTimeField() #date when event starts
-    dateTo = models.DateTimeField() #date when event ends
+    dateFrom = models.DateField() #date when event starts
+    timeFrom = models.TimeField(default='00:00')
+    dateTo = models.DateField() #date when event ends
+    timeTo = models.TimeField(default='00:00')
     created = models.DateTimeField(auto_now_add=True) #date event created
     participants = models.PositiveIntegerField(default=0) # number of participants
 
 
+class Comment(models.Model):
+    COMMENT_TYPE = (
+        (u'P',u'positive'),
+        (u'N',u'negative'),
+        (u'U',u'neutral')
+    )
+    event = models.ForeignKey(Event)
+    author = models.ForeignKey(User)
+    type = models.CharField(max_length=1, choices=COMMENT_TYPE, default='U')
+    text = models.TextField()
+    
 
 class Invite(models.Model):
     event = models.ForeignKey(Event)

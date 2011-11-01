@@ -12,8 +12,8 @@ class NewBlogForm(ModelForm):
 
     @transaction.commit_on_success
     def submit_blog(self, request):#create new blog
-        bId = self.instance.id
-
+        bId = self.instance.pk
+        
         newBlog = self.save(commit=False)
         #add info
         

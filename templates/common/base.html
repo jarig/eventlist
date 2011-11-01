@@ -24,6 +24,10 @@
 <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/socialScripts.js"></script>
 <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/init.js"></script>
 <script type="text/javascript" src="{{ STATIC_PREFIX }}js/menu_login.js"></script>
+<link href="{{ STATIC_PREFIX }}css/menu_sidemenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+{% if request.session.mode == 'publish' %}
+    <link href="{{ STATIC_PREFIX }}css/base_publisher.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+{% endif %}
 {% block includes %}
     
 {% endblock %}

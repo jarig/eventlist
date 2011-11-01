@@ -1,0 +1,74 @@
+{% extends 'common/base_common.html' %}
+{% load i18n %}
+{% load field_renderer %}
+
+
+{% block includes %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/organization.js"></script>
+    <link href="{{ STATIC_URL }}css/organization_page.css" rel="stylesheet" type="text/css">
+    {% if orgForm %}
+        <link href="{{ STATIC_URL }}common/css/forms.css" rel="stylesheet" type="text/css">
+        {% include 'jquery.multiselect.html' %}
+        <script type="text/javascript" src="{{ STATIC_URL }}address/address.js"></script>
+    {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        OrganizationCreate.init();
+        Address.init('#address','{% url common.views.getCities %}');
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="buttonPane">
+        <a href="#" >Submit</a>
+    </div>
+    <form action="." method="POST" enctype="multipart/form-data">
+        <table width="100%" >
+        <tr>
+            <td colspan="2">
+                <div class="divButton orgName">
+                    {% field  orgForm.name 'title=Organization name' %}
+                </div>
+                <!--div class='subMenu'>
+                    <ul>
+                        <li><a href="#" class="manageButton">General</a></li>
+                        <li><a href="#" class="manageButton">Find Page</a></li>
+                        <li><a href="#" class="manageButton">Register Organizer</a></li>
+                    </ul>
+                </div-->
+            </td>
+        </tr>
+        <tr style="vertical-align: top">
+            <td>
+                <div class="logo">
+                    <img src="{{ STATIC_URL }}common/images/logoStub.png" />
+                </div>
+            </td>
+            <td>
+                <div class="address" id="address">
+                    {% include 'common_address.html' with address=adrForm %}
+                </div>
+                <label>Code</label>
+                {{ orgForm.businessCode }}
+                <label>Phone</label>
+                {{ orgForm.phone }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="divButton orgDescr">
+                    {% field orgForm.description 'title=Description' %}
+                </div>
+            </td>
+        </tr>
+        </table>
+        <button type="submit">Submit</button>
+    </form>
+    {{ orgForm.errors }}
+    {{ adrForm.errors }}
+{% endblock %}
+
+
