@@ -31,7 +31,7 @@ var CommonGUI =
         $(CommonGUI.loadingWindow).dialog("close");
         $(CommonGUI.loadingWindow).remove();
     },
-    openUploadWindow: function(dialogId, logoSrcId)
+    openUploadWindow: function(dialogId, logoSrcId, inputId)
     {
       $(dialogId).dialog(
           {
@@ -56,6 +56,8 @@ var CommonGUI =
                                    $(this).unbind('load');
                                 });
                                 $(logoSrcId).attr("src",imgUrl);
+                                if (typeof(inputId) != "undefined")
+                                    $(inputId).val(imgUrl);
                                 $(dialogId).dialog("close");
                             }
                             $(this).unbind('load');

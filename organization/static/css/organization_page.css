@@ -1,8 +1,11 @@
 .logo
 {
-    width: 128px;
+    text-align: center;
 }
-
+.logo img
+{
+    max-height: 200px;
+}
 .address
 {
     width: 100%;

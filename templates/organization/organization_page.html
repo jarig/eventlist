@@ -14,6 +14,13 @@
 
 {% endblock %}
 
+{% block hiddenContent %}
+    <div id="uploadDialog">
+        <iframe src="{% url common.views.uploadTempImage %}" id="uploadLogoFrame" width="100%" height="100%">
+        </iframe>
+    </div>
+{% endblock %}
+
 {% block scripts %}
     <script type="text/javascript">
         OrganizationCreate.init();
@@ -44,14 +51,21 @@
         <tr style="vertical-align: top">
             <td>
                 <div class="logo">
-                    <img src="{{ STATIC_URL }}common/images/logoStub.png" />
+                    <img id="orgLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png" />
+                    {{ orgForm.logo }}
+                </div>
+                <div class="errors">
+                    {{ orgForm.logo.errors }}
+                </div>
+                <div class="logoControl">
+                    <a href="#" onclick="CommonGUI.openUploadWindow('#uploadDialog','#orgLogoSrc','#id_logo');">Upload</a>
                 </div>
             </td>
             <td>
                 <div class="address" id="address">
                     {% include 'common_address.html' with address=adrForm %}
                 </div>
-                <label>Code</label>
+                <label>Business Code</label>
                 {{ orgForm.businessCode }}
                 <label>Phone</label>
                 {{ orgForm.phone }}

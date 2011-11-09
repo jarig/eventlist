@@ -10,7 +10,7 @@ class Organization(models.Model):
     address = models.ForeignKey(Address)
     
     phone = models.CharField(max_length=32)
-    businessCode = models.CharField(max_length=16)
+    businessCode = models.CharField(max_length=16, verbose_name='business code')
     pass
 
 class OrgAccess(models.Model):

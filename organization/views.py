@@ -18,27 +18,37 @@ def create(request, orgId=None):
     organization = None
     if orgId is not None:
         organization = Organization.objects.get(pk=orgId)
-        address = organization.address.objects.all()
+        address = organization.address
+    postData = request.POST
+    if not len(postData): postData=None
+    adrData = postData
     
+    if adrData is None and address is None:
+        adrData = {'country': Country.objects.get(name='Estonia')}
+
+    adrForm = AddressForm(adrData,
+                          instance=address)
+
+    countryVal = adrForm.initial.get('country',None)
+    if adrForm.data.has_key("country"):
+        countryVal = adrForm.data.get('country',0)
+
+    cities = City.objects.filter(country=countryVal).all()
+    adrForm.fields['city'].queryset = cities
+
     if request.POST:
-        adrForm = AddressForm(request.POST, instance=address)
+        #adrForm = AddressForm(request.POST, instance=address)
         orgForm = OrganizationForm(request.POST, request.FILES, instance=organization)
         if orgForm.is_valid() and adrForm.is_valid():
             address = adrForm.save()
             organization = orgForm.saveOrganization(request, address)
-            messages.success(request, "done")
-            HttpResponseRedirect(reverse('create',args=[organization.pk]))#redirect to edit
+            messages.success(request, "Organization successfully created")
+            HttpResponseRedirect(reverse('organization.views.create',kwargs={'orgId':organization.pk}))#redirect to edit
         pass
     else:
         orgForm = OrganizationForm(instance=organization)
-        adrForm = AddressForm(instance=address,
-                              data={
-                                'country': Country.objects.get(name='Estonia')
-                              })
     
-    if adrForm.data.has_key("country"):
-            cities = City.objects.filter(country=adrForm.data.get('country',0)).all()
-            adrForm.fields['city'].queryset = cities
+
         
     return render_to_response("organization/organization_page.html",
                               {

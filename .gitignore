@@ -1,1 +1,4 @@
 *.pyc
+/fabfile.py
+media/*
+migrations/
