@@ -33,6 +33,7 @@
         <a href="#" >Submit</a>
     </div>
     <form action="." method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="orgId" id="id_organization" value="{{ orgForm.instance.pk }}">
         <table width="100%" >
         <tr>
             <td colspan="2">
@@ -51,7 +52,11 @@
         <tr style="vertical-align: top">
             <td>
                 <div class="logo">
-                    <img id="orgLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png" />
+                    {% if orgForm.logo.value %}
+                        <img id="orgLogoSrc" src="{{ MEDIA_URL }}{{ orgForm.logo.value }}" />
+                    {% else %}
+                        <img id="orgLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png" />
+                    {% endif %}
                     {{ orgForm.logo }}
                 </div>
                 <div class="errors">

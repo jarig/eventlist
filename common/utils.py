@@ -1,19 +1,20 @@
 import os
 from django.core.files.base import File
-from django.core.urlresolvers import resolve
+from django.core.files.storage import DefaultStorage
 
 def urlToPath(url):
-    resObj = resolve(url)
-    logoPath = resObj.kwargs['path']
-    if logoPath[0] == '/': logoPath = logoPath.replace("/","", 1)
-    root = resObj.kwargs['document_root']
-    return os.path.join(root, logoPath)
+    return DefaultStorage().path(url)
 
-def uploadLocalImage(url, filename, uploadFunc):
-    logoPath = urlToPath(url)
+def resolveMediaPath(dbPath):
+    return DefaultStorage().url(dbPath)
+
+def uploadLocalImage(filepath, filename, uploadFunc, overwrite=True):
+    storage = DefaultStorage()
     uploadFunc(
         filename,
-        File(open(logoPath,'rb'))
+        storage.open(filepath)
     )
-    if os.path.exists(logoPath): os.remove(logoPath)
+    #if overwrite: #delete old file
+    #    dirname = os.path.dirname(filepath)
+    #   storage.delete(os.path.join(dirname,filename))
   

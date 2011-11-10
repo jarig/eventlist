@@ -3,12 +3,15 @@ import md5
 import os
 from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
+from django.core.files.base import File
+from django.core.files.storage import DefaultStorage
 from django.core.serializers import json
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 import time
+from common.forms import TempImageForm
 from common.models import City
 
 
@@ -55,23 +58,24 @@ def userMode(request):
 @login_required
 @permission_required("publisher.publish")
 def uploadTempImage(request):
-    imageUrl=False
+    imagePath=False
     if request.method == "POST":
-        file = request.FILES["file"]
-        #TODO check if content type is correct
-        print "Content type: " + file.content_type
-        basename, extension = os.path.splitext(file.name)
-        filename = "temp_"+request.user.first_name + str(time.time())
-        dest = open(settings.MEDIA_ROOT + '/temp/'+ filename,"wb+")
-        for chunk in file.chunks():
-            dest.write(chunk)
-        dest.close()
-        imageUrl = settings.MEDIA_URL + '/temp/' + filename
+        tempImageForm = TempImageForm(request.POST, request.FILES)
+        if tempImageForm.is_valid():
+            #TODO check if content type is correct
+            file = tempImageForm.cleaned_data['image']
+            storage = DefaultStorage()
+            print "Content type: " + file.content_type
+            filename = storage.get_valid_name("temp_"+request.user.first_name + str(time.time()))
+            imagePath = storage.save('temp/'+filename, file)
+    else:
+        tempImageForm = TempImageForm()
     return render_to_response("common/uploadTempImage.html",
                               {
-                                "imageUrl": imageUrl
+                                "tempImageForm": tempImageForm,
+                                "imagePath": imagePath,
                               },
-                              context_instance=RequestContext(request)
+                                context_instance=RequestContext(request)
                               )
 
 def getCities(request):

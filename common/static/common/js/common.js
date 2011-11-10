@@ -45,8 +45,9 @@ var CommonGUI =
 
                      $("iframe",dialogId).load(function()
                          {
+                            var imgPath = $("iframe",dialogId).contents().find("#imagePath").val();
                             var imgUrl = $("iframe",dialogId).contents().find("#imageUrl").val();
-                            if (imgUrl != "False")
+                            if (imgPath != "False")
                             {
                                 CommonGUI.showLoading();
                                 $(logoSrcId).load(function()
@@ -57,7 +58,7 @@ var CommonGUI =
                                 });
                                 $(logoSrcId).attr("src",imgUrl);
                                 if (typeof(inputId) != "undefined")
-                                    $(inputId).val(imgUrl);
+                                    $(inputId).val(imgPath);
                                 $(dialogId).dialog("close");
                             }
                             $(this).unbind('load');

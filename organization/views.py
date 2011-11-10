@@ -16,6 +16,7 @@ from organization.models import Organization
 def create(request, orgId=None):
     address = None
     organization = None
+    if orgId is None: orgId = request.REQUEST.get('orgId',None)
     if orgId is not None:
         organization = Organization.objects.get(pk=orgId)
         address = organization.address

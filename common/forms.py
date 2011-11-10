@@ -1,4 +1,6 @@
 from django import forms
+from django.forms.fields import ImageField
+from django.forms.forms import Form
 from django.forms.models import ModelForm
 from common.models import Address, Country, City
 
@@ -14,3 +16,7 @@ class AddressForm(ModelForm):
     def saveAddress(self, request):
         
         return self.save()
+
+
+class TempImageForm(Form):
+    image = ImageField()

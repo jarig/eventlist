@@ -13,13 +13,6 @@ var OrganizationCreate = {
         {
             $("input").labelify({ labelledClass: "helpLabel" });
             $("textarea").labelify({ labelledClass: "helpLabel" });
-            //restore logo
-            var logoURL = $("#id_logo").val();
-            if (logoURL != "")
-            {
-                $("#orgLogoSrc").attr("alt","logo")
-                $("#orgLogoSrc").attr("src",logoURL);
-            }
         });
     }
 };
