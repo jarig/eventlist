@@ -15,6 +15,9 @@ class Account(models.Model):
     avatar = models.ImageField(upload_to='avatar/',blank=True, max_length=255)
     rating = models.FloatField(default=0)
 
+    class Meta:
+        unique_together = ("identity", "provider")
+
 
 
 def openRegister(identity, provider):

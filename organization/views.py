@@ -58,3 +58,14 @@ def create(request, orgId=None):
                               },
                               context_instance=RequestContext(request)
                               )
+
+@login_required
+def manage(request):
+    myOrgs = Organization.objects.filter(members=request.user)
+    return render_to_response("organization/organization_manage.html",
+                              {
+                                "myOrgs": myOrgs,
+                              },
+                              context_instance=RequestContext(request)
+                              )
+    pass

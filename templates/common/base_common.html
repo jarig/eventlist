@@ -48,17 +48,17 @@
                 </div>
                 <div id="profileInfo">
                     <div id="name">{{ user.first_name }} {{ user.last_name }}</div>
-                    <div id="profileLink"><a href="{% url accounts.views.edit %}">Edit Profile</a></div>
+                    <div id="profileLink"><a href="{% url accounts.views.edit %}">{% trans "Edit Profile" %}</a></div>
                 </div>
             </div>
         </div>
     {% endif %}
     {% if request.session.mode == 'publish' %}
             <div class="sideMenuItem">
-                <a href="{% url blogs.views.manage %}">Pages</a>
+                <a href="{% url blogs.views.manage %}">{% trans "Pages" %}</a>
             </div>
             <div class="sideMenuItem">
-                <a href="#">Organizations</a>
+                <a href="{% url organization.views.manage %}">{% trans "Organizations" %}</a>
             </div>
     {% else %}
         {% sidemenu %}

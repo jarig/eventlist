@@ -5,6 +5,7 @@
 
 {% block includes %}
    {{ block.super }}
+   <link href="{{ STATIC_PREFIX }}common/css/apps/manage.css" rel="stylesheet" type="text/css">
    <link href="{{ STATIC_PREFIX }}css/blogs_manage.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
@@ -15,18 +16,12 @@
             <ul>
                 <li><a href="{% url blogs.views.create %}" class="manageButton">Create Page</a></li>
                 <li><a href="{% url blogs.views.create %}" class="manageButton">Find Page</a></li>
-                {#TODO move to sep. template register/add an organizer #}
-                <li><a href="{% url organization.views.create %}" class="manageButton">Register Organizer</a></li>
             </ul>
         </div>
     </div>
-    <!--div class='blogsHeader'><span style="padding-left: 55px;">Your Pages:</span></div-->
-    <div id="blogs_container">
-        <!--div class="blog">
-            <a href="{% url blogs.views.create %}" class="manageButton">+Blog</a>
-        </div-->
+    <div id="items_container">
         {% for blog in myBlogs %}
-            <div class="blog">
+            <div class="boxedItem">
                 <a href="{% url blogs.views.edit blog.id None%}" class="manageButton">{{ blog.name }}</a>
             </div>
         {% endfor %}

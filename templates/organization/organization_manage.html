@@ -1,0 +1,35 @@
+{% extends 'organization/organization.html' %}
+{% load i18n %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block includes %}
+   {{ block.super }}
+   <link href="{{ STATIC_PREFIX }}common/css/apps/manage.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <div class='managementHeader'>
+        <h1>{% trans 'Organization Management' %}</h1>
+        <div class='subMenu'>
+            <ul>
+                <li><a href="{% url organization.views.create %}"
+                       class="manageButton"
+                        title="Register new organization">
+                    Register Organization</a>
+                </li>
+                <li><a href="{% url organization.views.create %}"
+                       class="manageButton"
+                       title="{% trans "Find organization to join" %}">Find Organization</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="items_container">
+        {% for org in myOrgs %}
+            <div class="boxedItem">
+                <a href="{% url organization.views.create org.id %}" class="manageButton">{{ org.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

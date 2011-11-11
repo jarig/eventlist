@@ -1,0 +1,37 @@
+
+#items_container
+{
+    padding-left: 40px;
+    padding-top: 20px;
+    float: left;
+    display: table;
+}
+
+.managementHeader
+{
+    margin-left: 55px;
+    margin-top: 25px;
+}
+.manageButton
+{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.boxedItem
+{
+    float:left;
+    width: 150px;
+    height: 125px;
+    margin: 15px;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    border: solid #d3d3d3 1px;
+}
+
+.boxedItem:hover
+{
+    background-color: #ffffe0;
+}
