@@ -27,6 +27,7 @@ def create(request, blogId=None):
     if blogId is not None:
         blog = Blog.objects.get(pk=blogId)
         addresses = blog.addresses.all()
+    
 
     if request.method == "POST":
         #get addresses
@@ -36,17 +37,20 @@ def create(request, blogId=None):
             for id in addressIds:
                 if id == '': continue
                 addresses.append(Address.objects.get(pk=id))
-        eventForm = NewEventForm(request.POST, request.FILES)
+        eventForm = NewEventForm(request.user, request.POST, request.FILES)
         if eventForm.is_valid():
             newEvent = eventForm.saveEvent(request)
             messages.success(request, ugettext("Event successfully created"))
             #redirect to edit/publish event
             return HttpResponseRedirect(reverse("event.views.edit", kwargs={"eventId": newEvent.id}))
     else:
-        eventForm = NewEventForm(initial={'dateFrom':datetime.date.today(),
+        eventForm = NewEventForm(request.user,
+                                 initial={'dateFrom':datetime.date.today(),
                                           'timeFrom':datetime.datetime.utcnow(),
                                           'timeTo':datetime.datetime.utcnow()
         })
+    
+
     return render_event(request, {
                                     "blog": blog,
                                     "addresses": addresses,

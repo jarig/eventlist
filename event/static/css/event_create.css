@@ -1,4 +1,14 @@
 
+.organizerSelection
+{
+    width: 100%;
+}
+
+.organizerSelection select
+{
+    width: 100%;
+}
+
 .createEventContainer
 {
     width: 100%;

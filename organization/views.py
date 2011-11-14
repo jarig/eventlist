@@ -13,41 +13,27 @@ from organization.models import Organization
 
 @login_required
 @permission_required('publisher.publish')
-def create(request, orgId=None):
+def credit(request, orgId=None):
     address = None
     organization = None
-    if orgId is None: orgId = request.REQUEST.get('orgId',None)
     if orgId is not None:
         organization = Organization.objects.get(pk=orgId)
         address = organization.address
-    postData = request.POST
-    if not len(postData): postData=None
-    adrData = postData
-    
-    if adrData is None and address is None:
-        adrData = {'country': Country.objects.get(name='Estonia')}
-
-    adrForm = AddressForm(adrData,
-                          instance=address)
-
-    countryVal = adrForm.initial.get('country',None)
-    if adrForm.data.has_key("country"):
-        countryVal = adrForm.data.get('country',0)
-
-    cities = City.objects.filter(country=countryVal).all()
-    adrForm.fields['city'].queryset = cities
 
     if request.POST:
         #adrForm = AddressForm(request.POST, instance=address)
         orgForm = OrganizationForm(request.POST, request.FILES, instance=organization)
+        adrForm = AddressForm(request.POST, instance=address)
         if orgForm.is_valid() and adrForm.is_valid():
             address = adrForm.save()
             organization = orgForm.saveOrganization(request, address)
-            messages.success(request, "Organization successfully created")
-            HttpResponseRedirect(reverse('organization.views.create',kwargs={'orgId':organization.pk}))#redirect to edit
+            messages.success(request, "Organization successfully saved")
+            HttpResponseRedirect(reverse('organization.views.credit',kwargs={'orgId':organization.pk}))#redirect to edit
         pass
     else:
         orgForm = OrganizationForm(instance=organization)
+        adrForm = AddressForm(instance=address,
+                              initial={'country':Country.objects.get(name='Estonia').pk})
     
 
         

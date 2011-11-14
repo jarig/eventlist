@@ -101,6 +101,20 @@
                             {% include 'event_address.html' %}
                         </div>
                     </div>
+                    <div class="eventOrganizers">
+                        <div class="sectionHeader">Organizers: </div>
+                        <div class="eventOrganizerSelection">
+                            <div class="organizerSelection">
+                                {{ eventForm.organizers }}
+                            </div>
+                            <div class="errors">
+                                {{ eventForm.organizers.errors }}
+                            </div>
+                        </div>
+                        <div class="chosenOrganizers" id="chosenOrganizers">
+                            
+                        </div>
+                    </div>
                 </td>
                 <td>
                     <div class="eventActivities">

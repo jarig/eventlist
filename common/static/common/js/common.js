@@ -9,7 +9,12 @@ var Common =
 		{
 			$("#debug").append(msg+"<br/>");
 		});
-	}
+	},
+    submitForm: function(formId)
+    {
+        $(formId).submit();
+        return false;
+    }
 };
 
 
@@ -33,6 +38,8 @@ var CommonGUI =
     },
     openUploadWindow: function(dialogId, logoSrcId, inputId)
     {
+      $(dialogId + " iframe").attr("src",$(dialogId + " iframe").attr("src"));
+      var dailogWindow = $(dialogId);
       $(dialogId).dialog(
           {
               title: "Upload Logo",
@@ -42,31 +49,29 @@ var CommonGUI =
               buttons: {
                   submit: function()
                   {
-
                      $("iframe",dialogId).load(function()
-                         {
-                            var imgPath = $("iframe",dialogId).contents().find("#imagePath").val();
-                            var imgUrl = $("iframe",dialogId).contents().find("#imageUrl").val();
-                            if (imgPath != "False")
+                     {
+                        $(this).unbind('load');
+                        var imgPath = $(dialogId + " iframe").contents().find("#imagePath").val();
+                        var imgUrl = $(dialogId + " iframe").contents().find("#imageUrl").val();
+                        if (imgPath != "False")
+                        {
+                            CommonGUI.showLoading();
+                            $(logoSrcId).load(function()
                             {
-                                CommonGUI.showLoading();
-                                $(logoSrcId).load(function()
-                                {
-                                   //hide loading
-                                   CommonGUI.hideLoading();
-                                   $(this).unbind('load');
-                                });
-                                $(logoSrcId).attr("src",imgUrl);
-                                if (typeof(inputId) != "undefined")
-                                    $(inputId).val(imgPath);
-                                $(dialogId).dialog("close");
-                            }
-                            $(this).unbind('load');
-                         });
-                     $('iframe',dialogId).contents().find("form").submit();
-                     $(this).dialog("close");
+                               //hide loading
+                               CommonGUI.hideLoading();
+                               $(this).unbind('load');
+                            });
+                            $(logoSrcId).attr("src",imgUrl);
+                            if (typeof(inputId) != "undefined")
+                                $(inputId).val(imgPath);
+                            $(dailogWindow).dialog("destroy");
+                        }
+                     });
+                     $(dialogId + ' iframe').contents().find("form").submit();
                   },
-                  cancel: function()
+                  close: function()
                   {
                     $(this).dialog("close");
                   }

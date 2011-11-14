@@ -7,10 +7,14 @@
 
 <body>
 
-{% if not imageUrl %}
-    <form action="{% url common.views.uploadTempImage %}" enctype="multipart/form-data" method="POST" id="uploadForm">
-         {{ tempImageForm.image }}
-    </form>
+<form action="{% url common.views.uploadTempImage %}"
+      enctype="multipart/form-data"
+      method="POST"
+      id="uploadForm">
+     {{ tempImageForm.image }}
+</form>
+{% if tempImageForm.errors %}
+    {{ tempImageForm.errors }}
 {% endif %}
 
 <input type="hidden" value="{{ MEDIA_URL }}{{ imagePath }}" id="imageUrl">

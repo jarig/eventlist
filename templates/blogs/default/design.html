@@ -25,7 +25,7 @@
             <div id="logoWrapper">
                 {% block logoSrc %}
                     {% if blog != None and blog.logo != None and blog.logo != '' %}
-                        <img id="blogLogoSrc" src="{{ STATIC_PREFIX }}{{ blog.logo }}">
+                        <img id="blogLogoSrc" src="{{ MEDIA_URL }}{{ blog.logo }}">
                     {% else %}
                         <img id="blogLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png">
                     {% endif %}

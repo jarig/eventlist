@@ -21,7 +21,7 @@ class Event(models.Model):
     blogs = models.ManyToManyField(Blog) #indicates to which blogs this event belongs to
     activities = models.ManyToManyField(EventActivity, blank=True, null=True)
     addresses = models.ManyToManyField(Address, blank=True, null=True) #locations where this event will be held
-    organizer = models.ForeignKey(Organization)
+    organizers = models.ManyToManyField(Organization)
     descr = models.TextField() #event description (BB code)
     rating = models.FloatField(default=0) #event rating
     dateFrom = models.DateField() #date when event starts

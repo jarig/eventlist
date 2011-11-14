@@ -13,12 +13,12 @@
         <h1>{% trans 'Organization Management' %}</h1>
         <div class='subMenu'>
             <ul>
-                <li><a href="{% url organization.views.create %}"
+                <li><a href="{% url organization.views.credit %}"
                        class="manageButton"
                         title="Register new organization">
                     Register Organization</a>
                 </li>
-                <li><a href="{% url organization.views.create %}"
+                <li><a href="{% url organization.views.credit %}"
                        class="manageButton"
                        title="{% trans "Find organization to join" %}">Find Organization</a>
                 </li>
@@ -28,7 +28,7 @@
     <div id="items_container">
         {% for org in myOrgs %}
             <div class="boxedItem">
-                <a href="{% url organization.views.create org.id %}" class="manageButton">{{ org.name }}</a>
+                <a href="{% url organization.views.credit org.id %}" class="manageButton">{{ org.name }}</a>
             </div>
         {% endfor %}
     </div>

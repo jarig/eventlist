@@ -1,0 +1,17 @@
+[
+    {
+        "pk": 1,
+        "model": "blogs.FacilityType",
+        "fields": {"name": "club", "confirmed": 1 }
+    },
+    {
+        "pk": 2,
+        "model": "blogs.FacilityType",
+        "fields": {"name": "bar", "confirmed": 1 }
+    },
+    {
+        "pk": 3,
+        "model": "blogs.FacilityType",
+        "fields": {"name": "cafe", "confirmed": 1 }
+    }
+]

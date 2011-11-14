@@ -1,14 +1,19 @@
 from django import forms
 from django.db import transaction
 from django.forms.models import ModelForm
+from django.forms.widgets import HiddenInput
 from django.utils.translation import ugettext as _
 from blogs.models import Blog, BlogAccess, FacilityType
+from common.utils import uploadLocalImage
 
 
 class NewBlogForm(ModelForm):
-    facilities = forms.ModelMultipleChoiceField(widget=forms.SelectMultiple,
+    facilities = forms.ModelMultipleChoiceField(widget=forms.SelectMultiple(attrs={'placeholder':"Select facility"}),
                                            queryset=FacilityType.objects.all().order_by("name"),
-                                           error_messages={'list':_('At least 1 type required')})
+                                           error_messages={'list':_('At least 1 type required')},
+                                           required=False)
+    logo = forms.CharField(widget=HiddenInput)
+
 
     @transaction.commit_on_success
     def submit_blog(self, request):#create new blog
@@ -18,6 +23,10 @@ class NewBlogForm(ModelForm):
         #add info
         
         newBlog.save()
+        #save logo
+        uploadLocalImage(self.cleaned_data["logo"],
+                         str(newBlog.pk) + '_logo',
+                         newBlog.logo.save)
 
         #access to blog
         if bId is None: #new blog
@@ -31,7 +40,7 @@ class NewBlogForm(ModelForm):
 
     class Meta:
         model = Blog
-        exclude = ('managers','rating','priority','type','logo')
+        exclude = ('managers','rating','priority','type')
         
 
         

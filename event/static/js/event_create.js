@@ -10,6 +10,7 @@ var CreateEvent =
             $("textarea").labelify({ labelledClass: "helpLabel" });
             CreateEvent.initMultiSelect("#id_activities","Select Event Activities");
             CreateEvent.initSelect("#id_blogs","Select Event Locations");
+            $("#id_organizers").chosen();
             $(".ui-multiselect").css("width","100%");
 
             var dates = $( "#id_dateFrom, #id_dateTo" ).datepicker({
@@ -154,9 +155,6 @@ var CreateEvent =
     },
     submitForm: function(formId)
     {
-        //$("#id_dateFrom").val($("#id_dateFrom").val() + " " + $("#timeFrom").val());
-        //$("#id_dateTo").val($("#id_dateTo").val() + " " + $("#timeTo").val());
-        $(formId).submit();
-        return false;
+        return Common.submitForm(formId);
     }
 };

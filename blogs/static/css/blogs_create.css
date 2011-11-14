@@ -45,3 +45,48 @@
     float:left;
     width: 100%;
 }
+
+#moduleChoser
+{
+    display: none;
+}
+
+#modulePreviewTemplate
+{
+    display: none;
+}
+
+#modules
+{
+    padding: 0;
+}
+.modulePreview
+{
+    width: 100%;
+    float: left;
+    border: 1px #e6e6fa solid;
+    margin-bottom: 10px;
+}
+
+.modulePreview:hover
+{
+    background-color: #e6e6fa;
+    cursor: pointer;
+}
+.moduleLogo
+{
+    float:left;
+    width: 67px;
+    height: 67px;
+    margin-right: 5px;
+}
+.moduleDescr
+{
+    float:left;
+    padding: 4px;
+}
+.moduleName
+{
+    color: #778899;
+    font-weight: 500;
+}

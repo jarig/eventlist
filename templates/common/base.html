@@ -24,6 +24,13 @@
 <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/socialScripts.js"></script>
 <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/init.js"></script>
 <script type="text/javascript" src="{{ STATIC_PREFIX }}js/menu_login.js"></script>
+
+<!-- Plugins -->
+<link href="{{ STATIC_PREFIX }}jqueryPlugins/chosen/chosen.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+<script type="text/javascript" src="{{ STATIC_PREFIX }}jqueryPlugins/chosen/chosen.jquery.min.js"></script>
+<!--script type="text/javascript" src="{{ STATIC_PREFIX }}jqueryPlugins/chosen/chosen.proto.min.js"></script-->
+
+
 <link href="{{ STATIC_PREFIX }}css/menu_sidemenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 {% if request.session.mode == 'publish' %}
     <link href="{{ STATIC_PREFIX }}css/base_publisher.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
@@ -33,7 +40,7 @@
 {% endblock %}
 
 <link rel="shortcut icon" href="" />
-<title>{% block title %}EventsList{% endblock %}</title>
+<title>{% block title %}Rest{% endblock %}</title>
 </head>
 
 <body>

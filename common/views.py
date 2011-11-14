@@ -66,14 +66,14 @@ def uploadTempImage(request):
             file = tempImageForm.cleaned_data['image']
             storage = DefaultStorage()
             print "Content type: " + file.content_type
-            filename = storage.get_valid_name("temp_"+request.user.first_name + str(time.time()))
+            filename = storage.get_valid_name("temp_"+str(request.user.id) + str(time.time()))
             imagePath = storage.save('temp/'+filename, file)
     else:
         tempImageForm = TempImageForm()
     return render_to_response("common/uploadTempImage.html",
                               {
                                 "tempImageForm": tempImageForm,
-                                "imagePath": imagePath,
+                                "imagePath": imagePath
                               },
                                 context_instance=RequestContext(request)
                               )

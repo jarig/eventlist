@@ -1,4 +1,15 @@
 
+.eventOrganizers
+{
+    border-top: solid #e6e6fa 1px;
+    margin-top: 10px;
+}
+
+.eventOrganizers .sectionHeader
+{
+    font-size: 15px;
+}
+
 .eventLogoBox
 {
     

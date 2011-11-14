@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load static %}
+
+<div id="moduleChoser" title="{% trans 'Choose module' %}">
+    <div id="modules">
+    </div>
+    <div class="modulePreview" id="modulePreviewTemplate">
+        <div class="moduleLogo">
+            <input type="hidden" value="{{ STATIC_URL }}" id="imgBase">
+            <img src="" id="logo"/>
+        </div>
+        <div class="moduleName" id="name"></div>
+        <div class="moduleDescr" id="descr"></div>
+    </div>
+</div>

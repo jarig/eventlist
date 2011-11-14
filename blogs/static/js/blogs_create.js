@@ -10,28 +10,7 @@ var BlogForm =
            $("input").labelify({ labelledClass: "helpLabel" });
            $("textarea").labelify({ labelledClass: "helpLabel" });
            //types select
-           $("#id_facilities").multiselect(
-               {
-                   header: "",
-                   noneSelectedText: 'Select facility types',
-                   selectedList: 4,
-                   multiselectclick: function(event, ui)
-                   {
-                       /*
-                       ui.value: value of the checkbox
-                        ui.text: text of the checkbox
-                        ui.checked: whether or not the input was checked
-                        or unchecked (boolean)
-                       */
-                       
-                   },
-                   beforeopen: function()
-                   {
-                       $(".ui-multiselect-menu").css("width",$(".ui-multiselect").width());
-                   }
-           }).multiselectfilter();
-           //$(".ui-helper-reset").hide();
-           $(".ui-multiselect").css("width","100%");
+           $("#id_facilities").chosen();
        });
     },
     submit: function(form)
@@ -45,6 +24,44 @@ var BlogForm =
 var BlogGUI =
 {
     selectedMenuItem : null,
+    showModulesPage: function(url, mDivId, position)
+    {
+        var modulesSector= $(mDivId +" #modules");
+        $(modulesSector).html("Loading...");
+        $.ajax(
+        {
+            "url": url,
+            success: function(resp)
+            {
+                $(modulesSector).html("");
+                var modules = eval("("+resp+")");
+                for(var i=0; i<modules.length;i++)
+                {
+                    var module = modules[i]["fields"];
+                    var mPreview = $(mDivId+ " #modulePreviewTemplate").clone();
+                    $("#name",mPreview).html(module["name"]);
+                    $("#logo",mPreview).attr("src", $("#imgBase",mPreview).val()+module["logo"]);
+                    $("#descr",mPreview).html(module["descr"]);
+                    $(mPreview).show();
+                    $(mPreview).attr("id",modules[i]["pk"]);
+                    $(modulesSector).append(mPreview);
+                }
+            }
+        });
+        var title = $(mDivId).attr("title");
+        $(mDivId).dialog({
+                "title": title,
+                width: 300,
+                height: 400,
+                modal: true,
+                buttons:
+                {
+                    'Close': function () { $(this).dialog("destroy"); }
+                },
+                close: function(){ $(this).dialog("destroy"); }
+        });
+        return false;
+    },
     initMenu: function(menuIdent, defaultSelected)
     {
         $(function()

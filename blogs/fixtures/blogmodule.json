@@ -1,0 +1,24 @@
+[
+    {
+        "pk": 1,
+        "model": "blogs.BlogModule",
+        "fields": {
+            "name": "Address",
+            "descr":"Show address",
+            "logo":"blog_modules/address_logo.png",
+            "path": "",
+            "type":"F"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "blogs.BlogModule",
+        "fields": {
+            "name": "Dummy",
+            "descr":"Dummy",
+            "logo":"blog_modules/dummy_logo.png",
+            "path": "",
+            "type":"F"
+        }
+    }
+]

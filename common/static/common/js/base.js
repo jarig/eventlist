@@ -16,6 +16,7 @@ var Base =
             }catch(e)
             {
             }
+
         });
     },
     toggle_profileBox: function(profileContainer)

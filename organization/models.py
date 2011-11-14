@@ -13,6 +13,9 @@ class Organization(models.Model):
     businessCode = models.CharField(max_length=16, verbose_name='business code')
     pass
 
+    def __unicode__(self):
+        return self.name
+
 class OrgAccess(models.Model):
     ROLE1 = 10
     ROLE2 = 20

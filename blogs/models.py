@@ -9,6 +9,9 @@ class FacilityType(models.Model):
     icon = models.ImageField(upload_to="blog/facility_type/icon/", default=None)
     thumbnail = models.ImageField(upload_to="blog/facility_type/thumb/", default=None)
     confirmed = models.BooleanField()
+
+    class Meta:
+        unique_together = ('name',)
     
     def __unicode__(self):
         return self.name
@@ -25,6 +28,20 @@ class BlogStyle(models.Model):
     def __unicode__(self):
         return self.name
 
+class BlogModule(models.Model):
+    MODULE_TYPE = (
+        (u'F',u'free'),
+        (u'P',u'premium'),
+    )
+    # modules for blog pages
+    name = models.CharField(max_length=255)
+    logo = models.ImageField(upload_to='blog_modules',blank=True, null=True)
+    descr = models.CharField(max_length=2048,default='')
+    path = models.CharField(max_length=255)
+    type = models.CharField(choices=MODULE_TYPE, default='F', max_length=1)
+
+    def __unicode__(self):
+        return self.name
 
 
 # Create your models here.
@@ -41,11 +58,24 @@ class Blog(models.Model):
     priority = models.PositiveIntegerField(default=0) #priorty of blog during search
     rating = models.PositiveIntegerField(default=0) #blogs rating
     style = models.ForeignKey(BlogStyle, default=1)
-    facilities = models.ManyToManyField(FacilityType)
+    facilities = models.ManyToManyField(FacilityType, blank=True, null=True)
     addresses = models.ManyToManyField(Address, blank=True, null=True)
-
+    modules = models.ManyToManyField(BlogModule, through='BlogModules', blank=True, null=True, editable=False)
+    
     def __unicode__(self):
         return self.name
+
+class BlogModules(models.Model):
+    #module parameters
+    blog = models.ForeignKey(Blog)
+    module = models.ForeignKey(BlogModule)
+    style = models.ForeignKey(BlogStyle)
+    position = models.CharField(max_length=32)
+    parameters = models.CharField(max_length=256)
+
+    class Meta:
+        unique_together = ('blog','module','style',)
+
 
 #which users has access to this blog
 class BlogAccess(models.Model):
@@ -66,6 +96,8 @@ class BlogAccess(models.Model):
     class Meta:
         unique_together = ('blog','user','access',)
 
+
+
 def getMaxPermission(blog, user):
         if blog is None or user is None: return -1
         bAccesses = blog.blogaccess_set.filter(user=user)
@@ -75,6 +107,3 @@ def getMaxPermission(blog, user):
                 maxIndex = bAccess.access
         return maxIndex
 
-class Module(models.Model):
-    # modules for blog pages
-    name = models.CharField(max_length=255)

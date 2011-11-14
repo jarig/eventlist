@@ -30,10 +30,17 @@
 
 {% block content %}
     <div class="buttonPane">
-        <a href="#" >Submit</a>
+        <a href="#" onclick="Common.submitForm('#orgForm');" >Submit</a>
     </div>
-    <form action="." method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="orgId" id="id_organization" value="{{ orgForm.instance.pk }}">
+    <form
+            id='orgForm'
+            {% if orgForm.instance.pk %}
+                action="{% url organization.views.credit orgForm.instance.pk %}"
+            {% else %}
+                action="{% url organization.views.credit%}"
+            {% endif %}
+            method="POST"
+            enctype="multipart/form-data">
         <table width="100%" >
         <tr>
             <td colspan="2">
@@ -84,7 +91,6 @@
             </td>
         </tr>
         </table>
-        <button type="submit">Submit</button>
     </form>
     {{ orgForm.errors }}
     {{ adrForm.errors }}

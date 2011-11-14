@@ -14,7 +14,8 @@ from django.template.context import RequestContext
 #choose in which blog to create event
 from django.utils.translation import ugettext as _
 from blogs.forms import NewBlogForm
-from blogs.models import Blog, BlogStyle, BlogAccess, getMaxPermission
+from blogs.models import Blog, BlogStyle, BlogAccess, getMaxPermission, BlogModule
+from common.forms import AddressForm
 from common.models import Country
 from menu.models import Menu
 
@@ -116,7 +117,8 @@ def create(request):
         defStyle = BlogStyle.objects.filter(default=True)
         if len(defStyle): blogStyle = defStyle[0]
         blogForm = NewBlogForm(initial={'style':  blogStyle})
-
+        adrForm = AddressForm()
+    
     return renderBlog(request,
                       mode="create",
                       attr={
@@ -124,6 +126,13 @@ def create(request):
                            })
 
 
+@login_required
+@permission_required("publisher.publish")
+def getAvailableModules(request):
+    modules = BlogModule.objects.all()
+    json_serializer = json.Serializer()
+    data= json_serializer.serialize(modules, ensure_ascii=False, use_natural_keys=True)
+    return HttpResponse(data)
 
 @login_required
 @permission_required("publisher.publish")
