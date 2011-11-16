@@ -1,0 +1,32 @@
+
+
+.addressesHeader
+{
+    text-align: right;
+    padding-right: 10px;
+    margin-bottom: 5px;
+}
+
+.addressHeader
+{
+    display: none;
+}
+
+.addresses
+{
+    text-align: center;
+}
+.addressForm
+{
+    margin: auto;
+}
+
+.addressForm input
+{
+    width: 100%;
+}
+
+.addressForm select
+{
+    width: 100%;
+}

@@ -6,22 +6,26 @@ from common.models import Address, Country, City
 
 class AddressForm(ModelForm):
     country = forms.ModelChoiceField(Country.objects.all(),
-                                     empty_label=None)
+                                     empty_label=None,
+                                     widget=forms.Select(attrs={'placeholder':'Select Country'}))
     city = forms.ModelChoiceField(City.objects.none(),
-                                    empty_label='Select City')
+                                    empty_label=None,
+                                    widget=forms.Select(attrs={'placeholder':'Select City'}))
 
     def __init__(self, *args, **kwargs):
         super(AddressForm, self).__init__(*args, **kwargs)
-        countryVal = 0
-        if self.data and self.data.has_key('country'):
-            countryVal = self.data['country']
-        elif self.initial and self.initial.has_key('country'):
-            countryVal=self.initial['country']
+        countryVal = self.__getitem__('country').value()
         
         self.fields['city'].queryset = City.objects.filter(country=countryVal).all()
 
     class Meta:
         model = Address
+        widgets = {
+            'street': forms.TextInput(attrs={'title':'Street'}),
+            'county': forms.TextInput(attrs={'title':'County'}),
+            'cityArea': forms.TextInput(attrs={'title':'City Area'}),
+            'postalCode': forms.TextInput(attrs={'title':'Postal Code'}),
+        }
         
     def saveAddress(self, request):
         

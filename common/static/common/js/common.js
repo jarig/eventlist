@@ -121,3 +121,71 @@ var CommonGUI =
         });//dom loaded
     }
 };
+
+var GoogleMaps = {
+    map: null,
+    markers: [],
+    bounds: null,
+    init: function(id, x, y)
+    {
+        $(function(){
+            var latlng = new google.maps.LatLng(x, y);
+            GoogleMaps.bounds = new google.maps.LatLngBounds();
+            var myOptions = {
+              zoom: 10,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            GoogleMaps.map = new google.maps.Map($(id).get(0), myOptions);
+            return GoogleMaps.map;
+        });
+    },
+    moveToAddress: function(address, putMarker)
+    {
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode( { 'address': address}, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                GoogleMaps.map.setCenter(results[0].geometry.location);
+                if (typeof(putMarker) == "boolean" &&  putMarker)
+                {
+                    GoogleMaps.putMarker(results[0].geometry.location);
+                    //GoogleMaps.zoomfit();
+                }
+                return results[0].geometry.location;
+              } else {
+                Common.DEBUG(status);
+              }
+       });
+    },
+    moveAndMark: function(address)
+    {
+        GoogleMaps.removeAllMarkers();
+        var location = GoogleMaps.moveToAddress(address, true);
+    },
+    putMarker: function(location)
+    {
+        var marker = new google.maps.Marker({
+            map: GoogleMaps.map,
+            position: location
+        });
+        GoogleMaps.markers.push(marker);
+        GoogleMaps.bounds.extend(location);
+        return marker;
+    },
+    removeAllMarkers: function()
+    {
+      for(var i=0; i< GoogleMaps.markers.length; i++)
+          GoogleMaps.removeMarker(GoogleMaps.markers[i]);
+      GoogleMaps.markers.length = 0;
+    },
+    removeMarker: function(marker)
+    {
+        marker.setMap(null);
+    },
+    zoomfit: function()
+    {
+        GoogleMaps.map.fitBounds(GoogleMaps.bounds);
+        //newcenter = GoogleMaps.bounds.getCenter();
+        //GoogleMaps.map.setCenter(newcenter, 13);
+    }
+};

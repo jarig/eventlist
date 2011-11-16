@@ -7,6 +7,7 @@ from django.core import serializers
 from django.core.serializers import json
 from django.core.urlresolvers import reverse
 from django.db.models.query_utils import Q
+from django.forms.formsets import formset_factory
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
@@ -107,8 +108,10 @@ def edit(request, blogId, page=None):
 @permission_required("publisher.publish")
 def create(request):
     blogStyle = ''
+    AdrFormSet = formset_factory(AddressForm, can_delete=True, can_order=True,extra=0)
     if request.method == "POST":
         blogForm = NewBlogForm(request.POST, request.FILES)
+        adrFormSet = AdrFormSet(request.POST)
         if blogForm.is_valid():
             nBlog = blogForm.submit_blog(request)
             messages.success(request, _("You've successfully created new blog!"))
@@ -117,12 +120,13 @@ def create(request):
         defStyle = BlogStyle.objects.filter(default=True)
         if len(defStyle): blogStyle = defStyle[0]
         blogForm = NewBlogForm(initial={'style':  blogStyle})
-        adrForm = AddressForm()
+        adrFormSet = AdrFormSet(initial=[{'country': Country.objects.get(name='Estonia').pk}])
     
     return renderBlog(request,
                       mode="create",
                       attr={
-                        "blogForm": blogForm
+                        "blogForm": blogForm,
+                        "adrFormSet": adrFormSet
                            })
 
 
