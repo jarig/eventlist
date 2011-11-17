@@ -16,13 +16,17 @@ class NewBlogForm(ModelForm):
 
 
     @transaction.commit_on_success
-    def submit_blog(self, request):#create new blog
+    def submit_blog(self, request, adrFormSet):#create new blog
         bId = self.instance.pk
-        
+
+
         newBlog = self.save(commit=False)
         #add info
-        
         newBlog.save()
+        for adrForm in adrFormSet:
+            adrForm.name = self.cleaned_data["name"]
+            newBlog.addresses.add(adrForm.save())
+        
         #save logo
         uploadLocalImage(self.cleaned_data["logo"],
                          str(newBlog.pk) + '_logo',

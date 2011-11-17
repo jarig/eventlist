@@ -5,9 +5,9 @@
 </div>
 <input type="hidden" name="belongsTo">
 <input type="hidden" name="adrId" value="{{ address.id }}">
-<div class="adr_country">{{ address.country }}</div>
-<div class="adr_city">{{ address.city }}</div>
-<div class="adr_cityArea">{{ address.cityArea }}</div>
+<div class="adr_country">{{ address.country }}{{ address.country.errors }}</div>
+<div class="adr_city">{{ address.city }}{{ address.city.errors }}</div>
+<div class="adr_cityArea">{{ address.cityArea }}{{ address.cityArea.errors }}</div>
 <!--div class="adr_county">{{ address.county }}</div-->
-<div class="adr_street">{{ address.street }}</div>
-<div class="adr_postalCode">{{ address.postalCode }}</div>
+<div class="adr_street">{{ address.street }}{{ address.street.errors }}</div>
+<div class="adr_postalCode">{{ address.postalCode }}{{ address.postalCode.errors }}</div>

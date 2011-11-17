@@ -115,7 +115,9 @@
 {% block blogModule_1 %}
     {% if adrFormSet %}
         <div class="addressesHeader">
-            <a href="#">Map</a>
+            <a href="#" onclick="$('#addresses').toggle();
+                                $('#googleMap').toggle(); return false;">
+                Map</a>
         </div>
         <div class="addresses" id="addresses">
             {% for form in adrFormSet %}
@@ -127,7 +129,7 @@
             <!--div class="button"><a href="#">Add More</a></div-->
             <!--div id="paginator"></div-->
         </div>
-        <div id="googleMap" style="width: 100%; height: 200px; border: 1px #e6e6fa solid;">
+        <div id="googleMap" style="width: 100%; height: 200px; border: 1px #e6e6fa solid; display:none;">
         </div>
     {% endif %}
 {% endblock %}
