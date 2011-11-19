@@ -3,7 +3,7 @@ from menu.models import Menu
 
 register = template.Library()
 
-@register.inclusion_tag('menu/subMenu.html')
+@register.inclusion_tag('menu/submenu.html')
 def subMenu(menuItems):
     return {"menuItems": menuItems }
 
