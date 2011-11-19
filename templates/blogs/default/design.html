@@ -30,7 +30,7 @@
                     {% if blog.logo %}
                         <img id="blogLogoSrc" src="{{ blog.logo.url }}">
                     {% endif %}
-                    {% if not blog.logo and not blogForm %}
+                    {% if not blog.logo and not blogForm.logo.value %}
                         <img id="blogLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png">
                     {% endif %}
                 {% endblock %}
