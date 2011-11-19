@@ -24,9 +24,13 @@
         <div id="generalLogo">
             <div id="logoWrapper">
                 {% block logoSrc %}
-                    {% if blog != None and blog.logo != None and blog.logo != '' %}
-                        <img id="blogLogoSrc" src="{{ MEDIA_URL }}{{ blog.logo }}">
-                    {% else %}
+                    {% if blogForm.logo.value %}
+                        <img id="blogLogoSrc" src="{{ MEDIA_URL }}{{ blogForm.logo.value }}">
+                    {% endif %}
+                    {% if blog.logo %}
+                        <img id="blogLogoSrc" src="{{ blog.logo.url }}">
+                    {% endif %}
+                    {% if not blog.logo and not blogForm %}
                         <img id="blogLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png">
                     {% endif %}
                 {% endblock %}
@@ -38,7 +42,6 @@
         </div>
     </div>
 {% endblock %}
-
 
 {% block blogContent %}
 <div id="createBlogBox">

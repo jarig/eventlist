@@ -36,12 +36,11 @@ def renderBlog(request, style='default',blog=None, page=None, mode=None, attr=No
     #render blog page
     if attr is None: attr = {}
     attr["mode"] = mode
-
-    attr["blog"] = blog
     attr['accessLevel'] = 0
     if blog is not None:
         style = unicode(blog.style)
-        attr['accessLevel'] = getMaxPermission(blog, request.user)
+        attr['accessLevel'] = blog.blogaccess_set.get(user=request.user).access
+        attr['blogId'] = blog.id
     elif mode == 'create':
         attr['accessLevel'] = BlogAccess.OWNER
 
@@ -75,7 +74,7 @@ def view(request, blogId, page=None):
     except Blog.DoesNotExist:
         raise Http404
     
-    return renderBlog(request, blog=blog, mode='view', page=page)
+    return renderBlog(request, blog=blog, mode='view', page=page, attr={"blog":blog})
 
 @login_required
 @permission_required("publisher.publish")
@@ -114,6 +113,7 @@ def create(request):
         adrFormSet = AdrFormSet(request.POST)
         if blogForm.is_valid() and adrFormSet.is_valid():
             nBlog = blogForm.submit_blog(request, adrFormSet)
+            print nBlog.addresses.all()
             messages.success(request, _("You've successfully created new blog!"))
             return HttpResponseRedirect(reverse("blogs.views.edit", kwargs={"blogId": nBlog.id, "page":""}))
     else:

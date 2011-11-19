@@ -30,13 +30,7 @@
     </script>
 {% endblock %}
 
-{% block logoSrc %}
-    {% if blogForm.logo.value %}
-        <img id="blogLogoSrc" src="{{ MEDIA_URL }}{{ blogForm.logo.value }}">
-    {% else %}
-        <img id="blogLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png">
-    {% endif %}
-{% endblock %}
+
 
 {% block logoBottom %}
     {% if blogForm %}

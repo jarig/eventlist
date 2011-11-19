@@ -28,4 +28,6 @@ if settings.DEBUG:
         url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
             'document_root': settings.MEDIA_ROOT,
         }),
+        url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to',
+                {'url': settings.MEDIA_URL+'common/favicon.ico'}),
    )

@@ -21,8 +21,9 @@
     </div>
     <div id="items_container">
         {% for blog in myBlogs %}
-            <div class="boxedItem">
-                <a href="{% url blogs.views.edit blog.id None%}" class="manageButton">{{ blog.name }}</a>
+            <div class="boxedItem" style="background-image: url('{{ blog.logo.url }}')">
+                <div class="itemName">{{ blog.name }}</div>
+                <a href="{% url blogs.views.edit blog.id None%}" class="manageButton"></a>
             </div>
         {% endfor %}
     </div>

@@ -3,4 +3,5 @@
 *.pyc
 /fabfile.py
 media/*
+!media/common
 migrations/

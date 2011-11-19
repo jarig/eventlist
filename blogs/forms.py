@@ -20,12 +20,12 @@ class NewBlogForm(ModelForm):
         bId = self.instance.pk
 
 
-        newBlog = self.save(commit=False)
+        newBlog = self.save()
         #add info
-        newBlog.save()
         for adrForm in adrFormSet:
-            adrForm.name = self.cleaned_data["name"]
+            adrForm.fields["name"].data = self.cleaned_data["name"]
             newBlog.addresses.add(adrForm.save())
+        newBlog.save()
         
         #save logo
         uploadLocalImage(self.cleaned_data["logo"],
@@ -37,9 +37,7 @@ class NewBlogForm(ModelForm):
             bAccess = BlogAccess(blog=newBlog, user=request.user, access=BlogAccess.OWNER)
             bAccess.save()
 
-        self.save()
         return newBlog
-
 
 
     class Meta:
