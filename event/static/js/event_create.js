@@ -11,7 +11,7 @@ var CreateEvent =
             CreateEvent.initMultiSelect("#id_activities","Select Event Activities");
             CreateEvent.initSelect("#id_blogs","Select Event Locations");
             $("#id_organizers").chosen();
-            $(".ui-multiselect").css("width","100%");
+            //$(".ui-multiselect").css("width","100%");
 
             var dates = $( "#id_dateFrom, #id_dateTo" ).datepicker({
                 changeMonth: true,
@@ -37,6 +37,7 @@ var CreateEvent =
             var curDate = new Date();
             if ($("#id_dateFrom").val() == "")
                 $("#id_dateFrom").datepicker( "setDate" , curDate );
+            
             /*$("#id_timeFrom, #id_timeTo").timepicker({
                 timeFormat: 'hh:mm'
             });*/
@@ -93,7 +94,7 @@ var CreateEvent =
             var adrObject = adrObjects[i];
             var address = $("#addressTemplate").clone();
             $(address).attr("id", adrObject["pk"]);
-            $("input[name=adrId]",address).val(adrObject["pk"]);
+            $("input[name=adr_id]",address).val(adrObject["pk"]);
             $("input[name=belongsTo]",address).val(belongsTo);
 
             //fill data
@@ -110,6 +111,7 @@ var CreateEvent =
     },
     initSelect: function(id, text)
     {
+        //$(id).chosen();
         $(id).multiselect(
                {
                    header: "",
@@ -118,12 +120,7 @@ var CreateEvent =
                    "multiple": false,
                    multiselectclick: function(event, ui)
                    {
-                       /*
-                        ui.value: value of the checkbox
-                        ui.text: text of the checkbox
-                        ui.checked: whether or not the input was checked
-                        or unchecked (boolean)
-                       */
+
                    },
                    beforeopen: function()
                    {
@@ -133,25 +130,21 @@ var CreateEvent =
     },
     initMultiSelect: function(id, text)
     {
-        $(id).multiselect(
+        $(id).chosen();
+        /*$(id).multiselect(
                {
                    header: "",
                    noneSelectedText: text,
                    selectedList: 4,
                    multiselectclick: function(event, ui)
                    {
-                       /*
-                        ui.value: value of the checkbox
-                        ui.text: text of the checkbox
-                        ui.checked: whether or not the input was checked
-                        or unchecked (boolean)
-                       */
+
                    },
                    beforeopen: function()
                    {
                        $(".ui-multiselect-menu").css("width",$(".ui-multiselect").width());
                    }
-           }).multiselectfilter();
+           }).multiselectfilter();*/
     },
     submitForm: function(formId)
     {

@@ -8,6 +8,7 @@ from django.core.serializers import json
 from django.core.urlresolvers import reverse
 from django.db.models.query_utils import Q
 from django.forms.formsets import formset_factory
+from django.forms.models import modelformset_factory
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
@@ -17,7 +18,7 @@ from django.utils.translation import ugettext as _
 from blogs.forms import NewBlogForm
 from blogs.models import Blog, BlogStyle, BlogAccess, getMaxPermission, BlogModule
 from common.forms import AddressForm
-from common.models import Country
+from common.models import Country, Address
 from menu.models import Menu
 
 
@@ -87,20 +88,30 @@ def edit(request, blogId, page=None):
     except Blog.DoesNotExist:
         raise Http404
 
+    AdrFormSet = modelformset_factory(Address, form=AddressForm, can_delete=True, extra=0)
     if request.method == "POST":
         blogForm = NewBlogForm(request.POST, request.FILES, instance=blog)
-        if blogForm.is_valid():
-            blog = blogForm.submit_blog(request)
+        adrFormSet = AdrFormSet(request.POST, queryset=blog.addresses.all())
+        if blogForm.is_valid() and adrFormSet.is_valid():
+            blog = blogForm.submit_blog(request,adrFormSet)
             messages.success(request, _("Changes successfully saved!"))
     else:
         blogForm = NewBlogForm(instance=blog)
+        addr = blog.addresses.all()
+        if len(addr):
+            adrFormSet = AdrFormSet(queryset=addr)
+        else:
+            AdrFormSet.extra = 1
+            adrFormSet = AdrFormSet(queryset=blog.addresses.none(),
+                                    initial=[{'country': Country.objects.get(name='Estonia').pk}])
     
     return renderBlog(request,
                       blog=blog,
                       page=page,
                       mode="edit",
                       attr={
-                            "blogForm": blogForm
+                            "blogForm": blogForm,
+                            "adrFormSet": adrFormSet
                            })
 
 @login_required

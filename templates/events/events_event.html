@@ -22,7 +22,14 @@
 
 {% block content %}
     <div class="createEventContainer">
-        <form id="eventDataForm" action="{% url event.views.create %}" method="POST" enctype="multipart/form-data">
+        <form id="eventDataForm"
+              {%  if eventForm.instance.pk %}
+                action="{% url event.views.edit eventForm.instance.pk %}"
+              {% else %}
+                action="{% url event.views.create %}"
+              {% endif %}
+              method="POST"
+              enctype="multipart/form-data">
             
             <div class="buttonPane">
                 <a href="#" onclick="CreateEvent.submitForm('#eventDataForm');return false;">Submit</a>
@@ -78,6 +85,25 @@
                 </td>
             </tr>
             <tr style="vertical-align: top;">
+                <td></td>
+                <td>
+                    <div class="eventActivities">
+                       <div class="formField">
+                            <div class="fieldLabel">{% trans 'Event Activities' %}:</div>
+                            <div class="fieldInput">
+                                {{ eventForm.activities }}
+                            </div>
+                            <div class="fieldRight">
+                                <a href="#" id="addNewEventType">Add New</a>
+                            </div>
+                            <div class="fieldError errors">
+                                {{ eventForm.activities.errors }}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="vertical-align: top;">
                 <td>
                     <div class="eventLocations">
                         <div class="eventBlogs">
@@ -113,22 +139,6 @@
                         </div>
                         <div class="chosenOrganizers" id="chosenOrganizers">
                             
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="eventActivities">
-                       <div class="formField">
-                            <div class="fieldLabel">{% trans 'Event Activities' %}:</div>
-                            <div class="fieldInput">
-                                {{ eventForm.activities }}
-                            </div>
-                            <div class="fieldRight">
-                                <a href="#" id="addNewEventType">Add New</a>
-                            </div>
-                            <div class="fieldError errors">
-                                {{ eventForm.activities.errors }}
-                            </div>
                         </div>
                     </div>
                 </td>

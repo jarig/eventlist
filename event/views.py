@@ -31,9 +31,8 @@ def create(request, blogId=None):
 
     if request.method == "POST":
         #get addresses
-        print request.POST
-        if request.POST.has_key(u"adrId"):
-            addressIds = request.POST.getlist('adrId')
+        if request.POST.has_key(u"adr_id"):
+            addressIds = request.POST.getlist('adr_id')
             for id in addressIds:
                 if id == '': continue
                 addresses.append(Address.objects.get(pk=id))
@@ -46,8 +45,8 @@ def create(request, blogId=None):
     else:
         eventForm = NewEventForm(request.user,
                                  initial={'dateFrom':datetime.date.today(),
-                                          'timeFrom':datetime.datetime.utcnow(),
-                                          'timeTo':datetime.datetime.utcnow()
+                                          'timeFrom':'00:00',
+                                          'timeTo':'00:00'
         })
     
 
@@ -64,8 +63,14 @@ def edit(request, eventId):
     event = Event.objects.select_related('blogs').get(pk=eventId)
     if event.author != request.user:
         raise Event.DoesNotExist(_("You don't have permission to edit this event"))
-    
-    eventForm = NewEventForm(request.POST, request.FILES, instance=event)
+    if request.method == "POST":
+        eventForm = NewEventForm(request.user, request.POST, request.FILES, instance=event)
+        if eventForm.is_valid():
+            eventForm.saveEvent(request)
+            messages.success(request, ugettext("Event details successfully changed."))
+    else:
+        eventForm = NewEventForm(request.user, instance=event)
+        
     addresses = event.addresses.all()
     return render_event(request,{
                                     "eventForm":eventForm,

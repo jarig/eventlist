@@ -19,13 +19,23 @@
     <script type="text/javascript">
         {% if blogForm and accessType >= accessTypes.ADMIN %}
             BlogForm.initCreate();
-            GoogleMaps.init('#googleMap', 0, 0);
+
             Address.init('.addressForm','{% url common.views.getCities %}',
                     function()
                     {
                         Address.refreshGoogleMap('.addressForm', GoogleMaps.moveAndMark);
                     });
-            Address.refreshGoogleMap('.addressForm', GoogleMaps.moveAndMark);
+            $(function()
+            {
+                $("#showMap").click(function()
+                {
+                   $('#addresses').toggle();
+                   GoogleMaps.init('#googleMap');
+                   if ( $("#googleMap").is(":visible") )
+                        Address.refreshGoogleMap('.addressForm', GoogleMaps.moveAndMark);
+                   return false;
+                });
+            });//TODO move to class
         {% endif %}
     </script>
 {% endblock %}
@@ -109,8 +119,7 @@
 {% block blogModule_1 %}
     {% if adrFormSet %}
         <div class="addressesHeader">
-            <a href="#" onclick="$('#addresses').toggle();
-                                $('#googleMap').toggle(); return false;">
+            <a href="#" id="showMap">
                 Map</a>
         </div>
         <div class="addresses" id="addresses">

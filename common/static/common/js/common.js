@@ -126,26 +126,38 @@ var GoogleMaps = {
     map: null,
     markers: [],
     bounds: null,
-    init: function(id, x, y)
+    init: function(id)
     {
-        $(function(){
-            var latlng = new google.maps.LatLng(x, y);
-            GoogleMaps.bounds = new google.maps.LatLngBounds();
-            var myOptions = {
-              zoom: 10,
-              center: latlng,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            GoogleMaps.map = new google.maps.Map($(id).get(0), myOptions);
-            return GoogleMaps.map;
-        });
+        var mVisible = $(id).is(":visible");
+        if (!mVisible)
+        {
+            $(function()
+            {
+                $(id).show();
+                var latlng = new google.maps.LatLng(0, 0);
+                GoogleMaps.bounds = new google.maps.LatLngBounds();
+                var myOptions = {
+                  zoom: 10,
+                  center: latlng,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                GoogleMaps.map = new google.maps.Map($(id).get(0), myOptions);
+                return GoogleMaps.map;
+            });
+        }else //if visible, should be already initialized
+        {
+            $(id).hide();
+        }
     },
     moveToAddress: function(address, putMarker)
     {
         geocoder = new google.maps.Geocoder();
         geocoder.geocode( { 'address': address}, function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
+              if (status == google.maps.GeocoderStatus.OK)
+              {
+                var zoom = results[0].address_components.length*3;
                 GoogleMaps.map.setCenter(results[0].geometry.location);
+                GoogleMaps.map.setZoom(zoom);
                 if (typeof(putMarker) == "boolean" &&  putMarker)
                 {
                     GoogleMaps.putMarker(results[0].geometry.location);

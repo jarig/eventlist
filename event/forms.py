@@ -11,7 +11,7 @@ class NewEventForm(ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super(NewEventForm, self).__init__(*args, **kwargs)
-        self.fields['organizers'].queryset = Organization.objects.filter(members=user)
+        self.fields['organizers'].queryset = Organization.objects.filter(members=user).all()
 
     class Meta:
         exclude = ('rating','created','participants','author')
@@ -20,7 +20,8 @@ class NewEventForm(ModelForm):
             'blogId': forms.HiddenInput(),
             'dateTo': forms.DateInput(format='%d/%m/%Y'),
             'timeFrom': forms.TimeInput(format='%H:%M'),
-            'timeTo': forms.TimeInput(format='%H:%M')
+            'timeTo': forms.TimeInput(format='%H:%M'),
+            'blogs': forms.SelectMultiple(attrs={'placeholder':'Select Event Place'})
         }
         
     def saveEvent(self, request):

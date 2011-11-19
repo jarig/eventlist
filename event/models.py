@@ -7,12 +7,14 @@ from organization.models import Organization
 
 class EventActivity(models.Model):
     name = models.CharField(max_length=128)
-    icon = models.ImageField(upload_to="event/event_type/icon/", blank=True)
-    thumbnail = models.ImageField(upload_to="event/event_type/thumb/", blank=True)
+    icon = models.ImageField(upload_to="event/event_type/icon/", blank=True, default='')
+    thumbnail = models.ImageField(upload_to="event/event_type/thumb/", blank=True, default='')
     confirmed = models.BooleanField(default=False)
     
     def __unicode__(self):
         return self.name
+    class Meta:
+        unique_together = ('name',)
 
 
 class Event(models.Model):
@@ -48,3 +50,6 @@ class Invite(models.Model):
     event = models.ForeignKey(Event)
     user = models.ForeignKey(User, related_name='invites')
     person = models.ForeignKey(User, related_name='invited')
+
+    class Meta:
+        unique_together = ('event', 'user', 'person')
