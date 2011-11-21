@@ -12,7 +12,7 @@ var CreateEvent =
             CreateEvent.initSelect("#id_blogs","Select Event Locations");
             $("#id_organizers").chosen();
             //$(".ui-multiselect").css("width","100%");
-
+            
             var dates = $( "#id_dateFrom, #id_dateTo" ).datepicker({
                 changeMonth: true,
                 numberOfMonths: 1,
@@ -34,14 +34,12 @@ var CreateEvent =
                     dates.not( this ).datepicker( "option", option, date );
                 }
             });
+            
             var curDate = new Date();
             if ($("#id_dateFrom").val() == "")
                 $("#id_dateFrom").datepicker( "setDate" , curDate );
             
-            /*$("#id_timeFrom, #id_timeTo").timepicker({
-                timeFormat: 'hh:mm'
-            });*/
-            //$("#timeFrom").val( curDate.getHours() + ":" + curDate.getMinutes() );
+            
 
             $("#eventAddresses").change(function(){
                 //init address close buttons

@@ -5,7 +5,7 @@ from organization.models import Organization
 
 class NewEventForm(ModelForm):
     dateFrom = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.DateInput(format='%d/%m/%Y'))
-    dateTo = forms.DateField(input_formats=['%d/%m/%Y'])
+    dateTo = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.DateInput(format='%d/%m/%Y'))
     organizers = forms.ModelMultipleChoiceField(Organization.objects.none(),
                                                 widget=forms.SelectMultiple(attrs={'placeholder':"Choose an organizers"}))
 
@@ -24,9 +24,11 @@ class NewEventForm(ModelForm):
             'blogs': forms.SelectMultiple(attrs={'placeholder':'Select Event Place'})
         }
         
-    def saveEvent(self, request):
-        newEvent = self.save(commit=False)
+    def saveEvent(self, request, addresses):
+        newEvent = self.save()
         newEvent.author = request.user
-        
+        newEvent.addresses = addresses
 
-        return self.save()
+        newEvent = newEvent.save()
+
+        return newEvent

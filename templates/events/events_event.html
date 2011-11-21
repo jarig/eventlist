@@ -46,7 +46,7 @@
                 </td>
             </tr>
             <tr>
-                <td width="256px">
+                <td width="256px" rowspan="99">
                     <div class="eventLogoBox">
                         <div class='divButton eventLogo'>
                             <div onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc');">
@@ -55,6 +55,44 @@
                         </div>
                         <div class='eventLogoUpload'>
                                 <a href="#" onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc');">Upload</a>
+                        </div>
+                    </div>
+
+                    <div class="eventLocations">
+                        <div class="sectionHeader">Event Locations: </div>
+                        <div class="eventBlogs">
+                            <div class='eventBlogsSelection'>
+                                {{ eventForm.blogs }}
+                            </div>
+                            <div class="errors">
+                                {{ eventForm.blogs.errors }}
+                            </div>
+                        </div>
+                        <div class="eventAddresses" id="eventAddresses">
+                            {% for address in addresses %}
+                                <div class="address" id="adr-{{ address.instance.id }}">
+                                    {% include 'event_address.html' %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <input type="hidden" value="{% url blogs.views.getBlogAddress %}" id="getAddressURL">
+                        <a href="#">Add Custom Address</a>
+                        <div class="address" id="addressTemplate" style="display: none">
+                            {% include 'event_address.html' %}
+                        </div>
+                    </div>
+                    <div class="eventOrganizers">
+                        <div class="sectionHeader">Organizers: </div>
+                        <div class="eventOrganizerSelection">
+                            <div class="organizerSelection">
+                                {{ eventForm.organizers }}
+                            </div>
+                            <div class="errors">
+                                {{ eventForm.organizers.errors }}
+                            </div>
+                        </div>
+                        <div class="chosenOrganizers" id="chosenOrganizers">
+
                         </div>
                     </div>
                 </td>
@@ -85,7 +123,7 @@
                 </td>
             </tr>
             <tr style="vertical-align: top;">
-                <td></td>
+
                 <td>
                     <div class="eventActivities">
                        <div class="formField">
@@ -103,46 +141,7 @@
                     </div>
                 </td>
             </tr>
-            <tr style="vertical-align: top;">
-                <td>
-                    <div class="eventLocations">
-                        <div class="eventBlogs">
-                            <div class='eventBlogsSelection'>
-                                {{ eventForm.blogs }}
-                            </div>
-                            <div class="errors">
-                                {{ eventForm.blogs.errors }}
-                            </div>
-                        </div>
-                        <div class="eventAddresses" id="eventAddresses">
-                            {% for address in addresses %}
-                                <div class="address" id="{{ address.id }}">
-                                    {% include 'event_address.html' %}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <input type="hidden" value="{% url blogs.views.getBlogAddress %}" id="getAddressURL">
-                        <a href="#">Add Custom Address</a>
-                        <div class="address" id="addressTemplate" style="display: none">
-                            {% include 'event_address.html' %}
-                        </div>
-                    </div>
-                    <div class="eventOrganizers">
-                        <div class="sectionHeader">Organizers: </div>
-                        <div class="eventOrganizerSelection">
-                            <div class="organizerSelection">
-                                {{ eventForm.organizers }}
-                            </div>
-                            <div class="errors">
-                                {{ eventForm.organizers.errors }}
-                            </div>
-                        </div>
-                        <div class="chosenOrganizers" id="chosenOrganizers">
-                            
-                        </div>
-                    </div>
-                </td>
-            </tr>
+
         </table>
         </form>
     </div>

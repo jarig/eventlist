@@ -38,7 +38,7 @@ def create(request, blogId=None):
                 addresses.append(Address.objects.get(pk=id))
         eventForm = NewEventForm(request.user, request.POST, request.FILES)
         if eventForm.is_valid():
-            newEvent = eventForm.saveEvent(request)
+            newEvent = eventForm.saveEvent(request, addresses)
             messages.success(request, ugettext("Event successfully created"))
             #redirect to edit/publish event
             return HttpResponseRedirect(reverse("event.views.edit", kwargs={"eventId": newEvent.id}))
@@ -61,23 +61,38 @@ def create(request, blogId=None):
 @permission_required('publisher.publish')
 def edit(request, eventId):
     event = Event.objects.select_related('blogs').get(pk=eventId)
+
     if event.author != request.user:
         raise Event.DoesNotExist(_("You don't have permission to edit this event"))
     if request.method == "POST":
+        addresses = []
+        if request.POST.has_key(u"adr_id"):
+            addressIds = request.POST.getlist('adr_id')
+            for id in addressIds:
+                if id == '': continue
+                addresses.append(Address.objects.get(pk=id))
         eventForm = NewEventForm(request.user, request.POST, request.FILES, instance=event)
         if eventForm.is_valid():
-            eventForm.saveEvent(request)
+            eventForm.saveEvent(request, addresses)
             messages.success(request, ugettext("Event details successfully changed."))
     else:
         eventForm = NewEventForm(request.user, instance=event)
-        
-    addresses = event.addresses.all()
+        addresses = event.addresses.all()
+    
     return render_event(request,{
                                     "eventForm":eventForm,
                                     "addresses":addresses
                                 })
 
 
+def manage(request):
+    myEvents = Event.objects.filter(author=request.user)
+    return render_to_response("events/events_manage.html",
+                              {
+                                "myEvents": myEvents,
+                              },
+                              context_instance=RequestContext(request)
+                              )
 
 def main(request):
     return render_to_response("events/events_main.html",

@@ -5,10 +5,15 @@
 </div>
 <input type="hidden" name="belongsTo">
 {% if address.instance.id %}
-    {{ address.id }}
-{% else %}
-    <input id="adr_id" type="hidden" name="adr_id">
+    <input id="adr_id" type="hidden" name="adr_id" value="{{ address.instance.id }}">
+{% else %}{# if not form #}
+    {% if address.id %} {# if object has id #}
+        <input id="adr_id" type="hidden" name="adr_id" value="{{ address.id }}">
+    {% else %} {# if not object #}
+        <input id="adr_id" type="hidden" name="adr_id" value="">
+    {% endif %}
 {% endif %}
+
 <div class="adr_country">{{ address.country }}{{ address.country.errors }}</div>
 <div class="adr_city">{{ address.city }}{{ address.city.errors }}</div>
 <div class="adr_cityArea">{{ address.cityArea }}{{ address.cityArea.errors }}</div>

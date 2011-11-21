@@ -60,6 +60,9 @@
             <div class="sideMenuItem">
                 <a href="{% url organization.views.manage %}">{% trans "Organizations" %}</a>
             </div>
+            <div class="sideMenuItem">
+                <a href="{% url event.views.manage %}">{% trans "Events" %}</a>
+            </div>
     {% else %}
         {% sidemenu %}
         {%  for item in menuItems %}
