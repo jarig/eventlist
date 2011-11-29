@@ -128,26 +128,18 @@ var GoogleMaps = {
     bounds: null,
     init: function(id)
     {
-        var mVisible = $(id).is(":visible");
-        if (!mVisible)
+        $(function()
         {
-            $(function()
-            {
-                $(id).show();
-                var latlng = new google.maps.LatLng(0, 0);
-                GoogleMaps.bounds = new google.maps.LatLngBounds();
-                var myOptions = {
-                  zoom: 10,
-                  center: latlng,
-                  mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                GoogleMaps.map = new google.maps.Map($(id).get(0), myOptions);
-                return GoogleMaps.map;
-            });
-        }else //if visible, should be already initialized
-        {
-            $(id).hide();
-        }
+            var latlng = new google.maps.LatLng(0, 0);
+            GoogleMaps.bounds = new google.maps.LatLngBounds();
+            var myOptions = {
+              zoom: 10,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            GoogleMaps.map = new google.maps.Map($(id).get(0), myOptions);
+            return GoogleMaps.map;
+        });
     },
     moveToAddress: function(address, putMarker)
     {

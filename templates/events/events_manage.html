@@ -20,7 +20,11 @@
     </div>
     <div id="items_container">
         {% for evObj in myEvents %}
-            <div class="boxedItem" style="background-image: url('{{ evObj.logo.url }}')">
+            <div class="boxedItem"
+                 {% if evObj.logo %}
+                    style="background-image: url('{{ evObj.logo.url }}')"
+                 {% endif %}
+                 >
                 <div class="itemName">{{ evObj.name }}</div>
                 <a href="{% url event.views.edit evObj.id %}" class="manageButton"></a>
             </div>

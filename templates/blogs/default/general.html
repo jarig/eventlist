@@ -30,9 +30,12 @@
                 $("#showMap").click(function()
                 {
                    $('#addresses').toggle();
-                   GoogleMaps.init('#googleMap');
+                   $("#googleMap").toggle();
                    if ( $("#googleMap").is(":visible") )
-                        Address.refreshGoogleMap('.addressForm', GoogleMaps.moveAndMark);
+                   {
+                       GoogleMaps.init('#googleMap');
+                       Address.refreshGoogleMap('.addressForm', GoogleMaps.moveAndMark);
+                   }
                    return false;
                 });
             });//TODO move to class

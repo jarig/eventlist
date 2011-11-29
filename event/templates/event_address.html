@@ -7,8 +7,8 @@
 {% if address.instance.id %}
     <input id="adr_id" type="hidden" name="adr_id" value="{{ address.instance.id }}">
 {% else %}{# if not form #}
-    {% if address.id %} {# if object has id #}
-        <input id="adr_id" type="hidden" name="adr_id" value="{{ address.id }}">
+    {% if address.pk %} {# if object has id #}
+        <input id="adr_id" type="hidden" name="adr_id" value="{{ address.pk }}">
     {% else %} {# if not object #}
         <input id="adr_id" type="hidden" name="adr_id" value="">
     {% endif %}

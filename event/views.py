@@ -95,8 +95,10 @@ def manage(request):
                               )
 
 def main(request):
+    events = Event.objects.all().order_by('dateFrom','rating')
     return render_to_response("events/events_main.html",
                               {
+                                    "events": events
                               },
                               context_instance=RequestContext(request)
                               )

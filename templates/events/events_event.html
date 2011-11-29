@@ -49,12 +49,21 @@
                 <td width="256px" rowspan="99">
                     <div class="eventLogoBox">
                         <div class='divButton eventLogo'>
-                            <div onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc');">
-                                <img id='eventLogoSrc' src="{{ STATIC_URL }}common/images/logoStub.png">
+                            <div onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc','#id_logo');">
+                                {% if eventForm.logo.value %}
+                                    <img id="eventLogoSrc" src="{{ MEDIA_URL }}{{ eventForm.logo.value }}">
+                                {% endif %}
+                                {% if event.logo %}
+                                    <img id="eventLogoSrc" src="{{ event.logo.url }}">
+                                {% endif %}
+                                {% if not event.logo and not eventForm.logo.value %}
+                                    <img id="eventLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png">
+                                {% endif %}
                             </div>
+                            {{ eventForm.logo }}
                         </div>
                         <div class='eventLogoUpload'>
-                                <a href="#" onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc');">Upload</a>
+                            <a href="#" onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc','#id_logo');">Upload</a>
                         </div>
                     </div>
 
@@ -139,6 +148,7 @@
                             </div>
                         </div>
                     </div>
+                    {{ eventForm.errors }}
                 </td>
             </tr>
 

@@ -11,16 +11,6 @@ var BlogForm =
            $("textarea").labelify({ labelledClass: "helpLabel" });
            //types select
            $("#id_facilities").chosen();
-           /*$("#paginator").pagination(1, {
-                    num_display_entries: 2,
-                    num_edge_entries: 2,
-                    items_per_page: 1,
-                    callback: function(index, dom)
-                    {
-                        
-                    }
-            });*/
-           
        });
     },
     submit: function(form)
