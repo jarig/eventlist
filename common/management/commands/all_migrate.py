@@ -15,7 +15,7 @@ class Command(BaseCommand):
             for app in settings.INSTALLED_APPS:
                 if self._is_project_app(app):
                     print "Creating migration for " + app
-                    call([sys.executable,'./manage.py', 'schemamigration', app,'--auto'])
+                    call([sys.executable,'./manage.py', 'schemamigration', app,'--auto --noinput --stdout'])
 
             print 'All applications migrated.'
         except Exception as e:
