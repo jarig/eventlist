@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.models import User
 from django.db import models
 from blogs.models import Blog
@@ -10,12 +11,10 @@ class EventActivity(models.Model):
     icon = models.ImageField(upload_to="event/event_type/icon/", blank=True, default='')
     thumbnail = models.ImageField(upload_to="event/event_type/thumb/", blank=True, default='')
     confirmed = models.BooleanField(default=False)
-    
     def __unicode__(self):
         return self.name
     class Meta:
         unique_together = ('name',)
-
 
 class Event(models.Model):
     name = models.CharField(max_length=255)
@@ -23,18 +22,24 @@ class Event(models.Model):
     logo = models.ImageField(upload_to="event/logo/",)
     blogs = models.ManyToManyField(Blog) #indicates to which blogs this event belongs to
     activities = models.ManyToManyField(EventActivity, blank=True, null=True) #event activities/actions
-    addresses = models.ManyToManyField(Address, blank=True, null=True) #locations where this event will be held
     organizers = models.ManyToManyField(Organization)
     descr = models.TextField() #event description (BB code)
     rating = models.FloatField(default=0) #event rating
-    dateFrom = models.DateField() #date when event starts
-    timeFrom = models.TimeField(default='00:00')
-    dateTo = models.DateField() #date when event ends
-    timeTo = models.TimeField(default='00:00')
     created = models.DateTimeField(auto_now_add=True) #date event created
     participants = models.PositiveIntegerField(default=0) # number of participants, help num (not exact)
+    confirmed = models.BooleanField(editable=False, default=True) #event confirmed by blog/page admins
     
-
+# Event may have many schedules
+class EventSchedule(models.Model):
+    event = models.ForeignKey(Event, editable=False)
+    dateFrom = models.DateField() #date when event starts
+    timeFrom = models.TimeField(default='00:00')
+    dateTo = models.DateField(null=True, blank=True, default=datetime.date.today) #date when event ends
+    timeTo = models.TimeField(default='00:00', null=True, blank=True)
+    #blog = models.ForeignKey(Blog, null=True, blank=True)
+    address = models.ForeignKey(Address) #location where this event will be held
+    
+    pass
 
 class Comment(models.Model):
     COMMENT_TYPE = (

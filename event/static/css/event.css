@@ -8,6 +8,13 @@
 .sectionHeader
 {
     font-size: 15px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.sectionHeaderHighlight
+{
+    background-color: #fffacd;
 }
 
 .eventDescr
@@ -63,6 +70,10 @@
     margin-bottom: 15px;
 }
 
+.briefEventDescr
+{
+    
+}
 .briefLogoBox
 {
     float:left;
@@ -78,7 +89,6 @@
     text-align: center;
     display: table-cell;
 }
-
 .briefEventLogo img
 {
     max-width: 128px;
@@ -86,12 +96,57 @@
     vertical-align: middle;
     display: block;
 }
+.eventButtons
+{
+    width: 100%;
+    position: relative;
+}
+.eventButton
+{
+    display: block;
+    background-color: #fffcff;
+    float: right;
+    min-width: 100px;
+    text-align: center;
+    border: 1px #e6e6fa solid;
+    position: relative;
+    top: 10px;
+    margin-right: 15px;
+    height: 20px;
+}
+.eventButton a
+{
+    line-height: 20px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+.eventButton a:hover
+{
+    background-color: #e6e6fa;
+}
 
 .eventDates
 {
     /*border-bottom: solid #79B7E7 1px;*/
     float:left;
     width: 100%;
+}
+
+.addScheduleButton
+{
+    border: 1px #e6e6fa dashed;
+}
+
+.eventSchedules
+{
+    margin-top: 20px;
+}
+
+.eventSchedule
+{
+    
 }
 
 .event-container

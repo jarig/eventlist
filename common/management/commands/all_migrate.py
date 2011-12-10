@@ -12,7 +12,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             call([sys.executable, './manage.py', 'syncdb'])
-
             for app in settings.INSTALLED_APPS:
                 if self._is_project_app(app):
                     print "Creating migration for " + app

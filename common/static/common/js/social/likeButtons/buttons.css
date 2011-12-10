@@ -5,7 +5,8 @@
     text-align:left;
     margin-bottom: 3px;
     float:left;
-    width:100%;
+    position: relative;
+    top: 5px;
     margin-left: 20px;
 }
 

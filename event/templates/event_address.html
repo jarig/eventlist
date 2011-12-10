@@ -1,11 +1,14 @@
 
+{% if address.name.value %}
 <div class="addressHeader">
     <div class="adr_name">{{ address.name }}</div>
     <button class="deleteAddressButton" onclick="return false;"></button>
 </div>
+{% endif %}
 <input type="hidden" name="belongsTo">
 {% if address.instance.id %}
     <input id="adr_id" type="hidden" name="adr_id" value="{{ address.instance.id }}">
+    {{ address.id }}
 {% else %}{# if not form #}
     {% if address.pk %} {# if object has id #}
         <input id="adr_id" type="hidden" name="adr_id" value="{{ address.pk }}">

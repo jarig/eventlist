@@ -15,7 +15,7 @@ class AddressForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(AddressForm, self).__init__(*args, **kwargs)
         countryVal = self.__getitem__('country').value()
-        
+        if countryVal is None: countryVal = 1
         self.fields['city'].queryset = City.objects.filter(country=countryVal).all()
 
     class Meta:

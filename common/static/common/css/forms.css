@@ -1,3 +1,16 @@
+.button
+{
+    cursor: pointer;
+    display: block;
+    line-height: 15px;
+    padding: 5px;
+    text-align: center;
+}
+
+.button:hover
+{
+    background-color: #e6e6fa;
+}
 
 .logoControl
 {

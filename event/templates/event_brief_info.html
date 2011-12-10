@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="event-container" id="event_{{ event.id }}">
     <h2>{{ event.name }}</h2>
     <div class="summary">
@@ -8,22 +9,31 @@
                 {% endif %}
             </div>
         </div>
-        <p>
-            {{ event.descr|truncatewords_html:200|safe }}
-        </p>
+        <div class="briefEventDescr">
+                {{ event.descr|truncatewords_html:200|safe }}
+        </div>
     </div>
-    <div class="likes-block">
-        <a href="?hash=event_{{ event.id }}" class="like l-fb">
-            <i class="l-ico"></i>
-            <span class="l-count"></span>
-        </a>
-        <a href="?hash=event_{{ event.id }}" class="like l-vk">
-            <i class="l-ico"></i>
-            <span class="l-count"></span>
-        </a>
-        <a href="?hash=event_{{ event.id }}" class="like l-tw">
-            <i class="l-ico"></i>
-            <span class="l-count"></span>
-        </a>
+    <div class="eventButtons">
+        <div class="likes-block">
+            <a href="?hash=event_{{ event.id }}" class="like l-fb">
+                <i class="l-ico"></i>
+                <span class="l-count"></span>
+            </a>
+            <a href="?hash=event_{{ event.id }}" class="like l-vk">
+                <i class="l-ico"></i>
+                <span class="l-count"></span>
+            </a>
+            <a href="?hash=event_{{ event.id }}" class="like l-tw">
+                <i class="l-ico"></i>
+                <span class="l-count"></span>
+            </a>
+        </div>
+        <div class="eventButton">
+            <a href="#">{% trans "I'll go"%}</a>
+        </div>
+        <div class="eventButton">
+            <a href="#">{% trans "Stub"%}</a>
+        </div>
     </div>
+
 </div>

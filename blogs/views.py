@@ -124,7 +124,6 @@ def create(request):
         adrFormSet = AdrFormSet(request.POST)
         if blogForm.is_valid() and adrFormSet.is_valid():
             nBlog = blogForm.submit_blog(request, adrFormSet)
-            print nBlog.addresses.all()
             messages.success(request, _("You've successfully created new blog!"))
             return HttpResponseRedirect(reverse("blogs.views.edit", kwargs={"blogId": nBlog.id, "page":""}))
     else:
