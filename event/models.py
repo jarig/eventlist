@@ -32,7 +32,7 @@ class Event(models.Model):
 # Event may have many schedules
 class EventSchedule(models.Model):
     event = models.ForeignKey(Event, editable=False)
-    dateFrom = models.DateField() #date when event starts
+    dateFrom = models.DateField(default=datetime.date.today) #date when event starts
     timeFrom = models.TimeField(default='00:00')
     dateTo = models.DateField(null=True, blank=True, default=datetime.date.today) #date when event ends
     timeTo = models.TimeField(default='00:00', null=True, blank=True)

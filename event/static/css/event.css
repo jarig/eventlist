@@ -31,11 +31,29 @@
 
 }
 
+.blogSelection select
+{
+    width: 100%;
+}
+
+.customAddress
+{
+    display: none;
+}
 .address
 {
     margin-top: 10px;
-    padding-left: 7px;
     margin-bottom: 10px;
+}
+
+.address input
+{
+    width: 100%;
+}
+
+.address select
+{
+    width: 100%;
 }
 
 .address .addressHeader

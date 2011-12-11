@@ -1,6 +1,7 @@
 from django.forms.formsets import BaseFormSet, formset_factory
 from django.forms.models import ModelForm
 from django.forms.widgets import HiddenInput
+from blogs.models import Blog
 from common.forms import AddressForm
 from common.models import Address
 from common.utils import uploadLocalImage
@@ -48,8 +49,9 @@ class EventScheduleForm(ModelForm):
     dateTo = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.DateInput(format='%d/%m/%Y',
                                                                                 attrs={
                                                                                     "class":"dateTo"
-                                                                                }))
-
+                                                                                }), required=False)
+    blog = forms.ModelChoiceField(queryset=Blog.objects.all(),empty_label="Custom Address")
+    
     def __init__(self, *args, **kwargs):
         super(EventScheduleForm, self).__init__(*args, **kwargs)
     
@@ -62,20 +64,24 @@ class EventScheduleForm(ModelForm):
         }
 
 class EventScheduleFormSet(BaseFormSet):
-
     
     def __init__(self, *args, **kwargs):
         self.addressSet = formset_factory(AddressForm, can_delete=True)
         super(EventScheduleFormSet, self).__init__(*args, **kwargs)
+        
 
     def add_fields(self, form, index):
         super(EventScheduleFormSet, self).add_fields(form, index)
-        form.addresses = self.addressSet(prefix='%s-address' % str(form.prefix))
+        data = None
+        if len(self.data):  data = self.data
+        form.addresses = self.addressSet(prefix='%s-address' % str(form.prefix),data=data)
 
     def is_valid(self):
         result = super(EventScheduleFormSet, self).is_valid()
 
         for form in self.forms:
+            blogId = form.data[form.prefix+"-blog"]
+            if isinstance(blogId,int) and blogId > 0: break
             if not form.addresses.is_valid():
                 return False
 

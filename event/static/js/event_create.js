@@ -11,47 +11,8 @@ var CreateEvent =
             CreateEvent.initMultiSelect("#id_activities","Select Event Activities");
             CreateEvent.initSelect("#id_blogs","Select Event Locations");
             $("#id_organizers").chosen();
-            $(".ui-multiselect").css("width","100%");
-
-            CreateEvent.initSchedules();
             
-            $(".address").change(function(){
-                //init address close buttons
-                $( ".deleteAddressButton .address").button({
-                    icons: {
-                        primary: "ui-icon-close"
-                    },
-                    text: false
-                });
-
-                $(".deleteAddressButton .address").click(function()
-                {
-                    $(this).parents(".address").remove();
-                });
-            });
-            $(".address").trigger("change");
-
-            $("#id_blogs").change(function(eventObj)
-            {
-                $(".eventAddresses").html("Loading...");
-                var selectedOpts = $("#id_blogs :selected");
-                for(var i=0; i< selectedOpts.length; i++)
-                {
-                    var opt = selectedOpts[i];
-                    var belongsTo = $(opt).val();
-                    $.ajax({
-                        url: $("#getAddressURL").val(),
-                        data: {
-                            "blogId": $(opt).val()
-                        },
-                        success: function(resp)
-                        {
-                          CreateEvent.addAddresses(eval("("+resp+")"), belongsTo);
-                          Common.DEBUG(resp);
-                        }
-                    });
-                }
-            });
+            CreateEvent.initSchedules();
         });
     },
     initSchedules: function()
@@ -65,6 +26,11 @@ var CreateEvent =
     },
     initSchedule: function(schedule)
     {
+        //clear date plugin
+        var dClear = $( ".hasDatepicker", schedule);
+        for (var i=0; i<dClear.length; i++)
+            $(dClear[i]).removeClass("hasDatepicker");
+        
         var dates = $( ".dateFrom, .dateTo",schedule ).datepicker({
                 changeMonth: true,
                 numberOfMonths: 1,
@@ -85,11 +51,59 @@ var CreateEvent =
                             selectedDate, instance.settings );
                     dates.not( this ).datepicker( "option", option, date );
                 }
-            });
+        });
 
         var curDate = new Date();
         if ($(".dateFrom",schedule).val() == "")
             $(".dateFrom",schedule).datepicker( "setDate" , curDate );
+
+
+        //id_form-0-blog
+        var prefix = $("#schedulePrefix",schedule).val();
+        var blogFieldId = "#id_"+prefix+"-blog";
+        $(blogFieldId, schedule).chosen();
+        $(blogFieldId, schedule).change(function(eventObj)
+        {
+            var selectedOpts = $(blogFieldId + " :selected", schedule);
+            for(var i=0; i< selectedOpts.length; i++)
+            {
+                var opt = selectedOpts[i];
+                var blogId = $(opt).val();
+                if (blogId == "undefined" || blogId == 0)
+                {
+                    $(".customAddress",schedule).show(); //custom address;
+                    //init city choice
+                    $(".customAddress",schedule).rest_Address("init", $('#getCityURL').val());
+                    $(".blogAddress",schedule).hide();
+                    return;
+                }
+                $(".customAddress",schedule).hide();
+                $(".blogAddress", schedule).show();
+                var adrTempl = $("#addressTemplate").clone().attr("id","address-for-"+blogId);
+                $(".blogAddress",schedule).html(adrTempl);
+
+                $(".loading", schedule).html("Loading...");
+                $.ajax({
+                    url: $("#getAddressURL").val(),
+                    data: {
+                        "blogId": blogId
+                    },
+                    success: function(resp)
+                    {
+                      $(".loading", schedule).html("");
+                      //add address div
+                      var resp = eval("("+resp+")");
+                      //TODO select address
+                      if (resp.length > 0)
+                      {
+                        Address.fillAddress(adrTempl, resp[0]);
+                        Common.DEBUG(resp[0]);
+                      }
+                    }
+                });
+            }
+        });
+        $(blogFieldId, schedule).change();
     },
     addSchedule: function(toClone, insertTo)
     {
@@ -98,12 +112,23 @@ var CreateEvent =
         var formPrefix = $("#schedulePrefix",clone).val();
         var inputs = $('input,select',clone);
         var prefixPattern=new RegExp('(.*)(\\d+)$','i');
-        var prefix = prefixPattern.exec(formPrefix)[1];
+        var prefixId = prefixPattern.exec(formPrefix)[1];
         var totalForms = $('#id_form-TOTAL_FORMS').val();
         $('#id_form-TOTAL_FORMS').val(parseInt(totalForms)+1);
         var currentFormId = parseInt(totalForms);// 1 based id
-        var currentPrefix = prefix+currentFormId+"";
+        var currentPrefix = prefixId+currentFormId+"";
+        $("#schedulePrefix",clone).val(currentPrefix);
         $(clone).attr("id","schedule-"+currentPrefix);
+        
+        //clear plugins
+        $(".chzn-container", clone).remove();
+        var chosenDone = $(".chzn-done", clone);
+        for(var i=0; i<chosenDone.length; i++)
+        {
+            $(chosenDone[i]).removeClass('chzn-done');
+            $(chosenDone[i]).show();
+        }
+        $("input", clone).labelify({ labelledClass: "helpLabel" });//reinit labelify
 
         for(var i=0; i<inputs.length; i++)
         {
@@ -117,9 +142,10 @@ var CreateEvent =
                 $(inputs[i]).attr("name",newName);
             }
         }// forloop
-        
+
         $(insertTo).prepend(clone);
         $(clone).show();
+        CreateEvent.initSchedule(clone);
         return false;
     },
     addAddresses:function(adrObjects, belongsTo)
@@ -167,20 +193,6 @@ var CreateEvent =
     initMultiSelect: function(id, text)
     {
         $(id).chosen();
-        /*$(id).multiselect(
-               {
-                   header: "",
-                   noneSelectedText: text,
-                   selectedList: 4,
-                   multiselectclick: function(event, ui)
-                   {
-
-                   },
-                   beforeopen: function()
-                   {
-                       $(".ui-multiselect-menu").css("width",$(".ui-multiselect").width());
-                   }
-           }).multiselectfilter();*/
     },
     submitForm: function(formId)
     {

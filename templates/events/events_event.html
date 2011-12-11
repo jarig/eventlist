@@ -9,6 +9,7 @@
     <link href="{{ STATIC_URL }}css/event_create.css" rel="stylesheet" type="text/css">
     <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{{ STATIC_URL }}js/event_create.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}address/address.js"></script>
     {% include "jquery.multiselect.html" %}
     {% include "jquery.timeentry.html" %}
 {% endblock %}
@@ -37,7 +38,7 @@
         <table id="eventDataTable" >
             <tr>
                 <td colspan="2">
-                    <div class="divButton eventName">
+                    <div class="divButton eventName {% if eventForm.name.errors %}errorHighlight{% endif %}">
                         {% field eventForm.name 'title=Event Name' %}
                     </div>
                     <div class="errors">
@@ -113,13 +114,15 @@
             </tr>
         <tr>
             <td>
+                <input type="hidden" value="{% url blogs.views.getBlogAddress %}" id="getAddressURL">
+                <input type="hidden" value="{% url common.views.getCities %}" id="getCityURL">
                 <div class="sectionHeader sectionHeaderHighlight">Event Schedules: </div>
                 <div class="button addScheduleButton" onclick='CreateEvent.addSchedule("#schedule-form-0","#eventSchedules");' >
                     Add Schedule
                 </div>
                 {{ eventSchedules.management_form }}
                 <div class="eventSchedules" id="eventSchedules">
-                        {% for schForm in eventSchedules %}
+                        {% for schForm in eventSchedules reversed %}
                             <div class="eventSchedule"
                                     id="schedule-form-{{ forloop.counter0 }}"
                             >
@@ -140,15 +143,24 @@
                                             </div>
                                         </div>
                                 </div>
+                                <div class="blogSelection">
+                                    {{ schForm.blog }}
+                                </div>
+                                <div class="loading"></div>
+                                <div class="address blogAddress">
+                                </div>
                                 {% for adr in schForm.addresses %}
                                     <input type="hidden" name="addressPrefix" id="addressPrefix" value="{{ adr.prefix }}">
-                                    <div class="address">
+                                    <div class="address customAddress">
                                         {% include "event_address.html" with address=adr %}
                                     </div>
                                 {% endfor %}
                                 {{  schForm.addresses.management_form }}
                             </div>
                         {% endfor %}
+                        <div id="addressTemplate">
+                            {% include "event_address.html" with address=None %}
+                        </div>
                 </div>
             </td>
         </tr>

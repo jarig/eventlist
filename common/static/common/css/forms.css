@@ -1,3 +1,7 @@
+.errorHighlight
+{
+    border: 1px red solid;
+}
 .button
 {
     cursor: pointer;

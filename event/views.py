@@ -27,7 +27,7 @@ def create(request):
     if request.method == "POST":
         eventForm = NewEventForm(request.user, request.POST, request.FILES)
         eventSchedules = eventScheduleFormSet(request.POST)
-        if eventForm.is_valid() and eventSchedules.is_valid():
+        if eventSchedules.is_valid() and eventForm.is_valid():
             newEvent = eventForm.saveEvent(request, eventSchedules)
             messages.success(request, ugettext("Event successfully created"))
             #redirect to edit/publish event

@@ -1,69 +1,78 @@
 
+//extend jquery
+//TODO rewrite to plugin
+(function($)
+{
+    var methods ={
+        init: function(cityURL, onChange)
+        {
+            var $this = $(this);
+            $('.adr_country select',$this).chosen(),
+            $('.adr_country select',$this).change(function(event, ui){
+                var targetVal = $(event.target).val();
+                methods.initCities($this, cityURL, targetVal);
+                if (typeof(onChange) === "function")
+                    onChange();
+            });
+            $('.adr_city select',$this).chosen();
+            $('.adr_city select',$this).change(function(event,ui){
+               if (typeof(onChange) === "function")
+                    onChange();
+            });
+            $('.adr_cityArea input',$this).blur(function()
+            {
+                if (typeof(onChange) === "function")
+                    onChange();
+            });
+            $('.adr_street input',$this).blur(function()
+            {
+                if (typeof(onChange) === "function")
+                    onChange();
+            });
+            $('.adr_country select',$this).change();
+            $("input",$this).labelify();
+        },
+        initCities: function ($this, url,countryId)
+        {
+            $('.adr_city option',$this).remove();
+            $('.adr_city select',$this).append('<option id="loadingOption" value="0">Loading...</option>');
+            $(".adr_city select",$this).trigger("liszt:updated");
+            $.ajax({
+                    url: url,
+                    data:{
+                      'country': countryId
+                    },
+                    success: function(cities)
+                    {
+                        $('.adr_city #loadingOption').remove();
+                        var cities = eval('('+cities+')');
+                        for(var i=0; i< cities.length; i++)
+                        {
+                            var city = cities[i];
+                            $('.adr_city select',$this).append('<option value='+city['pk']+'>'+city['fields']['name']+'</option>');
+                            $('.adr_city select',$this).change();
+                        }
+                        $(".adr_city select", $this).trigger("liszt:updated");
+                    }
+            });
+        }
+    };
+    $.fn.rest_Address = function(method)
+    {
+        if ( method && typeof method === "string" )
+        {
+            methods[method].apply(this, Array.prototype.slice.call( arguments, 1 ));
+        } else
+        {
+            $.error("No such method");
+        }
+        return this;
+    }
+})(jQuery);
 
 var Address =
 {
-    addressDiv : '',
     cityURL: '',
-    init: function(addressDiv, cityURL, onChange)
-    {
-        Address.cityURL = cityURL;
-        Address.addressDiv = addressDiv;
-        $(function()
-        {
-            $(addressDiv + " input").labelify();
-            Address.initMultiSelect($(addressDiv + ' .adr_country select'),
-                                    'Select Country',
-                                    function(event, ui)
-                                    {
-                                        var targetVal = $(event.target).val();
-                                        Address.initCities(targetVal);
-                                        if (typeof(onChange) == "function")
-                                            onChange();
-                                    });
-            Address.initMultiSelect($(addressDiv + ' .adr_city select'),
-                                    'Select City',
-                                    function(event, ui)
-                                    {
-                                        if (typeof(onChange) == "function")
-                                            onChange();
-                                    });
-            $(addressDiv + ' .adr_cityArea input').blur(function()
-            {
-                if (typeof(onChange) == "function")
-                    onChange();
-            });
-            $(addressDiv + ' .adr_street input').blur(function()
-            {
-                if (typeof(onChange) == "function")
-                    onChange();
-            });
-            //$(".ui-multiselect").css("width","100%");
-        });
-    },
-    initCities: function(country)
-    {
-        $('.adr_city option',Address.addressDiv).remove();
-        $('.adr_city select',Address.addressDiv).append('<option id="loadingOption" value="0">Loading...</option>');
-        $(".adr_city select").trigger("liszt:updated");
-        $.ajax({
-                url: Address.cityURL,
-                data:{
-                  'country': country
-                },
-                success: function(cities)
-                {
-                    $('.adr_city #loadingOption').remove();
-                    var cities = eval('('+cities+')');
-                    for(var i=0; i< cities.length; i++)
-                    {
-                        var city = cities[i];
-                        $('.adr_city select',Address.addressDiv).append('<option value='+city['pk']+'>'+city['fields']['name']+'</option>');
-                        $('.adr_city select').change();
-                    }
-                    $(".adr_city select", Address.addressDiv).trigger("liszt:updated");
-                }
-            });
-    },
     initMultiSelect: function(id, text, clickCallBack)
     {
         $(id).chosen().change( clickCallBack );
@@ -83,5 +92,15 @@ var Address =
             if ($(street).val() != $(street).attr("title")) searchText += ","+$(street).val();
             callback(searchText);
         });
+    },
+    fillAddress: function(addressDiv, request)
+    {
+        $("#adr_id",addressDiv).val(request["pk"]);
+        var fields = request["fields"];
+        $(".adr_country",addressDiv).html(fields["country"]);
+        $(".adr_city",addressDiv).html(fields["city"]);
+        $(".adr_cityArea",addressDiv).html(fields["cityArea"]);
+        $(".adr_street",addressDiv).html(fields["street"]);
+        $(".adr_postalCode",addressDiv).html(fields["postalCode"]);
     }
 };
