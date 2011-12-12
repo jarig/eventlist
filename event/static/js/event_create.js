@@ -9,7 +9,8 @@ var CreateEvent =
             $("input").labelify({ labelledClass: "helpLabel" });
             $("textarea").labelify({ labelledClass: "helpLabel" });
             CreateEvent.initMultiSelect("#id_activities","Select Event Activities");
-            CreateEvent.initSelect("#id_blogs","Select Event Locations");
+            //CreateEvent.initSelect("#id_blogs","Select Event Locations");
+            $("#id_blogs").chosen();
             $("#id_organizers").chosen();
             
             CreateEvent.initSchedules();
@@ -74,17 +75,18 @@ var CreateEvent =
                     $(".customAddress",schedule).show(); //custom address;
                     //init city choice
                     $(".customAddress",schedule).rest_Address("init", $('#getCityURL').val());
+                    $("#id_"+prefix+"-address",schedule).val(0);
                     $(".blogAddress",schedule).hide();
                     return;
                 }
                 $(".customAddress",schedule).hide();
                 $(".blogAddress", schedule).show();
-                var adrTempl = $("#addressTemplate").clone().attr("id","address-for-"+blogId);
+                var adrTempl = $("#addressTemplate", schedule).clone().attr("id","address-for-"+blogId);
                 $(".blogAddress",schedule).html(adrTempl);
 
                 $(".loading", schedule).html("Loading...");
                 $.ajax({
-                    url: $("#getAddressURL").val(),
+                    url: $("#getBlogAddressURL").val(),
                     data: {
                         "blogId": blogId
                     },
@@ -95,7 +97,8 @@ var CreateEvent =
                       var resp = eval("("+resp+")");
                       //TODO select address
                       if (resp.length > 0)
-                      {
+                      {//id_form-1-address
+                        $("#id_"+prefix+"-address",schedule).val(resp[0]["pk"]);
                         Address.fillAddress(adrTempl, resp[0]);
                         Common.DEBUG(resp[0]);
                       }

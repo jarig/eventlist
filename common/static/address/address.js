@@ -1,6 +1,5 @@
 
 //extend jquery
-//TODO rewrite to plugin
 (function($)
 {
     var methods ={
@@ -72,7 +71,6 @@
 
 var Address =
 {
-    cityURL: '',
     initMultiSelect: function(id, text, clickCallBack)
     {
         $(id).chosen().change( clickCallBack );

@@ -14,7 +14,7 @@
         <h1>{% trans 'Event Management' %}</h1>
         <div class='subMenu'>
             <ul>
-                <li><a href="{% url event.views.create %}" class="manageButton">Create Event</a></li>
+                <li><a href="{% url event.views.credit %}" class="manageButton">Create Event</a></li>
             </ul>
         </div>
     </div>
@@ -26,7 +26,7 @@
                  {% endif %}
                  >
                 <div class="itemName">{{ evObj.name }}</div>
-                <a href="{% url event.views.edit evObj.id %}" class="manageButton"></a>
+                <a href="{% url event.views.credit evObj.id %}" class="manageButton"></a>
             </div>
         {% endfor %}
     </div>

@@ -12,7 +12,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 import time
 from common.forms import TempImageForm
-from common.models import City
+from common.models import City, Address
 
 
 def index(request):
@@ -85,3 +85,10 @@ def getCities(request):
     data= json_serializer.serialize(cities, ensure_ascii=False, use_natural_keys=True)
     return HttpResponse(data)
     pass
+
+def getAddress(request):
+    adrId = request.REQUEST.get("id",0)
+    address = Address.objects.filter(pk=adrId)
+    json_serializer = json.Serializer()
+    data= json_serializer.serialize(address, ensure_ascii=False, use_natural_keys=True)
+    return HttpResponse(data)

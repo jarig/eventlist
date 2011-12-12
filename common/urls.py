@@ -6,4 +6,5 @@ urlpatterns = patterns('common.views',
     url(r'^publisher$', 'publisherMode'),
     url(r'^uploadTempImage$', 'uploadTempImage'),
     url(r'^getCities$', 'getCities'),
+    url(r'^getAddress$', 'getAddress'),
 )

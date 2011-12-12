@@ -12,6 +12,11 @@
     padding: 5px;
 }
 
+.sectionHeader:hover
+{
+    cursor: default;
+}
+
 .sectionHeaderHighlight
 {
     background-color: #fffacd;
