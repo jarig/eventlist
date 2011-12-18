@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.translation import ugettext
-from event.forms import NewEventForm, EventScheduleForm, EventScheduleFormSet
+from event.forms import EventForm, EventScheduleForm, EventScheduleFormSet
 from event.models import Event, EventSchedule
 
 
@@ -34,16 +34,16 @@ def credit(request, event=None):
                                                 form=EventScheduleForm,
                                                 formset=EventScheduleFormSet, can_delete=True, extra=extraSchedule)
     if request.method == "POST":
-        eventForm = NewEventForm(request.user, request.POST, request.FILES,instance=event)
+        eventForm = EventForm(request.user, request.POST, request.FILES,instance=event)
         eventSchedules = eventScheduleFormSet(request.POST,
                                               queryset=schedules)
         if eventForm.is_valid() and eventSchedules.is_valid():
             newEvent = eventForm.saveEvent(request, eventSchedules)
             messages.success(request, ugettext("Event successfully created"))
             #redirect to edit/publish event
-            return HttpResponseRedirect(reverse("event.views.edit", kwargs={"eventId": newEvent.id}))
+            return HttpResponseRedirect(reverse("event.views.credit", kwargs={"event": newEvent.id}))
     else:
-        eventForm = NewEventForm(request.user, instance=event)
+        eventForm = EventForm(request.user, instance=event)
         eventSchedules = eventScheduleFormSet(
             queryset=schedules,
             initial=[{'dateFrom':datetime.date.today(),
@@ -56,36 +56,6 @@ def credit(request, event=None):
                                     "eventForm": eventForm
                                  })
     pass
-
-"""
-@login_required
-@permission_required('publisher.publish')
-def credit(request, eventId):
-    event = Event.objects.select_related('blogs').get(pk=eventId)
-
-    if event.author != request.user:
-        raise Event.DoesNotExist(_("You don't have permission to edit this event"))
-    
-    if request.method == "POST":
-        addresses = []
-        if request.POST.has_key(u"adr_id"):
-            addressIds = request.POST.getlist('adr_id')
-            for id in addressIds:
-                if id == '': continue
-                addresses.append(Address.objects.get(pk=id))
-        eventForm = NewEventForm(request.user, request.POST, request.FILES, instance=event)
-        if eventForm.is_valid():
-            eventForm.saveEvent(request, addresses)
-            messages.success(request, ugettext("Event details successfully changed."))
-    else:
-        eventForm = NewEventForm(request.user, instance=event)
-        addresses = []#event.addresses.all()
-    
-    return render_event(request,{
-                                    "eventForm":eventForm,
-                                    "addresses":addresses
-                                })
-"""
 
 def manage(request):
     myEvents = Event.objects.filter(author=request.user)

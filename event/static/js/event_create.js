@@ -72,17 +72,20 @@ var CreateEvent =
                 var blogId = $(opt).val();
                 if (blogId == "undefined" || blogId == 0)
                 {
-                    $(".customAddress",schedule).show(); //custom address;
+                    var customAddress = $("#customAddressTemplate",schedule).clone();
                     //init city choice
-                    $(".customAddress",schedule).rest_Address("init", $('#getCityURL').val());
                     $("#id_"+prefix+"-address",schedule).val(0);
-                    $(".blogAddress",schedule).hide();
-                    return;
+                    $("#eventAddress",schedule).html($(customAddress).html());
+                    $(customAddress).show(); //custom address;
+                    $("#eventAddress",schedule).rest_Address("init", $('#getCityURL').val());
+                    $("input", schedule).labelify({ labelledClass: "helpLabel" });
+                    $("textarea", schedule).labelify({ labelledClass: "helpLabel" });
+                    return schedule;
                 }
-                $(".customAddress",schedule).hide();
-                $(".blogAddress", schedule).show();
-                var adrTempl = $("#addressTemplate", schedule).clone().attr("id","address-for-"+blogId);
-                $(".blogAddress",schedule).html(adrTempl);
+                //$(".customAddress",schedule).hide();
+                //$(".blogAddress", schedule).show();
+                var adrTempl = $("#blogAddressTemplate", schedule).clone().attr("id","address-for-"+blogId);
+                $("#eventAddress",schedule).html(adrTempl);
 
                 $(".loading", schedule).html("Loading...");
                 $.ajax({
@@ -106,7 +109,7 @@ var CreateEvent =
                 });
             }
         });
-        $(blogFieldId, schedule).change();
+        return schedule;
     },
     addSchedule: function(toClone, insertTo)
     {
@@ -148,7 +151,9 @@ var CreateEvent =
 
         $(insertTo).prepend(clone);
         $(clone).show();
-        CreateEvent.initSchedule(clone);
+        var schedule = CreateEvent.initSchedule(clone);
+        var blogFieldId = "#id_"+formPrefix+"-blog";
+        $(blogFieldId, schedule).change();
         return false;
     },
     addAddresses:function(adrObjects, belongsTo)

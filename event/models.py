@@ -20,7 +20,7 @@ class Event(models.Model):
     name = models.CharField(max_length=255)
     author = models.ForeignKey(User)
     logo = models.ImageField(upload_to="event/logo/",)
-    blogs = models.ManyToManyField(Blog) #indicates to which blogs this event belongs to
+    blogs = models.ManyToManyField(Blog) #indicates
     activities = models.ManyToManyField(EventActivity, blank=True, null=True) #event activities/actions
     organizers = models.ManyToManyField(Organization)
     descr = models.TextField() #event description (BB code)
@@ -37,7 +37,8 @@ class EventSchedule(models.Model):
     dateTo = models.DateField(null=True, blank=True, default=datetime.date.today) #date when event ends
     timeTo = models.TimeField(default='00:00', null=True, blank=True)
     address = models.ForeignKey(Address) #location where this event will be held
-
+    blog = models.ForeignKey(Blog, null=True, blank=True, default='') # addresses's blog
+    
     pass
 
 class Comment(models.Model):

@@ -11,7 +11,7 @@ class AddressForm(ModelForm):
     city = forms.ModelChoiceField(City.objects.none(),
                                     empty_label=None,
                                     widget=forms.Select(attrs={'placeholder':'Select City'}))
-
+    
     def __init__(self, *args, **kwargs):
         super(AddressForm, self).__init__(*args, **kwargs)
         countryVal = self.__getitem__('country').value()
@@ -26,7 +26,11 @@ class AddressForm(ModelForm):
             'cityArea': forms.TextInput(attrs={'title':'City Area'}),
             'postalCode': forms.TextInput(attrs={'title':'Postal Code'}),
         }
+    
+    def save(self, commit=True):
+        super(AddressForm, self).save(commit)
         
+
     def saveAddress(self, request):
         
         return self.save()

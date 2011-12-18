@@ -33,5 +33,6 @@ class Address(models.Model):
     county = models.CharField(max_length=128, default='', blank=True)
     street = models.CharField(max_length=255)
     postalCode = models.CharField(max_length=15, default='', blank=True)
+    token = models.CharField(max_length=32, default=None, null=True, editable=False)
 
     
