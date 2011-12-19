@@ -33,6 +33,7 @@
         },
         initCities: function ($this, url,countryId)
         {
+            var prevSelected = $('.adr_city option:selected',$this);
             $('.adr_city option',$this).remove();
             $('.adr_city select',$this).append('<option id="loadingOption" value="0">Loading...</option>');
             $(".adr_city select",$this).trigger("liszt:updated");
@@ -48,7 +49,14 @@
                         for(var i=0; i< cities.length; i++)
                         {
                             var city = cities[i];
-                            $('.adr_city select',$this).append('<option value='+city['pk']+'>'+city['fields']['name']+'</option>');
+                            var option = $('<option value='+city['pk']+'>'+city['fields']['name']+'</option>');
+                            for (var s=0; s< prevSelected.length; s++)
+                                if ( $(prevSelected[s]).val() == city['pk'])
+                                {
+                                    $(option).attr("selected","selected");
+                                    break;
+                                }
+                            $('.adr_city select',$this).append(option);
                             $('.adr_city select',$this).change();
                         }
                         $(".adr_city select", $this).trigger("liszt:updated");

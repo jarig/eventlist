@@ -83,9 +83,10 @@ var CreateEvent =
                     return schedule;
                 }
                 $("#customAddress",schedule).hide();
-                $("#blogAddress", schedule).show();
+                $("#blogAddress", schedule).html("Loading...");
+                //var adrTempl = $("#blogAddress", schedule).show();
                 var adrTempl = $("#blogAddressTemplate", schedule).clone().attr("id","address-for-"+blogId);
-                $("#eventAddress",schedule).html(adrTempl);
+                adrTempl = $("#blogAddress", schedule).html($(adrTempl).html());
                 
                 $(".loading", schedule).html("Loading...");
                 $.ajax({
@@ -104,7 +105,8 @@ var CreateEvent =
                         $("#id_"+prefix+"-address",schedule).val(resp[0]["pk"]);
                         Address.fillAddress(adrTempl, resp[0]);
                         Common.DEBUG(resp[0]);
-                      }
+                      } else
+                        $("#blogAddress", schedule).html("No addresses available");
                     }
                 });
             }
@@ -113,7 +115,7 @@ var CreateEvent =
         for(i=0; i< selectedOpts.length; i++)
         {
             var blogId = $(selectedOpts[i]).val();
-            if (blogId == "" || blogId <= 0)
+            if (blogId == "" || blogId <= 0)//TODO update only country-city fields
                 $(blogFieldId, schedule).change();
         }
         return schedule;
