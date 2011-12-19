@@ -72,21 +72,21 @@ var CreateEvent =
                 var blogId = $(opt).val();
                 if (blogId == "undefined" || blogId == 0)
                 {
-                    var customAddress = $("#customAddressTemplate",schedule).clone();
+                    var customAddress = $("#customAddress",schedule);
                     //init city choice
                     $("#id_"+prefix+"-address",schedule).val(0);
-                    $("#eventAddress",schedule).html($(customAddress).html());
+                    $("#blogAddress", schedule).hide();
                     $(customAddress).show(); //custom address;
                     $("#eventAddress",schedule).rest_Address("init", $('#getCityURL').val());
                     $("input", schedule).labelify({ labelledClass: "helpLabel" });
                     $("textarea", schedule).labelify({ labelledClass: "helpLabel" });
                     return schedule;
                 }
-                //$(".customAddress",schedule).hide();
-                //$(".blogAddress", schedule).show();
+                $("#customAddress",schedule).hide();
+                $("#blogAddress", schedule).show();
                 var adrTempl = $("#blogAddressTemplate", schedule).clone().attr("id","address-for-"+blogId);
                 $("#eventAddress",schedule).html(adrTempl);
-
+                
                 $(".loading", schedule).html("Loading...");
                 $.ajax({
                     url: $("#getBlogAddressURL").val(),
@@ -109,6 +109,13 @@ var CreateEvent =
                 });
             }
         });
+        var selectedOpts = $(blogFieldId + " :selected", schedule);
+        for(i=0; i< selectedOpts.length; i++)
+        {
+            var blogId = $(selectedOpts[i]).val();
+            if (blogId == "" || blogId <= 0)
+                $(blogFieldId, schedule).change();
+        }
         return schedule;
     },
     addSchedule: function(toClone, insertTo)
@@ -116,6 +123,7 @@ var CreateEvent =
         var clone = $(toClone).clone();
         //reset data
         var formPrefix = $("#schedulePrefix",clone).val();
+        $("#id_"+formPrefix+"-id",clone).remove();
         var inputs = $('input,select',clone);
         var prefixPattern=new RegExp('(.*)(\\d+)$','i');
         var prefixId = prefixPattern.exec(formPrefix)[1];
@@ -125,6 +133,8 @@ var CreateEvent =
         var currentPrefix = prefixId+currentFormId+"";
         $("#schedulePrefix",clone).val(currentPrefix);
         $(clone).attr("id","schedule-"+currentPrefix);
+        //id_form-2-id
+
         
         //clear plugins
         $(".chzn-container", clone).remove();

@@ -36,7 +36,7 @@ class EventSchedule(models.Model):
     timeFrom = models.TimeField(default='00:00')
     dateTo = models.DateField(null=True, blank=True, default=datetime.date.today) #date when event ends
     timeTo = models.TimeField(default='00:00', null=True, blank=True)
-    address = models.ForeignKey(Address) #location where this event will be held
+    address = models.ForeignKey(Address, null=True) #location where this event will be held
     blog = models.ForeignKey(Blog, null=True, blank=True, default='') # addresses's blog
     
     pass

@@ -132,7 +132,7 @@
                 <div class="eventSchedules" id="eventSchedules">
                         {% for schForm in eventSchedules reversed %}
                             <div class="eventSchedule"
-                                    id="schedule-form-{{ forloop.counter0 }}"
+                                    id="schedule-form-{{ forloop.revcounter0 }}"
                             >
                                 {{ schForm.id }}
                                 <input type="hidden" name="schedulePrefix" id="schedulePrefix" value="{{ schForm.prefix }}">
@@ -154,29 +154,37 @@
                                 </div>
                                 <div class="blogSelection">
                                     {{ schForm.blog }}
+                                    <!--div class="button"></div-->
                                 </div>
                                 <div class="loading"></div>
                                 {{ schForm.address }} {# address id #}
                                 <div class="address eventAddress" id="eventAddress">
-                                    {% if schForm.blogAddress %}
+                                    <div class="address blogAddress" id="blogAddress"
+                                         {% if schForm.blogAddress %}
+                                         style="display: block;"
+                                         {% endif %}
+                                    >
                                         {% include "event_address.html" with address=schForm.blogAddress %}
-                                    {% else %}
+                                    </div>
+                                    <div class="address customAddress" id="customAddress"
+                                         {% if schForm.blogAddress %}
+                                            style="display: none;"
+                                         {% endif %}
+                                            >
+                                        <input type="hidden" name="addressPrefix" id="addressPrefix" value="{{ schForm.customAddressForm.prefix }}">
                                         {% include "event_address.html" with address=schForm.customAddressForm %}
-                                    {% endif %}
+                                    </div>
                                 </div>
-                                <div class="address blogAddress"></div>
-                                <div class="address customAddress" id="customAddressTemplate">
-                                    <input type="hidden" name="addressPrefix" id="addressPrefix" value="{{ schForm.customAddressForm.prefix }}">
-                                    {% include "event_address.html" with address=schForm.customAddressForm %}
-                                </div>
+
                                 {{ schForm.addressForm.errors }}
                                 <div id="blogAddressTemplate">
                                     {% include "event_address.html" with address=None %}
                                 </div>
                             </div>
                         {% endfor %}
-                        {{ eventSchedules.errors }}
-
+                        {% for dict in eventSchedules.errors %}
+                            {{ dict }}
+                        {% endfor %}
                 </div>
             </td>
         </tr>

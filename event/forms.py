@@ -57,15 +57,15 @@ class EventScheduleForm(ModelForm):
                                                                                     "class":"dateTo"
                                                                                 }), required=False)
     #TODO get blog list dynamically
-    blog = forms.ModelChoiceField(queryset=Blog.objects.all(), empty_label="Custom Address")
-    address = forms.IntegerField(widget=HiddenInput())
+    blog = forms.ModelChoiceField(queryset=Blog.objects.all(), empty_label="Custom Address", required=False)
+    address = forms.IntegerField(widget=HiddenInput(), required=False)
 
     def clean_address(self):
-        print "here"
         data = self.cleaned_data['address']
-        data = Address.objects.get(pk=data)
-        # Always return the cleaned data, whether you have changed it or
-        # not.
+        if data:
+            data = Address.objects.get(pk=data)
+        else: #if custom address
+            data = None
         return data
 
     def __init__(self, *args, **kwargs):
@@ -74,19 +74,31 @@ class EventScheduleForm(ModelForm):
         data = None
         blog = None
         if len(self.data): data = self.data
-        print self.data["%s-blog" % self.prefix]
-        if self.instance:
-            #TODO refactor
-            try: address = self.instance.address
+        
+        if self.instance:#TODO refactor
+            try:
+                if self.is_bound:
+                    addressId = self.data["%s-address" % self.prefix]
+                    if addressId != '': address = Address.objects.get(pk=addressId)
+                else:
+                    address = self.instance.address
             except Address.DoesNotExist: pass
-            try: blog = self.instance.blog
+            try:
+                if self.is_bound:
+                    blogId = self.data["%s-blog" % self.prefix]
+                    if blogId != '': blog = Blog.objects.get(pk=blogId)
+                else:
+                    blog = self.instance.blog
             except Blog.DoesNotExist: pass
         # if it is a blog address pass Address object
         if blog:
             self.blogAddress = address
             address = None
-            
-        self.customAddressForm = AddressForm(data=data,
+            data = None
+
+        
+        self.customAddressForm = AddressForm(
+                                       data=data,
                                        prefix='%s-address' % self.prefix,
                                        instance=address)
 
@@ -99,15 +111,20 @@ class EventScheduleForm(ModelForm):
             schAddress = self.cleaned_data["address"]
         else:
             #create/save address
-            schAddress = self.customAddressForm.save().instance
+            self.customAddressForm.save()
+            schAddress = self.customAddressForm.instance
 
+        print schAddress
         schedule.address = schAddress
         schedule.save()
         
         return schedule
 
     def is_valid(self):
-        return super(EventScheduleForm, self).is_valid()
+        res = super(EventScheduleForm, self).is_valid()
+        if not self.cleaned_data["address"]:#if custom form
+            return res and self.customAddressForm.is_valid()
+        return res
         
 
     class Meta:
@@ -128,11 +145,6 @@ class EventScheduleFormSet(BaseModelFormSet):
 
     def is_valid(self):
         result = super(EventScheduleFormSet, self).is_valid()
-        
-        for form in self.forms:
-            if not form.addressForm.is_valid():
-                return False
-
         return result
     
     def saveSchedules(self, event):
