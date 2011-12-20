@@ -2,6 +2,7 @@ import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
+from django.db.models.aggregates import Count
 from django.forms.models import  modelformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -67,10 +68,11 @@ def manage(request):
                               )
 
 def main(request):
-    events = Event.objects.all().order_by('dateFrom','rating')
+    eventSchedules = EventSchedule.objects.all().order_by("-dateFrom")
+    print eventSchedules.select_related("event")
     return render_to_response("events/events_main.html",
                               {
-                                    "events": events
+                                    "eventSchedules": eventSchedules
                               },
                               context_instance=RequestContext(request)
                               )

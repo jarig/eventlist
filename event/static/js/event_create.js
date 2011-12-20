@@ -99,7 +99,6 @@ var CreateEvent =
                       $(".loading", schedule).html("");
                       //add address div
                       var resp = eval("("+resp+")");
-                      //TODO select address
                       if (resp.length > 0)
                       {//id_form-1-address
                         $("#id_"+prefix+"-address",schedule).val(resp[0]["pk"]);
@@ -115,8 +114,9 @@ var CreateEvent =
         for(i=0; i< selectedOpts.length; i++)
         {
             var blogId = $(selectedOpts[i]).val();
-            if (blogId == "" || blogId <= 0)//TODO update only country-city fields
-                $(blogFieldId, schedule).change();
+            if (blogId == "" || blogId <= 0)
+                $("#eventAddress",schedule).rest_Address("init", $('#getCityURL').val());
+                //$(blogFieldId, schedule).change();
         }
         return schedule;
     },
