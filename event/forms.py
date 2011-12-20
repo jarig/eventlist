@@ -122,7 +122,8 @@ class EventScheduleForm(ModelForm):
 
     def is_valid(self):
         res = super(EventScheduleForm, self).is_valid()
-        if not self.cleaned_data["address"]:#if custom form
+        print self.cleaned_data["address"]
+        if self.cleaned_data["address"] == "" or self.cleaned_data["address"] <= 0:#if custom form
             return res and self.customAddressForm.is_valid()
         return res
         
@@ -145,6 +146,8 @@ class EventScheduleFormSet(BaseModelFormSet):
 
     def is_valid(self):
         result = super(EventScheduleFormSet, self).is_valid()
+        for form in self.forms:
+            if not form.is_valid(): return False
         return result
     
     def saveSchedules(self, event):

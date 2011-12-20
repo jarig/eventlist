@@ -29,7 +29,8 @@ def credit(request, event=None):
         if event.author != request.user:#TODO check organization group
             raise Event.DoesNotExist(_("You don't have permission to edit this event"))
         schedules = EventSchedule.objects.filter(event=event)
-        extraSchedule = 0
+        if len(schedules):
+            extraSchedule = 0
     
     eventScheduleFormSet = modelformset_factory(EventSchedule,
                                                 form=EventScheduleForm,
@@ -68,7 +69,7 @@ def manage(request):
                               )
 
 def main(request):
-    eventSchedules = EventSchedule.objects.all().order_by("-dateFrom")
+    eventSchedules = EventSchedule.objects.all().order_by("-dateFrom", "-timeFrom")
     print eventSchedules.select_related("event")
     return render_to_response("events/events_main.html",
                               {

@@ -61,7 +61,7 @@ var Facebook =
 		 FB.login(function(response) {
 			  if (response.session) {
 
-			    if (response.perms)
+			    if (response.scope)
 			    {
                     //TODO check perms
                    FB.api('/me', function(user)
@@ -82,7 +82,7 @@ var Facebook =
 			  } else {
 			    // user is not logged in
 			  }
-		 }, {perms:'publish_stream, user_events, friends_events'});
+		 }, {scope:'publish_stream, user_events, friends_events'});
     },
     logout: function ()
       {
