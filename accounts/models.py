@@ -1,3 +1,8 @@
+import urllib
+import urllib2
+from django.core.files.base import File
+from django.core.files.storage import DefaultStorage
+from django.core.files.temp import NamedTemporaryFile
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -34,9 +39,17 @@ def updateUserData(user, firstName, lastName, avatarURL):
     user.first_name = firstName
     user.last_name = lastName
     profile = user.get_profile()
-    profile.avatar = avatarURL
     profile.save()
     user.save()
+
+    img_temp = NamedTemporaryFile()
+    img_temp.write(urllib2.urlopen(avatarURL).read())
+    img_temp.flush()
+    storage = DefaultStorage()
+    profile.avatar.save(
+        "avatar_"+str(user.pk),
+        File(img_temp)
+    )
 
 """ Not required
 def create_user_profile(sender, instance, created, **kwargs):

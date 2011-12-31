@@ -1,3 +1,5 @@
+import json
+import urllib
 import urlparse
 from django.http import HttpResponse
 from accounts import settings
@@ -20,8 +22,16 @@ class Facebook:
     
     
     def validate(self, request):
-        cookieName = "fbs_%s" % str(settings.BACKENDS["FACEBOOK"]["APP_ID"])
+        #cookieName = "fbsr_%s" % str(settings.BACKENDS["FACEBOOK"]["APP_ID"])
+        #https://graph.facebook.com/me?access_token=
         try:
+            accessToken = request.REQUEST["accessToken"]
+            uid = request.REQUEST["uid"]
+            resp = urllib.urlopen("https://graph.facebook.com/me?access_token=" + accessToken)
+            data = json.loads(resp.read())
+            print data["id"] == uid
+            return data["id"] == uid
+            """
             cookieData = urlparse.parse_qs(request.COOKIES[cookieName])
             kSorted = sorted(cookieData.keys())
             value=""
@@ -36,5 +46,6 @@ class Facebook:
                 return True
             else:
                 raise ValueError()
+            """
         except (KeyError, IndexError, AttributeError, ValueError):
             return False

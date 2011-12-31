@@ -59,11 +59,8 @@ var Facebook =
     {
         $("#fbSignName").html("Signing in...");
 		 FB.login(function(response) {
-			  if (response.session) {
-
-			    if (response.scope)
-			    {
-                    //TODO check perms
+			  if (response.authResponse) {
+                   $("#extLoginForm input[name=accessToken]").val(response.authResponse.accessToken);
                    FB.api('/me', function(user)
                    {
                        Common.DEBUG("DATA "+JSON.stringify(user));
@@ -74,11 +71,9 @@ var Facebook =
                        $("#extLoginForm input[name=photo]").val("http://graph.facebook.com/"+user.id+"/picture?type=large");
                        $("#extLoginForm input[name=uid]").val(user.id);
                        $("#extLoginForm input[name=provider]").val("fb");
+
                        $("#extLoginForm").submit();
                    });
-			    } else {
-			      // user is logged in, but did not grant any permissions
-			    }
 			  } else {
 			    // user is not logged in
 			  }

@@ -68,6 +68,8 @@ def manage(request):
                               context_instance=RequestContext(request)
                               )
 
+
+
 def main(request):
     eventSchedules = EventSchedule.objects.all().order_by("-dateFrom", "-timeFrom")
     print eventSchedules.select_related("event")
