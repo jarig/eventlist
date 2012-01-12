@@ -63,3 +63,20 @@ a:hover {
 	font-style: italic;
 }
 
+.logo a
+{
+    float: left;
+    margin-right: 14px;
+    text-align: center;
+    vertical-align: middle;
+    display: block;
+    padding-left: 10px;
+    background-image: url("");
+    background-repeat: no-repeat;
+    height: 31px;
+}
+
+.helpLabel
+{
+    color: graytext;
+}

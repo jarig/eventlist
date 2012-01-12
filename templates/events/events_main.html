@@ -1,26 +1,60 @@
 {% extends 'events/events.html' %}
-
+{% load i18n %}
 {% block includes %}
     {{ block.super }}
     <link href="{{ STATIC_URL }}common/js/social/likeButtons/buttons.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{{ STATIC_URL }}common/js/social/likeButtons/buttons.js"></script>
     <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/event.js"></script>
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript">
-        $(function(){
+        $(function()
+        {
+            Event.init();
             $('.like').socialButton();
+            $('.fastsearch input').labelify({ labelledClass: "helpLabel" });
         });
     </script>
 {% endblock %}
 
 {% block content %}
-
+    <div class="fastsearch">
+        <div class="wideinput">
+            <input type="text" title="Search">
+        </div>
+    </div>
     {% for eventSchedule in eventSchedules %}
         {% with eventSchedule.event as event %}
             {% include "event_brief_info.html" %}
         {% endwith %}
     {% endfor %}
-
+    
+    <div class="partyWindow" id="partyWindow">
+        <div class="partyWindowContent">
+            <div class="partyCloseButton">Close</div>
+            <div class="partyTitle">{% trans "Party!" %}</div>
+            <div class="partySuggestions">
+                <div class="partySubTitle">Top 5 party suggestions</div>
+                <div class="partySuggestionContainer">
+                    <ul>
+                        {% for i in 012345|make_list %}
+                            <li><div class="partySuggestion">Suggestion {{ i }}</div></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="partyCreateSlogan">
+                <div class="partySubTitle">{% trans "Create Own Party, invite friends or make new!" %}</div>
+            </div>
+        </div>
+        <div class="partyWindowControls">
+            <div class="nub"></div>
+        </div>
+    </div>
 {% endblock content %}
+
+{% block hiddenContent %}
+
+{% endblock%}

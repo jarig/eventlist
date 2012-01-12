@@ -1,40 +1,43 @@
 {% load i18n %}
 <div class="event-container" id="event_{{ event.id }}">
-    <h2>{{ event.name }}</h2>
-    {{ eventSchedule.dateFrom }}
-    <div class="summary">
-        <div class="briefLogoBox">
-            <div class="briefEventLogo">
-                {% if event.logo %}
-                    <img src="{{ event.logo.url }}"/>
-                {% endif %}
+    <div class="event-data">
+        <h2>{{ event.name }}</h2>
+        {{ eventSchedule.dateFrom }}
+        <div class="summary">
+            <div class="briefLogoBox">
+                <div class="briefEventLogo">
+                    {% if event.logo %}
+                        <img src="{{ event.logo.url }}"/>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="briefEventDescr">
+                    {{ event.descr|truncatewords_html:200|safe }}
             </div>
         </div>
-        <div class="briefEventDescr">
-                {{ event.descr|truncatewords_html:200|safe }}
+        <div class="eventButtons">
+            <div class="likes-block">
+                <a href="?hash=event_{{ event.id }}" class="like l-fb">
+                    <i class="l-ico"></i>
+                    <span class="l-count"></span>
+                </a>
+                <a href="?hash=event_{{ event.id }}" class="like l-vk">
+                    <i class="l-ico"></i>
+                    <span class="l-count"></span>
+                </a>
+                <a href="?hash=event_{{ event.id }}" class="like l-tw">
+                    <i class="l-ico"></i>
+                    <span class="l-count"></span>
+                </a>
+            </div>
         </div>
     </div>
-    <div class="eventButtons">
-        <div class="likes-block">
-            <a href="?hash=event_{{ event.id }}" class="like l-fb">
-                <i class="l-ico"></i>
-                <span class="l-count"></span>
-            </a>
-            <a href="?hash=event_{{ event.id }}" class="like l-vk">
-                <i class="l-ico"></i>
-                <span class="l-count"></span>
-            </a>
-            <a href="?hash=event_{{ event.id }}" class="like l-tw">
-                <i class="l-ico"></i>
-                <span class="l-count"></span>
-            </a>
-        </div>
-        <div class="eventButton">
-            <a href="#">{% trans "I'll go"%}</a>
-        </div>
-        <div class="eventButton">
-            <a href="#">{% trans "Stub"%}</a>
-        </div>
+    {% if user.is_authenticated %}
+    <div class="eventButton">
+        <a href="#" class="partyButton">{% trans "I'll go"%}</a>
     </div>
-
+    {% endif %}
+    <div class="eventButton">
+        <a href="#">{% trans "Stub"%}</a>
+    </div>
 </div>

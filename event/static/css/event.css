@@ -1,4 +1,90 @@
 
+
+/* Party */
+.partyTitle
+{
+    padding-left: 10px;
+    padding-top: 4px;
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+.partySubTitle
+{
+    background-color: rgb(59, 89, 152);
+    color: white;
+    font-weight: 700;
+    min-height: 30px;
+    margin-bottom: 7px;
+    padding-left: 13px;
+    line-height: 30px;
+}
+.partyCreateSlogan
+{
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.partyWindow
+{
+    position: absolute;
+    padding: .2em;
+    overflow: hidden;
+    display: none;
+}
+
+.partyWindowContent
+{
+    border: solid #778899 1px;
+    background-color: white;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* party suggestions */
+.partySuggestions
+{
+    display: block;
+}
+
+.partySuggestionContainer
+{
+    min-height: 100px;
+}
+.partySuggestionContainer ul
+{
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+.partySuggestionContainer li
+{
+    display: inline-block;
+    border: 1px #778899 solid;
+    width: 70px;
+    height: 70px;
+    margin-left: 13px;
+}
+.partySuggestion
+{
+    
+}
+
+.partyCloseButton
+{
+    float:right;
+    position: relative;
+}
+.partyWindowControls
+{
+}
+.partyWindowControls .nub
+{
+    background-image: url('/static/common/images/nub.gif');
+    background-repeat: no-repeat;
+    background-position: 90% 50%;
+    min-height: 5px;
+}
+
 .eventOrganizers
 {
     border-top: solid #e6e6fa 1px;
@@ -132,14 +218,12 @@
     min-width: 100px;
     text-align: center;
     border: 1px #e6e6fa solid;
-    position: relative;
-    top: 10px;
-    margin-right: 15px;
-    height: 20px;
+    border-top: none;
+    margin-left: -1px;
 }
 .eventButton a
 {
-    line-height: 20px;
+    line-height: 25px;
     display: block;
     width: 100%;
     height: 100%;
@@ -172,14 +256,20 @@
     
 }
 
+.event-data
+{
+    border-bottom: solid #e6e6fa 1px;
+    margin-top: 10px;
+    float: left;
+    width: 100%;
+}
 .event-container
 {
-    border: solid #e6e6fa 1px;
+    border-top: solid #e6e6fa 1px;
     margin-top: 10px;
     margin-bottom: 30px;
     float: left;
     width: 100%;
-    border-right: none;
     background-color: #fffcff;
 }
 .event-container .summary
@@ -192,4 +282,26 @@
 .event-container h2
 {
     padding-left: 10px;
+}
+
+/* Event Fast Search */
+
+.fastsearch
+{
+    width: 100%;
+    margin-bottom: 14px;
+    margin-top: 9px;
+}
+
+.wideinput
+{
+    padding-left: 18px;
+    padding-right: 25px;
+}
+
+.wideinput input
+{
+    line-height: 35px;
+    width: 100%;
+    font-size: 25px;
 }

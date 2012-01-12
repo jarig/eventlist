@@ -3,7 +3,6 @@ from django.db import models
 from event.models import Event
 
 class Party(models.Model):
-
     members = models.ManyToManyField(User, through='PartyMember', editable=False)
     max_members=models.PositiveIntegerField(default=2)
     closed=models.BooleanField(default=False)
