@@ -24,24 +24,34 @@ var Event =
 
 (function($)
 {
+    var $this;
+    function hide()
+    {
+        //$(this).unbind('click');
+        $this.hide();
+        return false;
+    }
     var methods ={
         showPartyWindow: function(button)
         {
-            var $this= $(this);
+            $this= $(this);
+            $this.show();
             var coord = $(button).offset();
             $this.width(450);
-            //$this.height(230);
-            /*$this.dialog({
-                "height": 250,
-                "width": 500,
-                "title": title,
-                "resizable": false
-            });*/
-            $this.offset(coord);
-            coord.top -= $this.height()+5;
-            coord.left -= $this.width()-$(button).width();
+            $('a[role="button"]',$this).hover(
+                function(eO)
+                {
+                    $(this).addClass("ui-state-hover");
+                },
+                function(eO)
+                {
+                    $(this).removeClass("ui-state-hover");
+                }
+            );
+            $('a[role="button"]',$this).click(hide);
+            $this.css({top: coord.top-($this.height()+5),
+                          left: coord.left - ($this.width()-$(button).width())});
             $this.show();
-            $this.offset(coord);
         }
     };
     $.fn.rest_Event = function(method)

@@ -23,7 +23,13 @@ class Account(models.Model):
     class Meta:
         unique_together = ("identity", "provider")
 
-
+class FriendShip(models.Model):
+    creator = models.ForeignKey(User, related_name='friends') #those who added I
+    friend = models.ForeignKey(User, related_name='subscribers') #those who added me
+    date_added = models.DateTimeField(auto_now_add=True, editable=False)
+    
+    class Meta:
+        unique_together = ("creator", "friend")
 
 def openRegister(identity, provider):
     if not settings.REGISTRATION_ALLOWED: return None

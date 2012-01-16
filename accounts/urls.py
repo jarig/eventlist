@@ -7,4 +7,6 @@ urlpatterns = patterns('accounts.views',
     url(r'^elogin', 'extLoginProfile'),
     url(r'^logout$', 'logoutProfile'),
     url(r'^login/$', 'nativeLogin'),
+    url(r'^friends$', 'friendlist'),
+    url(r'^messages', 'messages'),
 )

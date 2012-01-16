@@ -14,19 +14,36 @@ from django.utils.translation import ugettext as _
 @login_required
 def edit(request):
     if request.method == "POST":
-        editForm = EditForm(request.POST, request.FILES)
+        editForm = EditForm(request.POST, request.FILES, instance=request.user)
         if editForm.is_valid():
             messages.success(request, _("Your personal information saved"))
             editForm.save(request)
     else:
-        editForm = EditForm(initial={'first_name':request.user.first_name,
-                                     'last_name':request.user.last_name})
+        editForm = EditForm(instance=request.user)
     return render_to_response("accounts/accounts_edit.html",
                               {
                                 'editForm': editForm
                             },
                               context_instance=RequestContext(request)
                             )
+
+@login_required
+def friendlist(request):
+    friendships = request.user.friends.all().select_related("friend")
+    return render_to_response("accounts/accounts_friendlist.html",
+                              {
+                                "friendships": friendships
+                              },
+                              context_instance=RequestContext(request)
+    )
+
+def messages(request):
+    return render_to_response("accounts/accounts_friendlist.html",
+                              {
+                                 
+                              },
+                              context_instance=RequestContext(request)
+    )
 
 @login_required
 def profile(request):

@@ -8,8 +8,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<link href="{{ STATIC_PREFIX }}common/css/style.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 <link href="{{ STATIC_PREFIX }}common/css/jqueryUI.css/jquery-ui.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+<link href="{{ STATIC_PREFIX }}common/css/style.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 <link href="{{ STATIC_PREFIX }}css/menu_login.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 <link href="{{ STATIC_PREFIX }}css/menu_topmenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 <link href="{{ STATIC_PREFIX }}css/menu_submenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
@@ -35,11 +35,13 @@
 {% if request.session.mode == 'publish' %}
     <link href="{{ STATIC_PREFIX }}css/base_publisher.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 {% endif %}
+
+
 {% block includes %}
     
 {% endblock %}
 
-<link rel="shortcut icon" href="" />
+<link rel="shortcut icon" href="#" />
 <title>{% block title %}Rest{% endblock %}</title>
 </head>
 
@@ -169,6 +171,17 @@
 </div>
 
 <div id="rightSwitchBar">
+    <form action="/i18n/setlang/" method="post">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ request.path }}" />
+    <div class="sideSwitcher">
+         <div class="sideSwitchButton">
+             <a href="#">
+                 <img src="" alt="lang" title="Language">
+             </a>
+         </div>
+    </form>
+    </div>
     {% if perms.publisher %}
         <div class="sideSwitcher">
              <div class="sideSwitchButton">
@@ -183,6 +196,7 @@
              </div>
         </div>
     {% endif %}
+
 </div>
 
 

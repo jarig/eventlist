@@ -1,0 +1,59 @@
+.friendList
+{
+    margin-left: 50px;
+}
+
+.friendEntry
+{
+    margin-top: 10px;
+    background-color: #fcfcfc;
+    padding: 5px;
+}
+
+.friendThumb
+{
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+    vertical-align: middle;
+    display: block;
+}
+.friendThumb img
+{
+    max-width: 100px;
+    max-height: 100px;
+    position: relative;
+}
+
+.friendInfo
+{
+    float: left;
+}
+.friendActions
+{
+    float: right;
+    margin-right: 10px;
+    width: 150px;
+}
+.friendActions ul
+{
+    padding: 0px;
+    margin: 0px;
+}
+.friendActions li
+{
+    display: block;
+}
+.friendActions a
+{
+    display: block;
+    text-decoration: none;
+    padding: 5px;
+    text-align: center;
+}
+.friendActions a:hover
+{
+    background-color: #e6e6fa;
+}

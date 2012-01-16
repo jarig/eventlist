@@ -1,21 +1,25 @@
+from pyexpat import model
 from django import forms
+from django.contrib.auth.models import User
+from django.forms.models import ModelForm
 from accounts.models import Account
 
 
-class EditForm(forms.Form):
-    first_name = forms.CharField(required=True,min_length=5, label="First Name")
-    last_name = forms.CharField(required=True,min_length=5, label="Last Name")
-    avatar = forms.ImageField(required=False)
+class EditForm(ModelForm):
 
-    def save(self, request):
-        profile = request.user.get_profile()
-        first_name = self.cleaned_data["first_name"]
-        last_name = self.cleaned_data["last_name"]
+    class Meta:
+        model = User
+    
+    def save(self, commit=True):
+        user = self.save(commit)
+        profile = user.get_profile()
+        #first_name = self.cleaned_data["first_name"]
+        #last_name = self.cleaned_data["last_name"]
         avatar = self.cleaned_data["avatar"]
         
         if avatar is not None:
             profile.avatar.save(
-                'avatar_'+str(request.user.id),
+                'avatar_'+str(user.id),
                 avatar,
                 save=False
             )

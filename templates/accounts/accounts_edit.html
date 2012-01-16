@@ -20,7 +20,7 @@
             <tr >
             <td style="width: 200px;">
                 <div id="editAvatar">
-                    <img id="avatarImage" src="{{ user.get_profile.avatar }}" />
+                    <img id="avatarImage" src="{{ MEDIA_URL }}{{ user.get_profile.avatar }}" />
                     {{ editForm.avatar }}
                 </div>
             </td>

@@ -48,10 +48,11 @@ def credit(request, event=None):
         eventForm = EventForm(request.user, instance=event)
         eventSchedules = eventScheduleFormSet(
             queryset=schedules,
-            initial=[{'dateFrom':datetime.date.today(),
-                      'timeFrom':'00:00',
-                      'timeTo':'00:00'
-        }])
+            #initial=[{'dateFrom':datetime.date.today(),
+            #          'timeFrom':'00:00',
+            #          'timeTo':'00:00'
+        #}]
+        )
 
     return render_event(request, {
                                     "eventSchedules": eventSchedules,

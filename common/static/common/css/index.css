@@ -38,7 +38,6 @@
     margin: 0 auto;
     min-width: 725px;
     width: 75%;
-    float: none;
 }
 
 #rightSwitchBar
@@ -46,6 +45,13 @@
     width: 40px;
     float:left;
     display: block;
+}
+
+#langSwithBar
+{
+    float: right;
+    display: block;
+    width: 40px;
 }
 
 .sideSwitcher

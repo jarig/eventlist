@@ -1,5 +1,7 @@
 {% extends 'events/events.html' %}
 {% load i18n %}
+{% load static %}
+
 {% block includes %}
     {{ block.super }}
     <link href="{{ STATIC_URL }}common/js/social/likeButtons/buttons.css" rel="stylesheet" type="text/css">
@@ -33,10 +35,16 @@
     
     <div class="partyWindow" id="partyWindow">
         <div class="partyWindowContent">
-            <div class="partyCloseButton">Close</div>
-            <div class="partyTitle">{% trans "Party!" %}</div>
+            <div class="partySubTitle">
+                <span>{% trans "Party Suggestions" %}</span>
+                <div class="partyCloseButton">
+                    <a href="#" class="noBorder ui-widget-header ui-dialog-titlebar-close ui-corner-all" role="button">
+                        <span class="ui-icon ui-icon-closethick">close</span>
+                    </a>
+                </div>
+            </div>
             <div class="partySuggestions">
-                <div class="partySubTitle">Top 5 party suggestions</div>
+                <!--div class="partySubTitle">Top 5 party suggestions</div-->
                 <div class="partySuggestionContainer">
                     <ul>
                         {% for i in 012345|make_list %}
@@ -46,7 +54,7 @@
                 </div>
             </div>
             <div class="partyCreateSlogan">
-                <div class="partySubTitle">{% trans "Create Own Party, invite friends or make new!" %}</div>
+                <div class="partySubTitle">{% trans "Create Own Party!" %}</div>
             </div>
         </div>
         <div class="partyWindowControls">

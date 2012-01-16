@@ -30,13 +30,13 @@ class Menu:
         return [
                 {
                     "title":"Friends",
-                    "url": '', #reverse("accounts.views.friends"),
+                    "url": reverse("accounts.views.friendlist"),
                     "active": False,
                     "enabled": self.user.is_authenticated()
                 },
                 {
                     "title":"Messages",
-                    "url": '', #reverse("accounts.views.friends"),
+                    "url": reverse("accounts.views.messages"),
                     "active": False,
                     "enabled": self.user.is_authenticated()
                 }

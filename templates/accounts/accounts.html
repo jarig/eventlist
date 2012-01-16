@@ -1,1 +1,6 @@
 {% extends 'common/base_common.html' %}
+
+{% block includes %}
+   {{ block.super }}
+   <link href="{{ STATIC_PREFIX }}common/css/apps/manage.css" rel="stylesheet" type="text/css">
+{% endblock %}

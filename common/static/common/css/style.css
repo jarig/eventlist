@@ -80,3 +80,8 @@ a:hover {
 {
     color: graytext;
 }
+
+.noBorder
+{
+    border: none;
+}
