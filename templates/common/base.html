@@ -171,10 +171,11 @@
 </div>
 
 <div id="rightSwitchBar">
-    <form action="/i18n/setlang/" method="post">
-    {% csrf_token %}
-    <input name="next" type="hidden" value="{{ request.path }}" />
+
     <div class="sideSwitcher">
+    <form action="/i18n/setlang/" method="post">
+         {% csrf_token %}
+         <input name="next" type="hidden" value="{{ request.path }}" />
          <div class="sideSwitchButton">
              <a href="#">
                  <img src="" alt="lang" title="Language">
