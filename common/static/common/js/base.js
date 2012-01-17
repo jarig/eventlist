@@ -16,6 +16,10 @@ var Base =
             }catch(e)
             {
             }
+            $("#langSwitch").change(function()
+                                    {
+                                        $(this).parents("form").submit();
+                                    });
 
         });
     },

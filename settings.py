@@ -22,8 +22,8 @@ TIME_ZONE = 'Europe/Tallinn'
 LANGUAGE_CODE = 'en-us'
 
 LANGUAGES = (
-    ('ru', 'Russian'),
     ('ee', 'Estonian'),
+    ('ru', 'Russian'),
     ('en', 'English'),
 )
 
@@ -93,6 +93,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
     'django.core.context_processors.static',
+    'django.core.context_processors.i18n',
     'django.core.context_processors.media',
 )
 

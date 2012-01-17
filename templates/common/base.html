@@ -173,14 +173,20 @@
 <div id="rightSwitchBar">
 
     <div class="sideSwitcher">
-    <form action="/i18n/setlang/" method="post">
+    <form id="langForm" action="/i18n/setlang/" method="post">
          {% csrf_token %}
          <input name="next" type="hidden" value="{{ request.path }}" />
-         <div class="sideSwitchButton">
+         <select id="langSwitch" name="language">
+            {% for lang in LANGUAGES %}
+                <option value="{{ lang.0 }}" {% if lang.0 == request.LANGUAGE_CODE %}selected="true"{% endif %}>
+                    {{ lang.1 }}</option>
+            {% endfor %}
+         </select>
+         <!--div class="sideSwitchButton">
              <a href="#">
                  <img src="" alt="lang" title="Language">
              </a>
-         </div>
+         </div-->
     </form>
     </div>
     {% if perms.publisher %}

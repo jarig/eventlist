@@ -36,6 +36,8 @@
     float: right;
     margin-right: 10px;
     width: 150px;
+    border-left: 1px #778899 solid;
+    height: 100px;
 }
 .friendActions ul
 {

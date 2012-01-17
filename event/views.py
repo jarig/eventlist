@@ -73,7 +73,7 @@ def manage(request):
 
 def main(request):
     eventSchedules = EventSchedule.objects.all().order_by("-dateFrom", "-timeFrom")
-    print eventSchedules.select_related("event")
+    #print eventSchedules.select_related("event")
     return render_to_response("events/events_main.html",
                               {
                                     "eventSchedules": eventSchedules
