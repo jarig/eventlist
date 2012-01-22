@@ -22,7 +22,7 @@ TIME_ZONE = 'Europe/Tallinn'
 LANGUAGE_CODE = 'en-us'
 
 LANGUAGES = (
-    ('ee', 'Estonian'),
+    ('et', 'Estonian'),
     ('ru', 'Russian'),
     ('en', 'English'),
 )

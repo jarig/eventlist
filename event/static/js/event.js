@@ -52,6 +52,10 @@ var Event =
             $this.css({top: coord.top-($this.height()+5),
                           left: coord.left - ($this.width()-$(button).width())});
             $this.show();
+            $("#createPartyButton", $this).click(function()
+            {
+                //TODO ajax party creation ( form submition )
+            });
         }
     };
     $.fn.rest_Event = function(method)

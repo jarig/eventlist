@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-18 00:11+0200\n"
-"PO-Revision-Date: 2012-01-18 00:18+0200\n"
+"PO-Revision-Date: 2012-01-18 00:58+0200\n"
 "Last-Translator: JArik <test@test.ee>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -159,7 +159,7 @@ msgstr ""
 
 #: .\templates\events\events_main.html.py:57
 msgid "Create Own Party!"
-msgstr "Создавть свою компанию!"
+msgstr "Создать свою компанию!"
 
 #: .\templates\events\events_manage.html.py:14
 msgid "Event Management"
@@ -175,5 +175,5 @@ msgstr ""
 
 #: .\templates\search\search.html.py:13
 msgid "Find Where To Rest!"
-msgstr "Найти где отдохнуть!"
+msgstr "Найди где отдохнуть!"
 
