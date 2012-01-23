@@ -19,6 +19,21 @@
     line-height: 30px;
     position: relative;
 }
+.partyCreated
+{
+    background-color: #0d8f00;
+}
+.editPartyButton a
+{
+    color: white;
+    text-decoration: none;
+    padding-right: 5px;
+}
+.editPartyButton
+{
+    float: right;
+}
+
 .partyCreateSlogan
 {
     margin-bottom: 12px;

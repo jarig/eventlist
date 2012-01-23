@@ -54,12 +54,19 @@
                 </div>
             </div>
             <div class="partyCreateSlogan">
-                <div class="partySubTitle">{% trans "Create Own Party!" %}</div>
+                <div class="partySubTitle" id="createPartyButton" >
+                    {% trans "Create Own Party!" %}
+                    <div class="editPartyButton"><a href="#" id="">Edit Party</a></div>
+                </div>
+
             </div>
         </div>
         <div class="partyWindowControls">
             <div class="nub"></div>
         </div>
+        <form action="{% url party.views.silentCreate %}" method="POST" id="createSimpleParty">
+            {{ createPartyFormSample.as_p }}
+        </form>
     </div>
 {% endblock content %}
 

@@ -10,6 +10,7 @@ from django.template.context import RequestContext
 from django.utils.translation import ugettext
 from event.forms import EventForm, EventScheduleForm, EventScheduleFormSet
 from event.models import Event, EventSchedule
+from party.forms import CreateSimplePartyForm
 
 
 def render_event(request, attrs):
@@ -73,10 +74,15 @@ def manage(request):
 
 def main(request):
     eventSchedules = EventSchedule.objects.all().order_by("-dateFrom", "-timeFrom")
-    #print eventSchedules.select_related("event")
+    createPartyFormSample = CreateSimplePartyForm(
+        initial={
+            "author":request.user
+        }
+    )
     return render_to_response("events/events_main.html",
                               {
-                                    "eventSchedules": eventSchedules
+                                    "eventSchedules": eventSchedules,
+                                    "createPartyFormSample": createPartyFormSample
                               },
                               context_instance=RequestContext(request)
                               )

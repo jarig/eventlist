@@ -14,10 +14,11 @@ var Event =
         {
             $(".partyButton").click(function()
             {
-                $("#partyWindow").rest_Event("showPartyWindow", this);
+                var win = $("#partyWindow").clone();
+                $("#partyWindow").parent().append(win);
+                $(win).rest_Event("showPartyWindow", this);
                 return false;
             });
-            
         });
     }
 };
@@ -29,6 +30,7 @@ var Event =
     {
         //$(this).unbind('click');
         $this.hide();
+        $this.remove();
         return false;
     }
     var methods ={
@@ -54,7 +56,14 @@ var Event =
             $this.show();
             $("#createPartyButton", $this).click(function()
             {
-                //TODO ajax party creation ( form submition )
+                $.post($("#createSimpleParty", $this).attr("action"),
+                       $("#createSimpleParty", $this).serialize(),
+                        function(data, textStatus)
+                        {
+                            $("#createPartyButton", $this).addClass("partyCreated");
+                            $("#createPartyButton", $this).unbind("click");
+                        }
+                );
             });
         }
     };
