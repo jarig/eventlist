@@ -54,14 +54,18 @@ var Event =
             $this.css({top: coord.top-($this.height()+5),
                           left: coord.left - ($this.width()-$(button).width())});
             $this.show();
-            $("#createPartyButton", $this).click(function()
+            $(".createPartyButton", $this).click(function()
             {
-                $.post($("#createSimpleParty", $this).attr("action"),
-                       $("#createSimpleParty", $this).serialize(),
+                $.post($("#createSimpleParty").attr("action"),
+                       $("#createSimpleParty").serialize(),
                         function(data, textStatus)
                         {
-                            $("#createPartyButton", $this).addClass("partyCreated");
-                            $("#createPartyButton", $this).unbind("click");
+                            Common.DEBUG(JSON.stringify(data));
+                            $(".createPartyButton", $this).parent(".partySubTitle").addClass("partyCreated");
+                            $("#partyCreatedMessage", $this).show();
+                            $("#createPartyButton", $this).hide();
+                            $(".editPartyButton", $this).removeClass("hidden");
+                            $(".createPartyButton", $this).unbind("click");
                         }
                 );
             });

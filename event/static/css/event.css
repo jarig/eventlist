@@ -23,21 +23,23 @@
 {
     background-color: #0d8f00;
 }
-.editPartyButton a
+.partySubTitle a
 {
     color: white;
     text-decoration: none;
+}
+.partySubTitle
+{
     padding-right: 5px;
 }
-.editPartyButton
+.partySubTitle a:hover
 {
-    float: right;
+    text-decoration: underline;
 }
 
 .partyCreateSlogan
 {
     margin-bottom: 12px;
-    cursor: pointer;
 }
 
 .partyWindow
