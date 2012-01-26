@@ -20,7 +20,7 @@ class PartyMember(models.Model):
         (1, u'candidate'),
     )
     party = models.ForeignKey(Party, related_name='+')
-    user = models.ForeignKey(User, related_name='parties')
+    user = models.ForeignKey(User, related_name='partyMembership')
     role = models.PositiveIntegerField(choices=ROLE, default=1)
     
     dateAdded = models.DateTimeField(auto_now_add=True)

@@ -40,4 +40,47 @@
     <div class="eventButton">
         <a href="#">{% trans "Comments"%}</a>
     </div>
+
+    <!-- Party window -->
+    <div class="partyWindow" id="partyWindow-{{ eventSchedule.id }}">
+        <div class="partyWindowContent">
+            <div class="partySubTitle">
+                <span>{% trans "Party Suggestions" %}</span>
+                <div class="partyCloseButton">
+                    <a href="#" class="noBorder ui-widget-header ui-dialog-titlebar-close ui-corner-all" role="button">
+                        <span class="ui-icon ui-icon-closethick">close</span>
+                    </a>
+                </div>
+            </div>
+            <div class="partySuggestions">
+                <!--div class="partySubTitle">Top 5 party suggestions</div-->
+                <div class="partySuggestionContainer">
+                    <ul>
+                        {% for i in 012345|make_list %}
+                            <li><div class="partySuggestion">Suggestion {{ i }}</div></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="partyCreateSlogan">
+                <div class="partySubTitle" >
+                    <div class="createPartyButton float-left">
+                        <a href="#" id="createPartyButton">{% trans "Create Own Party!" %}</a>
+                        <div class="hidden" id="partyCreatedMessage">{% trans "Party Successfully created!" %}</div>
+                    </div>
+                    <div class="editPartyButton float-right hidden">
+                        <a href="#">Edit Party</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="partyWindowControls">
+            <div class="nub"></div>
+        </div>
+        <div class="hidden">
+            <form action="{% url party.views.silentCreate %}" method="POST" id="createSimpleParty">
+                {{ createPartyFormSample.as_p }}
+            </form>
+        </div>
+    </div>
 </div>

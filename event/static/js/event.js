@@ -12,12 +12,13 @@ var Event =
     {
         $(function()
         {
-            $(".partyButton").click(function()
+            $(".event-container").each(function()
             {
-                var win = $("#partyWindow").clone();
-                $("#partyWindow").parent().append(win);
-                $(win).rest_Event("showPartyWindow", this);
-                return false;
+                var $this = $(this);
+                $('.partyButton',$this).click(function()
+                {
+                    $('.partyWindow', $this).rest_Event("showPartyWindow", this);
+                });
             });
         });
     }
@@ -25,18 +26,36 @@ var Event =
 
 (function($)
 {
-    var $this;
-    function hide()
-    {
-        //$(this).unbind('click');
-        $this.hide();
-        $this.remove();
-        return false;
-    }
     var methods ={
-        showPartyWindow: function(button)
+        hide: function()
         {
-            $this= $(this);
+            var $this= $(this);
+            $this.hide();
+            //$this.remove();
+            $this.data('showPartyWindow',
+                    {
+                        "initialized": false
+                    });
+            //if ( typeof onClose == "function" )
+            //    onClose();
+            return this;
+        },
+        showPartyWindow: function(button, onCloseMethod)
+        {
+            var $this= $(this);
+            var data = $this.data('showPartyWindow');
+            if ( data && data.initialized)
+                return $this.rest_Event('hide');
+
+            if ( !data || !data.initialized)
+            {
+                $this.data('showPartyWindow',
+                    {
+                        "onClose": onCloseMethod,
+                        "initialized": true
+                    });
+            }
+            //alert(data.showPartyWindow['initialized']);
             $this.show();
             var coord = $(button).offset();
             $this.width(450);
@@ -50,7 +69,9 @@ var Event =
                     $(this).removeClass("ui-state-hover");
                 }
             );
-            $('a[role="button"]',$this).click(hide);
+            $('a[role="button"]',$this).click(
+                function() { $this.rest_Event('hide'); return false; }
+            );
             $this.css({top: coord.top-($this.height()+5),
                           left: coord.left - ($this.width()-$(button).width())});
             $this.show();
