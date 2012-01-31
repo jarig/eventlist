@@ -34,7 +34,11 @@
     </div>
     {% if user.is_authenticated %}
     <div class="eventButton">
-        <a href="#" class="partyButton">{% trans "I'll go"%}</a>
+        {% if eventSchedule.goes %}
+            <a href="#" class="partyButton" id="unGoButton">{% trans "I don't go"%}</a>
+        {% else %}
+            <a href="#" class="partyButton" id="goButton">{% trans "I'll go"%}</a>
+        {% endif %}
     </div>
     {% endif %}
     <div class="eventButton">
@@ -78,8 +82,9 @@
             <div class="nub"></div>
         </div>
         <div class="hidden">
-            <form action="{% url party.views.silentCreate %}" method="POST" id="createSimpleParty">
+            <form action="{% url party.views.silentCreate eventScheduleId=eventSchedule.pk %}" method="POST" id="createSimpleParty">
                 {{ createPartyFormSample.as_p }}
+                <!--input type="submit"-->
             </form>
         </div>
     </div>

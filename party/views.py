@@ -2,20 +2,23 @@
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import json
 from django.http import HttpResponse
+from event.views import _go
 from party.forms import CreateSimplePartyForm
 
 @login_required
-def silentCreate(request):
+def silentCreate(request, eventScheduleId):
 
-    if request.POST and request.is_ajax():
-        createPartyFormSample = CreateSimplePartyForm(request.POST)
+    if request.POST:
+        createEventPartyForm = CreateSimplePartyForm(request.POST)
         json_serializer = json.Serializer()
-        if createPartyFormSample.is_valid():
-            party = createPartyFormSample.save()
+        if createEventPartyForm.is_valid():
+            #record to event go
+            _go(request.user,eventScheduleId)
+            party = createEventPartyForm.save()
             data= json.simplejson.dumps({ "id": party.pk }, ensure_ascii=False)
             return HttpResponse(data)
         else:
-            data= json_serializer.serialize(createPartyFormSample.errors, ensure_ascii=False)
+            data= json_serializer.serialize(createEventPartyForm.errors, ensure_ascii=False)
             return HttpResponse(data)
     return HttpResponse("Invalid request")
     pass

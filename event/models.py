@@ -41,6 +41,14 @@ class EventSchedule(models.Model):
     
     pass
 
+class EventGo(models.Model):
+    eventSchedule = models.ForeignKey(EventSchedule, editable=False)
+    user = models.ForeignKey(User, editable=False, related_name='goesOnEvents')
+
+    class Meta:
+        unique_together = ('eventSchedule', 'user')
+
+
 class Comment(models.Model):
     COMMENT_TYPE = (
         (u'P',u'positive'),

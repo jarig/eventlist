@@ -15,9 +15,9 @@ var Event =
             $(".event-container").each(function()
             {
                 var $this = $(this);
-                $('.partyButton',$this).click(function()
+                $('#goButton',$this).click(function()
                 {
-                    $('.partyWindow', $this).rest_Event("showPartyWindow", this);
+                    $('.partyWindow', $this).rest_Event("showPartyWindow", $this);
                 });
             });
         });
@@ -40,9 +40,10 @@ var Event =
             //    onClose();
             return this;
         },
-        showPartyWindow: function(button, onCloseMethod)
+        showPartyWindow: function(container, onCloseMethod)
         {
             var $this= $(this);
+            var button = $("#goButton",container);
             var data = $this.data('showPartyWindow');
             if ( data && data.initialized)
                 return $this.rest_Event('hide');
@@ -87,6 +88,8 @@ var Event =
                             $("#createPartyButton", $this).hide();
                             $(".editPartyButton", $this).removeClass("hidden");
                             $(".createPartyButton", $this).unbind("click");
+                            $('#goButton',container).hide();
+                            $('#unGoButton',container).show();
                         }
                 );
             });

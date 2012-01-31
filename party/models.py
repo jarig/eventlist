@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from common.models import Address
 from event.models import Event
 
 class Party(models.Model):
@@ -7,10 +8,17 @@ class Party(models.Model):
     members = models.ManyToManyField(User, through='PartyMember', editable=False)
     closed=models.BooleanField(default=False, editable=False)
     created=models.DateTimeField(auto_now_add=True, editable=False)
-    #dateFrom = models.DateTimeField()
-    #dateTo = models.DateTimeField()
     pass #party model
 
+# party schedules
+class PartySchedule(models.Model):
+    party = models.ForeignKey(Party)
+    location = models.ForeignKey(Address)
+    dateFrom = models.DateField(null=True, blank=True) #date when party starts/gathers
+    timeFrom = models.TimeField(null=True, blank=True)
+    dateTo = models.DateField(null=True, blank=True) #date when party ends
+    timeTo = models.TimeField(null=True, blank=True)
+    pass
 
 class PartyMember(models.Model):
     ROLE = (

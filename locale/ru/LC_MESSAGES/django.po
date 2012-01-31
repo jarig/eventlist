@@ -159,7 +159,7 @@ msgstr ""
 
 #: .\templates\events\events_main.html.py:57
 msgid "Create Own Party!"
-msgstr "Создать свою компанию!"
+msgstr "Своей компанией!"
 
 #: .\templates\events\events_manage.html.py:14
 msgid "Event Management"

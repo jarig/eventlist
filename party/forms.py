@@ -1,5 +1,6 @@
 from django import forms
 from django.forms.models import ModelForm
+import event
 from party.models import Party
 
 class CreateSimplePartyForm(ModelForm):
@@ -9,3 +10,7 @@ class CreateSimplePartyForm(ModelForm):
         widgets = {
             'author': forms.HiddenInput
         }
+
+    #def save(self, commit=True):
+    #    return self.save()
+

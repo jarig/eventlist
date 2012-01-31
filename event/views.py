@@ -4,12 +4,12 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
 from django.db.models.aggregates import Count
 from django.forms.models import  modelformset_factory
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.translation import ugettext
 from event.forms import EventForm, EventScheduleForm, EventScheduleFormSet
-from event.models import Event, EventSchedule
+from event.models import Event, EventSchedule, EventGo
 from party.forms import CreateSimplePartyForm
 
 
@@ -74,6 +74,9 @@ def manage(request):
 
 def main(request):
     eventSchedules = EventSchedule.objects.all().order_by("-dateFrom", "-timeFrom")
+    eventSchedules = eventSchedules.extra(select={'goes':
+                                                      "SELECT true FROM dual WHERE EXISTS ( SELECT id FROM %s WHERE user_id=%d and id=%s.`event_id`)" % ( EventGo._meta.db_table, request.user.pk, EventSchedule._meta.db_table) })
+    print eventSchedules.query
     createPartyFormSample = CreateSimplePartyForm(
         initial={
             "author":request.user
@@ -87,3 +90,18 @@ def main(request):
                               context_instance=RequestContext(request)
                               )
 
+@login_required
+def go(request, eventSchId):
+    goObj = _go(request.user, eventSchId)
+    return HttpResponse("id="+goObj.pk)
+
+
+def _go(user, eventSchId):
+    """
+    Record user as event participant
+    """
+    return EventGo.objects.get_or_create(eventSchedule=EventSchedule.objects.get(pk=eventSchId), user=user)
+
+def _unGo(user, eventSchId):
+    EventGo.objects.filter(pk=eventSchId,user=user).delete()
+    return True
