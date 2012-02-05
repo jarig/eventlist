@@ -4,15 +4,17 @@ from common.models import Address
 from event.models import Event
 
 class Party(models.Model):
-    author = models.ForeignKey(User,related_name='authorOfParties')
-    members = models.ManyToManyField(User, through='PartyMember', editable=False)
+    #author = models.ForeignKey(User,related_name='authorOfParties')
+    #members = models.ManyToManyField(User, through='PartyMember', editable=False)
+    #party options
     closed=models.BooleanField(default=False, editable=False)
+    #
     created=models.DateTimeField(auto_now_add=True, editable=False)
     pass #party model
 
 # party schedules
 class PartySchedule(models.Model):
-    party = models.ForeignKey(Party)
+    party = models.ForeignKey(Party, related_name='schedules')
     location = models.ForeignKey(Address)
     dateFrom = models.DateField(null=True, blank=True) #date when party starts/gathers
     timeFrom = models.TimeField(null=True, blank=True)
@@ -21,17 +23,25 @@ class PartySchedule(models.Model):
     pass
 
 class PartyMember(models.Model):
-    ROLE = (
-        (30,u'owner'),
-        (20,u'moderator'),
-        (10,u'participant'),
-        (1, u'candidate'),
+    class ROLE:
+        OWNER = 30
+        MODERATOR = 20
+        PARTICIPANT = 10
+        CANDIDATE = 1
+    _ROLE_CHOICES = (
+        (ROLE.OWNER,u'owner'),
+        (ROLE.MODERATOR,u'moderator'),
+        (ROLE.PARTICIPANT,u'participant'),
+        (ROLE.CANDIDATE, u'candidate'),
     )
-    party = models.ForeignKey(Party, related_name='+')
+    party = models.ForeignKey(Party, related_name='members')
     user = models.ForeignKey(User, related_name='partyMembership')
-    role = models.PositiveIntegerField(choices=ROLE, default=1)
+    role = models.PositiveIntegerField(choices=_ROLE_CHOICES, default=1)
     
     dateAdded = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('party', 'user')
     pass
 
 class PartyEvent(models.Model):

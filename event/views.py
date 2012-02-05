@@ -75,7 +75,8 @@ def manage(request):
 def main(request):
     eventSchedules = EventSchedule.objects.all().order_by("-dateFrom", "-timeFrom")
     eventSchedules = eventSchedules.extra(select={'goes':
-                                                      "SELECT true FROM dual WHERE EXISTS ( SELECT id FROM %s WHERE user_id=%d and id=%s.`event_id`)" % ( EventGo._meta.db_table, request.user.pk, EventSchedule._meta.db_table) })
+                                                      "SELECT 1 FROM dual WHERE EXISTS ( SELECT id FROM %s WHERE user_id=%d and `eventSchedule_id`=%s.`id`)" % ( EventGo._meta.db_table, request.user.pk, EventSchedule._meta.db_table) })
+
     print eventSchedules.query
     createPartyFormSample = CreateSimplePartyForm(
         initial={
@@ -92,16 +93,19 @@ def main(request):
 
 @login_required
 def go(request, eventSchId):
-    goObj = _go(request.user, eventSchId)
-    return HttpResponse("id="+goObj.pk)
+    goObj, created = _go(request.user, EventSchedule.objects.get(pk=eventSchId))
+    return HttpResponse("id="+str(goObj.pk))
 
 
-def _go(user, eventSchId):
+def _go(user, eventSch):
     """
-    Record user as event participant
+    Record user as an event participant
     """
-    return EventGo.objects.get_or_create(eventSchedule=EventSchedule.objects.get(pk=eventSchId), user=user)
+    return EventGo.objects.get_or_create(eventSchedule=eventSch, user=user)
+
+def unGo(request, eventSchId):
+    return HttpResponse(str(_unGo(request.user, eventSchId)))
 
 def _unGo(user, eventSchId):
-    EventGo.objects.filter(pk=eventSchId,user=user).delete()
+    EventGo.objects.filter(eventSchedule=eventSchId,user=user).delete()
     return True

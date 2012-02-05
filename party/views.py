@@ -2,23 +2,27 @@
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import json
 from django.http import HttpResponse
+from event.models import Event, EventSchedule
 from event.views import _go
 from party.forms import CreateSimplePartyForm
+from party.models import Party, PartySchedule, PartyMember
 
 @login_required
-def silentCreate(request, eventScheduleId):
-
-    if request.POST:
-        createEventPartyForm = CreateSimplePartyForm(request.POST)
-        json_serializer = json.Serializer()
-        if createEventPartyForm.is_valid():
-            #record to event go
-            _go(request.user,eventScheduleId)
-            party = createEventPartyForm.save()
-            data= json.simplejson.dumps({ "id": party.pk }, ensure_ascii=False)
-            return HttpResponse(data)
-        else:
-            data= json_serializer.serialize(createEventPartyForm.errors, ensure_ascii=False)
-            return HttpResponse(data)
-    return HttpResponse("Invalid request")
+def silentCreateWithEvent(request, eventScheduleId):
+    #record to event go
+    eventSch = EventSchedule.objects.get(pk=eventScheduleId)
+    _go(request.user,eventSch)
+    party = Party.objects.create()
+    partySched = PartySchedule.objects.create(party=party,
+                                              location=eventSch.address,
+                                              dateFrom=eventSch.dateFrom,
+                                              timeFrom=eventSch.timeFrom,
+                                              dateTo=eventSch.dateTo,
+                                              timeTo=eventSch.timeTo)
+    partyMemberShip = PartyMember.objects.create(user=request.user,
+                                                 party=party,
+                                                 role=PartyMember.ROLE.OWNER)
+    data= json.simplejson.dumps({ "id": party.pk, "schedule": partySched.pk, "membership": partyMemberShip.pk })
+    return HttpResponse(data)
+    #return HttpResponse(json.simplejson.dumps({ "error": { "id": 1, "message":"Invalid request" }}))
     pass

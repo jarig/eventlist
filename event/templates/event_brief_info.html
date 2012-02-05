@@ -34,11 +34,10 @@
     </div>
     {% if user.is_authenticated %}
     <div class="eventButton">
-        {% if eventSchedule.goes %}
-            <a href="#" class="partyButton" id="unGoButton">{% trans "I don't go"%}</a>
-        {% else %}
-            <a href="#" class="partyButton" id="goButton">{% trans "I'll go"%}</a>
-        {% endif %}
+            <a href="#" class="partyButton" {% if not eventSchedule.goes %} style="display: none" {% endif %} id="unGoButton">{% trans "I don't go"%}</a>
+            <a href="#" class="partyButton" {% if eventSchedule.goes %} style="display: none" {% endif %} id="goButton">{% trans "I'll go"%}</a>
+            <form action="{% url event.views.unGo eventSchId=eventSchedule.pk %}" method="POST" id="unGoForm">
+            </form>
     </div>
     {% endif %}
     <div class="eventButton">
@@ -69,11 +68,11 @@
             <div class="partyCreateSlogan">
                 <div class="partySubTitle" >
                     <div class="createPartyButton float-left">
-                        <a href="#" id="createPartyButton">{% trans "Create Own Party!" %}</a>
+                        <a href="#" id="createPartyButton">{% trans "Go with Own Party!" %}</a>
                         <div class="hidden" id="partyCreatedMessage">{% trans "Party Successfully created!" %}</div>
                     </div>
                     <div class="editPartyButton float-right hidden">
-                        <a href="#">Edit Party</a>
+                        <a href="{% url party.views.silentCreateWithEvent eventScheduleId=eventSchedule.pk %}">{% trans "Invite people!" %}</a>
                     </div>
                 </div>
             </div>
@@ -82,9 +81,7 @@
             <div class="nub"></div>
         </div>
         <div class="hidden">
-            <form action="{% url party.views.silentCreate eventScheduleId=eventSchedule.pk %}" method="POST" id="createSimpleParty">
-                {{ createPartyFormSample.as_p }}
-                <!--input type="submit"-->
+            <form action="{% url event.views.go eventSchId=eventSchedule.pk %}" method="POST" id="createSimpleParty">
             </form>
         </div>
     </div>

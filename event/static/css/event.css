@@ -82,6 +82,12 @@
     height: 70px;
     margin-left: 13px;
 }
+
+.createPartyButton a
+{
+    width: 100%;
+}
+
 .partySuggestion
 {
     

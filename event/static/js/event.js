@@ -18,6 +18,19 @@ var Event =
                 $('#goButton',$this).click(function()
                 {
                     $('.partyWindow', $this).rest_Event("showPartyWindow", $this);
+                    return false;
+                });
+                $("#unGoButton",$this).click(function()
+                {
+                    $.post($("#unGoForm", $this).attr("action"),
+                        $("#unGoForm",$this).serialize(),
+                        function(data, textStatus)
+                        {
+                            $('#goButton',$this).show();
+                            $('#unGoButton',$this).hide();
+                        }
+                        );
+                    return false;
                 });
             });
         });
@@ -38,7 +51,7 @@ var Event =
                     });
             //if ( typeof onClose == "function" )
             //    onClose();
-            return this;
+            return false;
         },
         showPartyWindow: function(container, onCloseMethod)
         {
@@ -92,6 +105,7 @@ var Event =
                             $('#unGoButton',container).show();
                         }
                 );
+                return false;
             });
         }
     };
