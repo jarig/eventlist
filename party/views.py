@@ -12,6 +12,7 @@ from party.models import Party, PartySchedule, PartyMember
 @login_required
 def createWithEvent(request, eventScheduleId):
     #record to event go
+
     eventSch = EventSchedule.objects.get(pk=eventScheduleId)
     _go(request.user,eventSch)
     party = Party.objects.create()

@@ -1,20 +1,17 @@
 {% load i18n %}
 {% load static %}
 <div class="friendEntry">
-    <div class="friendThumb">
-        {# TODO avatar thumbnail #}
-        <img src="{{ friend.get_profile.avatar.url }}">
+    <div class="friendThumb thumbnail">
+        <img src="{{ friend.get_profile.avatar.url }}" alt="friend.first_name">
     </div>
     <div class="friendInfo">
         {{ friend.first_name }}
         {{ friend.last_name }}
     </div>
     <div class="friendActions">
-        <ul>
-            <li><a href="#">Invite</a></li>
-            <li><a href="#">Send Message</a></li>
-            <!--li><a href="#">Stub</a></li>
-            <li><a href="#">Stub</a></li-->
+        <ul class="nav nav-list">
+            <li><a href="#"><i class="icon-fire"></i>Invite</a> </li>
+            <li><a href="#"><i class="icon-envelope"></i>Send Message</a></li>
         </ul>
     </div>
     <div style="clear: both;"></div>

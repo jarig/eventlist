@@ -12,8 +12,6 @@
 
 .friendThumb
 {
-    width: 100px;
-    height: 100px;
     float: left;
     margin-right: 10px;
     text-align: center;
@@ -35,27 +33,7 @@
 {
     float: right;
     margin-right: 10px;
-    width: 150px;
     border-left: 1px #778899 solid;
     height: 100px;
-}
-.friendActions ul
-{
-    padding: 0px;
-    margin: 0px;
-}
-.friendActions li
-{
-    display: block;
-}
-.friendActions a
-{
-    display: block;
-    text-decoration: none;
-    padding: 5px;
-    text-align: center;
-}
-.friendActions a:hover
-{
-    background-color: #e6e6fa;
+    padding-left: 2px;
 }
