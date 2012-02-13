@@ -1,0 +1,201 @@
+{% extends 'event/events.html' %}
+{% load i18n %}
+{% load field_renderer %}
+
+
+{% block includes %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}common/css/forms.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/event_create.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/event_create.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}address/address.js"></script>
+    {% include "jquery.multiselect.html" %}
+    {% include "jquery.timeentry.html" %}
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        CreateEvent.init();
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="createEventContainer">
+        <form id="eventDataForm"
+              {%  if eventForm.instance.pk %}
+                action="{% url event.views.credit eventForm.instance.pk %}"
+              {% else %}
+                action="{% url event.views.credit %}"
+              {% endif %}
+              method="POST"
+              enctype="multipart/form-data">
+            
+            <div class="buttonPane">
+                <a href="#" onclick="CreateEvent.submitForm('#eventDataForm');return false;">Submit</a>
+            </div>
+        <table id="eventDataTable" >
+            <tr>
+                <td colspan="2">
+                    <div class="divButton eventName {% if eventForm.name.errors %}errorHighlight{% endif %}">
+                        {% field eventForm.name 'title=Event Name' %}
+                    </div>
+                    <div class="errors">
+                        {{ eventForm.name.errors }}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="256px" rowspan="99">
+                    <div class="eventLogoBox">
+                        <div class='divButton eventLogo'>
+                            <div onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc','#id_logo');">
+                                {% if eventForm.logo.value %}
+                                    <img id="eventLogoSrc" src="{{ MEDIA_URL }}{{ eventForm.logo.value }}">
+                                {% endif %}
+                                {% if event.logo %}
+                                    <img id="eventLogoSrc" src="{{ event.logo.url }}">
+                                {% endif %}
+                                {% if not event.logo and not eventForm.logo.value %}
+                                    <img id="eventLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png">
+                                {% endif %}
+                            </div>
+                            {{ eventForm.logo }}
+                        </div>
+                        <div class='eventLogoUpload'>
+                            <a href="#" onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc','#id_logo');">Upload</a>
+                        </div>
+                    </div>
+                
+                    <div class="eventOrganizers">
+                        <div class="sectionHeader">Organizers: </div>
+                        <div class="eventOrganizerSelection">
+                            <div class="organizerSelection">
+                                {{ eventForm.organizers }}
+                            </div>
+                            <div class="errors">
+                                {{ eventForm.organizers.errors }}
+                            </div>
+                        </div>
+                        <div class="chosenOrganizers" id="chosenOrganizers">
+                        </div>
+                    </div>
+                    <div class="eventBlogs">
+                        <div class="sectionHeader">Published on pages: </div>
+                        <div class="organizerSelection">
+                                {{ eventForm.blogs }}
+                        </div>
+                        <div class="publishedBlog" id="publishedBlog">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="divButton eventDescr">
+                        {% field eventForm.descr 'title=Event Description' 'class=eventDescr' %}
+                        <div class="errors">
+                            {{ eventForm.descr.errors }}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="vertical-align: top;">
+
+                <td>
+                    <div class="eventActivities">
+                       <div class="formField">
+                            <div class="fieldLabel">{% trans 'Event Activities' %}:</div>
+                            <div class="fieldInput">
+                                {{ eventForm.activities }}
+                            </div>
+                            <div class="fieldRight">
+                                <a href="#" id="addNewEventType">Add New</a>
+                            </div>
+                            <div class="fieldError errors">
+                                {{ eventForm.activities.errors }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ eventForm.errors }}
+                </td>
+            </tr>
+        <tr>
+            <td>
+                <input type="hidden" value="{% url blog.views.getBlogAddress %}" id="getBlogAddressURL">
+                <input type="hidden" value="{% url common.views.getAddress %}" id="getAddressURL">
+                <input type="hidden" value="{% url common.views.getCities %}" id="getCityURL">
+                <div class="sectionHeader sectionHeaderHighlight">Event Schedules: </div>
+                <div class="button addScheduleButton" onclick='CreateEvent.addSchedule("#schedule-form-0","#eventSchedules");' >
+                    Add Schedule
+                </div>
+                {{ eventSchedules.management_form }}
+                <div class="eventSchedules" id="eventSchedules">
+                        {% for schForm in eventSchedules reversed %}
+                            <div class="eventSchedule"
+                                    id="schedule-form-{{ forloop.revcounter0 }}"
+                            >
+                                {{ schForm.id }}
+                                <input type="hidden" name="schedulePrefix" id="schedulePrefix" value="{{ schForm.prefix }}">
+                                <div class="eventDates">
+                                        <div class="eventDate">
+                                            {{ schForm.dateFrom }}
+                                            {% field schForm.timeFrom 'class=eventTime' %}
+                                            <div class="errors">
+                                                {{ schForm.dateFrom.errors }}
+                                            </div>
+                                        </div>
+                                        <div class="eventDate" style="float:right">
+                                            {{ schForm.dateTo }}
+                                            {% field schForm.timeTo 'class=eventTime' %}
+                                            <div class="errors">
+                                                {{ schForm.dateTo.errors }}
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="blogSelection">
+                                    {{ schForm.blog }}
+                                    <!--div class="button"></div-->
+                                </div>
+                                <div class="loading"></div>
+                                {{ schForm.address }} {# address id #}
+                                <div class="address eventAddress" id="eventAddress">
+                                    <div class="address blogAddress" id="blogAddress"
+                                         {% if schForm.blogAddress %}
+                                         style="display: block;"
+                                         {% endif %}
+                                    >
+                                        {% include "event_address.html" with address=schForm.blogAddress %}
+                                    </div>
+                                    <div class="address customAddress" id="customAddress"
+                                         {% if schForm.blogAddress %}
+                                            style="display: none;"
+                                         {% endif %}
+                                            >
+                                        <input type="hidden" name="addressPrefix" id="addressPrefix" value="{{ schForm.customAddressForm.prefix }}">
+                                        {% include "event_address.html" with address=schForm.customAddressForm %}
+                                    </div>
+                                </div>
+
+                                {{ schForm.addressForm.errors }}
+                                <div id="blogAddressTemplate">
+                                    {% include "event_address.html" with address=None %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% for dict in eventSchedules.errors %}
+                            {{ dict }}
+                        {% endfor %}
+                </div>
+            </td>
+        </tr>
+
+        </table>
+        </form>
+    </div>
+    <div style="display: none">
+        <div id="uploadDialog">
+            <iframe src="{% url common.views.uploadTempImage %}" id="uploadLogoFrame" width="100%" height="100%">
+            </iframe>
+        </div>
+    </div>
+{% endblock %}

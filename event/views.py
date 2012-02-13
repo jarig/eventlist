@@ -15,7 +15,7 @@ from party.forms import CreateSimplePartyForm
 
 def render_event(request, attrs):
 
-    return render_to_response("events/events_event.html",
+    return render_to_response("event/events_event.html",
                                   attrs,
                                   context_instance=RequestContext(request)
                                   )
@@ -63,7 +63,7 @@ def credit(request, event=None):
 
 def manage(request):
     myEvents = Event.objects.filter(author=request.user)
-    return render_to_response("events/events_manage.html",
+    return render_to_response("event/events_manage.html",
                               {
                                 "myEvents": myEvents,
                               },
@@ -74,16 +74,17 @@ def manage(request):
 
 def main(request):
     eventSchedules = EventSchedule.objects.all().order_by("-dateFrom", "-timeFrom")
-    eventSchedules = eventSchedules.extra(select={'goes':
-                                                      "SELECT 1 FROM dual WHERE EXISTS ( SELECT id FROM %s WHERE user_id=%d and `eventSchedule_id`=%s.`id`)" % ( EventGo._meta.db_table, request.user.pk, EventSchedule._meta.db_table) })
+    createPartyFormSample = None
+    if request.user.is_authenticated():
+        eventSchedules = eventSchedules.extra(select={'goes':
+                                                          "SELECT 1 FROM dual WHERE EXISTS ( SELECT id FROM %s WHERE user_id=%d and `eventSchedule_id`=%s.`id`)" % ( EventGo._meta.db_table, request.user.pk, EventSchedule._meta.db_table) })
 
-    print eventSchedules.query
-    createPartyFormSample = CreateSimplePartyForm(
-        initial={
-            "author":request.user
-        }
-    )
-    return render_to_response("events/events_main.html",
+        createPartyFormSample = CreateSimplePartyForm(
+            initial={
+                "author":request.user
+            }
+        )
+    return render_to_response("event/events_main.html",
                               {
                                     "eventSchedules": eventSchedules,
                                     "createPartyFormSample": createPartyFormSample

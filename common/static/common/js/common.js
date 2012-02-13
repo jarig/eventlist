@@ -44,7 +44,7 @@ var CommonGUI =
           {
               title: "Upload Logo",
               height: "150",
-              width: "150",
+              width: "250",
               modal: true,
               buttons: {
                   submit: function()

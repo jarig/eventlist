@@ -7,42 +7,52 @@
 {% endblock %}
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<link href="{{ STATIC_PREFIX }}common/css/jqueryUI.css/jquery-ui.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-<link href="{{ STATIC_PREFIX }}common/css/style.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-<link href="{{ STATIC_PREFIX }}css/menu_login.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-<link href="{{ STATIC_PREFIX }}css/menu_topmenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-<link href="{{ STATIC_PREFIX }}css/menu_submenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap-responsive.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
-<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/common.js"></script>
-<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/base.js"></script>
-<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery-1.4.2.js"></script>
-<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery.cookie.js"></script>
-<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery.labelify.js"></script>
-<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jqueryUI.js/jquery-ui.js"></script>
-<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/socialInitScripts.js"></script>
-<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/socialScripts.js"></script>
-<script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/init.js"></script>
-<script type="text/javascript" src="{{ STATIC_PREFIX }}js/menu_login.js"></script>
-
-<!-- Plugins -->
-<link href="{{ STATIC_PREFIX }}jqueryPlugins/chosen/chosen.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-<script type="text/javascript" src="{{ STATIC_PREFIX }}jqueryPlugins/chosen/chosen.jquery.min.js"></script>
-<!--script type="text/javascript" src="{{ STATIC_PREFIX }}jqueryPlugins/chosen/chosen.proto.min.js"></script-->
+    <!--link href="{{ STATIC_PREFIX }}common/css/jqueryUI.css/jquery-ui.css" media="screen" rel="stylesheet" title="CSS" type="text/css" /-->
+    <link href="{{ STATIC_PREFIX }}common/plugins/jqueryUI/css/custom-theme/jquery-ui-1.8.17.custom.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    <link href="{{ STATIC_PREFIX }}common/css/style.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    <link href="{{ STATIC_PREFIX }}common/css/rest.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    <link href="{{ STATIC_PREFIX }}css/menu_login.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    <link href="{{ STATIC_PREFIX }}css/menu_topmenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    <link href="{{ STATIC_PREFIX }}css/menu_submenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
 
-<link href="{{ STATIC_PREFIX }}css/menu_sidemenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-{% if request.session.mode == 'publish' %}
-    <link href="{{ STATIC_PREFIX }}css/base_publisher.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-{% endif %}
 
 
-{% block includes %}
-    
-{% endblock %}
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/common.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/base.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery.labelify.js"></script>
+    <!--script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jqueryUI.js/jquery-ui.js"></script-->
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/jqueryUI/js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/socialInitScripts.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/socialScripts.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/init.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}js/menu_login.js"></script>
 
-<link rel="shortcut icon" href="#" />
-<title>{% block title %}Rest{% endblock %}</title>
+
+    <!-- Plugins -->
+    <link href="{{ STATIC_PREFIX }}jqueryPlugins/chosen/chosen.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}jqueryPlugins/chosen/chosen.jquery.min.js"></script>
+
+
+    <link href="{{ STATIC_PREFIX }}css/menu_sidemenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    {% if request.session.mode == 'publish' %}
+        <link href="{{ STATIC_PREFIX }}css/base_publisher.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    {% endif %}
+
+
+    {% block includes %}
+
+    {% endblock %}
+
+    <link rel="shortcut icon" href="#" />
+    <title>{% block title %}Rest{% endblock %}</title>
 </head>
 
 <body>
@@ -67,9 +77,6 @@
      <div id="container_wrap1">
       <div id="container_wrap2" style="margin-top: 0px;">
         <div id="header">
-        <!--div class="logo">
-            <a href="#"></a>
-        </div-->
             <div class="topMenu">
                 {% block topmenu %}
 
@@ -137,7 +144,7 @@
                 <div class="infoColumn">
                     <p>
                     {% if user.is_authenticated %}
-                        <a href="{% url accounts.views.logoutProfile %}">{% trans "Sign out"%}</a>
+                        <a href="{% url account.views.logoutProfile %}">{% trans "Sign out"%}</a>
                     {% else %}
                         <a href="#" onclick="User.openLoginBox();">{% trans "Sign in"%}</a>
                     {% endif %}
@@ -176,7 +183,7 @@
     <form id="langForm" action="/i18n/setlang/" method="post">
          {% csrf_token %}
          <input name="next" type="hidden" value="{{ request.path }}" />
-         <select id="langSwitch" name="language">
+         <select id="langSwitch" name="language" class="input-small">
             {% for lang in LANGUAGES %}
                 <option value="{{ lang.0 }}" {% if lang.0 == request.LANGUAGE_CODE %}selected="true"{% endif %}>
                     {{ lang.1 }}</option>

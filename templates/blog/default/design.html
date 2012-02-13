@@ -1,0 +1,125 @@
+{% extends 'blog/blogs_baseDesign.html' %}
+{% load field_renderer %}
+
+{% block includes %}
+   {{ block.super }}
+   <link href="{{ STATIC_PREFIX }}blogs_default/css/blogs.css" rel="stylesheet" type="text/css">
+   {% include "jquery.multiselect.html" %}
+{% endblock %}
+
+
+
+{% block blogMenu %}
+    {% for item in menu %}
+        {% if item.enabled and item.show %}
+            <div class="sideMenuItem {% if item.selected %} selected {% endif %}">
+                <a href="{{ item.url }}">{{ item.label }}</a>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block leftLogo %}
+    <div class="blog_leftLogo">
+        <div id="generalLogo">
+            <div id="logoWrapper">
+                {% block logoSrc %}
+                    {% if blogForm.logo.value %}
+                        <img id="blogLogoSrc" src="{{ MEDIA_URL }}{{ blogForm.logo.value }}">
+                    {% endif %}
+                    {% if blog.logo %}
+                        <img id="blogLogoSrc" src="{{ blog.logo.url }}">
+                    {% endif %}
+                    {% if not blog.logo and not blogForm.logo.value %}
+                        <img id="blogLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png">
+                    {% endif %}
+                {% endblock %}
+            </div>
+            <div class='logoBottom'>
+            {% block logoBottom %}
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block blogContent %}
+<div id="createBlogBox">
+        <div id="managePane">
+
+        </div>
+        {# Hidden content #}
+        <div id="blogPageBlocks">
+            {% block hiddenContent %}
+            {% endblock %}
+        </div>
+
+        <div id="blogContent">
+                {% block formDefinition %}
+                {% endblock %}
+                    <table style="width:100%;">
+                    <tr>
+                        <td colspan="2">
+                        <div class="blogSection" >
+                            {% block blogNameHeader%}
+                            
+                            {% endblock %}
+                        </div>
+
+                        <!--div class="blogTopImages">
+                            <div class="blogSection" >
+                                {% block blogHeaderImages %}
+                                
+                                {% endblock %}
+                            </div>
+                        </div-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="250px" style="vertical-align: top;">
+                            <div class="generalInfoLeftColumn">
+                                <div class="blogSection"  >
+                                    {% block blogModule_1 %}
+                                        
+                                    {% endblock %}
+                                </div>
+                            </div>
+                        </td>
+                        <td style="vertical-align: top;">
+                            <div class="blogInfoContent">
+                                    <div class="blogSection"  >
+                                        {% block blogDescription %}
+                                        
+                                        {% endblock %}
+                                    </div>
+                                    <!--div class="blogInfoDivider"></div-->
+                                    <div id="blogFacilities">
+                                                {% block blogFacilities %}
+
+                                                {% endblock %}
+                                     </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="vertical-align: top">
+
+                        </td>
+                    </tr>
+                    <tr >
+                        <td colspan="2" style="vertical-align: top;">
+                            <div class="blogSection">
+                                <div class="blogSectionName">News</div>
+                                {% block blogNews %}
+                                
+                                {% endblock %}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                {% block formEnd %}
+                
+                {% endblock %}
+            </div>
+</div>
+{% endblock blogContent %}

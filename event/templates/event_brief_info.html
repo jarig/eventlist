@@ -36,7 +36,7 @@
     <div class="eventButton">
             <a href="#" class="partyButton" {% if not eventSchedule.goes %} style="display: none" {% endif %} id="unGoButton">{% trans "I don't go"%}</a>
             <a href="#" class="partyButton" {% if eventSchedule.goes %} style="display: none" {% endif %} id="goButton">{% trans "I'll go"%}</a>
-            <form action="{% url event.views.unGo eventSchId=eventSchedule.pk %}" method="POST" id="unGoForm">
+            <form action="{% url event.views.unGo eventSchId=eventSchedule.pk %}" method="POST" id="unGoForm" class="hidden">
             </form>
     </div>
     {% endif %}
@@ -58,9 +58,13 @@
             <div class="partySuggestions">
                 <!--div class="partySubTitle">Top 5 party suggestions</div-->
                 <div class="partySuggestionContainer">
-                    <ul>
+                    <ul class="thumbnails">
                         {% for i in 012345|make_list %}
-                            <li><div class="partySuggestion">Suggestion {{ i }}</div></li>
+                            <li class="span2">
+                                <a href="#" class="thumbnail">
+                                        <img src="http://placehold.it/70x70" alt="">
+                                </a>
+                             </li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -72,7 +76,7 @@
                         <div class="hidden" id="partyCreatedMessage">{% trans "Party Successfully created!" %}</div>
                     </div>
                     <div class="editPartyButton float-right hidden">
-                        <a href="{% url party.views.silentCreateWithEvent eventScheduleId=eventSchedule.pk %}">{% trans "Invite people!" %}</a>
+                        <a href="{% url party.views.createWithEvent eventScheduleId=eventSchedule.pk %}">{% trans "Invite people!" %}</a>
                     </div>
                 </div>
             </div>
@@ -81,7 +85,7 @@
             <div class="nub"></div>
         </div>
         <div class="hidden">
-            <form action="{% url event.views.go eventSchId=eventSchedule.pk %}" method="POST" id="createSimpleParty">
+            <form action="{% url event.views.go eventSchId=eventSchedule.pk %}" method="POST" id="createSimpleParty" class="hidden">
             </form>
         </div>
     </div>

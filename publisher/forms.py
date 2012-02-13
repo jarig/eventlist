@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from accounts.models import Account
+from account.models import Account
 from publisher.models import PublisherRequest
 
 class RequestForm(forms.Form):

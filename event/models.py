@@ -1,7 +1,7 @@
 import datetime
 from django.contrib.auth.models import User
 from django.db import models
-from blogs.models import Blog
+from blog.models import Blog
 from common.models import Address
 from organization.models import Organization
 
@@ -38,12 +38,14 @@ class EventSchedule(models.Model):
     timeTo = models.TimeField(default='00:00', null=True, blank=True)
     address = models.ForeignKey(Address, null=True) #location where this event will be held
     blog = models.ForeignKey(Blog, null=True, blank=True, default=None) # addresses's blog
-    
+    created = models.DateTimeField(auto_now_add=True) #sch created
+
     pass
 
 class EventGo(models.Model):
     eventSchedule = models.ForeignKey(EventSchedule, editable=False)
     user = models.ForeignKey(User, editable=False, related_name='goesOnEvents')
+    created = models.DateTimeField(auto_now_add=True) #go created
 
     class Meta:
         unique_together = ('eventSchedule', 'user')
@@ -59,12 +61,14 @@ class Comment(models.Model):
     author = models.ForeignKey(User)
     type = models.CharField(max_length=1, choices=COMMENT_TYPE, default='U')
     text = models.TextField()
+    created = models.DateTimeField(auto_now_add=True) #created
     
 
 class Invite(models.Model):
     event = models.ForeignKey(Event)
     user = models.ForeignKey(User, related_name='invites')
     person = models.ForeignKey(User, related_name='invited')
+    created = models.DateTimeField(auto_now_add=True) #created
 
     class Meta:
         unique_together = ('event', 'user', 'person')

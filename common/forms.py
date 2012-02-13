@@ -27,8 +27,8 @@ class AddressForm(ModelForm):
             'postalCode': forms.TextInput(attrs={'title':'Postal Code'}),
         }
     
-    def save(self, commit=True):
-        super(AddressForm, self).save(commit)
+#    def save(self, commit=True):
+#        super(AddressForm, self).save(commit)
         
 
     def saveAddress(self, request):

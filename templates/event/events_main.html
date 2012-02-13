@@ -1,0 +1,41 @@
+{% extends 'event/events.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block includes %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}common/js/social/likeButtons/buttons.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{ STATIC_URL }}common/js/social/likeButtons/buttons.js"></script>
+    <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/event.js"></script>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(function()
+        {
+            Event.init();
+            $('.like').socialButton();
+            $('.fastsearch input').labelify({ labelledClass: "helpLabel" });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="fastsearch">
+        <div>
+            <input type="text" title="{% trans "Search" %}" class="wideinput">
+        </div>
+    </div>
+    {% for eventSchedule in eventSchedules %}
+        {% with eventSchedule.event as event %}
+            {% include "event_brief_info.html" %}
+        {% endwith %}
+    {% endfor %}
+
+
+{% endblock content %}
+
+{% block hiddenContent %}
+
+{% endblock%}

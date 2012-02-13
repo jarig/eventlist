@@ -21,7 +21,7 @@ def index(request):
     if request.session["mode"] == "user":
         return HttpResponseRedirect(reverse('event.views.main'))
     if request.session["mode"] == "publish":
-        return HttpResponseRedirect(reverse('blogs.views.manage'))
+        return HttpResponseRedirect(reverse('blog.views.manage'))
     pass
 
 def switchMode(request, mode, defaultView):
@@ -48,7 +48,7 @@ def switchMode(request, mode, defaultView):
 @login_required
 @permission_required("publisher.publish")
 def publisherMode(request):
-    return switchMode(request, 'publish', 'blogs.views.manage')
+    return switchMode(request, 'publish', 'blog.views.manage')
 
 
 def userMode(request):

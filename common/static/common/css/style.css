@@ -76,26 +76,3 @@ a:hover {
     height: 31px;
 }
 
-.helpLabel
-{
-    color: graytext;
-}
-
-.noBorder
-{
-    border: none;
-}
-.hidden
-{
-    display: none;
-}
-
-.float-left
-{
-    float: left;
-}
-
-.float-right
-{
-    float: right;
-}

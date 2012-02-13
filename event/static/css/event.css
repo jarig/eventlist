@@ -67,6 +67,7 @@
 .partySuggestionContainer
 {
     min-height: 100px;
+    text-align: center;
 }
 .partySuggestionContainer ul
 {
@@ -77,10 +78,10 @@
 .partySuggestionContainer li
 {
     display: inline-block;
-    border: 1px #778899 solid;
     width: 70px;
     height: 70px;
-    margin-left: 13px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .createPartyButton a
@@ -319,17 +320,4 @@
     width: 100%;
     margin-bottom: 14px;
     margin-top: 9px;
-}
-
-.wideinput
-{
-    padding-left: 18px;
-    padding-right: 25px;
-}
-
-.wideinput input
-{
-    line-height: 35px;
-    width: 100%;
-    font-size: 25px;
 }

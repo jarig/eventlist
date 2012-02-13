@@ -1,0 +1,33 @@
+{% extends 'event/events.html' %}
+{% load i18n %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block includes %}
+   {{ block.super }}
+   <link href="{{ STATIC_PREFIX }}common/css/apps/manage.css" rel="stylesheet" type="text/css">
+   <link href="{{ STATIC_PREFIX }}css/event_manage.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <div class='managementHeader'>
+        <h1>{% trans 'Event Management' %}</h1>
+        <div class='subMenu'>
+            <ul>
+                <li><a href="{% url event.views.credit %}" class="manageButton">Create Event</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="items_container">
+        {% for evObj in myEvents %}
+            <div class="boxedItem"
+                 {% if evObj.logo %}
+                    style="background-image: url('{{ evObj.logo.url }}')"
+                 {% endif %}
+                 >
+                <div class="itemName">{{ evObj.name }}</div>
+                <a href="{% url event.views.credit evObj.id %}" class="manageButton"></a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

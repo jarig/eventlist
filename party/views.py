@@ -2,13 +2,15 @@
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import json
 from django.http import HttpResponse
+from django.shortcuts import render_to_response
+from django.template.context import RequestContext
 from event.models import Event, EventSchedule
 from event.views import _go
 from party.forms import CreateSimplePartyForm
 from party.models import Party, PartySchedule, PartyMember
 
 @login_required
-def silentCreateWithEvent(request, eventScheduleId):
+def createWithEvent(request, eventScheduleId):
     #record to event go
     eventSch = EventSchedule.objects.get(pk=eventScheduleId)
     _go(request.user,eventSch)
@@ -23,6 +25,10 @@ def silentCreateWithEvent(request, eventScheduleId):
                                                  party=party,
                                                  role=PartyMember.ROLE.OWNER)
     data= json.simplejson.dumps({ "id": party.pk, "schedule": partySched.pk, "membership": partyMemberShip.pk })
-    return HttpResponse(data)
-    #return HttpResponse(json.simplejson.dumps({ "error": { "id": 1, "message":"Invalid request" }}))
+    return render_to_response("party/party_create.html",
+        {
+
+        },
+        context_instance=RequestContext(request)
+    )
     pass

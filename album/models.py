@@ -1,5 +1,5 @@
 from django.db import models
-from blogs.models import Blog
+from blog.models import Blog
 
 
 class Album(models.Model):

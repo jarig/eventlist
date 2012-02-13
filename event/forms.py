@@ -1,7 +1,7 @@
 
 from django.forms.models import ModelForm, BaseModelFormSet, modelformset_factory
 from django.forms.widgets import HiddenInput
-from blogs.models import Blog
+from blog.models import Blog
 from common.forms import AddressForm
 from common.models import Address
 from common.utils import uploadLocalImage

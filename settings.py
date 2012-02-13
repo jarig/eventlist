@@ -72,12 +72,23 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
-AUTH_PROFILE_MODULE = 'accounts.Account'
+AUTH_PROFILE_MODULE = 'account.Account'
 
 AUTHENTICATION_BACKENDS = (
-    'accounts.backends.PublicAuth',
+    'account.backends.PublicAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': os.path.abspath(".") + '/cache',
+        'TIMEOUT': 60,
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000
+        }
+    }
+}
 
 ROOT_URLCONF = 'rest.urls'
 
@@ -111,9 +122,9 @@ INSTALLED_APPS = (
     'party',
     'common',
     'event',
-    'blogs',
+    'blog',
     'menu',
-    'accounts',
+    'account',
     'jquery',
     'search',
     'publisher',

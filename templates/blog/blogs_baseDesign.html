@@ -1,0 +1,36 @@
+{% extends 'blog/blogs.html' %}
+{% load field_renderer %}
+
+{% block includes %}
+   {{ block.super }}
+   <link href="{{ STATIC_PREFIX }}common/css/forms.css" rel="stylesheet" type="text/css">
+   <link href="{{ STATIC_PREFIX }}css/blogs.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        BaseGUI.showLeftColumn();
+        BaseGUI.hideRightColumn();
+    </script>
+{% endblock %}
+
+{% block leftcolumn %}
+    <div class="blog_leftColumn">
+            {% block leftLogo %}
+
+            {% endblock %}
+        <div class="blog_menu">
+            {% block blogMenu %}
+                
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {% block blogContent %}
+
+    {% endblock %}
+    
+{% endblock %}

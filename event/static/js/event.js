@@ -26,8 +26,11 @@ var Event =
                         $("#unGoForm",$this).serialize(),
                         function(data, textStatus)
                         {
-                            $('#goButton',$this).show();
-                            $('#unGoButton',$this).hide();
+                            if (data == "True")
+                            {
+                                $('#goButton',$this).show();
+                                $('#unGoButton',$this).hide();
+                            }
                         }
                         );
                     return false;
@@ -49,8 +52,6 @@ var Event =
                     {
                         "initialized": false
                     });
-            //if ( typeof onClose == "function" )
-            //    onClose();
             return false;
         },
         showPartyWindow: function(container, onCloseMethod)
