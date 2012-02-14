@@ -1,5 +1,5 @@
-import os
-from django.core.files.base import File
+from exceptions import KeyError
+import re
 from django.core.files.storage import DefaultStorage
 
 def urlToPath(url):
@@ -17,4 +17,31 @@ def uploadLocalImage(filepath, filename, uploadFunc, overwrite=True):
     #if overwrite: #delete old file
     #    dirname = os.path.dirname(filepath)
     #   storage.delete(os.path.join(dirname,filename))
-  
+
+
+def json(data):
+    result = {}
+    for key in data.keys():
+        #test[sadsd][asdas]
+        #test[sadsd][xxx]
+        rKey = re.match("(.+)(\[.+\])",key)
+        if rKey is None:
+            result[key] = data[key]
+            continue
+        result[rKey.group(1)] = {}
+        rData = _formData(rKey.group(2), result[rKey.group(1)])
+        rData = data[key]
+    return result
+
+
+def _formData(keyString, result):
+    while keyString is not None and keyString != "":
+        reObj = re.match("\[(.+?)\]", keyString)
+        if reObj is None: break
+        key = reObj.group(1)
+        try:
+            result[key]
+        except KeyError: #no such key
+            result = result[key] = {} #create new dict and get reference to it
+        keyString = re.sub(r'\['+key+'\](.+)',r'\1',keyString)
+    return result

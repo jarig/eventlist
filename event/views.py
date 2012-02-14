@@ -15,7 +15,7 @@ from party.forms import CreateSimplePartyForm
 
 def render_event(request, attrs):
 
-    return render_to_response("event/events_event.html",
+    return render_to_response("event/events_credit.html",
                                   attrs,
                                   context_instance=RequestContext(request)
                                   )

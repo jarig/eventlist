@@ -30,7 +30,8 @@
                 action="{% url event.views.credit %}"
               {% endif %}
               method="POST"
-              enctype="multipart/form-data">
+              enctype="multipart/form-data"
+              class="form-horizontal">
             
             <div class="buttonPane">
                 <a href="#" onclick="CreateEvent.submitForm('#eventDataForm');return false;">Submit</a>
@@ -39,7 +40,7 @@
             <tr>
                 <td colspan="2">
                     <div class="divButton eventName {% if eventForm.name.errors %}errorHighlight{% endif %}">
-                        {% field eventForm.name 'title=Event Name' %}
+                        {% field eventForm.name 'title=Event Name' 'class=wideinput' %}
                     </div>
                     <div class="errors">
                         {{ eventForm.name.errors }}
@@ -50,7 +51,7 @@
                 <td width="256px" rowspan="99">
                     <div class="eventLogoBox">
                         <div class='divButton eventLogo'>
-                            <div onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc','#id_logo');">
+                            <div onclick="return CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc','#id_logo');">
                                 {% if eventForm.logo.value %}
                                     <img id="eventLogoSrc" src="{{ MEDIA_URL }}{{ eventForm.logo.value }}">
                                 {% endif %}
@@ -64,7 +65,7 @@
                             {{ eventForm.logo }}
                         </div>
                         <div class='eventLogoUpload'>
-                            <a href="#" onclick="CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc','#id_logo');">Upload</a>
+                            <a href="#" onclick="return CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc','#id_logo');">Upload</a>
                         </div>
                     </div>
                 
@@ -131,26 +132,29 @@
                 {{ eventSchedules.management_form }}
                 <div class="eventSchedules" id="eventSchedules">
                         {% for schForm in eventSchedules reversed %}
-                            <div class="eventSchedule"
+                            <div class="eventSchedule well"
                                     id="schedule-form-{{ forloop.revcounter0 }}"
                             >
                                 {{ schForm.id }}
                                 <input type="hidden" name="schedulePrefix" id="schedulePrefix" value="{{ schForm.prefix }}">
+                                <a class="close">&times;</a>
                                 <div class="eventDates">
-                                        <div class="eventDate">
-                                            {{ schForm.dateFrom }}
-                                            {% field schForm.timeFrom 'class=eventTime' %}
-                                            <div class="errors">
-                                                {{ schForm.dateFrom.errors }}
-                                            </div>
+                                    <div class="control-group">
+                                        <label class="control-label" >{% trans "Event starts" %}</label>
+                                        <div class="controls">
+                                            {% field schForm.dateFrom 'class=span2'%}
+                                            {% field schForm.timeFrom 'class=eventTime span1' %}
+                                            <span class="help-inline">{{ schForm.dateFrom.errors }}</span>
                                         </div>
-                                        <div class="eventDate" style="float:right">
-                                            {{ schForm.dateTo }}
-                                            {% field schForm.timeTo 'class=eventTime' %}
-                                            <div class="errors">
-                                                {{ schForm.dateTo.errors }}
-                                            </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label" >{% trans "Event ends" %}</label>
+                                        <div class="controls">
+                                            {% field schForm.dateTo 'class=span2' %}
+                                            {% field schForm.timeTo 'class=eventTime span1' %}
+                                            <span class="help-inline">{{ schForm.dateTo.errors }}</span>
                                         </div>
+                                    </div>
                                 </div>
                                 <div class="blogSelection">
                                     {{ schForm.blog }}

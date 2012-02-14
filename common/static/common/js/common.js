@@ -43,8 +43,8 @@ var CommonGUI =
       $(dialogId).dialog(
           {
               title: "Upload Logo",
-              height: "150",
-              width: "250",
+              height: "180",
+              width: "350",
               modal: true,
               buttons: {
                   submit: function()

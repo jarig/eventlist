@@ -152,7 +152,7 @@ var CreateEvent =
         {
             var inputId = $(inputs[i]).attr("id");
             var name = $(inputs[i]).attr("name");
-            if ( inputId.indexOf(formPrefix) >= 0)
+            if ( typeof inputId != "undefined" && inputId.indexOf(formPrefix) >= 0)
             {// if this input has formPrefix in id
                 var newId = inputId.replace(formPrefix, currentPrefix);
                 var newName = name.replace(formPrefix, currentPrefix);
@@ -161,8 +161,9 @@ var CreateEvent =
             }
         }// forloop
 
+        $(clone).hide();
         $(insertTo).prepend(clone);
-        $(clone).show();
+        $(clone).slideDown('slow');
         var schedule = CreateEvent.initSchedule(clone);
         var blogFieldId = "#id_"+formPrefix+"-blog";
         $(blogFieldId, schedule).change();

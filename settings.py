@@ -125,7 +125,6 @@ INSTALLED_APPS = (
     'blog',
     'menu',
     'account',
-    'jquery',
     'search',
     'publisher',
     'album',

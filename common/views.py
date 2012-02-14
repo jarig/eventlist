@@ -1,9 +1,5 @@
 # Create your views here.
-import md5
-import os
-from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
-from django.core.files.base import File
 from django.core.files.storage import DefaultStorage
 from django.core.serializers import json
 from django.core.urlresolvers import reverse

@@ -8,8 +8,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet/less" title="CSS" type="text/css" />
-    <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap-responsive.css" media="screen" rel="stylesheet/less" title="CSS" type="text/css" />
+    <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap-responsive.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
     <!--link href="{{ STATIC_PREFIX }}common/css/jqueryUI.css/jquery-ui.css" media="screen" rel="stylesheet" title="CSS" type="text/css" /-->
     <link href="{{ STATIC_PREFIX }}common/plugins/jqueryUI/css/custom-theme/jquery-ui-1.8.17.custom.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
@@ -37,11 +37,12 @@
 
 
     <!-- Plugins -->
-    <link href="{{ STATIC_PREFIX }}jqueryPlugins/chosen/chosen.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-    <script type="text/javascript" src="{{ STATIC_PREFIX }}jqueryPlugins/chosen/chosen.jquery.min.js"></script>
+    <link href="{{ STATIC_PREFIX }}common/plugins/chosen/chosen.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/chosen/chosen.jquery.min.js"></script>
 
 
     <link href="{{ STATIC_PREFIX }}css/menu_sidemenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+
     {% if request.session.mode == 'publish' %}
         <link href="{{ STATIC_PREFIX }}css/base_publisher.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     {% endif %}
