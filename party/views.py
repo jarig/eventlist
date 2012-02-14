@@ -10,6 +10,20 @@ from party.forms import CreateSimplePartyForm
 from party.models import Party, PartySchedule, PartyMember
 
 @login_required
+def forEvent(request, eventScheduleId):
+    #init forms
+    if request.POST:
+        pass
+
+    return render_to_response("party/party_create.html",
+        {
+
+        },
+        context_instance=RequestContext(request)
+    )
+    pass
+
+@login_required
 def createWithEvent(request, eventScheduleId):
     #record to event go
 
@@ -25,11 +39,6 @@ def createWithEvent(request, eventScheduleId):
     partyMemberShip = PartyMember.objects.create(user=request.user,
                                                  party=party,
                                                  role=PartyMember.ROLE.OWNER)
-    data= json.simplejson.dumps({ "id": party.pk, "schedule": partySched.pk, "membership": partyMemberShip.pk })
-    return render_to_response("party/party_create.html",
-        {
+    data = json.simplejson.dumps({ "id": party.pk, "schedule": partySched.pk, "membership": partyMemberShip.pk })
 
-        },
-        context_instance=RequestContext(request)
-    )
     pass

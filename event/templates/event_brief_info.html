@@ -76,7 +76,7 @@
                         <div class="hidden" id="partyCreatedMessage">{% trans "Party Successfully created!" %}</div>
                     </div>
                     <div class="editPartyButton float-right hidden">
-                        <a href="{% url party.views.createWithEvent eventScheduleId=eventSchedule.pk %}">{% trans "Invite people!" %}</a>
+                        <a href="{% url party.views.forEvent eventScheduleId=eventSchedule.pk %}">{% trans "Invite people!" %}</a>
                     </div>
                 </div>
             </div>

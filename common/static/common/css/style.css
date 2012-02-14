@@ -2,7 +2,8 @@
 @import url('popups.css');
 @import url('rightBox.css');
 
-body {
+body
+{
 	margin: 0 0 0 0;
 	background-color: white;
 	font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
@@ -61,18 +62,5 @@ a:hover {
 }
 .style_italic {
 	font-style: italic;
-}
-
-.logo a
-{
-    float: left;
-    margin-right: 14px;
-    text-align: center;
-    vertical-align: middle;
-    display: block;
-    padding-left: 10px;
-    background-image: url("");
-    background-repeat: no-repeat;
-    height: 31px;
 }
 
