@@ -159,5 +159,4 @@ if os.environ.has_key("PRODUCTION"):
     from settings_production import *
 else:
     print >> sys.stdout, "Developer Mode"
-    print "Developer mode"
     from settings_dev import  *

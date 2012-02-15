@@ -23,9 +23,7 @@
 
 {% block content %}
     <div class="fastsearch">
-        <div>
-            <input type="text" title="{% trans "Search" %}" class="wideinput">
-        </div>
+        <input type="text" title="{% trans "Search" %}" class="wideinput">
     </div>
     {% for eventSchedule in eventSchedules %}
         {% with eventSchedule.event as event %}
