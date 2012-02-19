@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
 from django.db.models.aggregates import Count
+from django.db.models.expressions import F
 from django.forms.models import  modelformset_factory
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
@@ -49,10 +50,6 @@ def credit(request, event=None):
         eventForm = EventForm(request.user, instance=event)
         eventSchedules = eventScheduleFormSet(
             queryset=schedules,
-            #initial=[{'dateFrom':datetime.date.today(),
-            #          'timeFrom':'00:00',
-            #          'timeTo':'00:00'
-        #}]
         )
 
     return render_event(request, {
@@ -73,17 +70,30 @@ def manage(request):
 
 
 def main(request):
-    eventSchedules = EventSchedule.objects.all().order_by("-dateFrom", "-timeFrom")
     createPartyFormSample = None
+    goes = "0"
     if request.user.is_authenticated():
-        eventSchedules = eventSchedules.extra(select={'goes':
-                                                          "SELECT 1 FROM dual WHERE EXISTS ( SELECT id FROM %s WHERE user_id=%d and `eventSchedule_id`=%s.`id`)" % ( EventGo._meta.db_table, request.user.pk, EventSchedule._meta.db_table) })
-
         createPartyFormSample = CreateSimplePartyForm(
             initial={
                 "author":request.user
             }
         )
+        goes = "SELECT 1 FROM dual WHERE EXISTS ( SELECT id FROM %s WHERE %s=%d and %s=SCH.`id`)" %\
+               ( EventGo._meta.db_table,
+                 EventGo.user.field.column,
+                 request.user.pk,
+                 EventGo.eventSchedule.field.column)
+    eventSchedules = EventSchedule.objects.raw("""select SCH.*,
+                                                (%s) AS `goes`
+                                                FROM  %s EE,
+                                                (SELECT * FROM %s SC GROUP BY %s ORDER BY dateFrom DESC) as SCH
+                                                WHERE EE.id=SCH.%s """ % (
+                                                                          goes,
+                                                                          Event._meta.db_table,
+                                                                          EventSchedule._meta.db_table,
+                                                                          EventSchedule.event.field.column,
+                                                                          EventSchedule.event.field.column))
+
     return render_to_response("event/events_main.html",
                               {
                                     "eventSchedules": eventSchedules,

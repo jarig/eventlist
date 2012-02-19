@@ -28,6 +28,7 @@ class Event(models.Model):
     created = models.DateTimeField(auto_now_add=True) #date event created
     participants = models.PositiveIntegerField(default=0) # number of participants, help num (not exact)
     confirmed = models.BooleanField(editable=False, default=True) #event confirmed by blog/page admins
+    #latest_schedule = models.ForeignKey('EventSchedule',related_name='+',default=None,null=True, blank=True)
     
 # Event may have many schedules
 class EventSchedule(models.Model):
@@ -40,7 +41,7 @@ class EventSchedule(models.Model):
     blog = models.ForeignKey(Blog, null=True, blank=True, default=None) # addresses's blog
     created = models.DateTimeField(auto_now_add=True) #sch created
 
-    pass
+
 
 class EventGo(models.Model):
     eventSchedule = models.ForeignKey(EventSchedule, editable=False)

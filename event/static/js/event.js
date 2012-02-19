@@ -92,8 +92,8 @@ var Event =
             $this.show();
             $(".createPartyButton", $this).click(function()
             {
-                $.post($("#createSimpleParty").attr("action"),
-                       $("#createSimpleParty").serialize(),
+                $.post($("#createSimpleParty",$this).attr("action"),
+                       $("#createSimpleParty",$this).serialize(),
                         function(data, textStatus)
                         {
                             Common.DEBUG(JSON.stringify(data));

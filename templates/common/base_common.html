@@ -2,41 +2,55 @@
 {% load i18n %}
 {% load menu_builder %}
 
-{% block topmenu %}
-    {% if request.session.mode == 'publish' %}
-            <div class="topButton" style="float: left; ">
-                <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Publications" %}</a>
-            </div>
-            <div class="topButton" style="float: left; ">
-                <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Statistics" %}</a>
-            </div>
-            <div id="signin" class="topButton">
-            {% if not user.is_authenticated %}
-                    <a href="#" onclick="User.openLoginBox(); return false;">{% trans "Sign in" %}</a>
-            {% else %}
-                    <img class="logoutLogo" src="{{ STATIC_PREFIX }}common/images/{{ user.get_profile.provider }}LogoSmall.png"/>
-                    <a href="#" onclick="Base.toggle_profileBox('#profileBox'); return false;" >{% trans "Profile" %}</a>
-            {%  endif %}
-        </div>
-    {% else %}
-        {{ block.super }}
-    {% endif %}
-{% endblock topmenu %}
 
-{% block userButtons %}
+
+
+{% block topmenu_left %}
+    {% if request.session.mode == 'publish' %}
+            <li >
+                <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Publications" %}</a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+                <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Statistics" %}</a>
+            </li>
+    {% else %}
+            <li >
+                <a href="/" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Events" %}</a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li>
+                <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Recent events" %}</a>
+            </li>
+    {% endif %}
+{% endblock topmenu_left %}
+
+
+{% block topmenu_right_actions %}
     {% if user.is_authenticated %}
-        {% if request.session.mode == 'publish' %}
-            <div class="topButton">
-                <a href="{% url event.views.credit %}" title="Publish!">{% trans "Publish!" %}</a>
-            </div>
-        {% else %}
-            <div id="publish" class="topButton">
-                <a href="{% url search.views.findPlace %}" title="Find Where To Rest!">{% trans "Rest!" %}</a>
-            </div>
-        {% endif %}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {% if request.session.mode == 'publish' %}
+                    <i class="myicon-gear"></i>
+                 {% else %}
+                    <!--i class="icon-glass"></i-->
+                {% endif %}Rest!
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                {% if request.session.mode == 'publish' %}
+                    <li><a href="{% url event.views.credit %}" title="Publish!">{% trans "Publish!" %}</a></li>
+                {% else %}
+                    <li><a href="{% url search.views.findPlace %}" title="Find Where To Rest!">{% trans "Rest!" %}</a></li>
+                {% endif %}
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>
+        </li>
     {% endif %}
 {% endblock %}
-
 
 
 {% block rightcolumn %}

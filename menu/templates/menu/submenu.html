@@ -5,7 +5,10 @@
         {% for item in menuItems %}
             <li>
                 <a {% if item.selected %} class="selected" {% endif %}
-                   id="{{ item.id }}" href="{{ item.url }}" onclick="{{ item.onclick }}">{{ item.label }}</a>
+                   id="submenu-item-{{ forloop.counter }}" href="{{ item.url }}"
+                   onclick="{{ item.onclick }}">
+                    {{ item.label }}
+                </a>
             </li>
         {% endfor %}
     </ul>

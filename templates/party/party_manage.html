@@ -1,0 +1,19 @@
+{% extends 'party/party.html' %}
+{% load i18n %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+{% load menu_builder %}
+
+{% block content %}
+    <div class="restHeader">
+        <div class="headerName"><h1>{% trans "Your Parties" %}</h1></div>
+        <div class="subMenu">
+            <ul>
+                <li>
+                    <a href="{% url party.views.credit %}">Create</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

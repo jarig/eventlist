@@ -2333,9 +2333,9 @@ button.btn.small, input[type="submit"].btn.small {
 }
 
 .navbar-inner {
-  padding-left: 20px;
-  padding-right: 20px;
+
 }
+
 .btn-navbar {
   display: none;
   float: right;
@@ -2392,12 +2392,12 @@ button.btn.small, input[type="submit"].btn.small {
 .navbar .brand {
   float: left;
   display: block;
-  padding: 8px 20px 12px;
+  padding: 5px 20px 6px;
   margin-left: -20px;
   font-size: 20px;
   font-weight: 200;
   line-height: 1;
-  color: #ffffff;
+  color: black;
 }
 .navbar .navbar-text {
   margin-bottom: 0;
@@ -2405,8 +2405,8 @@ button.btn.small, input[type="submit"].btn.small {
   color: #999999;
 }
 .navbar .navbar-text a:hover {
-  color: #ffffff;
-  background-color: transparent;
+    background-color: rgb(0, 102, 153);
+    color: white;
 }
 .navbar .btn, .navbar .btn-group {
   margin-top: 5px;
@@ -2513,16 +2513,18 @@ button.btn.small, input[type="submit"].btn.small {
   float: left;
 }
 .navbar .nav > li > a {
+  text-align: center;
+  min-width: 102px;
   float: none;
-  padding: 7px 30px 7px;
+  padding: 7px 0px 7px;
   line-height: 15px;
   color: black;
   text-decoration: none;
   text-shadow: 0 -1px 0 rgba(245, 245, 245, 0.25);
 }
 .navbar .nav > li > a:hover {
-  background-color: transparent;
-  color: #ffffff;
+  background-color: rgb(0, 102, 153);
+  color: white;
   text-decoration: none;
 }
 .navbar .nav .active > a, .navbar .nav .active > a:hover {
@@ -2531,12 +2533,13 @@ button.btn.small, input[type="submit"].btn.small {
   background-color: rgb(0, 102, 153);
 }
 .navbar .divider-vertical {
-  height: 40px;
-  width: 1px;
-  margin: 0 9px;
+  height: 30px;
+  width: 0.1px;
+  margin: 0;
   overflow: hidden;
-  background-color: #222222;
-  border-right: 1px solid #333333;
+  border-color: #EEEEEE;
+  border-right-style: solid;
+  border-width: 1px;
 }
 .navbar .nav.pull-right {
   margin-left: 10px;
@@ -2570,14 +2573,15 @@ button.btn.small, input[type="submit"].btn.small {
   left: 10px;
 }
 .navbar .nav .dropdown-toggle .caret, .navbar .nav .open.dropdown .caret {
-  border-top-color: #ffffff;
+
 }
 .navbar .nav .active .caret {
   opacity: 1;
   filter: alpha(opacity=100);
 }
 .navbar .nav .open > .dropdown-toggle, .navbar .nav .active > .dropdown-toggle, .navbar .nav .open.active > .dropdown-toggle {
-  background-color: transparent;
+
+  background-color: rgb(0, 102, 153);
 }
 .navbar .nav .active > .dropdown-toggle:hover {
   color: #ffffff;

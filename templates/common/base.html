@@ -15,7 +15,7 @@
     <!--link href="{{ STATIC_PREFIX }}common/css/jqueryUI.css/jquery-ui.css" media="screen" rel="stylesheet" title="CSS" type="text/css" /-->
     <link href="{{ STATIC_PREFIX }}common/plugins/jqueryUI/css/custom-theme/jquery-ui-1.8.17.custom.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}common/css/style.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-    <link href="{{ STATIC_PREFIX }}common/css/rest.less" media="screen" rel="stylesheet/less" type="text/css" />
+    <link href="{{ STATIC_PREFIX }}common/less/rest.less" media="screen" rel="stylesheet/less" type="text/css" />
     <link href="{{ STATIC_PREFIX }}css/menu_login.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}css/menu_topmenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}css/menu_submenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
@@ -50,7 +50,7 @@
 
     {% endblock %}
 
-    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/less/less-1.2.1.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/less/less-1.2.2.js"></script>
     <title>{% block title %}Rest{% endblock %}</title>
 </head>
 
@@ -71,102 +71,123 @@
 
 <!-- Begin Container -->
 
-<div id="wrapper">
-    <div id="container">
-     <div id="container_wrap1">
-      <div id="container_wrap2" style="margin-top: 0px;">
         <div id="header">
+            <div class="wrapper">
+                <div class="navbar topMenu">
+                    <div class="navbar-inner">
+                        <div class="container-custom">
+                            <!--a class="brand" href="#">
+                                REST
+                            </a-->
+                            <div class="nav-collapse">
+                                {% block topmenu %}
+                                    <ul class="nav">
+                                        {% block topmenu_left %}
+
+                                        {% endblock %}
+                                    </ul>
+                                    <ul class="nav pull-right">
+                                        {% block topmenu_right %}
+                                                <li>
+                                                    <div id="signin" class="topButton">
+                                                        {% if not user.is_authenticated %}
+                                                            <a href="#" onclick="User.openLoginBox(); return false;">{% trans "Sign in" %}</a>
+                                                        {% else %}
+
+                                                            <a href="#" onclick="Base.toggle_profileBox('#profileBox'); return false;" >
+                                                                {% trans "Profile" %}
+                                                                <img class="logoutLogo" src="{{ STATIC_PREFIX }}common/images/{{ user.get_profile.provider }}LogoSmall.png"/>
+                                                            </a>
+                                                        {%  endif %}
+                                                    </div>
+                                                </li>
+                                                <li class="divider-vertical"></li>
+                                            {% block topmenu_right_actions %}
+                                            {% endblock topmenu_right_actions %}
+                                        {% endblock topmenu_right %}
+                                    </ul>
+                                {% endblock topmenu %}
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% block userButtons %}
+                {% endblock userButtons %}
+            </div>
             <div class="navbar">
                 <div class="navbar-inner">
-                    <div class="container">
+                    <div class="container-custom">
                         <div class="nav-collapse">
                             <ul class="nav">
-                                <li class="active" >
-                                    <a href="#">Home</a>
-                                </li>
-                                <li><a href="#">Link</a></li>
-                                <li><a href="#">Link</a></li>
-                            </ul>
-                            <ul class="nav pull-right">
-                                <li><a href="#">Link</a></li>
-                                <li class="divider-vertical"></li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="icon-flag"></i>Language
+                                        <b class="caret"></b>
+                                    </a>
+                                        {# request.LANGUAGE_CODE #}
+                                        <ul class="dropdown-menu">
+                                            {% for lang in LANGUAGES %}
+                                                <li><a href="#" onclick="$('#langForm-{{ lang.0 }}').submit();">
+                                                    {{ lang.1 }}</a>
+                                                </li>
+                                                <form id="langForm-{{ lang.0 }}" action="/i18n/setlang/" method="post" class="hidden">
+                                                    {% csrf_token %}
+                                                    <input name="next" type="hidden" value="{{ request.path }}" />
+                                                    <input name="language" value="{{ lang.0 }}" type="hidden">
+                                                </form>
+                                            {% endfor %}
+                                        </ul>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="topMenu">
-                {% block topmenu %}
-
-                        <div class="topButton" style="float: left; ">
-                            <a href="/" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Events" %}</a>
-                        </div>
-                        <div class="topButton" style="float: left; ">
-                            <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Recent events" %}</a>
-                        </div>
-                        <div id="signin" class="topButton">
-                        {% if not user.is_authenticated %}
-                                <a href="#" onclick="User.openLoginBox(); return false;">{% trans "Sign in" %}</a>
-                        {% else %}
-                                <img class="logoutLogo" src="{{ STATIC_PREFIX }}common/images/{{ user.get_profile.provider }}LogoSmall.png"/>
-                                <a href="#" onclick="Base.toggle_profileBox('#profileBox'); return false;" >{% trans "Profile" %}</a>
-                        {%  endif %}
-                        </div>
-                {% endblock topmenu %}
-                {% block userButtons %}
-                {% endblock userButtons %}
-            </div>
 
             {% block header %}
             {% endblock %}
         </div>
-        <div id="content" class="fillSpace">
-        <table id="contentTable" cellpadding="0" cellspacing="0">
-            <tr>
-                <td id="column_left">
-                    <div class="fillSpace">
-                        {% block leftcolumn %}
-                        {% endblock %}
-                    </div>
-                </td>
-                <td id="content_container">
-                    <div  class="fillSpace">
-                        <div class="messages">
-                            {% block messages %}
-                                {% for message in messages %}
-                                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                                {% endfor %}
-                            {% endblock %}
-                        </div>
-                        {% block content %}
-                        {% endblock %}
-                    </div>
-                </td>
-                <td id="rightColumnToggleBar" onclick="BaseGUI.toggleRightColumn();">
-                    <p><img src="{{ STATIC_PREFIX }}common/images/base/base_toggleArrow.png"></p>
-                </td>
-                <td id="column_right">
-                    <div class="fillSpace">
-                        {% block rightcolumn %}
-                        {% endblock %}
-                    </div>
-                </td>
-            </tr>
-        </table>
-        </div>
+<div class="wrapper">
+    <div id="container" class="container-fluid">
+        <div id="container_wrap1">
+            <div id="container_wrap2" style="margin-top: 0;">
+                <div id="content" class="fillSpace">
+                <table id="contentTable" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td id="column_left">
+                            <div class="fillSpace">
+                                {% block leftcolumn %}
+                                {% endblock %}
+                            </div>
+                        </td>
+                        <td id="content_container">
+                            <div  class="fillSpace">
+                                <div class="messages">
+                                    {% block messages %}
+                                        {% for message in messages %}
+                                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                        {% endfor %}
+                                    {% endblock %}
+                                </div>
+                                {% block content %}
+                                {% endblock %}
+                            </div>
+                        </td>
+                        <td id="rightColumnToggleBar" onclick="BaseGUI.toggleRightColumn();">
+                            <p><img src="{{ STATIC_PREFIX }}common/images/base/base_toggleArrow.png"></p>
+                        </td>
+                        <td id="column_right">
+                            <div class="fillSpace">
+                                {% block rightcolumn %}
+                                {% endblock %}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                </div>
         <!-- Begin Footer -->
-        <div id="footer">
-
+        <div id="footer" class="container-fluid">
             {% block footer %}{% endblock %}
             <div class="footerInfo">
                 <div class="infoColumn">
@@ -208,21 +229,7 @@
 <div id="rightSwitchBar">
 
     <div class="sideSwitcher">
-    <form id="langForm" action="/i18n/setlang/" method="post">
-         {% csrf_token %}
-         <input name="next" type="hidden" value="{{ request.path }}" />
-         <select id="langSwitch" name="language" class="input-small">
-            {% for lang in LANGUAGES %}
-                <option value="{{ lang.0 }}" {% if lang.0 == request.LANGUAGE_CODE %}selected="true"{% endif %}>
-                    {{ lang.1 }}</option>
-            {% endfor %}
-         </select>
-         <!--div class="sideSwitchButton">
-             <a href="#">
-                 <img src="" alt="lang" title="Language">
-             </a>
-         </div-->
-    </form>
+
     </div>
     {% if perms.publisher %}
         <div class="sideSwitcher">

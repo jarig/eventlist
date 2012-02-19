@@ -5,10 +5,12 @@
 
 {% block includes %}
     {{ block.super }}
+    <link href="{{ STATIC_URL }}address/css/address.less" rel="stylesheet/less" type="text/css">
     <link href="{{ STATIC_URL }}common/css/forms.css" rel="stylesheet" type="text/css">
     <link href="{{ STATIC_URL }}css/event_create.css" rel="stylesheet" type="text/css">
     <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{{ STATIC_URL }}js/event_create.js"></script>
+
     <script type="text/javascript" src="{{ STATIC_URL }}address/address.js"></script>
     {% include "jquery.multiselect.html" %}
     {% include "jquery.timeentry.html" %}
@@ -139,20 +141,26 @@
                                 <input type="hidden" name="schedulePrefix" id="schedulePrefix" value="{{ schForm.prefix }}">
                                 <a class="close">&times;</a>
                                 <div class="eventDates">
-                                    <div class="control-group">
+                                    <div class="control-group {% if schForm.dateFrom.errors or schForm.timeFrom.errors %}
+                                        error
+                                    {% endif %}">
                                         <label class="control-label" >{% trans "Event starts" %}</label>
                                         <div class="controls">
-                                            {% field schForm.dateFrom 'class=span2'%}
+                                            {% field schForm.dateFrom 'class=dateFrom span2'%}
                                             {% field schForm.timeFrom 'class=eventTime span1' %}
-                                            <span class="help-inline">{{ schForm.dateFrom.errors }}</span>
+                                            <span class="help-inline">{{ schForm.dateFrom.errors|join:" " }}</span>
+                                            <span class="help-inline">{{ schForm.timeFrom.errors|join:" " }}</span>
                                         </div>
                                     </div>
-                                    <div class="control-group">
+                                    <div class="control-group {% if schForm.dateTo.errors or schForm.dateTo.errors %}
+                                        error
+                                    {% endif %}">
                                         <label class="control-label" >{% trans "Event ends" %}</label>
                                         <div class="controls">
-                                            {% field schForm.dateTo 'class=span2' %}
+                                            {% field schForm.dateTo 'class=dateTo span2' %}
                                             {% field schForm.timeTo 'class=eventTime span1' %}
-                                            <span class="help-inline">{{ schForm.dateTo.errors }}</span>
+                                            <span class="help-inline">{{ schForm.dateTo.errors|join:" " }}</span>
+                                            <span class="help-inline">{{ schForm.timeTo.errors|join:" " }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -165,14 +173,16 @@
                                 <div class="address eventAddress" id="eventAddress">
                                     <div class="address blogAddress" id="blogAddress"
                                          {% if schForm.blogAddress %}
-                                         style="display: block;"
+                                            style="display: block"
+                                         {% else %}
+                                            style="display: none"
                                          {% endif %}
                                     >
                                         {% include "event_address.html" with address=schForm.blogAddress %}
                                     </div>
                                     <div class="address customAddress" id="customAddress"
                                          {% if schForm.blogAddress %}
-                                            style="display: none;"
+                                            style="display: none"
                                          {% endif %}
                                             >
                                         <input type="hidden" name="addressPrefix" id="addressPrefix" value="{{ schForm.customAddressForm.prefix }}">
@@ -181,7 +191,7 @@
                                 </div>
 
                                 {{ schForm.addressForm.errors }}
-                                <div id="blogAddressTemplate">
+                                <div id="blogAddressTemplate" class="hidden">
                                     {% include "event_address.html" with address=None %}
                                 </div>
                             </div>

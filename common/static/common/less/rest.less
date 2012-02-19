@@ -1,4 +1,4 @@
-
+@import "mixins.less";
 
 .logo
 {
@@ -12,6 +12,21 @@
         padding-left: 10px;
         height: 31px;
     }
+}
+
+.topMenu
+{
+    border: none;
+    border-left: solid 1px #e6e6fa;
+    border-right: solid 1px #e6e6fa;
+    float: left;
+    width: 100%;
+}
+#header
+{
+    .box-shadow(0px 1px 7px rgba(0,0,0,.15));
+    position: relative;
+    margin-bottom: 1px;
 }
 
 .wideinput
@@ -28,9 +43,13 @@
     margin: 0;
 }
 
+.clear
+{
+    clear:both;
+}
 .helpLabel
 {
-    color: graytext;
+    color: #bdb9b9;
 }
 
 .noBorder
@@ -64,4 +83,26 @@
 {
     clear: both;
     width: 100%;
+}
+
+
+/* icons */
+
+.myicon
+{
+    display: inline-block;
+    vertical-align: text-top;
+}
+.myicon-gear
+{
+    .myicon;
+    background-image: url("../images/glyphs/gear_yellow.png");
+    background-repeat: no-repeat;
+    width: 14px;
+    height: 14px;
+}
+
+.row-empty
+{
+    height: 30px;
 }

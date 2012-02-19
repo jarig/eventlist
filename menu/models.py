@@ -39,6 +39,12 @@ class Menu:
                     "url": reverse("account.views.myMessages"),
                     "active": False,
                     "enabled": self.user.is_authenticated()
+                },
+                {
+                "title": "Parties",
+                "url": reverse("party.views.manage"),
+                "active": False,
+                "enabled": self.user.is_authenticated()
                 }
             ]
 

@@ -1,3 +1,11 @@
+.wrapper
+{
+    padding: 0 0 0 0;
+    margin: 0 auto;
+    min-width: 725px;
+    width: 75%;
+}
+
 #container {
 	margin: 0 auto;
 	margin-top: 0;
@@ -6,18 +14,17 @@
 	background-position: left top;
 	background-attachment: scroll;
     background-color: #FFFFFF;
-    border: 1px #EAEEF3 solid;
     min-height: 600px;
-    width: 100%;
     border-top: none;
     float: left;
+    width: 100%;
 }
 
 #container_wrap1 {
 	margin: 0;
-   	border: 1px #EBF0F4 solid;
     height: 100%;
     width: 100%;
+    border: 1px #EAEEF3 solid;
     border-top: none;
     float: left;
 }
@@ -25,19 +32,10 @@
 
 #container_wrap2 {
 	margin: 0;
-	border: 1px #C3CAD2 solid;
 	border-top-width: 0;
     height: 100%;
     width: 100%;
     float: left;
-}
-
-#wrapper
-{
-    padding: 0 0 0 0;
-    margin: 0 auto;
-    min-width: 725px;
-    width: 75%;
 }
 
 #rightSwitchBar
@@ -211,6 +209,10 @@
     margin: auto;
     border-top: solid #e6e6fa 1px;
 	clear: both;
+    margin-top: 50px;
+    padding: 0;
+    width: 100%;
+    float: left;
 }
 
 .footerInfo

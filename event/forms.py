@@ -48,14 +48,8 @@ class EventForm(ModelForm):
 
 
 class EventScheduleForm(ModelForm):
-    dateFrom = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.DateInput(format='%d/%m/%Y',
-                                                                                attrs={
-                                                                                    "class":"dateFrom"
-                                                                                }))
-    dateTo = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.DateInput(format='%d/%m/%Y',
-                                                                                attrs={
-                                                                                    "class":"dateTo"
-                                                                                }), required=False)
+    dateFrom = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.DateInput(format='%d/%m/%Y'))
+    dateTo = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.DateInput(format='%d/%m/%Y'), required=False)
     #TODO get blog list dynamically
     blog = forms.ModelChoiceField(queryset=Blog.objects.all(), empty_label="Custom Address", required=False)
     address = forms.IntegerField(widget=HiddenInput(), required=False)
@@ -96,6 +90,7 @@ class EventScheduleForm(ModelForm):
             address = None
             data = None
 
+
         
         self.customAddressForm = AddressForm(
                                        data=data,
@@ -121,11 +116,11 @@ class EventScheduleForm(ModelForm):
         return schedule
 
     def is_valid(self):
-        res = super(EventScheduleForm, self).is_valid()
+        if not super(EventScheduleForm, self).is_valid(): return False
         print self.cleaned_data["address"]
         if self.cleaned_data["address"] == "" or self.cleaned_data["address"] <= 0:#if custom form
-            return res and self.customAddressForm.is_valid()
-        return res
+            return self.customAddressForm.is_valid()
+        return True
         
 
     class Meta:

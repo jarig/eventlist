@@ -35,7 +35,7 @@ var CreateEvent =
         var dates = $( ".dateFrom, .dateTo",schedule ).datepicker({
                 changeMonth: true,
                 numberOfMonths: 1,
-                altFormat: 'dd/mm/yy',
+                dateFormat: 'dd/mm/yy',
                 beforeShowDay: function(date)
                 {
                     var fromDate = $('.dateFrom',schedule).datepicker( "getDate" );

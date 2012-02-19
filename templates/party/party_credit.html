@@ -1,0 +1,44 @@
+{% extends 'party/party.html' %}
+{% load i18n %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block includes %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="restHeader">
+        <div class="headerName">
+            <h1>
+                {% if party %}
+                    {% trans "Edit Party" %}
+                {% else %}
+                    {% trans "Create Party" %}
+                {% endif %}
+            </h1>
+        </div>
+        {% if party %}
+            <div class="subMenu">
+                <ul>
+                    <li>
+                        <a href="#">General</a>
+                    </li>
+                    <li>
+                        <a href="#">Chat</a>
+                    </li>
+                    <li>
+                        <a href="#">Forum</a>
+                    </li>
+                    <li>
+                        <a href="#">Album</a>
+                    </li>
+                    <li>
+                        <a href="#">Privacy</a>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

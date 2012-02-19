@@ -6,7 +6,7 @@ var Accounts =
     {
        $(function()
        { //dom ready
-           $("#submitButton","#editAccountBox").button();
+           //$("#submitButton","#editAccountBox").button();
        });
     },
     submit: function()

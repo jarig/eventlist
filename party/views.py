@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from event.models import Event, EventSchedule
 from event.views import _go
+from menu.models import Menu
 from party.forms import CreateSimplePartyForm
 from party.models import Party, PartySchedule, PartyMember
 
@@ -15,9 +16,28 @@ def forEvent(request, eventScheduleId):
     if request.POST:
         pass
 
-    return render_to_response("party/party_create.html",
-        {
+    #pass params
+    return credit(request)
+    pass
 
+@login_required
+def credit(request):
+
+    return render_to_response("party/party_credit.html",
+            {
+            "party":"1"
+        },
+        context_instance=RequestContext(request)
+    )
+    pass
+
+@login_required
+def manage(request):
+    parties =  request.user.partyMembership.all()
+
+    return render_to_response("party/party_manage.html",
+            {
+            "parties": parties
         },
         context_instance=RequestContext(request)
     )

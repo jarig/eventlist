@@ -34,6 +34,7 @@
     float:left;
     width:100%;
     text-decoration: none;
+    border-bottom: solid rgba(11, 8, 51, 0.01) 1px;
 }
 .selected a
 {
