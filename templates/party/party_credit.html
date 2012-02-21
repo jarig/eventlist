@@ -33,17 +33,17 @@
             <div class="row-fluid">
                 <div class="span3">
                     <div class='divButton'>
-                        <div onclick="return CommonGUI.openUploadWindow('#uploadDialog','#id_logo','#id_logo');">
+                        <div onclick="return CommonGUI.openUploadWindow('#uploadDialog','#id_logo','id_logo');">
                             {% if createPartyForm.logo.value %}
                                 {{ createPartyForm.logo }}
-                            {% endif %}
-                            {% if not party.logo and not createPartyForm.logo.value %}
-                                <img id="partyLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png">
                             {% endif %}
                         </div>
                     </div>
                     <div class='logoUploadLabel'>
-                        <a href="#" onclick="return CommonGUI.openUploadWindow('#uploadDialog','#id_logo','#id_logo');">Upload</a>
+                        <a href="#" onclick="return CommonGUI.openUploadWindow('#uploadDialog','#id_logo','id_logo');">Upload</a>
+                    </div>
+                    <div class="errors">
+                        {{ createPartyForm.logo.errors }}
                     </div>
                 </div>
                 <div class="span9">

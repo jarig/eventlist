@@ -66,7 +66,7 @@ var CommonGUI =
                             });
                             $(logoSrcId).attr("src",imgUrl);
                             if (typeof(inputId) != "undefined")
-                                $("input[id="+inputId+"]").val(imgPath);
+                                $("input[id="+inputId+"]").val(imgUrl);
                             $(dailogWindow).dialog("destroy");
                         }
                      });

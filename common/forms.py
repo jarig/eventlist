@@ -1,10 +1,13 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.core.files.storage import DefaultStorage
 from django.forms.fields import ImageField
 from django.forms.forms import Form
 from django.forms.models import ModelForm
 from common.models import Address, Country, City
 from common.widgets import PreviewImageInput
+from django.utils.translation import ugettext_lazy as _
+import settings
 
 class AddressForm(ModelForm):
     country = forms.ModelChoiceField(Country.objects.all(),
@@ -44,18 +47,25 @@ class TempImageForm(Form):
 
 class ImagePreviewField(ImageField):
     widget = PreviewImageInput # Default widget to use when rendering this type of Field.
+    errors = {
+        "unreachable": _("Image file is unreachable"),
+    }
 
     def to_python(self, data):
-        storage = DefaultStorage()
-        print "To python: " + str(data)
-        return  super(ImagePreviewField, self).to_python(storage.open(data))
+        try:
+            storage = DefaultStorage()
+            super(ImagePreviewField, self).to_python(storage.open(data)).close()
+        except Exception as e:
+            raise ValidationError(self.error_messages['invalid_image'])
+        return storage.path(data)
 
     def clean(self, data, initial=None):
-        storage = DefaultStorage()
+        if data.find(settings.MEDIA_URL) == 0:
+            data = data.replace(settings.MEDIA_URL, "", 1)
+        else: #media url not found
+            raise ValidationError(self.errors['unreachable'])
 
-        print "Clean: "+str(data)
-        print "Initial: "+str(initial)
-        return super(ImagePreviewField, self).clean(storage.open(data), initial)
+        return super(ImagePreviewField, self).clean(data, initial)
 
     def bound_data(self, data, initial):
         print "Bounded data:" + str(data)
