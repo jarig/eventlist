@@ -1,25 +1,30 @@
 from django.contrib.auth.models import User
 from django.db import models
-from common.models import Address
-from event.models import Event
+from account.models import Account
+from common.fields import ImagePreviewField
+from common.models import Address, Language
+from event.models import Event, EventSchedule
 
 class Party(models.Model):
-    #author = models.ForeignKey(User,related_name='authorOfParties')
-    #members = models.ManyToManyField(User, through='PartyMember', editable=False)
+    name = models.CharField(max_length=255) #same as event name by default
+    logo = ImagePreviewField(upload_to="party/logo/",default='common/images/logoStub.png')
+    description = models.TextField(blank=True, default='')
     #party options
-    closed=models.BooleanField(default=False, editable=False)
+    closed=models.BooleanField(default=False)
     #
     created=models.DateTimeField(auto_now_add=True, editable=False)
     pass #party model
 
-# party schedules
+# party schedules == activity plans
 class PartySchedule(models.Model):
-    party = models.ForeignKey(Party, related_name='schedules')
-    location = models.ForeignKey(Address)
+    party = models.ForeignKey(Party, related_name='schedules', editable=False)
+    location = models.ForeignKey(Address, verbose_name='Gathering Place') #gathering place
+    eventSchedule = models.ForeignKey(EventSchedule,null=True, blank=True, related_name='partySchedules')
     dateFrom = models.DateField(null=True, blank=True) #date when party starts/gathers
     timeFrom = models.TimeField(null=True, blank=True)
     dateTo = models.DateField(null=True, blank=True) #date when party ends
     timeTo = models.TimeField(null=True, blank=True)
+    description = models.TextField(max_length=1024, blank=True, default='')
     pass
 
 class PartyMember(models.Model):
@@ -44,10 +49,11 @@ class PartyMember(models.Model):
         unique_together = ('party', 'user')
     pass
 
-class PartyEvent(models.Model):
-    party = models.ForeignKey(Party)
-    event = models.ForeignKey(Event, null=True, blank=True)
-    url = models.CharField(max_length=1024, default="", blank=True)
-    
-    
-    pass
+class MemberVacancy(models.Model):
+    event = models.ForeignKey(Event)
+    age_min = models.PositiveSmallIntegerField(null=True, blank=True)
+    age_max = models.PositiveSmallIntegerField(null=True, blank=True)
+    sex = models.CharField(choices=Account._SEX, max_length=1,null=True, blank=True)
+    hasPhoto = models.NullBooleanField(null=True, blank=True)
+    language = models.ForeignKey(Language, null=True, blank=True)
+    num = models.IntegerField(default=1) #number of vacancies

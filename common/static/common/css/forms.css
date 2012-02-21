@@ -99,6 +99,12 @@
     margin-left: 10px;
 }
 
+.formControl
+{
+    display: block;
+    margin-bottom: 4px;
+}
+
 .divButton
 {
     display: block;
@@ -106,6 +112,7 @@
     text-align: center;
     cursor: pointer;
     border: solid #e6e6fa 1px;
+    margin-bottom: 3px;
 }
 
 .divButton input
@@ -120,4 +127,9 @@
 .divButton:hover
 {
     background-color: #e6e6fa;
+}
+
+.logoUploadLabel
+{
+    text-align: center;
 }

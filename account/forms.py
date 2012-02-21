@@ -1,19 +1,16 @@
-from pyexpat import model
 from django import forms
-from django.contrib.auth.models import User
 from django.forms.models import ModelForm
+from account.models import Account
 
 
 class EditForm(ModelForm):
 
     class Meta:
-        model = User
+        model = Account
     
     def save(self, commit=True):
-        user = self.save(commit)
-        profile = user.get_profile()
-        #first_name = self.cleaned_data["first_name"]
-        #last_name = self.cleaned_data["last_name"]
+        profile = self.save(commit)
+        user = profile.user
         avatar = self.cleaned_data["avatar"]
         
         if avatar is not None:
@@ -23,6 +20,7 @@ class EditForm(ModelForm):
                 save=False
             )
             profile.save()
+        return profile
 
 class PublisherRequest(forms.Form):
     publisher = forms.BooleanField(required=False, label="I want to publish events")

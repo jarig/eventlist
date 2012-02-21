@@ -5,12 +5,11 @@
 
 {% block includes %}
     {{ block.super }}
-    <link href="{{ STATIC_URL }}address/css/address.less" rel="stylesheet/less" type="text/css">
     <link href="{{ STATIC_URL }}common/css/forms.css" rel="stylesheet" type="text/css">
     <link href="{{ STATIC_URL }}css/event_create.css" rel="stylesheet" type="text/css">
     <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{{ STATIC_URL }}js/event_create.js"></script>
-
+    <link href="{{ STATIC_URL }}address/css/address.less" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{{ STATIC_URL }}address/address.js"></script>
     {% include "jquery.multiselect.html" %}
     {% include "jquery.timeentry.html" %}
@@ -191,7 +190,7 @@
                                 </div>
 
                                 {{ schForm.addressForm.errors }}
-                                <div id="blogAddressTemplate" class="hidden">
+                                <div id="blogAddressTemplate">
                                     {% include "event_address.html" with address=None %}
                                 </div>
                             </div>

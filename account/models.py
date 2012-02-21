@@ -13,12 +13,20 @@ User._meta.get_field('username')._unique = False
 # Create your models here.
 
 class Account(models.Model):
-    user = models.OneToOneField(User)
-
-    identity = models.CharField(max_length=128, default="")
-    provider = models.CharField(max_length=128, default="")
+    class SEX:
+        MALE = "M"
+        FEMALE = "F"
+    _SEX = (
+        (SEX.MALE,u'male'),
+        (SEX.FEMALE,u'female')
+    )
+    user = models.OneToOneField(User,editable=False)
+    identity = models.CharField(max_length=128, default="",editable=False)
+    provider = models.CharField(max_length=128, default="",editable=False)
+    rating = models.FloatField(default=0,editable=False)
     avatar = models.ImageField(upload_to='avatar/',blank=True, max_length=255)
-    rating = models.FloatField(default=0)
+    sex = models.CharField(max_length=1, choices=_SEX, null=True, blank=True)
+    age = models.PositiveSmallIntegerField(null=True, blank=True)
 
     class Meta:
         unique_together = ("identity", "provider")
@@ -41,10 +49,11 @@ def openRegister(identity, provider):
     Account.objects.create(user=user,identity=identity,provider=provider)
     return user
 
-def updateUserData(user, firstName, lastName, avatarURL):
+def updateUserData(user, firstName, lastName, avatarURL, gender=None):
     user.first_name = firstName
     user.last_name = lastName
     profile = user.get_profile()
+    profile.sex = gender
     profile.save()
     user.save()
 

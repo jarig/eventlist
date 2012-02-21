@@ -11,7 +11,7 @@ from django.template.context import RequestContext
 from django.utils.translation import ugettext
 from event.forms import EventForm, EventScheduleForm, EventScheduleFormSet
 from event.models import Event, EventSchedule, EventGo
-from party.forms import CreateSimplePartyForm
+from party.forms import CreatePartyForm
 
 
 def render_event(request, attrs):
@@ -73,7 +73,7 @@ def main(request):
     createPartyFormSample = None
     goes = "0"
     if request.user.is_authenticated():
-        createPartyFormSample = CreateSimplePartyForm(
+        createPartyFormSample = CreatePartyForm(
             initial={
                 "author":request.user
             }

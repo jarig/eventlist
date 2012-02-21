@@ -28,7 +28,6 @@ class Event(models.Model):
     created = models.DateTimeField(auto_now_add=True) #date event created
     participants = models.PositiveIntegerField(default=0) # number of participants, help num (not exact)
     confirmed = models.BooleanField(editable=False, default=True) #event confirmed by blog/page admins
-    #latest_schedule = models.ForeignKey('EventSchedule',related_name='+',default=None,null=True, blank=True)
     
 # Event may have many schedules
 class EventSchedule(models.Model):
@@ -41,10 +40,28 @@ class EventSchedule(models.Model):
     blog = models.ForeignKey(Blog, null=True, blank=True, default=None) # addresses's blog
     created = models.DateTimeField(auto_now_add=True) #sch created
 
+    def __unicode__(self):
+        return ("%s %s") % (self.event.name, self.dateFrom.strftime('%d/%m/%Y'))
+
+# Terms to be applied for each eventSchedule
+class EventTerms(models.Model):
+    class Conditions:
+        AGE = 'A'
+        PRICE = 'P'
+    _CONDITIONS = (
+        (Conditions.AGE,u'age'),
+        (Conditions.AGE,u'price'),
+    )
+    eventSchedule = models.ForeignKey(EventSchedule, editable=False)
+    type = models.CharField(choices=_CONDITIONS, max_length=2, default=Conditions.PRICE)
+    min_value = models.IntegerField(null=True, blank=True)
+    max_value = models.IntegerField(null=True, blank=True)
+    classifier = models.CharField(max_length=255,default='',blank=True) #aux. data for term ( like currency, etc. )
 
 
 class EventGo(models.Model):
     eventSchedule = models.ForeignKey(EventSchedule, editable=False)
+    #event = models.ForeignKey(EventSchedule, editable=False) # for performance
     user = models.ForeignKey(User, editable=False, related_name='goesOnEvents')
     created = models.DateTimeField(auto_now_add=True) #go created
 

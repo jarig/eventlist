@@ -35,4 +35,18 @@ class Address(models.Model):
     postalCode = models.CharField(max_length=15, default='', blank=True)
     token = models.CharField(max_length=32, default=None, null=True, editable=False)
 
-    
+    def natural_key(self):
+        return self.name
+
+    def __unicode__(self):
+        return "%s, %s, %s, %s" % (self.name, unicode(self.country), unicode(self.city), unicode(self.street))
+
+class Language(models.Model):
+    code = models.CharField(max_length=3, primary_key=True)
+    name = models.CharField(max_length=64)
+
+    def natural_key(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.name

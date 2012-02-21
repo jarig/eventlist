@@ -122,7 +122,7 @@
                             <ul class="nav">
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="icon-flag"></i>Language
+                                        <i class="icon-flag"></i>{% trans "Language" %}
                                         <b class="caret"></b>
                                     </a>
                                         {# request.LANGUAGE_CODE #}
@@ -164,9 +164,12 @@
                         <td id="content_container">
                             <div  class="fillSpace">
                                 <div class="messages">
-                                    {% block messages %}
-                                        {% for message in messages %}
-                                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                {% block messages %}
+                                    {% for message in messages %}
+                                            <div class="alert fade in alert-{{ message.tags }}">
+                                                <a class="close" data-dismiss="alert" href="#">×</a>
+                                                {{ message }}
+                                            </div>
                                         {% endfor %}
                                     {% endblock %}
                                 </div>

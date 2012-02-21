@@ -9,6 +9,7 @@ var Common =
 		{
 			$("#debug").append(msg+"<br/>");
 		});
+        console.log(msg);
 	},
     submitForm: function(formId)
     {
@@ -65,7 +66,7 @@ var CommonGUI =
                             });
                             $(logoSrcId).attr("src",imgUrl);
                             if (typeof(inputId) != "undefined")
-                                $(inputId).val(imgPath);
+                                $("input[id="+inputId+"]").val(imgPath);
                             $(dailogWindow).dialog("destroy");
                         }
                      });

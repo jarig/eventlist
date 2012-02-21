@@ -4,9 +4,14 @@
 {% get_static_prefix as STATIC_PREFIX %}
 {% load menu_builder %}
 
+{% block includes %}
+    {{ block.super }}
+    <link href="{{ STATIC_PREFIX }}common/less/manage.less" rel="stylesheet/less" type="text/css">
+{% endblock %}
+
 {% block content %}
     <div class="restHeader">
-        <div class="headerName"><h1>{% trans "Your Parties" %}</h1></div>
+        <div class="headerName"><h1>{% trans "Parties" %}</h1></div>
         <div class="subMenu">
             <ul>
                 <li>
@@ -14,6 +19,29 @@
                 </li>
             </ul>
         </div>
+    </div>
+
+    <div class="container-fluid">
+        <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mship in partyMembership %}
+                <tr>
+                    <td>
+                        {{ mship.party.name }}
+                    </td>
+                    <td>
+                        {{ mship.role }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
     </div>
 
 {% endblock %}
