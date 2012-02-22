@@ -5,6 +5,7 @@ var Common =
     csrf: "",
 	DEBUG: function(msg)
 	{
+        var msg = JSON.stringify(msg);
 		$(function() // wait till DOM is ready
 		{
 			$("#debug").append(msg+"<br/>");
@@ -15,6 +16,10 @@ var Common =
     {
         $(formId).submit();
         return false;
+    },
+    eval: function(data)
+    {
+        return eval("("+data+")");
     }
 };
 

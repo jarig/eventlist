@@ -28,8 +28,10 @@ var Event =
                         {
                             if (data == "True")
                             {
-                                $('#goButton',$this).show();
-                                $('#unGoButton',$this).hide();
+                                $('.partyWindow', $this).hide();
+                                $('.ifGoes',$this).hide();
+                                $('.ifNotGo',$this).show();
+                                $("#partyStatus", $this).removeClass("partyCreated");
                             }
                         }
                         );
@@ -59,8 +61,10 @@ var Event =
             var $this= $(this);
             var button = $("#goButton",container);
             var data = $this.data('showPartyWindow');
-            if ( data && data.initialized)
-                return $this.rest_Event('hide');
+            if ( $this.is(":visible") )
+            {
+                $this.hide(); return false;
+            }
 
             if ( !data || !data.initialized)
             {
@@ -97,13 +101,25 @@ var Event =
                         function(data, textStatus)
                         {
                             Common.DEBUG(JSON.stringify(data));
-                            $(".createPartyButton", $this).parent(".partySubTitle").addClass("partyCreated");
-                            $("#partyCreatedMessage", $this).show();
-                            $("#createPartyButton", $this).hide();
-                            $(".editPartyButton", $this).removeClass("hidden");
-                            $(".createPartyButton", $this).unbind("click");
-                            $('#goButton',container).hide();
-                            $('#unGoButton',container).show();
+                            try
+                            {
+                                var data = Common.eval(data);
+                                if (data.id > 0)
+                                {
+                                    $("#partyStatus", $this).addClass("partyCreated");
+                                    $("#partyCreatedMessage", $this).show();
+                                    $("#createPartyButton", $this).hide();
+                                    $(".editPartyButton", $this).removeClass("hidden");
+                                    $(".createPartyButton", $this).unbind("click");
+                                    $('.ifGoes',container).show();
+                                    $('.ifNotGo',container).hide();
+                                    $('.ifGoes',$this).show();
+                                    $('.ifNotGo',$this).hide();
+                                }
+                            }catch(e)
+                            {
+                                Common.DEBUG(e);
+                            }
                         }
                 );
                 return false;

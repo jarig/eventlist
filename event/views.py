@@ -105,7 +105,7 @@ def main(request):
 @login_required
 def go(request, eventSchId):
     goObj, created = _go(request.user, EventSchedule.objects.get(pk=eventSchId))
-    return HttpResponse("id="+str(goObj.pk))
+    return HttpResponse("{id: %d}" % goObj.pk)
 
 
 def _go(user, eventSch):

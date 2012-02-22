@@ -68,5 +68,4 @@ class ImagePreviewField(ImageField):
         return super(ImagePreviewField, self).clean(data, initial)
 
     def bound_data(self, data, initial):
-        print "Bounded data:" + str(data)
         return super(ImagePreviewField, self).bound_data(data, initial)
