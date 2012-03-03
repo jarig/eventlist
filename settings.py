@@ -76,7 +76,7 @@ AUTH_PROFILE_MODULE = 'account.Account'
 
 AUTHENTICATION_BACKENDS = (
     'account.backends.PublicAuth',
-    'django.contrib.auth.backends.ModelBackend',
+    'account.backends.NativeAuth',
 )
 
 CACHES = {
@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'party',
+    'messaging',
     'common',
     'event',
     'blog',
@@ -132,7 +133,7 @@ INSTALLED_APPS = (
     'publisher',
     'album',
     'organization',
-    'south'
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging

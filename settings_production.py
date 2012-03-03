@@ -27,7 +27,8 @@ STATIC_ROOT = os.path.join(REST_BASE_PATH,'static')
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
-STATICFILES_DIRS = ()
+STATICFILES_DIRS = (
+)
 
 TEMPLATE_DIRS = (
     os.path.join(REST_APP_PATH, 'templates'),

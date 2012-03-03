@@ -83,6 +83,7 @@ def main(request):
                  EventGo.user.field.column,
                  request.user.pk,
                  EventGo.eventSchedule.field.column)
+
     eventSchedules = EventSchedule.objects.raw("""select SCH.*,
                                                 (%s) AS `goes`
                                                 FROM  %s EE,

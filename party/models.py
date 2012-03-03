@@ -6,11 +6,11 @@ from common.models import Address, Language
 from event.models import Event, EventSchedule
 
 class Party(models.Model):
-    name = models.CharField(max_length=255) #same as event name by default
-    logo = ImagePreviewField(upload_to="party/logo/",default='common/images/logoStub.png')
+    name = models.CharField(max_length=255, null=True, blank=True) #same as event name by default
+    logo = ImagePreviewField(upload_to="party/logo/", null=True, blank=True)
     description = models.TextField(blank=True, default='')
     #party options
-    closed=models.BooleanField(default=False)
+    closed=models.BooleanField(default=True)
     #
     created=models.DateTimeField(auto_now_add=True, editable=False)
     pass #party model
@@ -19,7 +19,8 @@ class Party(models.Model):
 class PartySchedule(models.Model):
     party = models.ForeignKey(Party, related_name='schedules', editable=False)
     location = models.ForeignKey(Address, verbose_name='Gathering Place') #gathering place
-    eventSchedule = models.ForeignKey(EventSchedule,null=True, blank=True, related_name='partySchedules')
+    eventSchedule = models.ForeignKey(EventSchedule, null=True, blank=True, related_name='partySchedules')
+    url = models.URLField(verify_exists=False, null=True, blank=True)
     dateFrom = models.DateField(null=True, blank=True) #date when party starts/gathers
     timeFrom = models.TimeField(null=True, blank=True)
     dateTo = models.DateField(null=True, blank=True) #date when party ends

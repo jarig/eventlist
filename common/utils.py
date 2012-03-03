@@ -1,6 +1,7 @@
 from exceptions import KeyError
 import re
 from django.core.files.storage import DefaultStorage
+from django.forms.models import model_to_dict
 
 def urlToPath(url):
     return DefaultStorage().path(url)
@@ -18,6 +19,16 @@ def uploadLocalImage(filepath, filename, uploadFunc, overwrite=True):
     #    dirname = os.path.dirname(filepath)
     #   storage.delete(os.path.join(dirname,filename))
 
+def modelToDict(modelObj, include=None, exclude=None):
+    # exclude - list of keys to be excluded from resulted dict
+    dic = model_to_dict(modelObj)
+    keys = dic.keys()
+    if include is not None: keys = include
+    if exclude is not None: keys = list(set(keys) - set(exclude))
+    obj = {}
+    for key in keys:
+        obj[key] = unicode(dic[key])
+    return obj
 
 def json(data):
     result = {}

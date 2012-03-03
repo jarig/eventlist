@@ -210,7 +210,7 @@
  /* BUTTON PLUGIN DEFINITION
   * ======================== */
 
-  $.fn.button = function ( option ) {
+  $.fn.bsbutton = function ( option ) {
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('button')
@@ -221,11 +221,11 @@
     })
   }
 
-  $.fn.button.defaults = {
+  $.fn.bsbutton.defaults = {
     loadingText: 'loading...'
   }
 
-  $.fn.button.Constructor = Button
+  $.fn.bsbutton.Constructor = Button
 
 
  /* BUTTON DATA-API
@@ -233,7 +233,7 @@
 
   $(function () {
     $('body').on('click.button.data-api', '[data-toggle^=button]', function ( e ) {
-      $(e.target).button('toggle')
+      $(e.target).bsbutton('toggle')
     })
   })
 

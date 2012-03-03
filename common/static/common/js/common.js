@@ -3,6 +3,9 @@ var Common =
 {
     
     csrf: "",
+    _static: "",
+    _media: "",
+    _cache: {},
 	DEBUG: function(msg)
 	{
         var msg = JSON.stringify(msg);
@@ -20,6 +23,10 @@ var Common =
     eval: function(data)
     {
         return eval("("+data+")");
+    },
+    cache: function (key, data)
+    {
+        Common._cache[key] = data;
     }
 };
 
@@ -128,6 +135,7 @@ var CommonGUI =
     }
 };
 
+//TODO move to google maps.js
 var GoogleMaps = {
     map: null,
     markers: [],
@@ -199,3 +207,53 @@ var GoogleMaps = {
         //GoogleMaps.map.setCenter(newcenter, 13);
     }
 };
+
+
+
+
+jQuery.cachedScript = function(url, options) {
+    options = $.extend(options || {}, {
+        dataType: "script",
+        cache: true,
+        url: url
+    });
+    return jQuery.ajax(options);
+};
+
+jQuery.cachedHtml = function(url, options) {
+    options = $.extend(options || {}, {
+        dataType: "html",
+        cache: true,
+        url: url
+    });
+    return jQuery.ajax(options);
+};
+
+(function( jQuery ) {
+
+    var componentCounter = 0;
+    jQuery.loadComponent = function(url, resources, options, callback )
+    {
+        var // reference declaration & localization
+            length = resources.length,
+            deferreds = [],
+            idx = 0;
+        componentCounter++;
+        var html = jQuery.cachedHtml(url, options);
+        for ( ; idx < length; idx++ ) {
+            deferreds.push(
+                jQuery.cachedScript( Common._static + resources[ idx ], options )
+            );
+        }
+
+        jQuery.when.apply( null, deferreds ).then(function()
+        {
+            html.done(function(data)
+            {
+                var $div = $("<div id='component-"+componentCounter+"'></div>");
+                var $comp= $($div).append($(data));
+                callback && callback($comp);
+            });
+        });
+    };
+})( jQuery );

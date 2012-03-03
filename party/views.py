@@ -75,9 +75,8 @@ def manage(request):
     pass
 
 @login_required
-def createWithEvent(request, eventScheduleId):
+def inviteToEvent(request, eventScheduleId):
     #record to event go
-
     eventSch = EventSchedule.objects.get(pk=eventScheduleId)
     _go(request.user,eventSch)
     party = Party.objects.create()
@@ -90,6 +89,15 @@ def createWithEvent(request, eventScheduleId):
     partyMemberShip = PartyMember.objects.create(user=request.user,
                                                  party=party,
                                                  role=PartyMember.ROLE.OWNER)
-    data = json.simplejson.dumps({ "id": party.pk, "schedule": partySched.pk, "membership": partyMemberShip.pk })
 
+
+    data = json.simplejson.dumps({ "id": party.pk, "schedule": partySched.pk, "membership": partyMemberShip.pk })
     pass
+
+def getInvitationList(request):
+
+    return render_to_response("party_friend_list.html",
+            {
+            },
+        context_instance=RequestContext(request)
+    )

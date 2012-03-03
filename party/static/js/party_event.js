@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var Event =
+var PartyEvent =
 {
     init: function()
     {
@@ -17,7 +17,7 @@ var Event =
                 var $this = $(this);
                 $('#goButton',$this).click(function()
                 {
-                    $('.partyWindow', $this).rest_Event("showPartyWindow", $this);
+                    $('.partyWindow', $this).rest_Party("showPartyWindow", $this);
                     return false;
                 });
                 $("#unGoButton",$this).click(function()
@@ -35,6 +35,25 @@ var Event =
                             }
                         }
                         );
+                    return false;
+                });
+                $(".partyInviteButton", $this).click(function()
+                {
+                    $.loadComponent('/party/getInvitationList',['js/party_invite.js'],{},function(data)
+                    {
+                        $("body").append(data);
+                        $(".modal",data).modal().on('hidden', function ()
+                        {
+                            $(data).remove();
+                        });
+
+                    });
+                    //load popup and show, store in cache
+                    //$.get('/party/getInvitationList', function(data)
+                    //{
+                    //    var $data= $(data);
+                    //    $($data[6]).modal();
+                    //});
                     return false;
                 });
             });
@@ -89,7 +108,7 @@ var Event =
                 }
             );
             $('a[role="button"]',$this).click(
-                function() { $this.rest_Event('hide'); return false; }
+                function() { $this.rest_Party('hide'); return false; }
             );
             $this.css({top: coord.top-($this.height()+5),
                           left: coord.left - ($this.width()-$(button).width())});
@@ -126,7 +145,7 @@ var Event =
             });
         }
     };
-    $.fn.rest_Event = function(method)
+    $.fn.rest_Party = function(method)
     {
         if ( method && typeof method === "string" )
         {

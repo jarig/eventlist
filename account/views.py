@@ -2,6 +2,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.serializers import json
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, login, authenticate
@@ -10,7 +11,22 @@ from django.template.context import RequestContext
 from account.forms import EditForm
 from account.models import openRegister, updateUserData
 from django.utils.translation import ugettext as _
+from common.utils import modelToDict
 
+
+@login_required
+def getFriends(request):
+    #if not request.is_ajax(): return HttpResponse("Wrong request")
+    friendships = request.user.friends.all().select_related("friend")
+    friends = []
+    for fShip in friendships:
+        friends.append(modelToDict(fShip.friend,include=['first_name',
+                                                 'last_name',
+                                                 'avatar',
+                                                 'age',
+                                                 'sex']))
+    data = json.simplejson.dumps(friends, ensure_ascii=False)
+    return HttpResponse(data)
 
 @login_required
 def edit(request):
@@ -34,14 +50,6 @@ def friendlist(request):
     return render_to_response("account/accounts_friendlist.html",
                               {
                                 "friendships": friendships
-                              },
-                              context_instance=RequestContext(request)
-    )
-
-def myMessages(request):
-    return render_to_response("account/accounts_friendlist.html",
-                              {
-                                 
                               },
                               context_instance=RequestContext(request)
     )

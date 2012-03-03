@@ -1,14 +1,22 @@
 from importlib import import_module
-from django.contrib.auth.models import User
+from django.contrib.auth.backends import ModelBackend
 from account import settings
 from django.core.exceptions import ImproperlyConfigured
+from account.models import Account
 
+
+class NativeAuth(ModelBackend):
+    def get_user(self,user_id):
+        try:
+            return Account.objects.get(pk=user_id)
+        except Account.DoesNotExist:
+            return None
 
 class PublicAuth:
     def get_user(self,user_id):
         try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
+            return Account.objects.get(pk=user_id)
+        except Account.DoesNotExist:
             return None
 
     def authenticate(self, provider=None, identity=None, request=None):

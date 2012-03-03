@@ -12,7 +12,7 @@ from django.conf import settings as globalSettings
 User._meta.get_field('username')._unique = False
 # Create your models here.
 
-class Account(models.Model):
+class Account(User):
     class SEX:
         MALE = "M"
         FEMALE = "F"
@@ -20,7 +20,7 @@ class Account(models.Model):
         (SEX.MALE,u'male'),
         (SEX.FEMALE,u'female')
     )
-    user = models.OneToOneField(User,editable=False)
+    user = models.OneToOneField(User,editable=False, related_name='profile')
     identity = models.CharField(max_length=128, default="",editable=False)
     provider = models.CharField(max_length=128, default="",editable=False)
     rating = models.FloatField(default=0,editable=False)
@@ -32,8 +32,8 @@ class Account(models.Model):
         unique_together = ("identity", "provider")
 
 class FriendShip(models.Model):
-    creator = models.ForeignKey(User, related_name='friends') #those who added I
-    friend = models.ForeignKey(User, related_name='subscribers') #those who added me
+    creator = models.ForeignKey(Account, related_name='friends') #those who added I
+    friend = models.ForeignKey(Account, related_name='subscribers') #those who added me
     date_added = models.DateTimeField(auto_now_add=True, editable=False)
     
     class Meta:
@@ -65,11 +65,3 @@ def updateUserData(user, firstName, lastName, avatarURL, gender=None):
         "avatar_"+str(user.pk),
         File(img_temp)
     )
-
-""" Not required
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Account.objects.create(user=instance)
-
-post_save.connect(create_user_profile, sender=User)
-"""

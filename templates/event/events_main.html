@@ -7,14 +7,15 @@
     <link href="{{ STATIC_URL }}common/js/social/likeButtons/buttons.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{{ STATIC_URL }}common/js/social/likeButtons/buttons.js"></script>
     <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="{{ STATIC_URL }}js/event.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/party_event.js"></script>
+    <link href="{{ STATIC_URL }}less/party_event.less" rel="stylesheet/less" type="text/css">
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript">
         $(function()
         {
-            Event.init();
+            PartyEvent.init();
             $('.like').socialButton();
             $('.fastsearch input').labelify({ labelledClass: "helpLabel" });
         });
@@ -30,7 +31,6 @@
             {% include "event_brief_info.html" %}
         {% endwith %}
     {% endfor %}
-
 
 {% endblock content %}
 

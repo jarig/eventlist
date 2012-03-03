@@ -1,0 +1,29 @@
+{% extends 'common/base_common.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block includes %}
+    {{ block.super }}
+    <link href="{{ STATIC_PREFIX }}common/less/manage.less" rel="stylesheet/less" type="text/css">
+{% endblock %}
+
+
+{% block content %}
+    <div class="restHeader">
+        <div class="headerName"><h1>{% trans "Messages" %}</h1></div>
+        <div class="subMenu">
+            <ul>
+                <li>
+                    <a href="#">Create</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+
+{% endblock %}

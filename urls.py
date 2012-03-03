@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^common/', include('common.urls')),
     url(r'^event/', include('event.urls')),
     url(r'^organization/', include('organization.urls')),
+    url(r'^messaging/', include('messaging.urls')),
     (r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^$', 'common.views.index'),
 

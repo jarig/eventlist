@@ -32,20 +32,23 @@
             </div>
         </div>
     </div>
-    {% if user.is_authenticated %}
-        <div class="eventButton">
-                <a href="#" class="partyButton ifGoes" {% if not eventSchedule.goes %} style="display: none" {% endif %} id="unGoButton">{% trans "I don't go"%}</a>
-                <a href="#" class="partyButton ifNotGo" {% if eventSchedule.goes %} style="display: none" {% endif %} id="goButton">{% trans "I'll go"%}</a>
-                <form action="{% url event.views.unGo eventSchId=eventSchedule.pk %}" method="POST" id="unGoForm" class="hidden"></form>
-        </div>
+    <div class="eventButtons">
+        {% if user.is_authenticated %}
+            <div class="eventButton">
+                    <a href="#" class="partyButton ifGoes" {% if not eventSchedule.goes %} style="display: none" {% endif %} id="unGoButton">{% trans "I don't go"%}</a>
+                    <a href="#" class="partyButton ifNotGo" {% if eventSchedule.goes %} style="display: none" {% endif %} id="goButton">{% trans "I'll go"%}</a>
+                    <form action="{% url event.views.unGo eventSchId=eventSchedule.pk %}" method="POST" id="unGoForm" class="hidden"></form>
+            </div>
 
-        <div class="eventButton ifGoes {% if not eventSchedule.goes %}hidden{% endif %}" >
-                <a href="{% url party.views.forEvent eventScheduleId=eventSchedule.pk %}" class="partyButton">{% trans "Invite!"%}</a>
+            <div class="eventButton ifGoes {% if not eventSchedule.goes %}hidden{% endif %}" >
+                    <a href="#"  class="partyButton partyInviteButton">{% trans "Invite!"%}</a>
+            </div>
+        {% endif %}
+        <div class="eventButton">
+            <a href="#">{% trans "Comments"%}</a>
         </div>
-    {% endif %}
-    <div class="eventButton">
-        <a href="#">{% trans "Comments"%}</a>
     </div>
+
 
     <!-- Party window -->
     <div class="partyWindow" id="partyWindow-{{ eventSchedule.id }}">
@@ -79,7 +82,7 @@
                         <div class="hidden ifGoes" id="partyCreatedMessage">{% trans "Party Successfully created!" %}</div>
                     </div>
                     <div class="editPartyButton float-right hidden ifGoes">
-                        <a href="{% url party.views.forEvent eventScheduleId=eventSchedule.pk %}">{% trans "Invite people!" %}</a>
+                        <a href="#" class="partyInviteButton">{% trans "Invite people!" %}</a>
                     </div>
                 </div>
             </div>

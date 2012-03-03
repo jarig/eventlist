@@ -36,7 +36,7 @@ class Menu:
                 },
                 {
                     "title":"Messages",
-                    "url": reverse("account.views.myMessages"),
+                    "url": reverse("messaging.views.messagingReceived"),
                     "active": False,
                     "enabled": self.user.is_authenticated()
                 },

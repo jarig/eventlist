@@ -12,7 +12,6 @@
     <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
 
-    <!--link href="{{ STATIC_PREFIX }}common/css/jqueryUI.css/jquery-ui.css" media="screen" rel="stylesheet" title="CSS" type="text/css" /-->
     <link href="{{ STATIC_PREFIX }}common/plugins/jqueryUI/css/custom-theme/jquery-ui-1.8.17.custom.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}common/css/style.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}common/less/rest.less" media="screen" rel="stylesheet/less" type="text/css" />
@@ -20,14 +19,15 @@
     <link href="{{ STATIC_PREFIX }}css/menu_topmenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}css/menu_submenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
-    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/common.js"></script>
-    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/base.js"></script>
+
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery.labelify.js"></script>
-    <!--script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jqueryUI.js/jquery-ui.js"></script-->
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/jqueryUI/js/jquery-ui-1.8.17.custom.min.js"></script>
+
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/common.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/base.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/socialInitScripts.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/socialScripts.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/init.js"></script>
@@ -64,6 +64,8 @@
     {% else %}
         Init.apiInit("all");
     {% endif %}
+    Common._static = {{ STATIC_URL }};
+    Common._media = {{ MEDIA_URL }};
     Base.init();
 </script>
 {% block scripts %}{% endblock %}
