@@ -119,7 +119,7 @@ def register(request):
         if form.is_valid():
             form.save()
             return HttpResponse(_("Success"))
-        data = json.simplejson.dumps(form.errors)
+        data = json.simplejson.dumps(form.errors.values())
         print data
         return HttpResponse(data, status=405)
     return HttpResponse(_("Bad Request"), status=405)

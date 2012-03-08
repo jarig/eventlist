@@ -52,7 +52,7 @@
 
     <!-- Party window -->
     <div class="partyWindow" id="partyWindow-{{ eventSchedule.id }}">
-        <input value="{% url party.views.getInvitationList eventSchedule.id %}" id="invitationURL" type="hidden">
+        <input value="{% url party.views.invitationList eventSchedule.id %}" id="invitationURL" type="hidden">
         <div class="partyWindowContent">
             <div class="partySubTitle">
                 <span>{% trans "Party Suggestions" %}</span>

@@ -1,10 +1,3 @@
-/**
- * User: jarik
- * Date: 2.03.12
- * Time: 0:36
- */
-
-
 var PartyInvite =
 {
   initPartyInvitePopup: function(popup, invitationURL)

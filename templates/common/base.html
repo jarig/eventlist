@@ -32,6 +32,7 @@
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/socialScripts.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/init.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}js/menu_login.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}js/accounts.js"></script>
 
 
     <!-- Plugins -->
@@ -62,7 +63,7 @@
     {% if user.is_authenticated %}
         Init.apiInit("{{ user.get_profile.provider }}");
     {% else %}
-        BaseGUI.initLoginPopup();
+        Accounts.initLoginPopup();
         Init.apiInit("all");
     {% endif %}
     Common._static = {{ STATIC_URL }};
@@ -94,7 +95,7 @@
                                                 <li>
                                                     <div id="signin" class="topButton">
                                                         {% if not user.is_authenticated %}
-                                                            <a href="#" onclick="User.openLoginBox(); return false;">{% trans "Sign in" %}</a>
+                                                            <a href="#" onclick="Accounts.openLoginBox(); return false;">{% trans "Sign in" %}</a>
                                                         {% else %}
 
                                                             <a href="#" onclick="Base.toggle_profileBox('#profileBox'); return false;" >
@@ -201,7 +202,7 @@
                     {% if user.is_authenticated %}
                         <a href="{% url account.views.logoutProfile %}">{% trans "Sign out"%}</a>
                     {% else %}
-                        <a href="#" onclick="User.openLoginBox();">{% trans "Sign in"%}</a>
+                        <a href="#" onclick="Accounts.openLoginBox();">{% trans "Sign in"%}</a>
                     {% endif %}
                     </p>
                 </div>

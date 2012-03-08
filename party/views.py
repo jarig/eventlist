@@ -84,7 +84,7 @@ def inviteToEvent(request, eventScheduleId):
     return HttpResponse(data)
 
 @login_required
-def getInvitationList(request, eventScheduleId):
+def invitationList(request, eventScheduleId):
 
     if request.POST:
         friends = request.POST.getlist('friends[]')

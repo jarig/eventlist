@@ -1,17 +1,20 @@
-import datetime
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.core.exceptions import ValidationError
 from django.forms.models import ModelForm
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext as _
 from account.models import Account
 
 
 class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True, error_messages={
+        "required": _("Email field is required"),
+        "invalid": _("Email field is invalid")
+    })
 
     class Meta:
         model = Account
         fields = ("username",)
+
 
 class EditForm(ModelForm):
 

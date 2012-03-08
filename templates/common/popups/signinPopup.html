@@ -3,76 +3,122 @@
 {% get_static_prefix as STATIC_PREFIX %}
 
 <div id="signinPopup">
-    <div id="signInAccordion">
-        <h3><a href="#">Social Login</a></h3>
-        <div>
-            <div class="forSignin" id="fbSignin">
-                <div id="fbLoggedIn" onclick="Facebook.login(); return false;">
-                    <div class="signinAvatar" id="fbSignAvatar">
-                        <img src="{{ STATIC_PREFIX }}common/images/fbLogoBig.png" style="width: 120px; height: 120px;">
-                    </div>
-                    <div class="signName" id="fbSignName">
-                        Facebook
-                    </div>
-                </div>
-            </div>
-            <div class="forSignin" id="vkSignin">
-                <div id="vkLoggedIn" onclick="Vkontakte.login(); return false;">
-                    <div class="signinAvatar" id="vkSignAvatar" >
-                        <img src="{{ STATIC_PREFIX }}common/images/vkLogoBig.jpg" style="width: 120px; height: 120px;">
-                    </div>
-                    <div class="signName" id="vkSignName">
-                        {% trans "Vkontakte" %}
-                    </div>
-                </div>
-            </div>
-            <form id="extLoginForm" action="{% url account.views.extLoginProfile %}" method="POST" class="hidden">
-                <input name="lastName" type="hidden">
-                <input name="firstName" type="hidden">
-                <input name="uid" type="hidden">
-                <input name="nickName" type="hidden">
-                <input name="photo" type="hidden">
-                <input name="provider" type="hidden">
-                <input name="accessToken" type="hidden">
-                <input name="signedRequest" type="hidden">
-                <input name="next" value="{{ request.get_full_path }}" type="hidden">
-            </form>
-        </div>
-        <h3><a href="#">Login/Sign up</a></h3>
-        <div>
-            <div class="well">
-                <form id="nativeLoginForm" action="{% url account.views.nativeLogin %}" method="POST">
-                    <input type="text" id="username" name="username" class="span5" placeholder="Login">
-                    <input type="password" id="password" name="password" class="span5" placeholder="Password">
-                </form>
-                <button type="submit" id="nativeLoginButton" class="btn" data-loading-text="Signing in...">Submit</button>
-            </div>
-            <div class="alert alert-error hide" id="wrongPasswordAlert">
-                <h4 class="alert-heading">{% trans "Login failed." %}</h4>
-                {% trans "Username or password is wrong." %}
-            </div>
-            <div class="alert hide" id="notActivatedAlert">
-                <h4 class="alert-heading">{% trans "Warning" %}</h4>
-                {% trans "Account is not activated." %}
-            </div>
-        </div>
-        <h3><a href="#">Register</a></h3>
-        <div>
-            <div class="well">
-                <form id="registerForm" action="{% url account.views.register %}" method="POST">
-                    <input type="text" name="username" class="span5" placeholder="Username">
-                    <div class="control-group" id="password1">
-                        <div class="controls">
-                            <input type="password" name="password1" class="span5" placeholder="Password">
-                            <span class="help-inline hide errorText" id="err_pass_mismtach">
-                                {% trans "Passwords should match" %}
-                            </span>
+    <div id="signInTabs">
+
+        <ul class="nav nav-tabs">
+            <li class="active" ><a href="#socialLoginTab" data-toggle="tab">Social Login</a></li>
+            <li><a href="#signinTab" data-toggle="tab">Sign In</a></li>
+            <li><a href="#registerTab" data-toggle="tab">Register</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="socialLoginTab">
+                <div class="forSignin" id="fbSignin">
+                    <div id="fbLoggedIn" onclick="Facebook.login(); return false;">
+                        <div class="signinAvatar" id="fbSignAvatar">
+                            <img src="{{ STATIC_PREFIX }}common/images/fbLogoBig.png" style="width: 120px; height: 120px;">
+                        </div>
+                        <div class="signName" id="fbSignName">
+                            Facebook
                         </div>
                     </div>
-                    <input type="password" name="password2" class="span5" placeholder="Repeat password">
-                    <input type="text" name="email" class="span5" placeholder="Email">
+                </div>
+                <div class="forSignin" id="vkSignin">
+                    <div id="vkLoggedIn" onclick="Vkontakte.login(); return false;">
+                        <div class="signinAvatar" id="vkSignAvatar" >
+                            <img src="{{ STATIC_PREFIX }}common/images/vkLogoBig.jpg" style="width: 120px; height: 120px;">
+                        </div>
+                        <div class="signName" id="vkSignName">
+                            {% trans "Vkontakte" %}
+                        </div>
+                    </div>
+                </div>
+                <form id="extLoginForm" action="{% url account.views.extLoginProfile %}" method="POST" class="hidden">
+                    <input name="lastName" type="hidden">
+                    <input name="firstName" type="hidden">
+                    <input name="uid" type="hidden">
+                    <input name="nickName" type="hidden">
+                    <input name="photo" type="hidden">
+                    <input name="provider" type="hidden">
+                    <input name="accessToken" type="hidden">
+                    <input name="signedRequest" type="hidden">
+                    <input name="next" value="{{ request.get_full_path }}" type="hidden">
                 </form>
-                <button type="submit" id="registerButton" class="btn" data-loading-text="Verifying...">Register</button>
+            </div>
+            <div class="tab-pane" id="signinTab">
+                <div class="well">
+                    <form id="nativeLoginForm" class="form-horizontal" action="{% url account.views.nativeLogin %}" method="POST">
+                        <div class="control-group" >
+                            <label class="control-label">{% trans "Username" %}</label>
+                            <div class="controls">
+                            <input type="text" id="username" name="username" class="input-xlarge" placeholder="Login">
+                             </div>
+                        </div>
+                        <div class="control-group" >
+                            <label class="control-label">{% trans "Password" %}</label>
+                            <div class="controls">
+                            <input type="password" id="password" name="password" class="input-xlarge" placeholder="Password">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="form-actions">
+                        <button type="submit" id="nativeLoginButton" class="btn" data-loading-text="Signing in...">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+                <div class="alert alert-error hide" id="wrongPasswordAlert">
+                    <h4 class="alert-heading">{% trans "Login failed." %}</h4>
+                    {% trans "Username or password is wrong." %}
+                </div>
+                <div class="alert hide" id="notActivatedAlert">
+                    <h4 class="alert-heading">{% trans "Warning" %}</h4>
+                    {% trans "Account is not activated." %}
+                </div>
+            </div>
+            <div class="tab-pane" id="registerTab">
+                <div class="well" style="margin-bottom: 5px;">
+                    <form id="registerForm" class="form-horizontal" action="{% url account.views.register %}" method="POST">
+                        <div class="control-group" id="rUsername">
+                            <label class="control-label">{% trans "Username" %}</label>
+                            <div class="controls">
+                            <input type="text" name="username" class="input-xlarge" placeholder="Username">
+                            </div>
+                        </div>
+                        <div class="control-group" id="password1">
+                            <label class="control-label">{% trans "Password" %}</label>
+                            <div class="controls">
+                                <input type="password" name="password1" class="input-xlarge" placeholder="Password">
+                            <p class="help-block hide errorText" id="err_pass_mismtach">
+                                {% trans "Passwords should match" %}
+                            </p>
+                            </div>
+                        </div>
+                        <div class="control-group" id="password2">
+                            <label class="control-label">{% trans "Repeat Password" %}</label>
+                            <div class="controls">
+                            <input type="password" name="password2" class="input-xlarge" placeholder="Repeat password">
+                            </div>
+                        </div>
+                        <div class="control-group" id="email">
+                            <label class="control-label">{% trans "Email" %}</label>
+                            <div class="controls">
+                            <input type="text" name="email" class="input-xlarge" placeholder="Email">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="form-actions" style="margin: 0">
+                        <button type="submit" id="registerButton" class="btn"
+                                data-loading-text="Verifying..."
+                                data-loading-text="Registered">
+                            Register
+                        </button>
+                    </div>
+                </div>
+                <div class="alert hide" id="registerAlert">
+                    <h4 class="alert-heading">{% trans "Registration failed" %}</h4>
+                    <div id="registerErrors"></div>
+                </div>
             </div>
         </div>
     </div>
