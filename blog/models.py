@@ -1,5 +1,5 @@
-from django.contrib.auth.models import User
 from django.db import models
+from account.models import Account
 from common.models import Address
 
 
@@ -50,7 +50,7 @@ class Blog(models.Model):
         (u'RR',u'regular'),
         (u'GD',u'gold')
     )
-    managers = models.ManyToManyField(User, through='BlogAccess') #indicates which users has access to blog
+    managers = models.ManyToManyField(Account, through='BlogAccess') #indicates which users has access to blog
     name = models.CharField(max_length=64)
     description = models.TextField(default="")
     logo = models.ImageField(upload_to="blog/logo/",)
@@ -91,7 +91,7 @@ class BlogAccess(models.Model):
     )
     accessLevelConstants = dict((x,y) for y,x in ACCESS_LEVEL)
     blog = models.ForeignKey(Blog)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(Account)
     access = models.PositiveSmallIntegerField()
     class Meta:
         unique_together = ('blog','user','access',)

@@ -58,7 +58,11 @@
         <div id="profileBox" >
             <div id="avatarBox">
                 <div id="avatar">
-                        <img src="{{ user.get_profile.avatar.url }}" />
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" />
+                    {% else %}
+                        <img src="{{ STATIC_URL }}common/images/logoStub.png" />
+                    {% endif %}
                 </div>
                 <div id="profileInfo">
                     <div id="name">{{ user.first_name }} {{ user.last_name }}</div>

@@ -1,14 +1,11 @@
-import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
-from django.db.models.aggregates import Count
-from django.db.models.expressions import F
 from django.forms.models import  modelformset_factory
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext as _
 from event.forms import EventForm, EventScheduleForm, EventScheduleFormSet
 from event.models import Event, EventSchedule, EventGo
 from party.forms import CreatePartyForm
@@ -43,7 +40,7 @@ def credit(request, event=None):
                                               queryset=schedules)
         if eventForm.is_valid() and eventSchedules.is_valid():
             newEvent = eventForm.saveEvent(request, eventSchedules)
-            messages.success(request, ugettext("Event successfully created"))
+            messages.success(request, _("Event successfully created"))
             #redirect to edit/publish event
             return HttpResponseRedirect(reverse("event.views.credit", kwargs={"event": newEvent.id}))
     else:

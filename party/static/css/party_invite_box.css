@@ -1,0 +1,8 @@
+
+.invited-member-list
+{
+    padding: 5px;
+    border-top: 1px solid #5f9ea0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}

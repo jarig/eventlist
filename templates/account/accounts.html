@@ -1,6 +1,7 @@
 {% extends 'common/base_common.html' %}
+{% load static %}
 
 {% block includes %}
    {{ block.super }}
-   <link href="{{ STATIC_PREFIX }}common/css/apps/manage.css" rel="stylesheet" type="text/css">
+   <link href="{{ STATIC_URL }}common/less/manage.less" rel="stylesheet/less" type="text/css">
 {% endblock %}

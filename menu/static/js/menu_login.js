@@ -17,7 +17,7 @@ var User =
 	{
 		$("#signinPopup").dialog({
             "title": "Login",
-             height: '280',
+             height: '420',
              width: "540",
              modal: true });
         return false;

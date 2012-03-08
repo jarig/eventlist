@@ -65,6 +65,11 @@
     display: none;
     visibility: visible;
 }
+.hide
+{
+    display: none;
+    visibility: visible;
+}
 
 .float-left
 {
@@ -102,7 +107,7 @@
 }
 .flist-cell
 {
-    height: 50px;
+    height: 64px;
     border-bottom: 1px dotted #e8e3e3;
 }
 .flist-column
@@ -116,10 +121,10 @@
 }
 .flist-item-thumb
 {
-    float: left;
-    width: 32px;
-    height: 32px;
-    padding: 7px;
+    display: table-cell;
+    vertical-align: middle;
+    max-width: 60px;
+    max-height: 60px;
 }
 .flist-item-name
 {
@@ -127,6 +132,7 @@
     float: left;
     overflow: hidden;
     width: 160px;
+    padding-left: 7px;
 }
 .flist-item-action
 {
@@ -134,7 +140,16 @@
     display: table-cell;
     vertical-align: middle;
     text-align: center;
-    height: 50px;
+    height: 64px;
+}
+.horizontal-photos
+{
+
+}
+.horizontal-photo
+{
+    img{ max-height: 32px; max-width: 32px;}
+    padding-left: 7px;
 }
 
 /* icons */
@@ -151,6 +166,9 @@
     background-repeat: no-repeat;
     width: 14px;
     height: 14px;
+}
+.modal {
+    max-height: 550px;
 }
 
 .row-empty

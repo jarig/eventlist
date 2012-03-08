@@ -7,5 +7,5 @@ urlpatterns = patterns('party.views',
     url(r'create$', 'credit'),
 
 
-    url(r'getInvitationList$', 'getInvitationList'),
+    url(r'getInvitationList/(?P<eventScheduleId>\d+)$', 'getInvitationList'),
 )

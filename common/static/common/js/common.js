@@ -36,11 +36,12 @@ var CommonGUI =
     loadingWindow: '',
     showLoading: function()
     {
-        CommonGUI.loadingWindow = $('<div>Loading...</div>');
+        CommonGUI.loadingWindow = $('<div></div>');
         $(CommonGUI.loadingWindow).dialog({
             title: "Loading...",
             height: "80",
             width: "150",
+            resizable: false,
             modal: true
         });
     },
@@ -211,13 +212,37 @@ var GoogleMaps = {
 
 
 
-jQuery.cachedScript = function(url, options) {
-    options = $.extend(options || {}, {
-        dataType: "script",
-        cache: true,
-        url: url
-    });
-    return jQuery.ajax(options);
+jQuery.cachedResource = function(url, options)
+{
+    if (url.match(/.+\.css$/gi))
+    {
+        var css = $("<link>");
+        css.attr({
+            rel:  "stylesheet",
+            type: "text/css",
+            href: url
+        });
+        $("head").append(css);
+        return true;
+    }else if(url.match(/.+\.less$/gi))
+    {
+        var less = $("<link>");
+        less.attr({
+            rel:  "stylesheet",
+            type: "text/less",
+            href: url
+        });
+        $("head").append(less);
+        return true;
+    }else
+    {
+        options = $.extend(options || {}, {
+            dataType: "script",
+            cache: true,
+            url: url
+        });
+        return jQuery.ajax(options);
+    }
 };
 
 jQuery.cachedHtml = function(url, options) {
@@ -242,7 +267,7 @@ jQuery.cachedHtml = function(url, options) {
         var html = jQuery.cachedHtml(url, options);
         for ( ; idx < length; idx++ ) {
             deferreds.push(
-                jQuery.cachedScript( Common._static + resources[ idx ], options )
+                jQuery.cachedResource( Common._static + resources[ idx ], options )
             );
         }
 

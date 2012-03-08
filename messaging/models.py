@@ -1,8 +1,8 @@
 import datetime
-from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
+from account.models import Account
 
 class Message(models.Model):
     class STATUS:
@@ -18,8 +18,8 @@ class Message(models.Model):
     )
     subject = models.CharField(max_length=255, default='')
     text = models.TextField()
-    author = models.ForeignKey(User, related_name='sent_messages')
-    to = models.ForeignKey(User, related_name='received_messages')
+    author = models.ForeignKey(Account, related_name='sent_messages')
+    to = models.ForeignKey(Account, related_name='received_messages')
     # 0 - sent, 1 - received, 2 - deleted by author, 4 - deleted by correspondent
     status = models.PositiveSmallIntegerField(editable=False, default=0)
     sent = models.DateTimeField(auto_now_add=True, auto_now=True, default=datetime.date.today)

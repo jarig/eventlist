@@ -62,6 +62,7 @@
     {% if user.is_authenticated %}
         Init.apiInit("{{ user.get_profile.provider }}");
     {% else %}
+        BaseGUI.initLoginPopup();
         Init.apiInit("all");
     {% endif %}
     Common._static = {{ STATIC_URL }};

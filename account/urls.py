@@ -9,4 +9,5 @@ urlpatterns = patterns('account.views',
     url(r'^login$', 'nativeLogin'),
     url(r'^friends$', 'friendlist'),
     url(r'^getFriends$', 'getFriends'),
+    url(r'^register$', 'register'),
 )

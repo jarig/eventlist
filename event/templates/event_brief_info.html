@@ -52,6 +52,7 @@
 
     <!-- Party window -->
     <div class="partyWindow" id="partyWindow-{{ eventSchedule.id }}">
+        <input value="{% url party.views.getInvitationList eventSchedule.id %}" id="invitationURL" type="hidden">
         <div class="partyWindowContent">
             <div class="partySubTitle">
                 <span>{% trans "Party Suggestions" %}</span>
@@ -79,9 +80,9 @@
                 <div class="partySubTitle" id="partyStatus" >
                     <div class="createPartyButton float-left">
                         <a href="#" class="ifNotGo" id="createPartyButton">{% trans "Go with Own Party!" %}</a>
-                        <div class="hidden ifGoes" id="partyCreatedMessage">{% trans "Party Successfully created!" %}</div>
+                        <div class="hidden ifGoes" id="partyCreatedMessage">{% trans " " %}</div>
                     </div>
-                    <div class="editPartyButton float-right hidden ifGoes">
+                    <div class="editPartyButton float-left hidden ifGoes">
                         <a href="#" class="partyInviteButton">{% trans "Invite people!" %}</a>
                     </div>
                 </div>

@@ -28,7 +28,11 @@
                 <div class="row-fluid">
                     <div class="span3">
                         <div id="editAvatar" class="thumbnail">
-                            <img id="avatarImage" src="{{ user.get_profile.avatar.url }}" />
+                            {% if user.avatar %}
+                                <img id="avatarImage" src="{{ user.avatar.url }}" />
+                            {% else %}
+                                <img id="avatarImage" src="{{ STATIC_URL }}common/images/logoStub.png" />
+                            {% endif %}
                             {{ editForm.avatar }}
                         </div>
                     </div>

@@ -1,5 +1,9 @@
 from django.db.models.fields.files import ImageField
 from common import forms
+from south.modelsinspector import add_introspection_rules
+
+
+add_introspection_rules([], ["^common\.fields\.ImagePreviewField"])
 
 class ImagePreviewField(ImageField):
 

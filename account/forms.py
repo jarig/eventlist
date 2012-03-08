@@ -1,7 +1,17 @@
+import datetime
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 from django.forms.models import ModelForm
+from django.utils.translation import ugettext
 from account.models import Account
 
+
+class RegisterForm(UserCreationForm):
+
+    class Meta:
+        model = Account
+        fields = ("username",)
 
 class EditForm(ModelForm):
 

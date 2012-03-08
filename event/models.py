@@ -1,6 +1,6 @@
 import datetime
-from django.contrib.auth.models import User
 from django.db import models
+from account.models import Account
 from blog.models import Blog
 from common.models import Address
 from organization.models import Organization
@@ -18,7 +18,7 @@ class EventActivity(models.Model):
 
 class Event(models.Model):
     name = models.CharField(max_length=255)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(Account)
     logo = models.ImageField(upload_to="event/logo/",)
     blogs = models.ManyToManyField(Blog) #indicates
     activities = models.ManyToManyField(EventActivity, blank=True, null=True) #event activities/actions
@@ -62,7 +62,7 @@ class EventTerms(models.Model):
 class EventGo(models.Model):
     eventSchedule = models.ForeignKey(EventSchedule, editable=False)
     #event = models.ForeignKey(EventSchedule, editable=False) # for performance
-    user = models.ForeignKey(User, editable=False, related_name='goesOnEvents')
+    user = models.ForeignKey(Account, editable=False, related_name='goesOnEvents')
     created = models.DateTimeField(auto_now_add=True) #go created
 
     class Meta:
@@ -76,7 +76,7 @@ class Comment(models.Model):
         (u'U',u'neutral')
     )
     event = models.ForeignKey(Event)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(Account)
     type = models.CharField(max_length=1, choices=COMMENT_TYPE, default='U')
     text = models.TextField()
     created = models.DateTimeField(auto_now_add=True) #created
@@ -84,8 +84,8 @@ class Comment(models.Model):
 
 class Invite(models.Model):
     event = models.ForeignKey(Event)
-    user = models.ForeignKey(User, related_name='invites')
-    person = models.ForeignKey(User, related_name='invited')
+    user = models.ForeignKey(Account, related_name='invites')
+    person = models.ForeignKey(Account, related_name='invited')
     created = models.DateTimeField(auto_now_add=True) #created
 
     class Meta:

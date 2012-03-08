@@ -1,0 +1,29 @@
+<div class="row-fluid friend-item" id="friend_{{ friend.pk }}">
+    <input value="{{ friend.pk }}" name="friend" type="hidden">
+    <div class="flist-cell">
+        <table cellpadding="0" cellspacing="0">
+            <tbody>
+            <tr>
+                <td>
+                    <div class="flist-item-thumb">
+                        <div class="thumbnail">
+                            <img src="{{ friend.avatar.url }}">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="flist-item-name" id="friend-name">
+                        {{ friend.first_name }} {{ friend.last_name }}
+                    </div>
+                </td>
+                <td>
+                    <div class="flist-item-action">
+                            <i class="icon-minus hide" id="minusSign"></i>
+                            <i class="icon-plus" id="plusSign"></i>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

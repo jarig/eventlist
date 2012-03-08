@@ -1,19 +1,22 @@
-from django.contrib.auth.models import User
 from django.db import models
 from account.models import Account
 from common.fields import ImagePreviewField
 from common.models import Address, Language
 from event.models import Event, EventSchedule
+from common import forms
 
 class Party(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True) #same as event name by default
+    author = models.ForeignKey(Account, related_name='authorOfParties', editable=False)
     logo = ImagePreviewField(upload_to="party/logo/", null=True, blank=True)
     description = models.TextField(blank=True, default='')
     #party options
-    closed=models.BooleanField(default=True)
+    closed=models.BooleanField(default=True)#if opened, then logo should exist
     #
     created=models.DateTimeField(auto_now_add=True, editable=False)
-    pass #party model
+
+    def __unicode__(self):
+        return self.name
 
 # party schedules == activity plans
 class PartySchedule(models.Model):
@@ -33,15 +36,17 @@ class PartyMember(models.Model):
         OWNER = 30
         MODERATOR = 20
         PARTICIPANT = 10
+        INVITED = 2
         CANDIDATE = 1
     _ROLE_CHOICES = (
         (ROLE.OWNER,u'owner'),
         (ROLE.MODERATOR,u'moderator'),
         (ROLE.PARTICIPANT,u'participant'),
+        (ROLE.INVITED, u'invited'),
         (ROLE.CANDIDATE, u'candidate'),
     )
     party = models.ForeignKey(Party, related_name='members')
-    user = models.ForeignKey(User, related_name='partyMembership')
+    user = models.ForeignKey(Account, related_name='partyMembership')
     role = models.PositiveIntegerField(choices=_ROLE_CHOICES, default=1)
     
     dateAdded = models.DateTimeField(auto_now_add=True)
@@ -55,6 +60,6 @@ class MemberVacancy(models.Model):
     age_min = models.PositiveSmallIntegerField(null=True, blank=True)
     age_max = models.PositiveSmallIntegerField(null=True, blank=True)
     sex = models.CharField(choices=Account._SEX, max_length=1,null=True, blank=True)
-    hasPhoto = models.NullBooleanField(null=True, blank=True)
+    hasPhoto = models.NullBooleanField(null=True, blank=True)# true, false, null- doesnt matter
     language = models.ForeignKey(Language, null=True, blank=True)
-    num = models.IntegerField(default=1) #number of vacancies
+    num = models.IntegerField(default=1) #number of such vacancies

@@ -24,7 +24,7 @@ class Account(User):
     identity = models.CharField(max_length=128, default="",editable=False)
     provider = models.CharField(max_length=128, default="",editable=False)
     rating = models.FloatField(default=0,editable=False)
-    avatar = models.ImageField(upload_to='avatar/',blank=True, max_length=255)
+    avatar = models.ImageField(upload_to='avatar/', blank=True, null=True, max_length=255, default='')
     sex = models.CharField(max_length=1, choices=_SEX, null=True, blank=True)
     age = models.PositiveSmallIntegerField(null=True, blank=True)
 

@@ -1,12 +1,12 @@
-from django.contrib.auth.models import User
 from django.db import models
+from account.models import Account
 from common.models import Address
 
 class Organization(models.Model):
     name = models.CharField(max_length=256)
     logo = models.ImageField(upload_to='organization/logo/')
     description = models.TextField(blank=True, default='')
-    members = models.ManyToManyField(User, through='OrgAccess')
+    members = models.ManyToManyField(Account, through='OrgAccess')
     address = models.ForeignKey(Address)
     
     phone = models.CharField(max_length=32)
@@ -25,7 +25,7 @@ class OrgAccess(models.Model):
         (ROLE2,'ROLE2'),
         (OWNER,'OWNER'),
     )
-    member = models.ForeignKey(User)
+    member = models.ForeignKey(Account)
     organization = models.ForeignKey(Organization)
     level = models.PositiveSmallIntegerField(choices=LEVELS)
     class Meta:

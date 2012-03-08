@@ -1,4 +1,5 @@
 # Create your views here.
+import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -8,7 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, login, authenticate
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from account.forms import EditForm
+from account.forms import EditForm, RegisterForm
 from account.models import openRegister, updateUserData
 from django.utils.translation import ugettext as _
 from common.utils import modelToDict
@@ -67,7 +68,7 @@ def extLoginProfile(request):
     try:
         try:
             user = authenticate(provider=userInfo["provider"], identity=userInfo["uid"],request=request)
-            if user != None:
+            if user is not None:
                 login(request, user)
                 updateUserData(user, userInfo["firstName"],userInfo["lastName"],userInfo["photo"])
                 messages.success(request,_("You've successfully logged in!"))
@@ -88,8 +89,21 @@ def extLoginProfile(request):
         return HttpResponseRedirect(next)
 
 def nativeLogin(request):
-    return HttpResponseRedirect("/")
-    #return HttpResponseRedirect(request.REQUEST["next"])
+    if request.POST:
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        if user is not None:
+            if user.is_active:
+                if not request.is_ajax():
+                    login(request, user)
+                    return HttpResponseRedirect("/")
+            else:
+                return HttpResponse(_("Account not activated"), status=202)
+                pass
+        else:
+            return HttpResponse(_("Wrong password or username"), status=405)
+            pass
+    #login succeddeed
+    return HttpResponse("Success")
 
 @login_required
 def logoutProfile(request):
@@ -97,3 +111,15 @@ def logoutProfile(request):
     messages.success(request,_("Logged out"))
     
     return HttpResponseRedirect("/")
+
+
+def register(request):
+    if request.POST:
+        form = RegisterForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse(_("Success"))
+        data = json.simplejson.dumps(form.errors)
+        print data
+        return HttpResponse(data, status=405)
+    return HttpResponse(_("Bad Request"), status=405)

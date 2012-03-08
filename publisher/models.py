@@ -1,7 +1,7 @@
-from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
+from account.models import Account
 
 class PublisherRequest(models.Model):
     STATUSES= (
@@ -9,7 +9,7 @@ class PublisherRequest(models.Model):
         (u'A',u'accepted'),
         (u'D',u'declined'),
     )
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(Account)
     message = models.TextField()
     status = models.CharField(choices=STATUSES, default='R', max_length=1)
     dateAdded = models.DateTimeField(auto_now_add=True) #date event created

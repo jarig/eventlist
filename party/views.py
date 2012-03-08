@@ -1,15 +1,17 @@
 # Create your views here.
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import json
+from django.db import transaction
+from django.db.models.query_utils import Q
 from django.forms.models import modelformset_factory
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.translation import ugettext
 from event.models import EventSchedule
-from event.views import _go
 from party.forms import CreatePartyForm
 from party.models import Party, PartySchedule, PartyMember
+from party.utils import createPartyForEvent, invitePeopleToParty
 
 @login_required
 def forEvent(request, eventScheduleId):
@@ -77,27 +79,37 @@ def manage(request):
 @login_required
 def inviteToEvent(request, eventScheduleId):
     #record to event go
-    eventSch = EventSchedule.objects.get(pk=eventScheduleId)
-    _go(request.user,eventSch)
-    party = Party.objects.create()
-    partySched = PartySchedule.objects.create(party=party,
-                                              location=eventSch.address,
-                                              dateFrom=eventSch.dateFrom,
-                                              timeFrom=eventSch.timeFrom,
-                                              dateTo=eventSch.dateTo,
-                                              timeTo=eventSch.timeTo)
-    partyMemberShip = PartyMember.objects.create(user=request.user,
-                                                 party=party,
-                                                 role=PartyMember.ROLE.OWNER)
-
-
+    party, partySched, partyMemberShip = createPartyForEvent(request.user, eventScheduleId)
     data = json.simplejson.dumps({ "id": party.pk, "schedule": partySched.pk, "membership": partyMemberShip.pk })
-    pass
+    return HttpResponse(data)
 
-def getInvitationList(request):
+@login_required
+def getInvitationList(request, eventScheduleId):
 
-    return render_to_response("party_friend_list.html",
-            {
-            },
-        context_instance=RequestContext(request)
-    )
+    if request.POST:
+        friends = request.POST.getlist('friends[]')
+        if len(friends):
+            with transaction.commit_on_success():
+                party, partySched, partyMembership = createPartyForEvent(request.user, eventScheduleId)
+                invitePeopleToParty(party, friends)
+            return HttpResponse('done')
+    else:
+        invited = []
+        #TODO take only mutual friends
+        friendships = request.user.friends.all().select_related("friend").order_by('-date_added')
+        try:
+            party = Party.objects.get(schedules__eventSchedule=eventScheduleId, author=request.user)
+            pMembers = party.members.filter(~Q(user = request.user)).select_related('user')
+            for member in pMembers:
+                invited.append(member.user)
+        except Party.DoesNotExist:
+            pass
+
+        return render_to_response("party_invite_box.html",
+                {
+                "friendships": friendships,
+                "invited": invited
+                },
+            context_instance=RequestContext(request)
+        )
+    return HttpResponseBadRequest('Bad request')

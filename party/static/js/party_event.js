@@ -37,23 +37,22 @@ var PartyEvent =
                         );
                     return false;
                 });
+                var invitationURL = $("#invitationURL", $this).val();
                 $(".partyInviteButton", $this).click(function()
                 {
-                    $.loadComponent('/party/getInvitationList',['js/party_invite.js'],{},function(data)
+                    CommonGUI.showLoading();
+                    $.loadComponent(invitationURL,['js/party_invite.js','css/party_invite_box.css'],{},function(data)
                     {
+                        CommonGUI.hideLoading();
                         $("body").append(data);
-                        $(".modal",data).modal().on('hidden', function ()
+                        var popup = $(".modal",data).modal();
+                        popup.on('hidden', function ()
                         {
                             $(data).remove();
                         });
+                        PartyInvite.initPartyInvitePopup(popup,invitationURL);
 
                     });
-                    //load popup and show, store in cache
-                    //$.get('/party/getInvitationList', function(data)
-                    //{
-                    //    var $data= $(data);
-                    //    $($data[6]).modal();
-                    //});
                     return false;
                 });
             });
