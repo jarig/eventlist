@@ -1,7 +1,0 @@
-[
-    {
-        "pk": 1,
-        "model": "blogs.BlogStyle",
-        "fields": {"name": "default", "default": 1, "type":"F" }
-    }
-]
