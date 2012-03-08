@@ -1,20 +1,34 @@
 [
     {
-        "pk": 1,
-        "model": "auth.user",
-        "fields": {
-            "username": "jar",
-            "first_name": "",
-            "last_name": "",
-            "is_active": true,
-            "is_superuser": true,
-            "is_staff": true,
-            "last_login": "2008-09-04 14:25:29",
-            "groups": [],
-            "user_permissions": [],
-            "password": "sha1$42b18$c3645c1177d718850e1c2363185c8885efa3602b",
-            "email": "jar@rest.ee",
-            "date_joined": "2008-09-04 14:25:29"
+        "pk":1,
+        "model":"auth.user",
+        "fields":{
+            "username":"rest",
+            "first_name":"",
+            "last_name":"",
+            "is_active":true,
+            "is_superuser":true,
+            "is_staff":true,
+            "last_login":"2008-09-04 14:25:29",
+            "groups":[],
+            "user_permissions":[],
+            "password":"sha1$7d636$b3f8c2640c06ae3d215addc0d20f66625af0def3",
+            "email":"rest@rest.ee",
+            "date_joined":"2008-09-04 14:25:29"
+        }
+    },
+    {
+        "pk":1,
+        "model":"account.account",
+        "fields":{
+            "rating":0.0,
+            "age": 99,
+            "sex":null,
+            "avatar":"",
+            "groups":[],
+            "provider":"",
+            "user_permissions":[],
+            "identity":""
         }
     }
 ]

@@ -1,44 +1,63 @@
 [
     {
-        "pk": 1,
-        "model": "blogs.FacilityType",
-        "fields": {"name": "club", "confirmed": 1 }
-    },
-    {
-        "pk": 2,
-        "model": "blogs.FacilityType",
-        "fields": {"name": "bar", "confirmed": 1 }
-    },
-    {
-        "pk": 3,
-        "model": "blogs.FacilityType",
-        "fields": {"name": "cafe", "confirmed": 1 }
-    },
-    {
-        "pk": 1,
-        "model": "blogs.BlogStyle",
-        "fields": {"name": "default", "default": 1, "type":"F" }
-    },
-    {
-        "pk": 1,
-        "model": "blogs.BlogModule",
-        "fields": {
-            "name": "Address",
-            "descr":"Show address",
-            "logo":"blog_modules/address_logo.png",
-            "path": "",
-            "type":"F"
+        "pk":1,
+        "model":"blog.facilitytype",
+        "fields":{
+            "thumbnail":"",
+            "confirmed":true,
+            "name":"club",
+            "icon":""
         }
     },
     {
-        "pk": 2,
-        "model": "blogs.BlogModule",
-        "fields": {
-            "name": "Dummy",
-            "descr":"Dummy",
+        "pk":2,
+        "model":"blog.facilitytype",
+        "fields":{
+            "thumbnail":"",
+            "confirmed":true,
+            "name":"bar",
+            "icon":""
+        }
+    },
+    {
+        "pk":3,
+        "model":"blog.facilitytype",
+        "fields":{
+            "thumbnail":"",
+            "confirmed":true,
+            "name":"cafe",
+            "icon":""
+        }
+    },
+    {
+        "pk":1,
+        "model":"blog.blogstyle",
+        "fields":{
+            "default":true,
+            "type":"F",
+            "name":"default"
+        }
+    },
+    {
+        "pk":1,
+        "model":"blog.blogmodule",
+        "fields":{
+            "logo":"blog_modules/address_logo.png",
+            "type":"F",
+            "name":"Address",
+            "descr":"Show address",
+            "path":""
+        }
+    },
+    {
+        "pk":2,
+        "model":"blog.blogmodule",
+        "fields":{
             "logo":"blog_modules/dummy_logo.png",
-            "path": "",
-            "type":"F"
+            "type":"F",
+            "name":"Dummy",
+            "descr":"Dummy",
+            "path":""
         }
     }
 ]
