@@ -14,4 +14,4 @@ var Party =
             $("textarea").labelify({ labelledClass: "helpLabel" });
         });
     }
-}
+};
