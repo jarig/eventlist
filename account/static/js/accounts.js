@@ -96,9 +96,9 @@ var Accounts =
                         statusCode:{
                             200: function(data) //success
                             {
-                                $this.attr("disabled","true");
                                 $this.addClass("btn-success");
-                                $this.bsbutton("complete");
+                                $this.text($this.attr("data-complete-text"));
+                                $this.attr("disabled","true");
                             },
                             405: function(data)
                             {
@@ -109,12 +109,17 @@ var Accounts =
                                     {
                                         $("#registerErrors").append(errors[i][e]+"<br/>");
                                     }
+                                $this.bsbutton("reset");
+                            },
+                            500: function(data)
+                            {
+                                $this.bsbutton("reset");
+                                $("#registerErrors").append("Unknown error<br/>");
                             }
                         }
                     }).always(function(jqXHR, textStatus)
                         {
                             $(".alert").hide();
-                            $this.bsbutton("reset");
                         });
                 }catch(e)
                 {

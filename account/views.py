@@ -114,12 +114,16 @@ def logoutProfile(request):
 
 
 def register(request):
-    if request.POST:
-        form = RegisterForm(data=request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponse(_("Success"))
-        data = json.simplejson.dumps(form.errors.values())
-        print data
-        return HttpResponse(data, status=405)
+    try:
+        if request.POST:
+            form = RegisterForm(data=request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponse(_("Success"))
+            data = json.simplejson.dumps(form.errors.values())
+            #print data
+            return HttpResponse(data, status=405)
+    except Exception as e:
+        print e
+        raise e
     return HttpResponse(_("Bad Request"), status=405)

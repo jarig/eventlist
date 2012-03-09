@@ -4,12 +4,12 @@ from django.core.files.base import File
 from django.core.files.storage import DefaultStorage
 from django.core.files.temp import NamedTemporaryFile
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, UserManager
 from django.db.models.signals import post_save
 from account import settings
 from django.conf import settings as globalSettings
 
-User._meta.get_field('username')._unique = False
+#User._meta.get_field('username')._unique = False
 # Create your models here.
 
 class Account(User):
@@ -30,6 +30,9 @@ class Account(User):
 
     class Meta:
         unique_together = ("identity", "provider")
+
+    def __unicode__(self):
+        print self.username
 
 class FriendShip(models.Model):
     creator = models.ForeignKey(Account, related_name='friends') #those who added I

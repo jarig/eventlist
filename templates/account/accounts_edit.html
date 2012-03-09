@@ -16,7 +16,7 @@
 
 {% block content %}
     <div id="editAccountBox">
-        <form  enctype="multipart/form-data" action="{% url account.views.edit %}" method="POST">
+        <form  enctype="multipart/form-data" action="{% url account.views.edit %}" method="POST" class="form-horizontal">
             <div class="container-fluid">
                 <div class="row-fluid">
                     <div class="restHeader">
@@ -33,39 +33,11 @@
                             {% else %}
                                 <img id="avatarImage" src="{{ STATIC_URL }}common/images/logoStub.png" />
                             {% endif %}
-                            {{ editForm.avatar }}
                         </div>
                     </div>
                     <div class="span7">
                         <div id="editGeneralInfo">
-                            <div class="formField">
-                                <div class="fieldLabel">{{ editForm.first_name.label }}</div>
-                                <div class="fieldInput">{{ editForm.first_name }}</div>
-                                <div class="fieldError">
-                                    {{ editForm.first_name.errors }}
-                                </div>
-                             </div>
-                            <div class="formField">
-                                <div class="fieldLabel">{{ editForm.last_name.label }}</div>
-                                <div class="fieldInput">{{ editForm.last_name }}</div>
-                                <div class="fieldError">
-                                    {{ editForm.last_name.errors }}
-                                </div>
-                             </div>
-                            <div class="formField">
-                                <div class="fieldLabel">{{ editForm.publisher }}</div>
-                                <div class="fieldInput">{{ editForm.publisher.label }}</div>
-                                <div class="fieldError">
-                                    {{ editForm.publisher.errors }}
-                                </div>
-                             </div>
-                            <div class="formField">
-                                <div class="fieldLabel">{{ editForm.publisherRequestText.label }}</div>
-                                <div class="fieldInput">{{ editForm.publisherRequestText }}</div>
-                                <div class="fieldError">
-                                    {{ editForm.publisherRequestText.errors }}
-                                </div>
-                             </div>
+                            {{ editForm.as_p  }}
                         </div>
                     </div>
                 </div>
