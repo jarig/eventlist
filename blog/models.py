@@ -1,5 +1,6 @@
 from django.db import models
 from account.models import Account
+from _ext.pibu.fields import ImagePreviewModelField
 from common.models import Address
 
 
@@ -43,6 +44,8 @@ class BlogModule(models.Model):
     def __unicode__(self):
         return self.name
 
+def blog_logo_name(instance, filename):
+    return "blog/logo/%d_main_logo" % int(instance.pk)
 
 # Create your models here.
 class Blog(models.Model):
@@ -53,7 +56,7 @@ class Blog(models.Model):
     managers = models.ManyToManyField(Account, through='BlogAccess') #indicates which users has access to blog
     name = models.CharField(max_length=64)
     description = models.TextField(default="")
-    logo = models.ImageField(upload_to="blog/logo/",)
+    logo = ImagePreviewModelField(upload_to=blog_logo_name, max_width=150)
     type = models.CharField(max_length=2, choices=BLOG_TYPE, default='RR') #type of the blog
     priority = models.PositiveIntegerField(default=0) #priorty of blog during search
     rating = models.PositiveIntegerField(default=0) #blogs rating

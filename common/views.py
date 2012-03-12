@@ -1,13 +1,8 @@
 # Create your views here.
 from django.contrib.auth.decorators import login_required, permission_required
-from django.core.files.storage import DefaultStorage
 from django.core.serializers import json
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-import time
-from common.forms import TempImageForm
 from common.models import City, Address
 
 
@@ -49,30 +44,6 @@ def publisherMode(request):
 
 def userMode(request):
     return switchMode(request, 'user', 'event.views.main')
-
-
-@login_required
-@permission_required("publisher.publish")
-def uploadTempImage(request):
-    imagePath=False
-    if request.method == "POST":
-        tempImageForm = TempImageForm(request.POST, request.FILES)
-        if tempImageForm.is_valid():
-            #TODO check if content type is correct
-            file = tempImageForm.cleaned_data['image']
-            storage = DefaultStorage()
-            print "Content type: " + file.content_type
-            filename = storage.get_valid_name("temp_"+str(request.user.id) + str(time.time()))
-            imagePath = storage.save('temp/'+filename, file)
-    else:
-        tempImageForm = TempImageForm()
-    return render_to_response("common/uploadTempImage.html",
-                              {
-                                "tempImageForm": tempImageForm,
-                                "imagePath": imagePath
-                              },
-                                context_instance=RequestContext(request)
-                              )
 
 def getCities(request):
     countryId = request.REQUEST.get("country",0)

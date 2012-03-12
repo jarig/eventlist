@@ -1,14 +1,13 @@
 from django.db import models
 from account.models import Account
-from common.fields import ImagePreviewField
+from _ext.pibu.fields import ImagePreviewModelField
 from common.models import Address, Language
 from event.models import Event, EventSchedule
-from common import forms
 
 class Party(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True) #same as event name by default
     author = models.ForeignKey(Account, related_name='authorOfParties', editable=False)
-    logo = ImagePreviewField(upload_to="party/logo/", null=True, blank=True)
+    logo = ImagePreviewModelField(upload_to="party/logo/", null=True, blank=True)
     description = models.TextField(blank=True, default='')
     #party options
     closed=models.BooleanField(default=True)#if opened, then logo should exist

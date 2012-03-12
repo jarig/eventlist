@@ -35,7 +35,8 @@ def edit(request):
         editForm = EditForm(request.POST, request.FILES, instance=request.user)
         if editForm.is_valid():
             messages.success(request, _("Your personal information saved"))
-            editForm.save(request)
+            editForm.save()
+            return HttpResponseRedirect(reverse('account.views.edit'))
     else:
         editForm = EditForm(instance=request.user)
     return render_to_response("account/accounts_edit.html",
@@ -78,10 +79,13 @@ def extLoginProfile(request):
                 raise ValueError
         except User.DoesNotExist:
             #register user
-            openRegister(provider=userInfo["provider"],identity=userInfo["uid"])
+            openRegister(provider=userInfo["provider"],
+                                identity=userInfo["uid"],
+                                avatarURL=userInfo["photo"],
+                                firstName=userInfo["firstName"],
+                                lastName=userInfo["lastName"])
             user = authenticate(provider=userInfo["provider"], identity=userInfo["uid"],request=request)
             login(request, user)
-            updateUserData(user, userInfo["firstName"],userInfo["lastName"],userInfo["photo"])
             messages.success(request,_("You've successfully logged in!"))
             return HttpResponseRedirect(next)
     except (KeyError, ValueError): #smthing went wrong

@@ -13,6 +13,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}address/address.js"></script>
     {% include "jquery.multiselect.html" %}
     {% include "jquery.timeentry.html" %}
+    {{ eventForm.media }}
 {% endblock %}
 
 {% block scripts %}
@@ -52,21 +53,11 @@
                 <td width="256px" rowspan="99">
                     <div class="eventLogoBox">
                         <div class='divButton eventLogo'>
-                            <div onclick="return CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc','#id_logo');">
-                                {% if eventForm.logo.value %}
-                                    <img id="eventLogoSrc" src="{{ MEDIA_URL }}{{ eventForm.logo.value }}">
-                                {% endif %}
-                                {% if event.logo %}
-                                    <img id="eventLogoSrc" src="{{ event.logo.url }}">
-                                {% endif %}
-                                {% if not event.logo and not eventForm.logo.value %}
-                                    <img id="eventLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png">
-                                {% endif %}
-                            </div>
+                            {% field eventForm.logo "render=preview" %}
                             {{ eventForm.logo }}
                         </div>
                         <div class='eventLogoUpload'>
-                            <a href="#" onclick="return CommonGUI.openUploadWindow('#uploadDialog','#eventLogoSrc','#id_logo');">Upload</a>
+                            {% field eventForm.logo "render=upload" %}
                         </div>
                     </div>
                 
@@ -204,11 +195,5 @@
 
         </table>
         </form>
-    </div>
-    <div style="display: none">
-        <div id="uploadDialog">
-            <iframe src="{% url common.views.uploadTempImage %}" id="uploadLogoFrame" width="100%" height="100%">
-            </iframe>
-        </div>
     </div>
 {% endblock %}

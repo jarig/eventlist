@@ -1,16 +1,16 @@
-import urllib
 import urllib2
 from django.core.files.base import File
-from django.core.files.storage import DefaultStorage
 from django.core.files.temp import NamedTemporaryFile
 from django.db import models
-from django.contrib.auth.models import User, UserManager
-from django.db.models.signals import post_save
+from django.contrib.auth.models import User
+from _ext.pibu.fields import ImagePreviewModelField
 from account import settings
-from django.conf import settings as globalSettings
 
 #User._meta.get_field('username')._unique = False
 # Create your models here.
+
+def account_logo_name(instance, filename):
+    return "avatar/%d_avatar" % (int(instance.pk))
 
 class Account(User):
     class SEX:
@@ -24,7 +24,7 @@ class Account(User):
     identity = models.CharField(max_length=128, default="",editable=False)
     provider = models.CharField(max_length=128, default="",editable=False)
     rating = models.FloatField(default=0,editable=False)
-    avatar = models.ImageField(upload_to='avatar/', blank=True, null=True, max_length=255, default='')
+    avatar = ImagePreviewModelField(upload_to=account_logo_name, max_width=164, blank=True, null=True, max_length=255, default='')
     sex = models.CharField(max_length=1, choices=_SEX, null=True, blank=True)
     age = models.PositiveSmallIntegerField(null=True, blank=True)
 
@@ -42,29 +42,39 @@ class FriendShip(models.Model):
     class Meta:
         unique_together = ("creator", "friend")
 
-def openRegister(identity, provider):
+def openRegister(identity, provider, avatarURL=None, firstName=None, lastName=None):
     if not settings.REGISTRATION_ALLOWED: return None
     username = provider+str(identity)
-    user = User.objects.create_user(username=username, email="",password=settings.SECRET_PASS)
+    #TODO generate random pass
+    user = Account.objects.create(identity=identity,provider=provider,username=username, email="")
     if settings.ACTIVATION_REQUIRED:
         user.is_active = 0
+    user.set_password(settings.SECRET_PASS)
+    if firstName: user.first_name = firstName
+    if lastName: user.last_name = lastName
     user.save()
-    Account.objects.create(user=user,identity=identity,provider=provider)
+    if avatarURL is not None:
+        img_temp = NamedTemporaryFile()
+        img_temp.write(urllib2.urlopen(avatarURL).read())
+        img_temp.flush()
+        #storage = DefaultStorage()
+        user.avatar.save(
+            "avatar_"+str(user.pk),
+            File(img_temp)
+        )
     return user
 
 def updateUserData(user, firstName, lastName, avatarURL, gender=None):
     user.first_name = firstName
     user.last_name = lastName
-    profile = user.get_profile()
-    profile.sex = gender
-    profile.save()
+    user.sex = gender
     user.save()
 
     img_temp = NamedTemporaryFile()
     img_temp.write(urllib2.urlopen(avatarURL).read())
     img_temp.flush()
-    storage = DefaultStorage()
-    profile.avatar.save(
+    #storage = DefaultStorage()
+    user.avatar.save(
         "avatar_"+str(user.pk),
         File(img_temp)
     )

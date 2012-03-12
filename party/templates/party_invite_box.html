@@ -43,7 +43,11 @@
                     {% for friend in invited %}
                         <td class="horizontal-photo">
                             <a href="#" class="thumbnail" rel="tooltip" title="{{ friend.first_name }} {{ friend.last_name }}">
-                                <img src="{{ friend.avatar.url }}">
+                                {% if friend.avatar %}
+                                    <img src="{{ friend.avatar.url }}">
+                                {% else %}
+                                    <img src="{{ STATIC_URL }}common/images/logoStub.png">
+                                {% endif %}
                             </a>
                         </td>
                     {% endfor %}

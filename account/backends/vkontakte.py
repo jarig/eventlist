@@ -8,11 +8,11 @@ from hashlib import md5
 class Vkontakte:
 
     def authenticate(self, identity=None, request=None):
-        if identity == None or request == None: return None
+        if identity is None or request is None: return None
         # check cookies
         if not self.validate(request): return None
         try:
-            user = Account.objects.get(identity=identity, provider=settings.BACKENDS["VKONTAKTE"]["NAME"]).user
+            user = Account.objects.get(identity=identity, provider=settings.BACKENDS["VKONTAKTE"]["NAME"])
             return user
         except Account.DoesNotExist:
             raise User.DoesNotExist

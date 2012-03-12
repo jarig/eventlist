@@ -1,9 +1,6 @@
 # Create your views here.
-import os
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
-from django.core import serializers
 from django.core.serializers import json
 from django.core.urlresolvers import reverse
 from django.db.models.query_utils import Q
@@ -16,7 +13,7 @@ from django.template.context import RequestContext
 #choose in which blog to create event
 from django.utils.translation import ugettext as _
 from blog.forms import NewBlogForm
-from blog.models import Blog, BlogStyle, BlogAccess, getMaxPermission, BlogModule
+from blog.models import Blog, BlogStyle, BlogAccess, BlogModule
 from common.forms import AddressForm
 from common.models import Country, Address
 from menu.models import Menu
@@ -93,8 +90,9 @@ def edit(request, blogId, page=None):
         blogForm = NewBlogForm(request.POST, request.FILES, instance=blog)
         adrFormSet = AdrFormSet(request.POST, queryset=blog.addresses.all())
         if blogForm.is_valid() and adrFormSet.is_valid():
-            blog = blogForm.submit_blog(request,adrFormSet)
+            blogForm.submit_blog(request,adrFormSet)
             messages.success(request, _("Changes successfully saved!"))
+            return HttpResponseRedirect(reverse('blog.views.edit',kwargs={'blogId':blogId,'page':page}))
     else:
         blogForm = NewBlogForm(instance=blog)
         addr = blog.addresses.all()

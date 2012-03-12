@@ -12,7 +12,6 @@ from organization.models import Organization
 class EventForm(ModelForm):
     organizers = forms.ModelMultipleChoiceField(Organization.objects.none(),
                                                 widget=forms.SelectMultiple(attrs={'placeholder':"Choose an organizers"}))
-    logo = forms.CharField(widget=HiddenInput)
 
     def __init__(self, user, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
@@ -37,11 +36,6 @@ class EventForm(ModelForm):
         self.save_m2m() #save manyToMany rls
 
         eventSchedules.saveSchedules(newEvent)
-        
-        #save logo
-        uploadLocalImage(self.cleaned_data["logo"],
-                         str(newEvent.pk) + '_logo',
-                         newEvent.logo.save)
 
         return newEvent
 

@@ -56,3 +56,12 @@ def _formData(keyString, result):
             result = result[key] = {} #create new dict and get reference to it
         keyString = re.sub(r'\['+key+'\](.+)',r'\1',keyString)
     return result
+
+
+def prettySize(size):
+    suffixes = [("B",2**10), ("KB",2**20), ("MB",2**30), ("GB",2**40), ("TB",2**50)]
+    for suf, lim in suffixes:
+        if size > lim:
+            continue
+        else:
+            return "%d %s" % (round(size/float(lim/2**10),2), suf)

@@ -15,7 +15,7 @@ class Facebook:
         # check cookies
         if not self.validate(request): return None
         try:
-            user = Account.objects.get(identity=identity, provider=settings.BACKENDS["FACEBOOK"]["NAME"]).user
+            user = Account.objects.get(identity=identity, provider=settings.BACKENDS["FACEBOOK"]["NAME"])
             return user
         except Account.DoesNotExist:
             raise User.DoesNotExist

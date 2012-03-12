@@ -134,6 +134,7 @@ INSTALLED_APPS = (
     'album',
     'organization',
     'south',
+    '_ext.pibu',
 )
 
 # A sample logging configuration. The only tangible logging

@@ -47,18 +47,9 @@
 
 {% block logoBottom %}
     {% if blogForm %}
-        <a href="#" onclick="CommonGUI.openUploadWindow('#uploadDialog','#blogLogoSrc','#id_logo');">Upload</a>
+        {% field blogForm.logo "render=upload" %}
     {% endif %}
 {% endblock logoBottom%}
-
-{% block hiddenContent %}
-    {% if blogForm %}
-    <div id="uploadDialog">
-        <iframe src="{% url common.views.uploadTempImage %}" id="uploadLogoFrame" width="100%" height="100%">
-        </iframe>
-    </div>
-    {% endif %}
-{% endblock %}
 
 
 {% block formDefinition %}
@@ -70,8 +61,8 @@
               action="{% url blog.views.create %}"
               {% endif %}
         enctype="multipart/form-data" method="POST">
-        {{ blogForm.logo }}
         <input type="hidden" id="blog_id" value="{{ blogForm.instance.id }}">
+        {{ blogForm.logo }}
         <div class="buttonPane">
             <span><a href="{% url blog.views.manage %}">{{"<< Back"|escape}}</a></span>
             <span>

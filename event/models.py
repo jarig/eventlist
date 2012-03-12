@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from _ext.pibu.fields import ImagePreviewModelField
 from account.models import Account
 from blog.models import Blog
 from common.models import Address
@@ -19,7 +20,7 @@ class EventActivity(models.Model):
 class Event(models.Model):
     name = models.CharField(max_length=255)
     author = models.ForeignKey(Account)
-    logo = models.ImageField(upload_to="event/logo/",)
+    logo = ImagePreviewModelField(upload_to="event/logo/",)
     blogs = models.ManyToManyField(Blog) #indicates
     activities = models.ManyToManyField(EventActivity, blank=True, null=True) #event activities/actions
     organizers = models.ManyToManyField(Organization)

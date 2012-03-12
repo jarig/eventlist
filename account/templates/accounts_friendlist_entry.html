@@ -2,7 +2,9 @@
 {% load static %}
 <div class="friendEntry">
     <div class="friendThumb thumbnail">
-        <img src="{{ friend.get_profile.avatar.url }}" alt="friend.first_name">
+        {% if friend.avatar %}
+            <img src="{{ friend.avatar.url }}" alt="friend.first_name">
+        {% endif %}
     </div>
     <div class="friendInfo">
         {{ friend.first_name }}
