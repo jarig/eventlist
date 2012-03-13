@@ -11,7 +11,7 @@
 
 {% block content %}
     <div class="restHeader">
-        <div class="headerName"><h1>{% trans "Parties" %}</h1></div>
+        <div class="headerName"><h1>{% trans "Invitations" %}</h1></div>
         <div class="subMenu">
             <ul>
                 <li>
@@ -25,7 +25,7 @@
         <table class="table table-striped">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Invited</th>
                 <th>Role</th>
             </tr>
         </thead>
@@ -33,7 +33,7 @@
             {% for mship in partyMembership %}
                 <tr>
                     <td>
-                        {{ mship.party.name }}
+                        {{ mship.partyMembers|join:', ' }}
                     </td>
                     <td>
                         {{ mship.role }}

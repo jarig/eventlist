@@ -12,6 +12,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/party.js"></script>
     {% include "jquery.multiselect.html" %}
     {% include "jquery.timeentry.html" %}
+    {{ createPartyForm.media }}
 {% endblock %}
 
 {% block scripts %}
@@ -33,16 +34,13 @@
             <div class="row-fluid">
                 <div class="span3">
                     <div class='divButton'>
-                        <div onclick="return CommonGUI.openUploadWindow('#uploadDialog','#id_logo','id_logo');">
-                            {% if createPartyForm.logo.value %}
-                                {{ createPartyForm.logo }}
-                            {% else %}
-                                <img src="{{ STATIC_URL }}common/images/logoStub.png">
-                            {% endif %}
+                        <div>
+                            {% field createPartyForm.logo "render=preview" %}
+                            {{ createPartyForm.logo }}
                         </div>
                     </div>
                     <div class='logoUploadLabel'>
-                        <a href="#" onclick="return CommonGUI.openUploadWindow('#uploadDialog','#id_logo','id_logo');">Upload</a>
+                        {% field createPartyForm.logo "render=upload" %}
                     </div>
                     <div class="errors">
                         {{ createPartyForm.logo.errors }}
@@ -82,12 +80,5 @@
                 </div>
             </div>
         </form>
-    </div>
-
-    <div style="display: none">
-        <div id="uploadDialog">
-            <iframe src="{% url common.views.uploadTempImage %}" id="uploadLogoFrame" width="100%" height="100%">
-            </iframe>
-        </div>
     </div>
 {% endblock %}

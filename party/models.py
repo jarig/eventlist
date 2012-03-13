@@ -15,7 +15,7 @@ class Party(models.Model):
     created=models.DateTimeField(auto_now_add=True, editable=False)
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
 # party schedules == activity plans
 class PartySchedule(models.Model):
@@ -52,6 +52,9 @@ class PartyMember(models.Model):
 
     class Meta:
         unique_together = ('party', 'user')
+
+    def __unicode__(self):
+        return unicode(self.user.first_name)
     pass
 
 class MemberVacancy(models.Model):

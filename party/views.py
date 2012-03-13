@@ -67,7 +67,14 @@ def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=N
 
 @login_required
 def manage(request):
-    partyMembership =  request.user.partyMembership.all().select_related('party')
+    partyMembership = []
+    _partyMembership =  request.user.partyMembership.all().select_related('party')
+    for _member in _partyMembership:
+        partyMembers = PartyMember.objects.filter(Q(party=_member.party) & ~Q(user=request.user)).select_related('user').all()
+        print partyMembers
+        _member.partyMembers = partyMembers
+        partyMembership.append(_member)
+
     return render_to_response("party/party_manage.html",
             {
             "partyMembership": partyMembership

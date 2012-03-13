@@ -2,6 +2,7 @@ import re
 from django import template
 from django.core.urlresolvers import reverse, resolve
 from django.db import models
+from django.utils.translation import ugettext
 
 
 class Menu:
@@ -29,19 +30,19 @@ class Menu:
     def sideMenu(self):
         return [
                 {
-                    "title":"Friends",
+                    "title": ugettext("Friends"),
                     "url": reverse("account.views.friendlist"),
                     "active": False,
                     "enabled": self.user.is_authenticated()
                 },
                 {
-                    "title":"Messages",
+                    "title":ugettext("Messages"),
                     "url": reverse("messaging.views.messagingReceived"),
                     "active": False,
                     "enabled": self.user.is_authenticated()
                 },
                 {
-                "title": "Parties",
+                "title": ugettext("Invitations"),
                 "url": reverse("party.views.manage"),
                 "active": False,
                 "enabled": self.user.is_authenticated()
