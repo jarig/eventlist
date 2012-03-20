@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    '_ext.pibu',
     'party',
     'messaging',
     'common',
@@ -134,7 +135,6 @@ INSTALLED_APPS = (
     'album',
     'organization',
     'south',
-    '_ext.pibu',
 )
 
 # A sample logging configuration. The only tangible logging

@@ -10,15 +10,13 @@
         <link href="{{ STATIC_URL }}common/css/forms.css" rel="stylesheet" type="text/css">
         {% include 'jquery.multiselect.html' %}
         <script type="text/javascript" src="{{ STATIC_URL }}address/address.js"></script>
+        {{ orgForm.media }}
     {% endif %}
 
 {% endblock %}
 
 {% block hiddenContent %}
-    <div id="uploadDialog">
-        <iframe src="{% url common.views.uploadTempImage %}" id="uploadLogoFrame" width="100%" height="100%">
-        </iframe>
-    </div>
+
 {% endblock %}
 
 {% block scripts %}
@@ -59,18 +57,14 @@
         <tr style="vertical-align: top">
             <td>
                 <div class="logo">
-                    {% if orgForm.logo.value %}
-                        <img id="orgLogoSrc" src="{{ MEDIA_URL }}{{ orgForm.logo.value }}" />
-                    {% else %}
-                        <img id="orgLogoSrc" src="{{ STATIC_URL }}common/images/logoStub.png" />
-                    {% endif %}
-                    {{ orgForm.logo }}
+                    {% field orgForm.logo %}
+                    {% field orgForm.logo "render=preview"%}
                 </div>
                 <div class="errors">
                     {{ orgForm.logo.errors }}
                 </div>
                 <div class="logoControl">
-                    <a href="#" onclick="CommonGUI.openUploadWindow('#uploadDialog','#orgLogoSrc','#id_logo');">Upload</a>
+                    {% field orgForm.logo "render=upload"%}
                 </div>
             </td>
             <td>

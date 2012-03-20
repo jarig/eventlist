@@ -68,7 +68,7 @@
     {% endif %}
     Common._static = {{ STATIC_URL }};
     Common._media = {{ MEDIA_URL }};
-    Base.init();
+    Base.init(null);
 </script>
 {% block scripts %}{% endblock %}
 {% block top %}{% endblock %}

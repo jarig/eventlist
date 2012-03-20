@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-18 00:11+0200\n"
-"PO-Revision-Date: 2012-01-18 00:58+0200\n"
+"POT-Creation-Date: 2012-03-14 00:35+0200\n"
+"PO-Revision-Date: 2012-03-14 00:46+0200\n"
 "Last-Translator: JArik <test@test.ee>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,162 +16,348 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: .\accounts\views.py:19
-msgid "Your personal information saved"
+#: .\_ext\pibu\fields.py:75
+#, python-format
+msgid "Uploaded image exceeds maximum size - %s"
 msgstr ""
 
-#: .\accounts\views.py:61
-#: .\accounts\views.py:72
+#: .\_ext\pibu\fields.py:90
+msgid "Image file is unreachable"
+msgstr ""
+
+#: .\_ext\pibu\widgets.py:14
+msgid "Upload"
+msgstr "Загрузить"
+
+#: .\account\forms.py:11
+msgid "Email field is required"
+msgstr "Э-мейл обязателен"
+
+#: .\account\forms.py:12
+msgid "Email field is invalid"
+msgstr "Э-мейл не правельный"
+
+#: .\account\views.py:37
+msgid "Your personal information saved"
+msgstr "Информация сохранена"
+
+#: .\account\views.py:75
+#: .\account\views.py:89
 msgid "You've successfully logged in!"
 msgstr ""
 
-#: .\accounts\views.py:75
+#: .\account\views.py:92
 msgid "Login failed!"
 msgstr "Вход не удался!"
 
-#: .\accounts\views.py:85
+#: .\account\views.py:104
+msgid "Account not activated"
+msgstr ""
+
+#: .\account\views.py:107
+msgid "Wrong password or username"
+msgstr "Неправльный пароль или учетная запись"
+
+#: .\account\views.py:115
 msgid "Logged out"
 msgstr "Выйти"
 
-#: .\blogs\forms.py:13
+#: .\account\views.py:126
+msgid "Success"
+msgstr ""
+
+#: .\account\views.py:133
+msgid "Bad Request"
+msgstr ""
+
+#: .\blog\forms.py:11
 msgid "At least 1 type required"
 msgstr ""
 
-#: .\blogs\views.py:87
+#: .\blog\views.py:84
 msgid "You don't have permission to edit this blog"
 msgstr ""
 
-#: .\blogs\views.py:97
+#: .\blog\views.py:94
 msgid "Changes successfully saved!"
-msgstr ""
+msgstr "Изменения сохранены!"
 
-#: .\blogs\views.py:127
+#: .\blog\views.py:125
 msgid "You've successfully created new blog!"
-msgstr ""
+msgstr "Страница успешно создана!"
 
-#: .\blogs\templates\moduleChoser.html.py:4
+#: .\blog\templates\moduleChoser.html.py:4
 msgid "Choose module"
 msgstr ""
 
-#: .\event\views.py:30
+#: .\event\views.py:29
 msgid "You don't have permission to edit this event"
 msgstr ""
 
-#: .\event\views.py:44
+#: .\event\views.py:43
 msgid "Event successfully created"
-msgstr ""
+msgstr "Событие сохранено"
 
-#: .\event\templates\event_brief_info.html.py:37
+#: .\event\templates\event_brief_info.html.py:38
+msgid "I don't go"
+msgstr "Не пойду"
+
+#: .\event\templates\event_brief_info.html.py:39
 msgid "I'll go"
 msgstr "Пойду!"
 
-#: .\event\templates\event_brief_info.html.py:41
+#: .\event\templates\event_brief_info.html.py:44
+msgid "Invite!"
+msgstr "Пригласи друзей!"
+
+#: .\event\templates\event_brief_info.html.py:48
 msgid "Comments"
 msgstr "Комментарии"
+
+#: .\event\templates\event_brief_info.html.py:58
+msgid "Party Suggestions"
+msgstr "Предложения компаний"
+
+#: .\event\templates\event_brief_info.html.py:82
+#, fuzzy
+msgid "Go with Own Party!"
+msgstr "Своей компанией!"
+
+#: .\event\templates\event_brief_info.html.py:83
+msgid " "
+msgstr " "
+
+#: .\event\templates\event_brief_info.html.py:86
+msgid "Invite people!"
+msgstr "Пригласи друзей!"
+
+#: .\menu\models.py:33
+#: .\templates\account\accounts_friendlist.html.py:19
+msgid "Friends"
+msgstr "Друзья"
+
+#: .\menu\models.py:39
+#: .\templates\messaging\messaging_received.html.py:13
+#, fuzzy
+msgid "Messages"
+msgstr "Страницы"
+
+#: .\menu\models.py:45
+#: .\templates\party\party_manage.html.py:14
+msgid "Invitations"
+msgstr "Приглашения"
 
 #: .\organization\forms.py:25
 msgid "Image doesn't exist"
 msgstr ""
 
-#: .\templates\accounts\accounts_friendlist.html.py:19
-msgid "Friends"
+#: .\party\models.py:42
+msgid "Owner"
+msgstr "Организатор"
+
+#: .\party\models.py:43
+msgid "Moderator"
+msgstr "Модератор"
+
+#: .\party\models.py:44
+msgid "Participant"
+msgstr "Участник"
+
+#: .\party\models.py:45
+#: .\party\templates\party_invite_box.html.py:63
+msgid "Invited"
+msgstr "Приглашены"
+
+#: .\party\models.py:46
+msgid "Candidate"
+msgstr "Кандидат"
+
+#: .\party\views.py:23
+msgid "Party for "
 msgstr ""
 
-#: .\templates\blogs\blogs_manage.html.py:14
-msgid "Page Management"
-msgstr ""
+#: .\party\templates\party_invite_box.html.py:8
+msgid "Invite Friends"
+msgstr "Пригласи друзей!"
 
-#: .\templates\blogs\default\general.html.py:80
-msgid "Save"
-msgstr ""
+#: .\party\templates\party_invite_box.html.py:16
+#: .\templates\event\events_main.html.py:27
+msgid "Search"
+msgstr "Поиск"
 
-#: .\templates\blogs\default\general.html.py:82
-msgid "Create"
-msgstr ""
+#: .\party\templates\party_invite_box.html.py:39
+msgid "Already invited"
+msgstr "Уже приглашены"
 
-#: .\templates\blogs\default\general.html.py:166
-msgid "Facilities"
-msgstr ""
+#: .\party\templates\party_invite_box.html.py:64
+msgid "Inviting..."
+msgstr "Приглашаю..."
 
-#: .\templates\common\base.html.py:77
-#: .\templates\common\base_common.html.py:64
-msgid "Events"
-msgstr "События"
+#: .\party\templates\party_invite_box.html.py:66
+msgid "Invite"
+msgstr "Пригласить"
 
-#: .\templates\common\base.html.py:80
-msgid "Recent events"
-msgstr "Последние события"
+#: .\party\templates\party_invite_box.html.py:69
+msgid "Close"
+msgstr "Закрыть"
 
-#: .\templates\common\base.html.py:84
-#: .\templates\common\base.html.py:142
-#: .\templates\common\base_common.html.py:15
-msgid "Sign in"
-msgstr ""
-
-#: .\templates\common\base.html.py:87
-#: .\templates\common\base_common.html.py:18
+#: .\templates\account\accounts_edit.html.py:25
+#: .\templates\common\base.html.py:102
 msgid "Profile"
 msgstr "Профиль"
 
-#: .\templates\common\base.html.py:140
-msgid "Sign out"
+#: .\templates\blog\blogs_manage.html.py:14
+msgid "Page Management"
+msgstr "Страницы"
+
+#: .\templates\blog\default\general.html.py:71
+msgid "Save"
+msgstr "Сохранить"
+
+#: .\templates\blog\default\general.html.py:73
+msgid "Create"
+msgstr "Создать"
+
+#: .\templates\blog\default\general.html.py:157
+msgid "Facilities"
 msgstr ""
 
-#: .\templates\common\base_common.html.py:8
-msgid "Publications"
+#: .\templates\common\base.html.py:98
+#: .\templates\common\base.html.py:207
+msgid "Sign in"
+msgstr "Войти"
+
+#: .\templates\common\base.html.py:129
+msgid "Language"
 msgstr ""
+
+#: .\templates\common\base.html.py:205
+msgid "Sign out"
+msgstr "Выйти"
 
 #: .\templates\common\base_common.html.py:11
+msgid "Publications"
+msgstr "Публикации"
+
+#: .\templates\common\base_common.html.py:15
 msgid "Statistics"
 msgstr "Статистика"
 
-#: .\templates\common\base_common.html.py:30
+#: .\templates\common\base_common.html.py:19
+#: .\templates\common\base_common.html.py:82
+msgid "Events"
+msgstr "События"
+
+#: .\templates\common\base_common.html.py:23
+msgid "Recent events"
+msgstr "Последние события"
+
+#: .\templates\common\base_common.html.py:42
 msgid "Publish!"
 msgstr "Опубликовать!"
 
-#: .\templates\common\base_common.html.py:34
+#: .\templates\common\base_common.html.py:44
 msgid "Rest!"
 msgstr "Отдохни!"
 
-#: .\templates\common\base_common.html.py:51
+#: .\templates\common\base_common.html.py:69
 msgid "Edit Profile"
 msgstr "Редактировать"
 
-#: .\templates\common\base_common.html.py:58
+#: .\templates\common\base_common.html.py:76
 msgid "Pages"
 msgstr "Страницы"
 
-#: .\templates\common\base_common.html.py:61
+#: .\templates\common\base_common.html.py:79
 msgid "Organizations"
-msgstr ""
+msgstr "Организации"
 
-#: .\templates\common\popups\signinPopup.html.py:26
+#: .\templates\common\popups\signinPopup.html.py:32
 msgid "Vkontakte"
 msgstr "Вконтакте"
 
-#: .\templates\events\events_event.html.py:107
+#: .\templates\common\popups\signinPopup.html.py:52
+#: .\templates\common\popups\signinPopup.html.py:83
+msgid "Username"
+msgstr "Учетная запись"
+
+#: .\templates\common\popups\signinPopup.html.py:58
+#: .\templates\common\popups\signinPopup.html.py:89
+msgid "Password"
+msgstr "Пароль"
+
+#: .\templates\common\popups\signinPopup.html.py:71
+#, fuzzy
+msgid "Login failed."
+msgstr "Вход не удался!"
+
+#: .\templates\common\popups\signinPopup.html.py:72
+msgid "Username or password is wrong."
+msgstr "Учетная запись или пароль не правельный."
+
+#: .\templates\common\popups\signinPopup.html.py:75
+msgid "Warning"
+msgstr "Внимание!"
+
+#: .\templates\common\popups\signinPopup.html.py:76
+msgid "Account is not activated."
+msgstr "Учетная запись не активирована."
+
+#: .\templates\common\popups\signinPopup.html.py:93
+msgid "Passwords should match"
+msgstr "Пароли должны совпадать"
+
+#: .\templates\common\popups\signinPopup.html.py:98
+msgid "Repeat Password"
+msgstr "Повторите пароль"
+
+#: .\templates\common\popups\signinPopup.html.py:104
+msgid "Email"
+msgstr ""
+
+#: .\templates\common\popups\signinPopup.html.py:119
+#, fuzzy
+msgid "Registration failed"
+msgstr "Вход не удался!"
+
+#: .\templates\event\events_credit.html.py:100
 msgid "Event Activities"
 msgstr ""
 
-#: .\templates\events\events_main.html.py:39
-msgid "Party Suggestions"
-msgstr ""
+#: .\templates\event\events_credit.html.py:137
+#, fuzzy
+msgid "Event starts"
+msgstr "События"
 
-#: .\templates\events\events_main.html.py:57
-msgid "Create Own Party!"
-msgstr "Своей компанией!"
+#: .\templates\event\events_credit.html.py:148
+#, fuzzy
+msgid "Event ends"
+msgstr "События"
 
-#: .\templates\events\events_manage.html.py:14
+#: .\templates\event\events_manage.html.py:14
 msgid "Event Management"
-msgstr ""
+msgstr "События"
 
 #: .\templates\organization\organization_manage.html.py:13
 msgid "Organization Management"
-msgstr ""
+msgstr "Организации"
 
 #: .\templates\organization\organization_manage.html.py:23
 msgid "Find organization to join"
-msgstr ""
+msgstr "Найти организацию"
+
+#: .\templates\party\party_credit.html.py:31
+msgid "Submit"
+msgstr "Сохранить"
+
+#: .\templates\party\party_credit.html.py:78
+#, fuzzy
+msgid "Create Party"
+msgstr "Своей компанией!"
+
+#: .\templates\party\party_credit.html.py:79
+msgid "Cancel"
+msgstr "Отменить"
 
 #: .\templates\search\search.html.py:13
 msgid "Find Where To Rest!"

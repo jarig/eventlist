@@ -20,8 +20,8 @@ REST_APP_PATH = os.environ["REST_APP_PATH"]
 
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.join(REST_BASE_PATH,'media')
-STATIC_ROOT = os.path.join(REST_BASE_PATH,'static')
+MEDIA_ROOT = os.path.join(REST_BASE_PATH,'media/')
+STATIC_ROOT = os.path.join(REST_BASE_PATH,'static/')
 
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'

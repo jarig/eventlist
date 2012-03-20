@@ -1,0 +1,24 @@
+{% load static %}
+{% load i18n %}
+
+<div id="sendMessagePopup" class="modal hide">
+    <div>
+        Message to {{ friend }}
+    </div>
+    <form method="POST">
+        <div>
+            <div class="control-group" >
+                <label class="control-label">{% trans "Header" %}</label>
+                <div class="controls">
+                    <input id="header" name="header" class="input-xlarge" placeholder="Header">
+                </div>
+            </div>
+            <div class="control-group" >
+                <label class="control-label">{% trans "Header" %}</label>
+                <div class="controls">
+                    <textarea id="message" name="message" class="input-xlarge" placeholder="Message"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

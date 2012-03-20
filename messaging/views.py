@@ -17,17 +17,17 @@ def messagingReceived(request):
     )
 
 
-def sendMessage(request):
-    data = None
+def sendMessageTo(request, user):
     if request.POST:
         msgForm = SendMessageForm(request.POST)
         if msgForm.is_valid():
             msgForm.save()
-        json_serializer = json.Serializer()
-        data = json_serializer.serialize(msgForm.errors, ensure_ascii=False, use_natural_keys=True)
-    else:
-        data = "{error: \"Wrong request\"}"
-    return HttpResponse(data)
+    return render_to_response("messaging_send_friend.html",
+            {
+            "user": user,
+        },
+        context_instance=RequestContext(request)
+    )
 
 def deleteMessage(request, msgId):
     Message.objects.get(pk=msgId).delete()

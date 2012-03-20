@@ -5,15 +5,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.serializers import json
 from django.core.urlresolvers import reverse
+from django.db.models.query_utils import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, login, authenticate
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from account.forms import EditForm, RegisterForm
-from account.models import openRegister, updateUserData
+from account.models import openRegister, updateUserData, FriendShip, Account
 from django.utils.translation import ugettext as _
 from common.utils import modelToDict
-
 
 @login_required
 def getFriends(request):
@@ -71,7 +71,7 @@ def extLoginProfile(request):
             user = authenticate(provider=userInfo["provider"], identity=userInfo["uid"],request=request)
             if user is not None:
                 login(request, user)
-                updateUserData(user, userInfo["firstName"],userInfo["lastName"],userInfo["photo"])
+                updateUserData(user, userInfo["firstName"],userInfo["lastName"]) #update basic info
                 messages.success(request,_("You've successfully logged in!"))
                 return HttpResponseRedirect(next)
             else:
@@ -131,3 +131,37 @@ def register(request):
         print e
         raise e
     return HttpResponse(_("Bad Request"), status=405)
+
+
+@login_required
+def addFriend(request, user):
+    try:
+        fr = FriendShip.objects.get(creator=Account(pk=user), friend=request.user) #if friend already added me
+        fr.status = FriendShip.STATUS.FRIENDSHIP
+        fr.save()
+    except FriendShip.DoesNotExist: #friend didn't add me before
+        fs, created = FriendShip.objects.get_or_create(creator=request.user, friend=Account(pk=user))
+        if not created:
+            if fs.status == FriendShip.STATUS.SUBSCRIBED_REFUSED:
+                fs.status = FriendShip.STATUS.SUBSCRIBED
+            fs.save()
+    next = request.REQUEST.get("next",reverse("account.views.friendlist"))
+    return HttpResponseRedirect(next)
+
+@login_required
+def removeFriend(request, friend):
+    fShips = FriendShip.objects.filter(Q(creator=request.user, friend=Account(pk=friend))
+                               | Q(creator=Account(pk=friend), friend=request.user)).all()
+    for fShip in fShips:
+        if fShip.status == FriendShip.STATUS.SUBSCRIBED_REFUSED: continue
+        if fShip.creator == request.user:
+            fShip.delete()
+            continue
+        #creator == friend
+        if fShip.status == FriendShip.STATUS.SUBSCRIBED:
+            fShip.status = FriendShip.STATUS.SUBSCRIBED_REFUSED
+        elif fShip.status == FriendShip.STATUS.FRIENDSHIP:
+            fShip.status = FriendShip.STATUS.SUBSCRIBED
+        fShip.save()
+
+    pass

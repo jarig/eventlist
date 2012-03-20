@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy
 from account.models import Account
 from _ext.pibu.fields import ImagePreviewModelField
 from common.models import Address, Language
@@ -38,16 +39,17 @@ class PartyMember(models.Model):
         INVITED = 2
         CANDIDATE = 1
     _ROLE_CHOICES = (
-        (ROLE.OWNER,u'owner'),
-        (ROLE.MODERATOR,u'moderator'),
-        (ROLE.PARTICIPANT,u'participant'),
-        (ROLE.INVITED, u'invited'),
-        (ROLE.CANDIDATE, u'candidate'),
+        (ROLE.OWNER,ugettext_lazy(u'Owner')),
+        (ROLE.MODERATOR,ugettext_lazy(u'Moderator')),
+        (ROLE.PARTICIPANT, ugettext_lazy(u'Participant')),
+        (ROLE.INVITED, ugettext_lazy(u'Invited')),
+        (ROLE.CANDIDATE, ugettext_lazy(u'Candidate')),
     )
     party = models.ForeignKey(Party, related_name='members')
     user = models.ForeignKey(Account, related_name='partyMembership')
     role = models.PositiveIntegerField(choices=_ROLE_CHOICES, default=1)
-    
+    invitedBy = models.ForeignKey(Account, related_name='+')
+
     dateAdded = models.DateTimeField(auto_now_add=True)
 
     class Meta:

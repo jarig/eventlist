@@ -5,12 +5,15 @@
 
 {% block includes %}
     {{ block.super }}
-    <script src="{{ STATIC_PREFIX }}js/rest.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
     <div class="restHeader">
         <div class="headerName"><h1>{% trans "Find Where To Rest!" %}</h1></div>
         {% subMenu subMenuItems %}
+    </div>
+    <div class="searchResult">
+        {% block searchResult %}
+        {% endblock %}
     </div>
 {% endblock %}

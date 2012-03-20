@@ -1,0 +1,49 @@
+
+.fastsearch
+{
+    padding-left: 30px;
+}
+
+.user-avatar
+{
+    width: 100px;
+    height: 90px;
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+}
+.user-info
+{
+    float: left;
+    display: block;
+    height: 100px;
+}
+
+.user-actions
+{
+    float: right;
+    height: 100px;
+}
+
+.user-list
+{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.user-block
+{
+    border-bottom: 1px solid #e6e6fa;
+    min-height: 10px;
+    width: 100%;
+    height: 100px;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}

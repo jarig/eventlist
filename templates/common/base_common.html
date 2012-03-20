@@ -43,8 +43,9 @@
                 {% else %}
                     <li><a href="{% url search.views.findPlace %}" title="Find Where To Rest!">{% trans "Rest!" %}</a></li>
                 {% endif %}
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
+                <li><a href="{% url search.views.findPlace %}">{% trans "Find Place" %}</a></li>
+                <li><a href="{% url search.views.findPeople %}">{% trans "Find People" %}</a></li>
+
                 <li class="divider"></li>
                 <li><a href="#">Separated link</a></li>
             </ul>

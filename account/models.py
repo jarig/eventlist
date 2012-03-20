@@ -1,10 +1,13 @@
+import os
 import urllib2
 from django.core.files.base import File
+from django.core.files.storage import DefaultStorage
 from django.core.files.temp import NamedTemporaryFile
 from django.db import models
 from django.contrib.auth.models import User
 from _ext.pibu.fields import ImagePreviewModelField
 from account import settings
+from _ext.pibu import settings as pibu_settings
 
 #User._meta.get_field('username')._unique = False
 # Create your models here.
@@ -32,12 +35,23 @@ class Account(User):
         unique_together = ("identity", "provider")
 
     def __unicode__(self):
-        print self.username
+        return u"%s %s" % ( unicode(self.first_name), unicode(self.last_name))
 
 class FriendShip(models.Model):
+    class STATUS:
+        SUBSCRIBED_REFUSED = 0
+        SUBSCRIBED = 1
+        FRIENDSHIP = 2
+
+    _STATUS = (
+        (STATUS.SUBSCRIBED_REFUSED, u'refused in friendship'),
+        (STATUS.SUBSCRIBED, u'subscribed'),
+        (STATUS.FRIENDSHIP, u'friendship'),
+    )
     creator = models.ForeignKey(Account, related_name='friends') #those who added I
     friend = models.ForeignKey(Account, related_name='subscribers') #those who added me
     date_added = models.DateTimeField(auto_now_add=True, editable=False)
+    status = models.PositiveSmallIntegerField(choices=_STATUS,default=STATUS.SUBSCRIBED, blank=True, editable=False)
     
     class Meta:
         unique_together = ("creator", "friend")
@@ -50,6 +64,11 @@ def openRegister(identity, provider, avatarURL=None, firstName=None, lastName=No
     if settings.ACTIVATION_REQUIRED:
         user.is_active = 0
     user.set_password(settings.SECRET_PASS)
+
+    updateUserData(user, firstName, lastName, avatarURL)
+    return user
+
+def updateUserData(user, firstName, lastName, avatarURL = None, gender=None):
     if firstName: user.first_name = firstName
     if lastName: user.last_name = lastName
     user.save()
@@ -57,24 +76,9 @@ def openRegister(identity, provider, avatarURL=None, firstName=None, lastName=No
         img_temp = NamedTemporaryFile()
         img_temp.write(urllib2.urlopen(avatarURL).read())
         img_temp.flush()
-        #storage = DefaultStorage()
+        storage = DefaultStorage()
+        name = storage.save(os.path.join(pibu_settings.MEDIA_TEMP_URL, account_logo_name(user,"avatar")), File(img_temp))
         user.avatar.save(
-            "avatar_"+str(user.pk),
-            File(img_temp)
+            name,
+            storage.open(name)
         )
-    return user
-
-def updateUserData(user, firstName, lastName, avatarURL, gender=None):
-    user.first_name = firstName
-    user.last_name = lastName
-    user.sex = gender
-    user.save()
-
-    img_temp = NamedTemporaryFile()
-    img_temp.write(urllib2.urlopen(avatarURL).read())
-    img_temp.flush()
-    #storage = DefaultStorage()
-    user.avatar.save(
-        "avatar_"+str(user.pk),
-        File(img_temp)
-    )

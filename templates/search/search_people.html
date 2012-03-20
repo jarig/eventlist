@@ -1,0 +1,55 @@
+{% extends 'search/search.html' %}
+{% load i18n %}
+{% load static %}
+{% load field_renderer %}
+
+{% block includes %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}css/search_people.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block searchResult %}
+<div>
+    <form method="GET">
+        <div class="fastsearch">
+            {% field searchForm.search "class=wideinput" %}
+            <!--input type="text" name="search" title="{% trans "Search" %}" class="wideinput" placeholder="Search"-->
+        </div>
+    </form>
+    <div class="user-list">
+        {% if not users %}
+            <div class="alert alert-info">
+                {% trans "Enter first name or last name to find people" %}
+            </div>
+        {% endif %}
+        {% for user in users %}
+            <div class="user-block">
+                <div class="user-avatar thumbnail" style="background-image: url('{{ user.avatar.url}}');">
+                    {% if user.avatar %}
+                        <!--img src="{{ user.avatar.url }}" alt="friend.first_name"-->
+                    {% endif %}
+                </div>
+                <div class="user-info">
+                    {{ user.first_name }}
+                    {{ user.last_name }}
+                    {{ user.sex }}
+                    {{ user.age }}
+                </div>
+                <div class="user-actions">
+                    <ul class="nav nav-list">
+                        <li action-bind="addToFriends">
+                            <a href="{% url account.views.addFriend user=user.pk %}">
+                                <i class="icon-fire"></i>{% trans "Add to my Chums list" %}
+                            </a>
+                            <div class="hide" id="action-success">
+                                <span class="label label-success">{% trans "Added to Chums list" %}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -161,5 +161,35 @@ var Accounts =
     submit: function()
     {
         
+    },
+    initActions: function()
+    {
+        $(function()
+        {
+            $("[action-bind='addToFriends']").each(function()
+            {
+                var $this = $(this);
+                var $thisHref = $("a",this);
+                $thisHref.click(function()
+                {
+                    var url = $thisHref.attr("href");
+                    $.ajax({
+                        url: url,
+                        data:{
+                          "next": window.location.pathname
+                        },
+                        type: "GET",
+                        success: function(data) //success
+                            {
+                                $('#action-success',$this).show();
+                                $thisHref.hide();
+                            }
+                    });
+                    return false;
+                });
+            });
+        });
     }
-}
+};
+
+Accounts.initActions();

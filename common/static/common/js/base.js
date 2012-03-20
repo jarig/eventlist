@@ -3,7 +3,7 @@
 
 var Base =
 {
-    init: function()
+    init: function(csrf)
     {
         $(function()
         {
@@ -20,7 +20,13 @@ var Base =
                                     {
                                         $(this).parents("form").submit();
                                     });
-
+            var headers = {}
+            if (typeof csrf != "undefined" && csrf != null)
+                headers["X-CSRFToken"] = csrf;
+            $.ajaxSetup(
+            {
+                "headers": headers
+            });
         });
     },
     toggle_profileBox: function(profileContainer)

@@ -71,7 +71,6 @@ def manage(request):
     _partyMembership =  request.user.partyMembership.all().select_related('party')
     for _member in _partyMembership:
         partyMembers = PartyMember.objects.filter(Q(party=_member.party) & ~Q(user=request.user)).select_related('user').all()
-        print partyMembers
         _member.partyMembers = partyMembers
         partyMembership.append(_member)
 
@@ -92,7 +91,6 @@ def inviteToEvent(request, eventScheduleId):
 
 @login_required
 def invitationList(request, eventScheduleId):
-
     if request.POST:
         friends = request.POST.getlist('friends[]')
         if len(friends):

@@ -17,6 +17,8 @@ try:
 except ImportError:
     from StringIO import StringIO
 
+
+
 class ImagePreviewFieldFile(ImageFieldFile):
     def _get_url(self):
         if not self:
@@ -110,7 +112,6 @@ class ImagePreviewField(ImageField):
         return super(ImagePreviewField, self).bound_data(data, initial)
 
 
-# South introspection rules
 add_introspection_rules([
     (
         [ImagePreviewModelField], # Class(es) these apply to
@@ -121,6 +122,6 @@ add_introspection_rules([
                         "max_size": ["max_size", {"default": settings.IMAGE_MAX_SIZE}],
                         "format": ["format", {"default": 'JPEG'}],
                         "stub_file": ["stub_file", {"default": settings.IMAGE_STUB_FILE}],
-            },
+                        },
         ),
-], ["^common\.fields\.ImagePreviewModelField"])
+], ["^_ext\.pibu\.fields\.ImagePreviewModelField"])

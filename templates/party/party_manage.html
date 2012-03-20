@@ -36,7 +36,7 @@
                         {{ mship.partyMembers|join:', ' }}
                     </td>
                     <td>
-                        {{ mship.role }}
+                        {{ mship.get_role_display }}
                     </td>
                 </tr>
             {% endfor %}

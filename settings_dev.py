@@ -16,9 +16,10 @@ DATABASES = {
 }
 
 MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.abspath(".")+'/media/'
 STATIC_ROOT = os.path.abspath(".")+'/static/'
-STATIC_URL = '/static/'
+
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 

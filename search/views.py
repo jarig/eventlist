@@ -2,10 +2,13 @@ from django import template
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse, resolve
+from django.db.models.query_utils import Q
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
+from account.models import Account
 from menu.models import Menu
+from search.forms import SearchPeopleForm
 
 
 @login_required
@@ -24,9 +27,34 @@ def findParty(request):
                           },
                           context_instance=RequestContext(request)
                           )
+@login_required
+def findPeople(request):
+    users = None
+
+    if request.GET:
+        searchForm = SearchPeopleForm(request.GET)
+        if searchForm.is_valid():
+            search = searchForm.cleaned_data["search"]
+            user = request.user
+            users = Account.objects.only('first_name','last_name','id','avatar','sex','age').filter(~Q(pk=user) &
+                                           ~Q(pk__in=user.friends.all().values_list('friend', flat=True))).filter(Q(first_name__icontains=search) |
+                                           Q(last_name__icontains=search)).order_by('-rating')[:20]
+        pass
+    else:
+        searchForm = SearchPeopleForm()
+
+    return render_to_response("search/search_people.html",
+            {#data here
+             "subMenuItems": generateMenu(request),
+             "searchForm": searchForm,
+             "users": users,
+        },
+        context_instance=RequestContext(request)
+    )
 
 def generateMenu(request):
     menu = Menu(RequestContext(request))
     menu.addItem('Place','search.views.findPlace')
     menu.addItem('Party','search.views.findParty')
+    menu.addItem('People','search.views.findPeople')
     return menu.getMenu()

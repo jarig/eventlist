@@ -1,10 +1,11 @@
 from django.db import models
+from _ext.pibu.fields import ImagePreviewModelField
 from account.models import Account
 from common.models import Address
 
 class Organization(models.Model):
     name = models.CharField(max_length=256)
-    logo = models.ImageField(upload_to='organization/logo/')
+    logo = ImagePreviewModelField(upload_to='organization/logo/', max_width=160)
     description = models.TextField(blank=True, default='')
     members = models.ManyToManyField(Account, through='OrgAccess')
     address = models.ForeignKey(Address)

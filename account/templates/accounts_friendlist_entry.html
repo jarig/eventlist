@@ -2,9 +2,7 @@
 {% load static %}
 <div class="friendEntry">
     <div class="friendThumb thumbnail">
-        {% if friend.avatar %}
-            <img src="{{ friend.avatar.url }}" alt="friend.first_name">
-        {% endif %}
+        <img src="{{ friend.avatar.url }}" alt="friend.first_name">
     </div>
     <div class="friendInfo">
         {{ friend.first_name }}
@@ -13,7 +11,7 @@
     <div class="friendActions">
         <ul class="nav nav-list">
             <li><a href="#"><i class="icon-fire"></i>Invite</a> </li>
-            <li><a href="#"><i class="icon-envelope"></i>Send Message</a></li>
+            <li><a href="#{{ friend.pk }}" action-bind="sendMessage" ><i class="icon-envelope"></i>Send Message</a></li>
         </ul>
     </div>
     <div style="clear: both;"></div>

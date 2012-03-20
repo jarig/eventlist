@@ -30,7 +30,7 @@ class Menu:
     def sideMenu(self):
         return [
                 {
-                    "title": ugettext("Friends"),
+                    "title": ugettext("My Party Chums"),
                     "url": reverse("account.views.friendlist"),
                     "active": False,
                     "enabled": self.user.is_authenticated()
