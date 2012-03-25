@@ -247,7 +247,6 @@
 }
 .eventButton
 {
-    display: block;
     background-color: #fffcff;
     float: right;
     min-width: 100px;

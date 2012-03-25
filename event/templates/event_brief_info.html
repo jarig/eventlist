@@ -6,26 +6,26 @@
         <div class="summary">
             <div class="briefLogoBox">
                 <div class="briefEventLogo thumbnail">
-                    {% if event.logo %}
-                        <img src="{{ event.logo.url }}"/>
+                    {% if eventSchedule.logo %}
+                        <img src="{{ MEDIA_URL }}{{ eventSchedule.logo }}"/>
                     {% endif %}
                 </div>
             </div>
             <div class="briefEventDescr">
-                    {{ event.descr|truncatewords_html:200|safe }}
+                    {{ eventSchedule.descr|truncatewords_html:200|safe }}
             </div>
         </div>
         <div class="eventButtons">
             <div class="likes-block">
-                <a href="?hash=event_{{ event.id }}" class="like l-fb">
+                <a href="?hash=event_{{ eventSchedule.event_id }}" class="like l-fb">
                     <i class="l-ico"></i>
                     <span class="l-count"></span>
                 </a>
-                <a href="?hash=event_{{ event.id }}" class="like l-vk">
+                <a href="?hash=event_{{ eventSchedule.event_id }}" class="like l-vk">
                     <i class="l-ico"></i>
                     <span class="l-count"></span>
                 </a>
-                <a href="?hash=event_{{ event.id }}" class="like l-tw">
+                <a href="?hash=event_{{ eventSchedule.event_id }}" class="like l-tw">
                     <i class="l-ico"></i>
                     <span class="l-count"></span>
                 </a>

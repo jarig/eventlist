@@ -64,7 +64,9 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
@@ -72,23 +74,16 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+#django.contrib.sessions.backends.signed_cookies
+
 AUTH_PROFILE_MODULE = 'account.Account'
 
 AUTHENTICATION_BACKENDS = (
     'account.backends.PublicAuth',
     'account.backends.NativeAuth',
 )
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': os.path.abspath(".") + '/cache',
-        'TIMEOUT': 60,
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000
-        }
-    }
-}
 
 ROOT_URLCONF = 'rest.urls'
 
@@ -101,8 +96,8 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.static',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
@@ -164,4 +159,5 @@ if os.environ.has_key("PRODUCTION"):
     from settings_production import *
 else:
     print >> sys.stdout, "Developer Mode"
+    TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.debug',) + TEMPLATE_CONTEXT_PROCESSORS
     from settings_dev import  *

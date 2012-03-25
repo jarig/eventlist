@@ -27,9 +27,7 @@
         <input type="text" title="{% trans "Search" %}" class="wideinput">
     </div>
     {% for eventSchedule in eventSchedules %}
-        {% with eventSchedule.event as event %}
-            {% include "event_brief_info.html" %}
-        {% endwith %}
+        {% include "event_brief_info.html" %}
     {% endfor %}
 
 {% endblock content %}

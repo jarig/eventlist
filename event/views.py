@@ -81,7 +81,7 @@ def main(request):
                  request.user.pk,
                  EventGo.eventSchedule.field.column)
 
-    eventSchedules = EventSchedule.objects.raw("""select SCH.*,
+    eventSchedules = EventSchedule.objects.raw("""select EE.*, SCH.*,
                                                 (%s) AS `goes`
                                                 FROM  %s EE,
                                                 (SELECT * FROM %s SC GROUP BY %s ORDER BY dateFrom DESC) as SCH
@@ -100,6 +100,8 @@ def main(request):
                               context_instance=RequestContext(request)
                               )
 
+
+# ========= AJAX views ============
 @login_required
 def go(request, eventSchId):
     goObj, created = _go(request.user, EventSchedule.objects.get(pk=eventSchId))
@@ -118,3 +120,13 @@ def unGo(request, eventSchId):
 def _unGo(user, eventSchId):
     EventGo.objects.filter(eventSchedule=eventSchId,user=user).delete()
     return True
+
+def searchEvent(request):
+    events = Event.objects.latest_schedules(limit=10)
+    return render_to_response("event_search.html",
+            {
+            'events': events
+        },
+        context_instance=RequestContext(request)
+    )
+# ======= AJAX views END ==========

@@ -15,6 +15,9 @@ DATABASES = {
     }
 }
 
+
+INTERNAL_IPS = ('127.0.0.1',
+                'localhost',)
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.abspath(".")+'/media/'
@@ -31,6 +34,15 @@ TEMPLATE_DIRS = (
     os.path.abspath(".")+'/templates',
 )
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake'
+    }
+    #'default': {
+    #    'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    #    }
+}
 
 LOGGING = {
     'version': 1,

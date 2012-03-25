@@ -1,24 +1,37 @@
 from importlib import import_module
 from django.contrib.auth.backends import ModelBackend
+from django.contrib.auth.models import User, Permission
 from account import settings
 from django.core.exceptions import ImproperlyConfigured
 from account.models import Account
 
-
-class NativeAuth(ModelBackend):
+class CustomModelBackend(ModelBackend):
     def get_user(self,user_id):
         try:
+            #TODO cache account info
             return Account.objects.get(pk=user_id)
         except Account.DoesNotExist:
             return None
 
-class PublicAuth:
-    def get_user(self,user_id):
-        try:
-            return Account.objects.get(pk=user_id)
-        except Account.DoesNotExist:
-            return None
+    def get_group_permissions(self, user_obj):
+        """
+        Returns a set of permission strings that this user has through his/her
+        groups.
+        """
+        if not hasattr(user_obj, '_group_perm_cache'):
+            if user_obj.is_superuser:
+                perms = Permission.objects.all()
+            else:
+                perms = Permission.objects.filter(group__user=User(pk=user_obj.pk))
+            perms = perms.values_list('content_type__app_label', 'codename').order_by()
+            user_obj._group_perm_cache = set(["%s.%s" % (ct, name) for ct, name in perms])
+        return user_obj._group_perm_cache
 
+class NativeAuth(CustomModelBackend):
+    pass
+
+
+class PublicAuth(CustomModelBackend):
     def authenticate(self, provider=None, identity=None, request=None):
         for authProfile in settings.BACKENDS:
             try:

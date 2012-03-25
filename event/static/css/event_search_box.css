@@ -1,0 +1,13 @@
+
+.eventBox
+{
+    border: 1px solid #e6e6fa;
+    min-height: 20px;
+    padding: 4px;
+    margin-bottom: 5px;
+}
+
+.eventBox:hover
+{
+    background-color: #e6e6fa;
+}

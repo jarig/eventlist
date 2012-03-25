@@ -13,6 +13,7 @@
 
 
     <link href="{{ STATIC_PREFIX }}common/plugins/jqueryUI/css/custom-theme/jquery-ui-1.8.17.custom.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+
     <link href="{{ STATIC_PREFIX }}common/css/style.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}common/less/rest.less" media="screen" rel="stylesheet/less" type="text/css" />
     <link href="{{ STATIC_PREFIX }}css/menu_login.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
@@ -61,7 +62,7 @@
 
 <script type="text/javascript">
     {% if user.is_authenticated %}
-        Init.apiInit("{{ user.get_profile.provider }}");
+        Init.apiInit("{{ user.provider }}");
     {% else %}
         Accounts.initLoginPopup();
         Init.apiInit("all");
@@ -100,7 +101,7 @@
 
                                                             <a href="#" onclick="Base.toggle_profileBox('#profileBox'); return false;" >
                                                                 {% trans "Profile" %}
-                                                                <img class="logoutLogo" src="{{ STATIC_PREFIX }}common/images/{{ user.get_profile.provider }}LogoSmall.png"/>
+                                                                <img class="logoutLogo" src="{{ STATIC_PREFIX }}common/images/{{ user.provider }}LogoSmall.png"/>
                                                             </a>
                                                         {%  endif %}
                                                     </div>
@@ -262,9 +263,21 @@
     {% include "common/popups/signinPopup.html" %}
 {% endif %}
 
-<div id="debug" style="clear:both; width: 75%; margin: 10px auto 0 auto;">
-{% block debug %}{% endblock %}
-</div>
+{% if debug %}
+    <div id="debug" class="debug">
+        {% block debug %}{% endblock %}
+
+        <div class="sql">
+            {{ sql_queries|length }} queries
+            {% for query in sql_queries %}
+                <div class="query">
+                    <div>Time: {{ query.time }}</div>
+                    <div>SQL: {{ query.sql }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
 
 <div style="display:none;">
     {% block hiddenContent %}

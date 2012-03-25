@@ -9,7 +9,7 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.translation import ugettext
 from event.models import EventSchedule
-from party.forms import CreatePartyForm
+from party.forms import CreatePartyForm, PartyScheduleForm
 from party.models import Party, PartySchedule, PartyMember
 from party.utils import createPartyForEvent, invitePeopleToParty
 
@@ -44,22 +44,24 @@ def credit(request):
 
 
 def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=None, party=None):
-    PartySheduleSet = modelformset_factory(PartySchedule)
-    pSchedules = None
+    PartySheduleSet = modelformset_factory(PartySchedule, form=PartyScheduleForm)
+    pSchedules = PartySchedule.objects.none()
     if party: pSchedules = party.schedules
 
     if request.POST:
         createPartyForm = CreatePartyForm(request.POST, instance=party)
-        eventSchedulesFormSet = PartySheduleSet(request.POST, queryset=pSchedules)
+        partyScheduleFormSet = PartySheduleSet(request.POST, queryset=pSchedules)
+        if createPartyForm.is_valid() and partyScheduleFormSet.is_valid():
+            pass
     else:
         createPartyForm = CreatePartyForm(initial=initialCreatePartyForm,instance=party)
-        eventSchedulesFormSet = PartySheduleSet(initial=initialEventSchedulesFormSet, queryset=pSchedules)
+        partyScheduleFormSet = PartySheduleSet(initial=initialEventSchedulesFormSet, queryset=pSchedules)
 
 
     return render_to_response("party/party_credit.html",
             {
             "createPartyForm": createPartyForm,
-            "eventSchedulesFormSet": eventSchedulesFormSet,
+            "partyScheduleFormSet": partyScheduleFormSet,
         },
         context_instance=RequestContext(request)
     )

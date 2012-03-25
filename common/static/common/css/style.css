@@ -1,5 +1,4 @@
 ﻿@import url('index.css');
-@import url('popups.css');
 @import url('rightBox.css');
 
 body
@@ -53,6 +52,34 @@ h6 {
 a {
 	color: #006699;
 }
+
+.noBorder
+{
+    border: none;
+}
+.hidden
+{
+    display: none;
+    visibility: visible;
+}
+.hide
+{
+    display: none;
+    visibility: visible;
+}
+.float-left
+{
+    float: left;
+}
+
+.float-right
+{
+    float: right;
+}
+.btn-narrow
+{
+    padding: 3px;
+}
 a:hover {
 	text-decoration: none;
 }
@@ -64,3 +91,12 @@ a:hover {
 	font-style: italic;
 }
 
+.debug
+{
+    clear:both; width: 75%; margin: 10px auto 0 auto;
+    padding-top: 20px;
+}
+.query
+{
+    border-top: 1px solid #5f9ea0;
+}

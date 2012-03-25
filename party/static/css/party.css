@@ -1,0 +1,47 @@
+
+
+.partyHeader
+{
+    margin-bottom: 10px;
+}
+
+.partyLogo
+{
+    width: 178px;
+    height: 128px;
+    text-align: center;
+    display: table-cell;
+}
+
+.partyParticipantBox
+{
+    border: 1px solid #e6e6fa;
+    height: 150px;
+    position: relative;
+}
+.partyParticipantActions
+{
+    width: 100%;
+    text-align: center;
+}
+.partyParticipantInviteButton
+{
+    border: none;
+    background-color: #faf4f4;
+}
+
+.partyScheduleHeader
+{
+    margin-top: 20px;
+}
+
+.partySchedule
+{
+    margin-top: 10px;
+    width: auto;
+}
+
+.partySchedule .scheduleMap
+{
+    float: right;
+}
