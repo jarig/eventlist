@@ -44,10 +44,13 @@ def credit(request):
 
 
 def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=None, party=None):
-    PartySheduleSet = modelformset_factory(PartySchedule, form=PartyScheduleForm)
     pSchedules = PartySchedule.objects.none()
     if party: pSchedules = party.schedules
+    extraPartySched = 1
+    if len(pSchedules):
+        extraPartySched = 0
 
+    PartySheduleSet = modelformset_factory(PartySchedule, form=PartyScheduleForm, extra=extraPartySched)
     if request.POST:
         createPartyForm = CreatePartyForm(request.POST, instance=party)
         partyScheduleFormSet = PartySheduleSet(request.POST, queryset=pSchedules)
@@ -56,6 +59,7 @@ def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=N
     else:
         createPartyForm = CreatePartyForm(initial=initialCreatePartyForm,instance=party)
         partyScheduleFormSet = PartySheduleSet(initial=initialEventSchedulesFormSet, queryset=pSchedules)
+
 
 
     return render_to_response("party/party_credit.html",
@@ -69,6 +73,7 @@ def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=N
 
 @login_required
 def manage(request):
+    #TODO reduce too many queries
     partyMembership = []
     _partyMembership =  request.user.partyMembership.all().select_related('party')
     for _member in _partyMembership:

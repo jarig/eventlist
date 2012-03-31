@@ -83,16 +83,21 @@
                     <ul class="dropdown-menu">
                         <input type="hidden" id="searchEventURL" value="{% url event.views.searchEvent %}">
                         <li><a href="#" id="searchEventButton">Find Event</a></li>
-                        <li><a href="#">Custom Schedule</a></li>
+                        <li><a href="#" id="addCustomScheduleButton">Custom Schedule</a></li>
                         <li><a href="#">External Event</a></li>
                     </ul>
                     </div>
                 </div>
             </div>
+        <div id="scheduleForms" action-bind="ajaxForm">
+        {{ partyScheduleFormSet.management_form }}
+        <input type="hidden" value="{{ partyScheduleFormSet.prefix }}" id="formPrefix">
         {% for partySchedule in partyScheduleFormSet %}
             <div class="row-fluid partySchedule well">
+                <input id="is_bound" value="{{ partySchedule.is_bound }}" type="hidden">
+                {{ partySchedule.id }}
                 <div class="row-fluid">
-                    <a class="close">&times;</a>
+                    <a class="close" id="closeButton">&times;</a>
                 </div>
                 <div class="row-fluid">
                     <div class="span4">
@@ -109,6 +114,7 @@
                 </div>
             </div>
         {% endfor %}
+        </div>
             <div class="row-fluid">
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">{% trans "Create Party" %}</button>

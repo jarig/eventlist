@@ -1,7 +1,6 @@
 
 .eventBox
 {
-    border: 1px solid #e6e6fa;
     min-height: 20px;
     padding: 4px;
     margin-bottom: 5px;
@@ -9,5 +8,35 @@
 
 .eventBox:hover
 {
+
+}
+.eventsList
+{
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 350px;
+    width: 100%;
+}
+.eventEntryRow
+{
+    margin-bottom: 4px;
+    border: 1px solid #e6e6fa;
+    height: 100px;
+}
+
+.eventEntryRow:hover
+{
     background-color: #e6e6fa;
+}
+.eventThumbColumn
+{
+    width: 100px;
+    vertical-align: middle;
+    height: 100%;
+    float: left;
+}
+
+.eventInfoColumn
+{
+
 }

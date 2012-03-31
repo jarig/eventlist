@@ -13,12 +13,15 @@ var Party =
             //TODO move to credit init
             $("input").labelify({ labelledClass: "helpLabel" });
             $("textarea").labelify({ labelledClass: "helpLabel" });
-            Party.addSchedule();
+            $("#scheduleForms").ajaxForm("init", ".partySchedule");
             $("#searchEventButton").click(function()
             {
                 var searchEventURL = $("#searchEventURL").val();
                 CommonGUI.showLoading();
-                $.loadComponent(searchEventURL,['js/event_search.js','css/event_search_box.css'],{},function(data)
+                $.loadComponent(searchEventURL,
+                                ['js/event_search.js',
+                                 'css/event_search_box.css'],{},
+                function(data)
                 {
                     CommonGUI.hideLoading();
                     $("body").click();
@@ -32,6 +35,11 @@ var Party =
                     EventSearch.initPopup(popup, searchEventURL);
                 });
                 return false;
+            });
+            $("#addCustomScheduleButton").click(function()
+            {
+                $("body").click();
+                return $("#scheduleForms").ajaxForm("add", "#scheduleForms");
             });
         });
     },

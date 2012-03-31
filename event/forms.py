@@ -133,11 +133,11 @@ class EventScheduleFormSet(BaseModelFormSet):
     def add_fields(self, form, index):
         super(EventScheduleFormSet, self).add_fields(form, index)
 
-    def is_valid(self):
-        result = super(EventScheduleFormSet, self).is_valid()
-        for form in self.forms:
-            if not form.is_valid(): return False
-        return result
+    #def is_valid(self):
+    #    result = super(EventScheduleFormSet, self).is_valid()
+    #    for form in self.forms:
+    #        if not form.is_valid(): return False
+    #    return result
     
     def saveSchedules(self, event):
         schedules = []

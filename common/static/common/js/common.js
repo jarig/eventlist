@@ -95,7 +95,7 @@ var GoogleMaps = {
     moveAndMark: function(address)
     {
         GoogleMaps.removeAllMarkers();
-        var location = GoogleMaps.moveToAddress(address, true);
+        //var location = GoogleMaps.moveToAddress(address, true);
     },
     putMarker: function(location)
     {
@@ -196,5 +196,101 @@ jQuery.cachedHtml = function(url, options) {
                 callback && callback($comp);
             });
         });
+    };
+})( jQuery );
+
+(function( $ ){
+
+    var formTemplate;
+    var managementForm = {
+        totalForms: 0,
+        initialForms: 0,
+        maxNum: 0
+    };
+    var baseIdent;
+    var formIdent='';
+    var formPrefix;
+    var methods = {
+        init : function( fI )
+        {
+            baseIdent = $(this);
+            formIdent = fI;
+            formPrefix = $("#formPrefix" ,this).val();
+            managementForm["totalForms"] = $("input[name='"+formPrefix+"-TOTAL_FORMS']" ,this);
+            managementForm["initialForms"] = $("input[name='"+formPrefix+"-INITIAL_FORMS']",this);
+            managementForm["maxNum"]= $("input[name='"+formPrefix+"-MAX_NUM_FORMS']",this);
+            formTemplate = $($($(formIdent).get(0)).clone());
+            //reset data
+            $("[name^="+formPrefix+"]", formTemplate).each(function()
+            {//TODO retrieve initial data
+                $(this).val("");
+            });
+            methods.initForm(formIdent);
+        },
+        initForm: function(forms)
+        {//init any forms ( bound and new ones )
+            $(forms).each(function()
+            {
+                var form = $(this);
+                $("#closeButton",this).click(function()
+                {
+                    return methods.remove(form);
+                });
+            });
+        },
+        remove: function(form)
+        {
+            var $form = $(form);
+            $form.fadeOut('fast',function()
+            {
+                $form.remove();
+                managementForm["totalForms"].val(parseInt(managementForm["totalForms"].val())-1);
+                methods.updateIndices();
+            });
+            return false;
+        },
+        add: function( prependTo )
+        {
+            if ( typeof managementForm["maxNum"].val() != "undefined" &&
+                 parseInt(managementForm["totalForms"].val()) >=
+                 parseInt(managementForm["maxNum"].val()) ) return false;
+            var form = $(formTemplate).clone();
+            methods.initForm(form);
+            form.hide();
+            $(prependTo).prepend(form);
+            form.fadeIn();
+            managementForm["totalForms"].val(parseInt(managementForm["totalForms"].val())+1);
+            methods.updateIndices();
+            return false;
+        },
+        updateIndices: function()
+        {
+            var formPrefixRegex = new RegExp('(.*)('+formPrefix+'-)(\\d+)(.*)','i');
+            var counter=0;
+            //
+            $(formIdent, baseIdent).each(function()
+            {
+                $("[name^="+formPrefix+"]", this).each(function()
+                {
+                    var newId =  formPrefixRegex.exec($(this).attr("id"));
+                    var newName = formPrefixRegex.exec($(this).attr("name"));
+                    $(this).attr("id", newId[1]+newId[2]+counter + newId[4]);
+                    $(this).attr("name", newName[1]+newName[2]+counter + newName[4]);
+                });
+                counter++;
+            });
+        }
+    };
+
+    $.fn.ajaxForm = function( method ) {
+        // Method calling logic
+        if ( methods[method] ) {
+            return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+        } else if ( typeof method === 'object' || ! method ) {
+            return methods.init.apply( this, arguments );
+        } else {
+            $.error( 'Method ' +  method + ' does not exist on jQuery' );
+        }
+
     };
 })( jQuery );
