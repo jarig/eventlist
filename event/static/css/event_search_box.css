@@ -28,15 +28,31 @@
 {
     background-color: #e6e6fa;
 }
+
+.eventThumb
+{
+    vertical-align: middle;
+    display: table-cell;
+    text-align: center;
+    height: 90px;
+    max-width: 100px;
+}
+
+.eventThumb img
+{
+    vertical-align: middle;
+    display: block;
+}
+
 .eventThumbColumn
 {
     width: 100px;
-    vertical-align: middle;
     height: 100%;
     float: left;
+    margin-right: 10px;
 }
 
 .eventInfoColumn
 {
-
+    float:left;
 }

@@ -232,10 +232,11 @@ jQuery.cachedHtml = function(url, options) {
             $(forms).each(function()
             {
                 var form = $(this);
-                $("#closeButton",this).click(function()
+                $("[action-bind='closeButton']",this).click(function()
                 {
                     return methods.remove(form);
                 });
+                options.onInitForm(form);
             });
         },
         remove: function(form)
@@ -255,13 +256,14 @@ jQuery.cachedHtml = function(url, options) {
                  parseInt(managementForm["totalForms"].val()) >=
                  parseInt(managementForm["maxNum"].val()) ) return false;
             var form = $(formTemplate).clone();
-            methods.initForm(form);
             form.hide();
             $(prependTo).prepend(form);
             form.fadeIn();
-            managementForm["totalForms"].val(parseInt(managementForm["totalForms"].val())+1);
             methods.updateIndices();
-            return false;
+            methods.initForm(form);
+            managementForm["totalForms"].val(parseInt(managementForm["totalForms"].val())+1);
+            options.onAdd(form);
+            return form;
         },
         updateIndices: function()
         {
@@ -274,19 +276,33 @@ jQuery.cachedHtml = function(url, options) {
                 {
                     var newId =  formPrefixRegex.exec($(this).attr("id"));
                     var newName = formPrefixRegex.exec($(this).attr("name"));
-                    $(this).attr("id", newId[1]+newId[2]+counter + newId[4]);
-                    $(this).attr("name", newName[1]+newName[2]+counter + newName[4]);
+                    var newActionData = formPrefixRegex.exec($(this).attr("action-data"));
+                    if ( newId != null )
+                        $(this).attr("id", newId[1]+newId[2]+counter + newId[4]);
+                    if ( newName != null )
+                        $(this).attr("name", newName[1]+newName[2]+counter + newName[4]);
+                    if ( newActionData != null )
+                        $(this).attr("action-data", newActionData[1]+newActionData[2]+counter + newActionData[4]);
                 });
                 counter++;
             });
         }
     };
 
+    var options = {
+        onAdd: function(form){},
+        onInitForm: function(form) {}
+    };
+
     $.fn.ajaxForm = function( method ) {
         // Method calling logic
-        if ( methods[method] ) {
+        if ( methods[method] )
+        {
             return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-        } else if ( typeof method === 'object' || ! method ) {
+        } else if ( typeof method === 'object')
+        {
+            $.extend(options, method);
+        } else if ( ! method ) {
             return methods.init.apply( this, arguments );
         } else {
             $.error( 'Method ' +  method + ' does not exist on jQuery' );

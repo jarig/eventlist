@@ -18,11 +18,14 @@ class EventActivity(models.Model):
     class Meta:
         unique_together = ('name',)
 
+
+def event_logo_name(instance, filename):
+    return "event/logo/%d_main_logo" % int(instance.pk)
 #
 class Event(models.Model):
     name = models.CharField(max_length=255)
     author = models.ForeignKey(Account)
-    logo = ImagePreviewModelField(upload_to="event/logo/",)
+    logo = ImagePreviewModelField(upload_to=event_logo_name,)
     blogs = models.ManyToManyField(Blog) # blogs/pages on which this event is published
     activities = models.ManyToManyField(EventActivity, blank=True, null=True) #event activities/actions
     organizers = models.ManyToManyField(Organization) # organizations that are responsible for this event

@@ -6,6 +6,10 @@ from django.utils.safestring import mark_safe
 register = template.Library()
 
 @register.filter
+def to_python(boundfield):
+    return boundfield.field.to_python(boundfield.value())
+
+@register.filter
 def bbcode(value):
     """
     Generates (X)HTML from string with BBCode "markup".

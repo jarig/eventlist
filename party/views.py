@@ -9,7 +9,7 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.translation import ugettext
 from event.models import EventSchedule
-from party.forms import CreatePartyForm, PartyScheduleForm
+from party.forms import CreatePartyForm, CustomPartyScheduleForm, EventPartyScheduleForm, PartyScheduleFormSet
 from party.models import Party, PartySchedule, PartyMember
 from party.utils import createPartyForEvent, invitePeopleToParty
 
@@ -50,22 +50,24 @@ def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=N
     if len(pSchedules):
         extraPartySched = 0
 
-    PartySheduleSet = modelformset_factory(PartySchedule, form=PartyScheduleForm, extra=extraPartySched)
+    CustomPartySheduleSet = modelformset_factory(PartySchedule,
+                                                    form=CustomPartyScheduleForm,
+                                                    formset=PartyScheduleFormSet,
+                                                    extra=extraPartySched)
+
     if request.POST:
         createPartyForm = CreatePartyForm(request.POST, instance=party)
-        partyScheduleFormSet = PartySheduleSet(request.POST, queryset=pSchedules)
-        if createPartyForm.is_valid() and partyScheduleFormSet.is_valid():
+        customPartyScheduleFormSet = CustomPartySheduleSet(request.POST, queryset=pSchedules)
+        if createPartyForm.is_valid() and customPartyScheduleFormSet.is_valid():
             pass
     else:
         createPartyForm = CreatePartyForm(initial=initialCreatePartyForm,instance=party)
-        partyScheduleFormSet = PartySheduleSet(initial=initialEventSchedulesFormSet, queryset=pSchedules)
-
-
+        customPartyScheduleFormSet = CustomPartySheduleSet(initial=initialEventSchedulesFormSet, queryset=pSchedules)
 
     return render_to_response("party/party_credit.html",
             {
             "createPartyForm": createPartyForm,
-            "partyScheduleFormSet": partyScheduleFormSet,
+            "customPartyScheduleFormSet": customPartyScheduleFormSet
         },
         context_instance=RequestContext(request)
     )

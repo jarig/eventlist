@@ -1,7 +1,6 @@
 from django import forms
-from django.forms.models import ModelForm
+from django.forms.models import ModelForm, BaseModelFormSet
 from common.models import Address
-from event.models import EventSchedule
 from party.models import Party, PartySchedule
 
 class CreatePartyForm(ModelForm):
@@ -13,11 +12,32 @@ class CreatePartyForm(ModelForm):
     #def save(self, commit=True):
     #    return self.save()
 
-class PartyScheduleForm(ModelForm):
+class PartyScheduleFormSet(BaseModelFormSet):
+    def __iter__(self):
+        """Yields the forms in the order they should be rendered"""
+        return iter(sorted(self.forms, key=lambda form: (form['dateFrom'].value(),form['timeFrom'].value()),
+                                        reverse=True))
 
-    eventSchedule = forms.ModelChoiceField(EventSchedule.objects.none(),
-        empty_label='Find Event', widget=forms.HiddenInput)
-    location = forms.ModelChoiceField(Address.objects.none(), empty_label='Find Place')
+    def __getitem__(self, index):
+        """Returns the form at the given index, based on the rendering order"""
+        return sorted(self.forms, key=lambda form: (form['dateFrom'].value(),form['timeFrom'].value()),
+            reverse=True)[index]
+    pass
+
+class EventPartyScheduleForm(ModelForm):
+    eventSchedule = forms.CharField(widget=forms.HiddenInput)
+    dateFrom = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.HiddenInput)
+
+    class Meta:
+        model = PartySchedule
+        widgets = {
+            'timeFrom': forms.HiddenInput()
+        }
+        exclude = ('url','dateTo','timeTo', 'location')
+
+class CustomPartyScheduleForm(ModelForm):
+    eventSchedule = forms.CharField(widget=forms.HiddenInput, required=False)
+    location = forms.CharField(widget=forms.HiddenInput)
     dateFrom = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.DateInput(format='%d/%m/%Y',attrs={
         'placeholder': 'Date From',
     }))
@@ -26,10 +46,15 @@ class PartyScheduleForm(ModelForm):
         'placeholder': 'Date To',
     }))
 
+    def clean_location(self):
+        return Address(pk=self.cleaned_data['location'])
+
     class Meta:
         model = PartySchedule
         widgets = {
             'timeFrom': forms.TimeInput(format='%H:%M', attrs={'placeholder':'Time From'}),
-            'timeTo': forms.TimeInput(format='%H:%M', attrs={'placeholder':'Time To'}),
-            'url': forms.TextInput(attrs={'placeholder':'URL'})
+            'timeTo': forms.TimeInput(format='%H:%M', attrs={'placeholder':'Time To'})
         }
+        exclude = ('eventSchedule', 'url')
+
+

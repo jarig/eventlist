@@ -20,19 +20,37 @@
                 <div>
                         {% for event in events %}
                         <div class="eventEntryRow">
+                            <input type="hidden" value="{{ event.id }}" id="eventId" >
+                            <input type="hidden" value="{{ event.dateFrom }}" id="dateFrom">
+                            <input type="hidden" value="{{ event.timeFrom }}" id="timeFrom">
+                            <input type="hidden" value="{% if event.dateTo %}{{ event.dateTo }}{% endif %}" id="dateTo">
+                            <input type="hidden" value="{% if event.timeTo %}{{ event.timeTo }}{% endif %}" id="timeTo">
+                            <input type="hidden" value="{{ event.descr }}" id="eventDescr">
+                            <input type="hidden" value="{{ event.address.pk }}" id="eventLocation">
+                            <input type="hidden" value="{{ event.address }}" id="eventLocationText">
                             <div class="eventThumbColumn">
-                                <div class="thumbnail">
+                                <div class="eventThumb thumbnail">
                                     <img src="{{ MEDIA_URL }}{{ event.logo}}" />
                                 </div>
                             </div>
                             <div class="eventInfoColumn">
                                 <div class="eventBox">
                                     <div>
-                                        {{ event.dateFrom }}
-                                        {{ event.dateTo }}
+                                        {{ event.dateFrom|date }}<br/>
+                                        {{ event.timeFrom }}<br/>
+                                        {% if event.dateTo %}
+                                            {{ event.dateTo }}<br/>
+                                            {{ event.timeTo }}<br/>
+                                        {% endif %}
                                         {{ event.descr }}
                                     </div>
                                 </div>
+                            </div>
+                            <div class="eventInfoColumn">
+                                <a href="#" class="addEventButton">
+                                    <i class="icon-plus"></i>
+                                    Add
+                                </a>
                             </div>
                             <div class="clear"></div>
                         </div>

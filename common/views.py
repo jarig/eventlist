@@ -2,6 +2,7 @@
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.serializers import json
 from django.core.urlresolvers import reverse
+from django.db.models.query_utils import Q
 from django.http import HttpResponseRedirect, HttpResponse
 from common.models import City, Address
 
@@ -52,6 +53,14 @@ def getCities(request):
     data= json_serializer.serialize(cities, ensure_ascii=False, use_natural_keys=True)
     return HttpResponse(data)
     pass
+
+def findAddress(request):
+    term = request.REQUEST.get('term','')
+    address = Address.objects.filter(Q(name__icontains=term) | Q(street__icontains=term)).order_by('-name','-street')[:5]
+    print address
+    json_serializer = json.Serializer()
+    data= json_serializer.serialize(address, ensure_ascii=False, use_natural_keys=True)
+    return HttpResponse(data)
 
 def getAddress(request):
     adrId = request.REQUEST.get("id",0)

@@ -1,6 +1,7 @@
 {% extends 'party/party.html' %}
 {% load i18n %}
 {% load static %}
+{% load filters %}
 {% get_static_prefix as STATIC_PREFIX %}
 {% load field_renderer %}
 
@@ -28,6 +29,7 @@
     <div class="container-fluid">
         <form action="{%  url party.views.credit %}" method="POST">
             {{ eventSchedulesFormSet.management_form }}
+            <input type="hidden" value="{% url common.views.findAddress %}" id="findAddressUrl">
             <div class="row-fluid">
                 <div class="buttonPane">
                     <a href="#" class="btn">{% trans "Submit" %}</a>
@@ -90,39 +92,44 @@
                 </div>
             </div>
         <div id="scheduleForms" action-bind="ajaxForm">
-        {{ partyScheduleFormSet.management_form }}
-        <input type="hidden" value="{{ partyScheduleFormSet.prefix }}" id="formPrefix">
-        {% for partySchedule in partyScheduleFormSet %}
-            <div class="row-fluid partySchedule well">
-                <input id="is_bound" value="{{ partySchedule.is_bound }}" type="hidden">
-                {{ partySchedule.id }}
-                <div class="row-fluid">
-                    <a class="close" id="closeButton">&times;</a>
-                </div>
-                <div class="row-fluid">
-                    <div class="span4">
-                        {{ partySchedule.location }}
+            {% for partySchedule in customPartyScheduleFormSet %}
+                <div class="row-fluid partySchedule well">
+                    <input id="is_bound" value="{{ partySchedule.is_bound }}" type="hidden">
+                    {{ partySchedule.id }}
+                    <div class="row-fluid">
+                        <a class="close" action-bind="closeButton">&times;</a>
                     </div>
-                    <div class="span7">
-                        {{ partySchedule.eventSchedule }}
-                        {{ partySchedule.url }}
-                        {{ partySchedule.dateFrom }}
-                        {{ partySchedule.timeFrom }}
-                        {{ partySchedule.dateTo }}
-                        {{ partySchedule.timeTo }}
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <input type="text" value="{{ partySchedule.location.value  }}"
+                                   name="{{ partySchedule.location.html_name }}"
+                                                        id="locationSearchField"
+                                                        placeholder="Place">
+                            {{ partySchedule.location }}
+                        </div>
+                        <div id="editable" class="span7">
+                            {{ partySchedule.eventSchedule }}
+                            {{ partySchedule.url }}
+                            {{ partySchedule.dateFrom }}
+                            {{ partySchedule.timeFrom }}
+                            {{ partySchedule.dateTo }}
+                            {{ partySchedule.timeTo }}
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+            {{ customPartyScheduleFormSet.management_form }}
+            <input type="hidden" value="{{ customPartyScheduleFormSet.prefix }}" id="formPrefix">
         </div>
-            <div class="row-fluid">
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">{% trans "Create Party" %}</button>
-                    <button class="btn">{% trans "Cancel" %}</button>
-                </div>
+
+        <div class="row-fluid">
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{% trans "Create Party" %}</button>
+                <button class="btn">{% trans "Cancel" %}</button>
             </div>
+        </div>
         </form>
-        {{ partyScheduleFormSet.errors }}
+        {{ customPartyScheduleFormSet.errors }}
         {{ createPartyForm.errors }}
     </div>
 {% endblock %}

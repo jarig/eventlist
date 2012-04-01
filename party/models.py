@@ -47,6 +47,7 @@ class PartyMember(models.Model):
     )
     party = models.ForeignKey(Party, related_name='members')
     user = models.ForeignKey(Account, related_name='partyMembership')
+    #userOutputName = models.CharField() # for efficiency
     role = models.PositiveIntegerField(choices=_ROLE_CHOICES, default=1)
     invitedBy = models.ForeignKey(Account, related_name='+')
 

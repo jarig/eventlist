@@ -16,6 +16,9 @@ MANAGERS = ()
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
 TIME_ZONE = 'Europe/Tallinn'
+TIME_FORMAT = 'H:i'
+#DATE_FORMAT
+#
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -35,7 +38,7 @@ USE_I18N = True
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
-USE_L10N = True
+#USE_L10N = True
 
 # Additional locations of static files
 STATICFILES_DIRS = (

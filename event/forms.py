@@ -67,14 +67,14 @@ class EventScheduleForm(ModelForm):
             try:
                 if self.is_bound:
                     addressId = self.data["%s-address" % self.prefix]
-                    if addressId != '': address = Address.objects.get(pk=addressId)
+                    if addressId != '': address = Address(pk=addressId)
                 else:
                     address = self.instance.address
             except Address.DoesNotExist: pass
             try:
                 if self.is_bound:
                     blogId = self.data["%s-blog" % self.prefix]
-                    if blogId != '': blog = Blog.objects.get(pk=blogId)
+                    if blogId != '': blog = Blog(pk=blogId)
                 else:
                     blog = self.instance.blog
             except Blog.DoesNotExist: pass
