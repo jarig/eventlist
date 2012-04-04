@@ -13,10 +13,10 @@ var Party =
                    "onInitForm": function(nForm)
                    {
                        Party.initSchedule(nForm);
-                   }
+                   },
+                   "compareForms": Party.compareForms
             });
             $("#scheduleForms").ajaxForm("init", ".partySchedule");
-
             $("#searchEventButton").click(function()
             {
                 var searchEventURL = $("#searchEventURL").val();
@@ -47,8 +47,8 @@ var Party =
                         var descr = $("#eventDescr", event).val();
                         var adrId = $("#eventLocation", event).val();
                         var adrText = $("#eventLocationText", event).val();
-                        var nForm = $("#scheduleForms").ajaxForm("add", "#scheduleForms");
-                        $("[type=text][name$=-location]", nForm).val(adrText);
+                        var nForm = $("#scheduleForms").ajaxForm("add", {'dateFrom': new Date(dateFrom), 'timeFrom': timeFrom} );
+                        $("[type=text][name$=-location_text]", nForm).val(adrText);
                         $("[type=hidden][name$=-location]", nForm).val(adrId);
                         $("[name$=-dateFrom]", nForm).datepicker( "setDate" , new Date(dateFrom) ).datepicker( "destroy" );
                         $("[name$=-timeFrom]", nForm).val(timeFrom);
@@ -63,23 +63,30 @@ var Party =
                 });
                 return false;
             });
+
             $("#addCustomScheduleButton").click(function()
             {
                 $("body").click();
-                $("#scheduleForms").ajaxForm("add", "#scheduleForms");
+                $("#scheduleForms").ajaxForm("add");
+                //$("#customSchedulePopup").modal('show');
                 return false;
             });
         });
     },
     initSchedule: function(form)
     {
-        //$('select[name$="-location"]',form).chosen();
-        //$('select[name$="-eventSchedule"]', form).chosen();
-        $( "input[name$='-dateFrom']" ).datepicker( "destroy").datepicker( {"dateFormat": 'dd/mm/yy' });
-        $( "input[name$='-dateTo']").datepicker( "destroy").datepicker( {"dateFormat": 'dd/mm/yy' });
+        var sch = $('[name$="-eventSchedule"]',form).val();
+        if ( typeof sch == "string" && sch != "" )
+        {
+            $('input',form).attr("readonly","readonly");
+            $("input", form).datepicker( "destroy");
+            return;
+        }
+        $( "input[name$='-dateFrom']",form).datepicker( "destroy" ).datepicker( {"dateFormat": 'dd/mm/yy' });
+        $( "input[name$='-dateTo']", form).datepicker( "destroy" ).datepicker( {"dateFormat": 'dd/mm/yy' });
 
         var cache = {}, lastXhr;
-        $('#locationSearchField', form).autocomplete({
+        $("[name$='-location_text']", form).autocomplete({
         source: function( request, response ) {
                 var term = request.term;
                 if ( term in cache ) {
@@ -101,7 +108,7 @@ var Party =
         select: function( event, ui )
         {
             $(this, form).val(ui.item.fields.street);
-            $('[type=hidden][name='+$(this).attr("name")+']', form).val(ui.item.pk);
+            $("[name$='-location']", form).val(ui.item.pk);
             return false;
         }
         }).data( "autocomplete" )._renderItem = function( ul, item ) {
@@ -111,6 +118,25 @@ var Party =
                 .append( "<a>" + item.fields.name + "/" +
                                 item.fields.street + "/" + item.fields.cityArea + "</a>" )
                 .appendTo( ul );
-        };;
+        };
+    },
+    compareForms: function(formData, form2)
+    {
+        var date1, time1, date2, time2;
+        if (typeof formData == "undefined" || formData == null) return 1;
+        try
+        { date1 = formData['dateFrom'];
+        } catch (e){date1= null;}
+        time1 = formData['timeFrom'];
+        try
+        { date2 = $.datepicker.parseDate( 'dd/mm/yy' , $("input[name$='-dateFrom']", form2).val());
+        } catch(e){date2=null;}
+        time2 = $("input[name$='-timeFrom']", form2).val();
+        if ( date2 == null && date1 == null ) return 0;
+        if ( date2 == null || ( date1 != null && date1.getTime() > date2.getTime() ) )
+            return 1; //form1 greater
+        if ( date1 == null || ( date1.getTime() < date2.getTime() ) )
+            return -1;//form2 greater
+        return 0; //equal
     }
 };

@@ -1,21 +1,23 @@
 
-from django.forms.models import ModelForm, BaseModelFormSet, modelformset_factory
+from django.forms.models import ModelForm, BaseModelFormSet
 from django.forms.widgets import HiddenInput
 from blog.models import Blog
 from common.forms import AddressForm
 from common.models import Address
-from common.utils import uploadLocalImage
 from event.models import Event, EventSchedule
 from django import forms
 from organization.models import Organization
 
 class EventForm(ModelForm):
     organizers = forms.ModelMultipleChoiceField(Organization.objects.none(),
+                                                cache_choices=True,
                                                 widget=forms.SelectMultiple(attrs={'placeholder':"Choose an organizers"}))
-
+    _cached_orgs = None
     def __init__(self, user, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
-        self.fields['organizers'].queryset = Organization.objects.filter(members=user).all()
+        if self._cached_orgs is None:
+            self._cached_orgs = Organization.objects.filter(members=user).all()
+        self.fields['organizers'].queryset = self._cached_orgs
 
     class Meta:
         exclude = ('rating','created','participants','author')
@@ -40,18 +42,19 @@ class EventForm(ModelForm):
         return newEvent
 
 
-
 class EventScheduleForm(ModelForm):
     dateFrom = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.DateInput(format='%d/%m/%Y'))
     dateTo = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.DateInput(format='%d/%m/%Y'), required=False)
     #TODO get blog list dynamically
-    blog = forms.ModelChoiceField(queryset=Blog.objects.all(), empty_label="Custom Address", required=False)
+    blog = forms.ModelChoiceField(queryset=Blog.objects.all(), cache_choices=True,
+                                    empty_label="Custom Address", required=False)
     address = forms.IntegerField(widget=HiddenInput(), required=False)
+
 
     def clean_address(self):
         data = self.cleaned_data['address']
         if data:
-            data = Address.objects.get(pk=data)
+            data = Address.objects.select_related().get(pk=data)
         else: #if custom address
             data = None
         return data
@@ -62,19 +65,20 @@ class EventScheduleForm(ModelForm):
         data = None
         blog = None
         if len(self.data): data = self.data
-        
+
+
         if self.instance:#TODO refactor
             try:
                 if self.is_bound:
                     addressId = self.data["%s-address" % self.prefix]
-                    if addressId != '': address = Address(pk=addressId)
+                    if addressId != '': address = Address.objects.select_related().get(pk=addressId)
                 else:
                     address = self.instance.address
             except Address.DoesNotExist: pass
             try:
                 if self.is_bound:
                     blogId = self.data["%s-blog" % self.prefix]
-                    if blogId != '': blog = Blog(pk=blogId)
+                    if blogId != '': blog = Blog.objects.select_related().get(pk=blogId)
                 else:
                     blog = self.instance.blog
             except Blog.DoesNotExist: pass

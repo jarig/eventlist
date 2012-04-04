@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.translation import ugettext as _
+from common.models import Address
 from event.forms import EventForm, EventScheduleForm, EventScheduleFormSet
 from event.models import Event, EventSchedule, EventGo
 from party.forms import CreatePartyForm

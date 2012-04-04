@@ -4,9 +4,11 @@ from common.models import Address, Country, City
 
 class AddressForm(ModelForm):
     country = forms.ModelChoiceField(Country.objects.all(),
+                                     cache_choices=True,
                                      empty_label=None,
                                      widget=forms.Select(attrs={'placeholder':'Select Country'}))
     city = forms.ModelChoiceField(City.objects.none(),
+                                    cache_choices=True,
                                     empty_label=None,
                                     widget=forms.Select(attrs={'placeholder':'Select City'}))
     

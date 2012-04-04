@@ -1,5 +1,6 @@
 from django import forms
 from django.forms.models import ModelForm, BaseModelFormSet
+from _ext.autocomplete import fields
 from common.models import Address
 from party.models import Party, PartySchedule
 
@@ -13,15 +14,6 @@ class CreatePartyForm(ModelForm):
     #    return self.save()
 
 class PartyScheduleFormSet(BaseModelFormSet):
-    def __iter__(self):
-        """Yields the forms in the order they should be rendered"""
-        return iter(sorted(self.forms, key=lambda form: (form['dateFrom'].value(),form['timeFrom'].value()),
-                                        reverse=True))
-
-    def __getitem__(self, index):
-        """Returns the form at the given index, based on the rendering order"""
-        return sorted(self.forms, key=lambda form: (form['dateFrom'].value(),form['timeFrom'].value()),
-            reverse=True)[index]
     pass
 
 class EventPartyScheduleForm(ModelForm):
@@ -37,7 +29,8 @@ class EventPartyScheduleForm(ModelForm):
 
 class CustomPartyScheduleForm(ModelForm):
     eventSchedule = forms.CharField(widget=forms.HiddenInput, required=False)
-    location = forms.CharField(widget=forms.HiddenInput)
+    #location = forms.CharField(widget=forms.HiddenInput)
+    location = fields.AutoCompleteCharField(model=Address)
     dateFrom = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.DateInput(format='%d/%m/%Y',attrs={
         'placeholder': 'Date From',
     }))

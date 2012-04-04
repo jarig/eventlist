@@ -53,7 +53,7 @@ def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=N
     CustomPartySheduleSet = modelformset_factory(PartySchedule,
                                                     form=CustomPartyScheduleForm,
                                                     formset=PartyScheduleFormSet,
-                                                    extra=extraPartySched)
+                                                    extra=extraPartySched,can_delete=True, can_order=True)
 
     if request.POST:
         createPartyForm = CreatePartyForm(request.POST, instance=party)

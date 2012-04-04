@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+from common.managers import AddressManager
 
 
 class Country(models.Model):
@@ -35,11 +36,16 @@ class Address(models.Model):
     postalCode = models.CharField(max_length=15, default='', blank=True)
     token = models.CharField(max_length=32, default=None, null=True, editable=False)
 
+    objects = AddressManager()
+
+    def __init__(self, *args, **kwargs):
+        super(Address, self).__init__(*args, **kwargs)
+
     def natural_key(self):
         return self.name
 
     def __unicode__(self):
-        return "%s, %s, %s, %s" % (self.name, unicode(self.country), unicode(self.city), unicode(self.street))
+        return "%s, %s, %s, %s" % (self.name, self.street, self.country, self.city)
 
 class Language(models.Model):
     code = models.CharField(max_length=3, primary_key=True)

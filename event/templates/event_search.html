@@ -26,8 +26,11 @@
                             <input type="hidden" value="{% if event.dateTo %}{{ event.dateTo }}{% endif %}" id="dateTo">
                             <input type="hidden" value="{% if event.timeTo %}{{ event.timeTo }}{% endif %}" id="timeTo">
                             <input type="hidden" value="{{ event.descr }}" id="eventDescr">
-                            <input type="hidden" value="{{ event.address.pk }}" id="eventLocation">
-                            <input type="hidden" value="{{ event.address }}" id="eventLocationText">
+                            {% with adr=event.address %}
+                                <input type="hidden" value="{{ adr }}" id="eventLocationText">
+                                <input type="hidden" value="{{ adr.pk }}" id="eventLocation">
+                            {% endwith %}
+
                             <div class="eventThumbColumn">
                                 <div class="eventThumb thumbnail">
                                     <img src="{{ MEDIA_URL }}{{ event.logo}}" />

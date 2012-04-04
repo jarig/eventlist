@@ -232,11 +232,17 @@ jQuery.cachedHtml = function(url, options) {
             $(forms).each(function()
             {
                 var form = $(this);
-                $("[action-bind='closeButton']",this).click(function()
+                if ($("[name$=-DELETE]", this).is("[value=on]"))
                 {
-                    return methods.remove(form);
-                });
-                options.onInitForm(form);
+                    form.hide();
+                }else
+                {
+                    $("[action-bind='closeButton']",this).click(function()
+                    {
+                        return methods.remove(form);
+                    });
+                    options.onInitForm(form);
+                }
             });
         },
         remove: function(form)
@@ -244,46 +250,66 @@ jQuery.cachedHtml = function(url, options) {
             var $form = $(form);
             $form.fadeOut('fast',function()
             {
-                $form.remove();
-                managementForm["totalForms"].val(parseInt(managementForm["totalForms"].val())-1);
-                methods.updateIndices();
+                $form.hide();
+                $('[name$=-DELETE]', $form).val("on");
+                //managementForm["totalForms"].val(parseInt(managementForm["totalForms"].val())-1);
+                //methods.updateIndices();
             });
             return false;
         },
-        add: function( prependTo )
+        add: function( compareData )
         {
             if ( typeof managementForm["maxNum"].val() != "undefined" &&
                  parseInt(managementForm["totalForms"].val()) >=
                  parseInt(managementForm["maxNum"].val()) ) return false;
             var form = $(formTemplate).clone();
             form.hide();
-            $(prependTo).prepend(form);
+            var last = null;
+            $(formIdent, baseIdent).each(function()
+            {
+                var isGreater = options.compareForms(compareData, $(this));
+                Common.DEBUG(isGreater);
+                if (isGreater >= 0)
+                {
+                    $(this).before(form);
+                    return false;
+                }
+                else
+                {//less
+                    last = $(this);
+                }
+            });
+            if ( last != null ) last.after(form);
+
             form.fadeIn();
-            methods.updateIndices();
+            methods.updateIndex(form, parseInt(managementForm["totalForms"].val()));
             methods.initForm(form);
             managementForm["totalForms"].val(parseInt(managementForm["totalForms"].val())+1);
             options.onAdd(form);
             return form;
         },
-        updateIndices: function()
+        updateIndex: function(form, nIndex)
         {
             var formPrefixRegex = new RegExp('(.*)('+formPrefix+'-)(\\d+)(.*)','i');
+            $("[name^="+formPrefix+"]", form).each(function()
+            {
+                var newId =  formPrefixRegex.exec($(this).attr("id"));
+                var newName = formPrefixRegex.exec($(this).attr("name"));
+                var newActionData = formPrefixRegex.exec($(this).attr("action-data"));
+                if ( newId != null )
+                    $(this).attr("id", newId[1]+newId[2]+nIndex + newId[4]);
+                if ( newName != null )
+                    $(this).attr("name", newName[1]+newName[2]+nIndex + newName[4]);
+                if ( newActionData != null )
+                    $(this).attr("action-data", newActionData[1]+newActionData[2]+nIndex + newActionData[4]);
+            });
+        },
+        updateIndices: function()
+        {
             var counter=0;
             //
             $(formIdent, baseIdent).each(function()
             {
-                $("[name^="+formPrefix+"]", this).each(function()
-                {
-                    var newId =  formPrefixRegex.exec($(this).attr("id"));
-                    var newName = formPrefixRegex.exec($(this).attr("name"));
-                    var newActionData = formPrefixRegex.exec($(this).attr("action-data"));
-                    if ( newId != null )
-                        $(this).attr("id", newId[1]+newId[2]+counter + newId[4]);
-                    if ( newName != null )
-                        $(this).attr("name", newName[1]+newName[2]+counter + newName[4]);
-                    if ( newActionData != null )
-                        $(this).attr("action-data", newActionData[1]+newActionData[2]+counter + newActionData[4]);
-                });
                 counter++;
             });
         }
@@ -291,7 +317,8 @@ jQuery.cachedHtml = function(url, options) {
 
     var options = {
         onAdd: function(form){},
-        onInitForm: function(form) {}
+        onInitForm: function(form) {},
+        compareForms: function(form1, form2) { return form1;}
     };
 
     $.fn.ajaxForm = function( method ) {
