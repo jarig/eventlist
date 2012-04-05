@@ -81,6 +81,8 @@ MIDDLEWARE_CLASSES = (
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 #django.contrib.sessions.backends.signed_cookies
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
+
 AUTH_PROFILE_MODULE = 'account.Account'
 
 AUTHENTICATION_BACKENDS = (
