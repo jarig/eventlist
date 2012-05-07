@@ -15,7 +15,7 @@
         <div class="subMenu">
             <ul>
                 <li>
-                    <a href="{% url party.views.credit %}">Create</a>
+                    <a href="{% url party.views.create %}">Create</a>
                 </li>
             </ul>
         </div>
@@ -36,7 +36,7 @@
                         {{ mship.partyMembers|join:', ' }}
                     </td>
                     <td>
-                        {{ mship.get_role_display }}
+                        <a href="{% url party.views.edit partyId=1 %}">{{ mship.get_role_display }}</a>
                     </td>
                 </tr>
             {% endfor %}

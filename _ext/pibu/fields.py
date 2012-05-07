@@ -1,5 +1,6 @@
 from exceptions import Exception
 import os
+from django.core import validators
 from django.core.exceptions import ValidationError
 from django.core.files.storage import DefaultStorage
 from django.db.models.fields.files import ImageFieldFile
@@ -94,6 +95,7 @@ class ImagePreviewField(ImageField):
 
     def to_python(self, data):
         try:
+            if data in validators.EMPTY_VALUES: return None
             storage = DefaultStorage()
             fp = storage.open(data)
             return super(ImagePreviewField, self).to_python(fp)
@@ -105,7 +107,8 @@ class ImagePreviewField(ImageField):
         if not data.find(settings.MEDIA_URL):
             data = data.replace(settings.MEDIA_URL, "", 1)
         else: #media url not found
-            raise ValidationError(self.errors['unreachable'])
+            if self.required:
+                raise ValidationError(self.errors['unreachable'])
         return super(ImagePreviewField, self).clean(data, initial)
 
     def bound_data(self, data, initial):

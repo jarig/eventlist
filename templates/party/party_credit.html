@@ -27,14 +27,14 @@
 {% block content %}
 
     <div class="container-fluid">
-        <form action="{%  url party.views.credit %}" method="POST">
+        <form method="POST">
             {{ eventSchedulesFormSet.management_form }}
             <input type="hidden" value="{% url common.views.findAddress %}" id="findAddressUrl">
-            <div class="row-fluid">
+            <!--div class="row-fluid">
                 <div class="buttonPane">
                     <a href="#" class="btn">{% trans "Submit" %}</a>
                 </div>
-            </div>
+            </div-->
             <div class="row-fluid partyHeader">
                 <div class="formControl {% if createPartyForm.name.errors %}errorHighlight{% endif %}">
                     {% field createPartyForm.name 'title=Party Name' 'class=wideinput' %}
@@ -60,12 +60,29 @@
                     </div>
                 </div>
                 <div class="span9">
-                    <div class="partyParticipantBox">
-                        <div class="partyParticipantActions">
-                            <div class="partyParticipantInviteButton divButton">
-                                <i class="icon-plus"></i>
-                                {% trans "Invite Participants" %}
+                    <div class="tabbable tabs-below">
+                        <div class="partyParticipantBox">
+                            <div class="partyParticipantActions">
+                                <a class="partyParticipantInviteButton btn btn-small btn-info"
+                                   href="#{% url party.views.invitationList 0 %}"
+                                        id="inviteParticipantButton">
+                                    <i class="icon-plus"></i>
+                                    {% trans "Invite Participants" %}
+                                </a>
                             </div>
+                            <div id="participantList">
+                                <div class="participantProfile thumbnail" rel="tooltip"
+                                     id="participantTemplate"
+                                     title="{{ request.user }}"
+                                     style="background-image: url('{{ request.user.avatar.url }}')">
+                                     <input type="hidden" value="{{ request.user.pk }}" name="invited">
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            {{ createPartyForm.invited }}
+                        </div>
+                        <div class="partyParticipantStatsBox">
+                            In invitation list: {{ invited|length }}
                         </div>
                     </div>
                 </div>
@@ -75,7 +92,7 @@
                 </div>
                 <div class="btn-group float-right" id="partyScheduleMenu">
                     <a class="btn btn-small btn-info" id="addCustomScheduleButton" href="#">
-                        <i class="icon-plus icon-white"></i>
+                        <i class="icon-plus"></i>
                         {% trans "Add Custom Event" %}
                     </a>
                     <button class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown">
@@ -90,7 +107,7 @@
                 </div>
             </div>
         <div id="scheduleForms" action-bind="ajaxForm">
-            {% for partySchedule in customPartyScheduleFormSet %}
+            {% for partySchedule in customPartyScheduleFormSet reversed %}
                 <div class="row-fluid partySchedule well">
                     <input id="is_bound" value="{{ partySchedule.is_bound }}" type="hidden">
                     {{ partySchedule.id }}
@@ -121,35 +138,11 @@
         <div class="row-fluid">
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{% trans "Create Party" %}</button>
-                <button class="btn">{% trans "Cancel" %}</button>
             </div>
         </div>
         </form>
         {{ customPartyScheduleFormSet.errors }}
         {{ createPartyForm.errors }}
-    </div>
-    <!-- Custom Schedule -->
-    <div class="modal hide" id="customSchedulePopup">
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">×</a>
-            <h3>{% trans "Add Custom Schedule" %}</h3>
-        </div>
-        <div class="modal-body container-fluid">
-            <div class="row-fluid">
-            </div>
-            <div class="clear"></div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary span2" autocomplete="off"
-                    data-complete-text="{% trans "Added" %}"
-                    data-loading-text="{% trans "Adding..." %}"
-                    id="addButton">
-                {% trans "Add" %}
-            </button>
-            <a href="#" class="btn span2" data-dismiss="modal" autocomplete="off">
-                {% trans "Close" %}
-            </a>
-        </div>
     </div>
 {% endblock %}
 

@@ -1,0 +1,44 @@
+{% load static %}
+{% load i18n %}
+{% load field_renderer %}
+
+<div id="sendMessagePopup" class="modal">
+    <form method="POST" id="sendMessageForm" action="{% url messaging.views.sendMessageTo %}">
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal">×</button>
+            <h3>Message to
+                {% if friend %}
+                    {{ friend }}
+                {% else %}
+                    {{ msgForm.to }}
+                {% endif %}
+            </h3>
+        </div>
+        <div class="modal-body">
+                <div class="row-fluid">
+                    <div class="control-group">
+                        <label class="control-label" for="header">{% trans "Header" %}</label>
+                        <div class="controls">
+                            {% field msgForm.subject "class=span11" %}
+                        </div>
+                        <p class="help-block">Message Header</p>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="message">{% trans "Message" %}</label>
+                        <div class="controls">
+                            {% field msgForm.text "class=span11" %}
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </form>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal">{% trans "Close" %}</button>
+        <button class="btn btn-primary" id="sendMessageButton"
+           data-loading-text="Sending..."
+           data-complete-text="Sent!">
+            {% trans "Send" %}
+        </button>
+    </div>
+
+</div>

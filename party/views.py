@@ -1,13 +1,17 @@
 # Create your views here.
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import json
+from django.core.urlresolvers import resolve, reverse
+from django.core.validators import validate_slug, RegexValidator
 from django.db import transaction
 from django.db.models.query_utils import Q
 from django.forms.models import modelformset_factory
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.translation import ugettext
+from account.models import Account
 from event.models import EventSchedule
 from party.forms import CreatePartyForm, CustomPartyScheduleForm, EventPartyScheduleForm, PartyScheduleFormSet
 from party.models import Party, PartySchedule, PartyMember
@@ -37,15 +41,22 @@ def forEvent(request, eventScheduleId):
     pass
 
 @login_required
-def credit(request):
-
+def create(request):
     return _credit(request)
     pass
 
+@login_required
+def edit(request, partyId):
+    #TODO check perms
+    party = Party(pk=partyId)
+    return _credit(request, party=party)
 
 def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=None, party=None):
     pSchedules = PartySchedule.objects.none()
-    if party: pSchedules = party.schedules
+    invited = []
+    if party:
+        pSchedules = party.schedules.all()
+        invited = party.members
     extraPartySched = 1
     if len(pSchedules):
         extraPartySched = 0
@@ -56,10 +67,13 @@ def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=N
                                                     extra=extraPartySched,can_delete=True, can_order=True)
 
     if request.POST:
+        invited = request.POST.getlist("invited")
         createPartyForm = CreatePartyForm(request.POST, instance=party)
         customPartyScheduleFormSet = CustomPartySheduleSet(request.POST, queryset=pSchedules)
         if createPartyForm.is_valid() and customPartyScheduleFormSet.is_valid():
-            pass
+            createPartyForm.saveParty(request.user, customPartyScheduleFormSet, invited)
+            messages.success(request, ugettext("Party successfully created"))
+            return HttpResponseRedirect(reverse('party.views.credit'))
     else:
         createPartyForm = CreatePartyForm(initial=initialCreatePartyForm,instance=party)
         customPartyScheduleFormSet = CustomPartySheduleSet(initial=initialEventSchedulesFormSet, queryset=pSchedules)
@@ -67,6 +81,7 @@ def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=N
     return render_to_response("party/party_credit.html",
             {
             "createPartyForm": createPartyForm,
+            "invited": invited,
             "customPartyScheduleFormSet": customPartyScheduleFormSet
         },
         context_instance=RequestContext(request)
@@ -109,6 +124,9 @@ def invitationList(request, eventScheduleId):
             return HttpResponse('done')
     else:
         invited = []
+        exclude = []
+        if request.POST:#TODO filter out friends that already added
+            exclude = request.POST.getlist("exclude[]",[])
         #TODO take only mutual friends
         friendships = request.user.friends.all().select_related("friend").order_by('-date_added')
         try:

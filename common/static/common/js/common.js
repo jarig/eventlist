@@ -14,6 +14,7 @@ var Common =
 			$("#debug").append(msg+"<br/>");
 		});
         console.log(msg);
+        return msg;
 	},
     submitForm: function(formId)
     {
@@ -283,6 +284,7 @@ jQuery.cachedHtml = function(url, options) {
 
             form.fadeIn();
             methods.updateIndex(form, parseInt(managementForm["totalForms"].val()));
+            methods.updateOrderIndices();
             methods.initForm(form);
             managementForm["totalForms"].val(parseInt(managementForm["totalForms"].val())+1);
             options.onAdd(form);
@@ -304,13 +306,14 @@ jQuery.cachedHtml = function(url, options) {
                     $(this).attr("action-data", newActionData[1]+newActionData[2]+nIndex + newActionData[4]);
             });
         },
-        updateIndices: function()
+        updateOrderIndices: function()
         {
             var counter=0;
             //
             $(formIdent, baseIdent).each(function()
             {
                 counter++;
+                $("[name$=-ORDER]", this).val(counter);
             });
         }
     };

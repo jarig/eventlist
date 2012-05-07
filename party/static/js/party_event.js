@@ -41,7 +41,10 @@ var PartyEvent =
                 $(".partyInviteButton", $this).click(function()
                 {
                     CommonGUI.showLoading();
-                    $.loadComponent(invitationURL,['js/party_invite.js','css/party_invite_box.css'],{},function(data)
+                    $.loadComponent(invitationURL,[
+                        'js/account_search.js',
+                        'js/party_invite.js',
+                        'css/party_invite_box.css'],{},function(data)
                     {
                         CommonGUI.hideLoading();
                         $("body").append(data);

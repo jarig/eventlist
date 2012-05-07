@@ -13,21 +13,55 @@
     display: table-cell;
 }
 
+#participantList
+{
+    padding-left: 3px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: 125px;
+}
+.participantProfile
+{
+    width: 32px;
+    height: 32px;
+    margin-left: 8px;
+    margin-top: 6px;
+    margin-bottom: 1px;
+    float: left;
+    padding: 0px;
+    background-size: contain;
+    background: no-repeat center;
+    text-align: center;
+}
+.participantProfile img
+{
+    max-width: 32px;
+    max-height: 32px;
+}
+.participantProfile:hover
+{
+    cursor: pointer;
+}
 .partyParticipantBox
 {
     border: 1px solid #e6e6fa;
     height: 150px;
     position: relative;
 }
-.partyParticipantActions
-{
-    width: 100%;
-    text-align: center;
-}
 .partyParticipantInviteButton
 {
     border: none;
     background-color: #faf4f4;
+    width: 100%;
+    padding: 3px 0 3px 0;
+}
+
+.partyParticipantStatsBox
+{
+    border: 1px solid #e6e6fa;
+    border-top: none;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .partyScheduleHeader

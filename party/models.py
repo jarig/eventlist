@@ -1,3 +1,4 @@
+from django.core.files.storage import DefaultStorage
 from django.db import models
 from django.utils.translation import ugettext_lazy
 from account.models import Account
@@ -49,9 +50,15 @@ class PartyMember(models.Model):
     user = models.ForeignKey(Account, related_name='partyMembership')
     #userOutputName = models.CharField() # for efficiency
     role = models.PositiveIntegerField(choices=_ROLE_CHOICES, default=1)
-    invitedBy = models.ForeignKey(Account, related_name='+')
+    invitedBy = models.ForeignKey(Account, related_name='+', blank=True, null=True)
 
     dateAdded = models.DateTimeField(auto_now_add=True)
+
+    def getUserAvatar(self):
+        from account.models import account_logo_name
+        storage = DefaultStorage()
+        return storage.url(account_logo_name(Account(pk=self.user), ''))
+        pass
 
     class Meta:
         unique_together = ('party', 'user')

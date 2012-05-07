@@ -1,17 +1,35 @@
 from django import forms
 from django.forms.models import ModelForm, BaseModelFormSet
 from _ext.autocomplete import fields
+from account.models import Account
 from common.models import Address
-from party.models import Party, PartySchedule
+from party.models import Party, PartySchedule, PartyMember
 
 class CreatePartyForm(ModelForm):
-
+    #invited = forms.MultiValueField()
 
     class Meta:
         model = Party
 
-    #def save(self, commit=True):
-    #    return self.save()
+    def saveParty(self, author, schedulesFormSet, invited):
+
+        party = self.save(commit=False)
+        party.author = author
+        party.save()
+
+        #save invited members
+        for inv in invited:
+            pm = PartyMember(party=party, user=Account(pk=inv), role=PartyMember.ROLE.INVITED, invitedBy=author)
+            if inv == author.pk:
+                pm.role= PartyMember.ROLE.OWNER
+            #TODO bulk save
+            pm.save()
+
+        for form in schedulesFormSet:
+            form.party = party
+        schedulesFormSet.save()
+
+        return self.save()
 
 class PartyScheduleFormSet(BaseModelFormSet):
     pass

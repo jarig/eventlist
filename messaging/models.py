@@ -26,10 +26,10 @@ class Message(models.Model):
     )
     subject = models.CharField(max_length=255, default='')
     text = models.TextField()
-    author = models.ForeignKey(Account, related_name='sent_messages')
+    author = models.ForeignKey(Account, related_name='sent_messages', editable=False)
     to = models.ForeignKey(Account, related_name='received_messages')
     # 0 - sent, 1 - received, 2 - deleted by author, 4 - deleted by correspondent
-    status = models.PositiveSmallIntegerField(editable=False, default=0)
+    status = models.PositiveSmallIntegerField(editable=False, default=STATUS.SENT)
     sent = models.DateTimeField(auto_now_add=True, auto_now=True, default=datetime.date.today, editable=False)
     feed = models.CharField(max_length=8, default=gen_feed_hash, editable=False )
 

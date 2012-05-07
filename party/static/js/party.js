@@ -1,10 +1,16 @@
 var Party =
 {
     findAddressUrl: '',
+    invitationURL: '',
     init: function()
     {
         $(function()
         {
+            $("#participantList").change(function()
+            {
+                $("[rel=tooltip]").tooltip();
+            });
+            $("#participantList").change();
             Party.findAddressUrl = $("#findAddressUrl").val();
             //TODO move to credit init
             $("input").labelify({ labelledClass: "helpLabel" });
@@ -15,6 +21,54 @@ var Party =
                        Party.initSchedule(nForm);
                    },
                    "compareForms": Party.compareForms
+            });
+
+            $("#inviteParticipantButton").click(function()
+            {
+                CommonGUI.showLoading();
+                var invitationURL = $(this).attr('href').replace('#','');
+                var toExclude = [];
+                $('#participantList [name=invited]').each(function()
+                {
+                    toExclude.push($(this).val());
+                });
+                $.loadComponent(invitationURL,[
+                                                'js/account_search.js',
+                                                'css/party_invite_box.css'
+                ],{},function(data)
+                {
+                    CommonGUI.hideLoading();
+                    $("body").append(data);
+                    var popup = $(".modal",data).modal();
+                    popup.on('hidden', function ()
+                    {
+                        $(data).remove();
+                    });
+                    AccountSearch.initFriendSelect(popup,{
+                        onSubmit: function(popup, button, friendList, addInfo)
+                        {
+                            Common.DEBUG(addInfo);
+                            for(var i=0; i< friendList.length; i++)
+                            {
+                                var friendId = friendList[i];
+                                var invited = $("#participantList #participantTemplate").clone();
+                                $("[name=invited]", invited).val(friendId);
+                                $(invited).attr("id", "friend-"+friendId);
+                                $(invited).attr("title", addInfo[friendId]['name']);
+                                $(invited).css("background-image", "url('"+addInfo[friendId]['avatar']+"')");
+                                $("#participantList").prepend(invited);
+                                $(invited).fadeIn();
+                            }
+                            $("#participantList").change();
+                            button.text(button.attr("data-complete-text"));
+                            button.addClass("btn-success");
+                            $(popup).modal('hide');
+                        },
+                        toExclude: toExclude
+                    });
+
+                });
+                return false;
             });
             $("#scheduleForms").ajaxForm("init", ".partySchedule");
             $("#searchEventButton").click(function()
