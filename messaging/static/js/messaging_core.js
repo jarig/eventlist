@@ -10,6 +10,7 @@ var Messaging =
     {
         $(function()
         {
+            $(".read-narrow-button").tooltip();
             var $this = $(this);
             $('#createMessageButton').click(function()
             {
@@ -26,12 +27,20 @@ var Messaging =
                         $(data).remove();
                     });
                     var $form = $("#sendMessageForm",popup);
+                    $("#id_to", popup).chosen();
                     $("#sendMessageButton", popup).click(function()
                     {
                         var $this = $(this);
                         $this.bsbutton('loading');
+                        $(".control-group", popup).removeClass("error");
                         $.post($form.attr("action"), $form.serialize())
-                        .success(function() { $this.bsbutton('complete'); })
+                        .success(function()
+                            {
+                                $this.bsbutton('complete');
+                                $this.addClass("btn-success");
+                                $this.attr("disabled","disabled");
+                            }
+                        )
                         .error(function(data) {
                                 var errorData = Common.eval(data["responseText"]);
                                 for (var errorKey in errorData)

@@ -22,9 +22,9 @@
                             <div class="bar" style="width: 100%;"></div>
                         </div>
                     </div>
-                    {% for fShip in friendships %}
-                        {% if fShip.friend not in invited %}
-                            {% include "party_invite_friend_item.html" with friend=fShip.friend %}
+                    {% for friend in friendships %}
+                        {% if friend not in invited %}
+                            {% include "party_invite_friend_item.html" %}
                         {% endif %}
                     {% endfor %}
                 </div>

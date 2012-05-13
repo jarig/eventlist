@@ -1,1 +1,32 @@
 
+
+.message_feed_header
+{
+    padding-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-bottom: solid 1px rgb(207, 207, 207);
+}
+
+.read-narrow-button
+{
+    width: 100%;
+    text-align: center;
+    height: 5px;
+    padding-bottom: 4px;
+    background-color: #f7f7f7;
+}
+.message-actions
+{
+    padding-right: 7px;
+}
+
+.read-narrow-button:hover
+{
+    background-color: #b0c4de;
+    cursor: pointer;
+}
+
+.message_feed_header:hover
+{
+}

@@ -155,7 +155,7 @@ jQuery.cachedResource = function(url, options)
     {
         options = $.extend(options || {}, {
             dataType: "script",
-            cache: true,
+            cache: false,//TODO enable
             url: url
         });
         return jQuery.ajax(options);
@@ -165,7 +165,7 @@ jQuery.cachedResource = function(url, options)
 jQuery.cachedHtml = function(url, options) {
     options = $.extend(options || {}, {
         dataType: "html",
-        cache: true,
+        cache: false,//TODO enable
         url: url
     });
     return jQuery.ajax(options);

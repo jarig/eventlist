@@ -54,12 +54,6 @@ class PartyMember(models.Model):
 
     dateAdded = models.DateTimeField(auto_now_add=True)
 
-    def getUserAvatar(self):
-        from account.models import account_logo_name
-        storage = DefaultStorage()
-        return storage.url(account_logo_name(Account(pk=self.user), ''))
-        pass
-
     class Meta:
         unique_together = ('party', 'user')
 

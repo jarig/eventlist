@@ -1,6 +1,7 @@
-from django.conf import settings
 
 # Social AUTH
+from django.conf import settings
+
 BACKENDS = {
     "VKONTAKTE":{
         "CLASS":"account.backends.vkontakte.Vkontakte",
@@ -22,4 +23,5 @@ SECRET_PASS ="+kw*8&m#oy&r", #default pass for user
 # Settings
 ACTIVATION_REQUIRED = False
 REGISTRATION_ALLOWED = True
-  
+
+AVATAR_STUB = settings.STATIC_URL+"common/images/logoStub.png"

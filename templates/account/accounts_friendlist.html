@@ -24,8 +24,8 @@
         </div>
     </div>
     <div class="friendList">
-        {% for friendship in friendships %}
-            {% include "accounts_friendlist_entry.html" with friend=friendship.friend %}
+        {% for friend in friends %}
+            {% include "accounts_friendlist_entry.html" %}
         {% endfor %}
     </div>
 {% endblock %}

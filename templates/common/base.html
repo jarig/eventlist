@@ -8,9 +8,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap-responsive.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-    <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
+    <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap-responsive.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
     <link href="{{ STATIC_PREFIX }}common/plugins/jqueryUI/css/custom-theme/jquery-ui-1.8.17.custom.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
@@ -101,7 +101,7 @@
 
                                                             <a href="#" onclick="Base.toggle_profileBox('#profileBox'); return false;" >
                                                                 {% trans "Profile" %}
-                                                                <img class="logoutLogo" src="{{ STATIC_PREFIX }}common/images/{{ user.provider }}LogoSmall.png"/>
+                                                                <img class="logoutLogo" src="{{ STATIC_URL }}common/images/{{ user.provider }}LogoSmall.png"/>
                                                             </a>
                                                         {%  endif %}
                                                     </div>
@@ -160,15 +160,15 @@
                 <div id="content" class="fillSpace">
                 {% block contentHeader %}
                 {% endblock %}
-                <table id="contentTable" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td id="column_left">
+                <div id="contentTable" class="container-fluid">
+                    <div class="row-fluid">
+                        <div id="column_left" class="span4">
                             <div class="fillSpace">
                                 {% block leftcolumn %}
                                 {% endblock %}
                             </div>
-                        </td>
-                        <td id="content_container">
+                        </div>
+                        <div id="content_container" class="span9">
                             <div  class="fillSpace">
                                 <div class="messages">
                                 {% block messages %}
@@ -183,18 +183,18 @@
                                 {% block content %}
                                 {% endblock %}
                             </div>
-                        </td>
-                        <td id="rightColumnToggleBar" onclick="BaseGUI.toggleRightColumn();">
+                        </div>
+                        <!--div id="rightColumnToggleBar" class="span1" onclick="BaseGUI.toggleRightColumn();">
                             <p><img src="{{ STATIC_PREFIX }}common/images/base/base_toggleArrow.png"></p>
-                        </td>
-                        <td id="column_right">
+                        </div-->
+                        <div id="column_right" class="span2">
                             <div class="fillSpace">
                                 {% block rightcolumn %}
                                 {% endblock %}
                             </div>
-                        </td>
-                    </tr>
-                </table>
+                        </div>
+                    </div>
+                </div>
                 </div>
         <!-- Begin Footer -->
         <div id="footer" class="container-fluid">

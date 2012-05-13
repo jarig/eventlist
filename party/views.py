@@ -46,9 +46,9 @@ def create(request):
     pass
 
 @login_required
-def edit(request, partyId):
+def edit(request, party):
     #TODO check perms
-    party = Party(pk=partyId)
+    party = Party(pk=party)
     return _credit(request, party=party)
 
 def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=None, party=None):
@@ -56,7 +56,7 @@ def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=N
     invited = []
     if party:
         pSchedules = party.schedules.all()
-        invited = party.members
+        invited = party.members.all()
     extraPartySched = 1
     if len(pSchedules):
         extraPartySched = 0
@@ -71,9 +71,9 @@ def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=N
         createPartyForm = CreatePartyForm(request.POST, instance=party)
         customPartyScheduleFormSet = CustomPartySheduleSet(request.POST, queryset=pSchedules)
         if createPartyForm.is_valid() and customPartyScheduleFormSet.is_valid():
-            createPartyForm.saveParty(request.user, customPartyScheduleFormSet, invited)
+            party = createPartyForm.saveParty(request.user, customPartyScheduleFormSet, invited)
             messages.success(request, ugettext("Party successfully created"))
-            return HttpResponseRedirect(reverse('party.views.credit'))
+            return HttpResponseRedirect(reverse('party.views.edit', kwargs={'party':party.pk}))
     else:
         createPartyForm = CreatePartyForm(initial=initialCreatePartyForm,instance=party)
         customPartyScheduleFormSet = CustomPartySheduleSet(initial=initialEventSchedulesFormSet, queryset=pSchedules)
@@ -82,7 +82,8 @@ def _credit(request, initialCreatePartyForm=None, initialEventSchedulesFormSet=N
             {
             "createPartyForm": createPartyForm,
             "invited": invited,
-            "customPartyScheduleFormSet": customPartyScheduleFormSet
+            "customPartyScheduleFormSet": customPartyScheduleFormSet,
+            "party": party
         },
         context_instance=RequestContext(request)
     )
@@ -94,7 +95,7 @@ def manage(request):
     partyMembership = []
     _partyMembership =  request.user.partyMembership.all().select_related('party')
     for _member in _partyMembership:
-        partyMembers = PartyMember.objects.filter(Q(party=_member.party) & ~Q(user=request.user)).select_related('user').all()
+        partyMembers = PartyMember.objects.filter(Q(party=_member.party) & ~Q(user=request.user)).select_related('user').all()[:10]
         _member.partyMembers = partyMembers
         partyMembership.append(_member)
 
@@ -128,7 +129,8 @@ def invitationList(request, eventScheduleId):
         if request.POST:#TODO filter out friends that already added
             exclude = request.POST.getlist("exclude[]",[])
         #TODO take only mutual friends
-        friendships = request.user.friends.all().select_related("friend").order_by('-date_added')
+        friendships = request.user.friends.all().extra(select={'date_added': "account_friendship.date_added"}).order_by("-date_added")
+        print friendships.query
         try:
             party = Party.objects.get(schedules__eventSchedule=eventScheduleId, author=request.user)
             pMembers = party.members.filter(~Q(user = request.user)).select_related('user')

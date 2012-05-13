@@ -104,7 +104,7 @@ class ImagePreviewField(ImageField):
 
 
     def clean(self, data, initial=None):
-        if not data.find(settings.MEDIA_URL):
+        if data is not None and not data.find(settings.MEDIA_URL):
             data = data.replace(settings.MEDIA_URL, "", 1)
         else: #media url not found
             if self.required:

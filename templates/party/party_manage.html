@@ -3,45 +3,47 @@
 {% load static %}
 {% get_static_prefix as STATIC_PREFIX %}
 {% load menu_builder %}
+{% load extra %}
 
 {% block includes %}
     {{ block.super }}
     <link href="{{ STATIC_PREFIX }}common/less/manage.less" rel="stylesheet/less" type="text/css">
+    <link href="{{ STATIC_URL }}css/party.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
     <div class="restHeader">
-        <div class="headerName"><h1>{% trans "Invitations" %}</h1></div>
+        <div class="headerName"><h1>{% trans "Parties" %}</h1></div>
         <div class="subMenu">
             <ul>
                 <li>
                     <a href="{% url party.views.create %}">Create</a>
+                </li>
+                <li>
+                    <a href="#">Recommended</a>
                 </li>
             </ul>
         </div>
     </div>
 
     <div class="container-fluid">
-        <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Invited</th>
-                <th>Role</th>
-            </tr>
-        </thead>
-        <tbody>
+        <div class="row-fluid">
             {% for mship in partyMembership %}
-                <tr>
-                    <td>
-                        {{ mship.partyMembers|join:', ' }}
-                    </td>
-                    <td>
-                        <a href="{% url party.views.edit partyId=1 %}">{{ mship.get_role_display }}</a>
-                    </td>
-                </tr>
+                <div class="row-fluid party-list-item">
+                        <div class="span7">
+                        {% for member in mship.partyMembers %}
+                            <div style="background-image: url({{ member.user.pk|user_avatar }})"
+                                 class="party-member-thumb float-left"></div>
+                        {% endfor %}
+                        </div>
+                        <div class="party-list-actions float-right">
+                            {% if mship.role == mship.ROLE.OWNER %}
+                                <a href="{% url party.views.edit party=mship.party.pk %}">{% trans "Edit" %}</a>
+                            {% endif %}
+                        </div>
+                </div>
             {% endfor %}
-        </tbody>
-        </table>
+        </div>
     </div>
 
 {% endblock %}

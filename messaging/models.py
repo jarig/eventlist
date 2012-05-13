@@ -16,8 +16,8 @@ class Message(models.Model):
     class STATUS:
         SENT = 0
         RECEIVED  = 1
-        DELETED_AUTHOR = 2
-        DELETED_CORRESPONDENT = 4
+        DELETED_CORRESPONDENT = 2
+        DELETED_AUTHOR = 4
     _STATUS = (
         (STATUS.SENT, u'sent'),
         (STATUS.RECEIVED, u'received'),
@@ -29,8 +29,9 @@ class Message(models.Model):
     author = models.ForeignKey(Account, related_name='sent_messages', editable=False)
     to = models.ForeignKey(Account, related_name='received_messages')
     # 0 - sent, 1 - received, 2 - deleted by author, 4 - deleted by correspondent
-    status = models.PositiveSmallIntegerField(editable=False, default=STATUS.SENT)
+    status = models.PositiveSmallIntegerField(editable=False, default=STATUS.SENT, db_index=True)
     sent = models.DateTimeField(auto_now_add=True, auto_now=True, default=datetime.date.today, editable=False)
-    feed = models.CharField(max_length=8, default=gen_feed_hash, editable=False )
+    feed = models.CharField(max_length=8, default=gen_feed_hash, editable=False, db_index=True)
 
-
+    def __unicode__(self):
+        return self.text

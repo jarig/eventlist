@@ -48,10 +48,10 @@ def edit(request):
 
 @login_required
 def friendlist(request):
-    friendships = request.user.friends.all().select_related("friend")
+    friends = request.user.friends.all()
     return render_to_response("account/accounts_friendlist.html",
                               {
-                                "friendships": friendships
+                                "friends": friends
                               },
                               context_instance=RequestContext(request)
     )

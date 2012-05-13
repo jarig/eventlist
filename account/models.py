@@ -15,6 +15,10 @@ from _ext.pibu import settings as pibu_settings
 def account_logo_name(instance, filename):
     return "avatar/%d_avatar" % (int(instance.pk))
 
+def _account_logo_name(pk):
+    storage = DefaultStorage()
+    return storage.url("avatar/%d_avatar.jpeg" % int(pk))
+
 class Account(User):
     class SEX:
         MALE = "M"
@@ -30,12 +34,13 @@ class Account(User):
     avatar = ImagePreviewModelField(upload_to=account_logo_name, max_width=164, blank=True, null=True, max_length=255, default='')
     sex = models.CharField(max_length=1, choices=_SEX, null=True, blank=True)
     age = models.PositiveSmallIntegerField(null=True, blank=True)
+    friends = models.ManyToManyField('Account', through='FriendShip')
 
     class Meta:
         unique_together = ("identity", "provider")
 
     def __unicode__(self):
-        return u"%s %s" % ( unicode(self.first_name), unicode(self.last_name))
+        return u"%s %s" % ( unicode(self.first_name), unicode(self.last_name) )
 
 class FriendShip(models.Model):
     class STATUS:
@@ -48,7 +53,7 @@ class FriendShip(models.Model):
         (STATUS.SUBSCRIBED, u'subscribed'),
         (STATUS.FRIENDSHIP, u'friendship'),
     )
-    creator = models.ForeignKey(Account, related_name='friends') #those who added I
+    creator = models.ForeignKey(Account, related_name='+') #those who added I
     friend = models.ForeignKey(Account, related_name='subscribers') #those who added me
     date_added = models.DateTimeField(auto_now_add=True, editable=False)
     status = models.PositiveSmallIntegerField(choices=_STATUS,default=STATUS.SUBSCRIBED, blank=True, editable=False)

@@ -55,7 +55,7 @@ var Party =
                                 $("[name=invited]", invited).val(friendId);
                                 $(invited).attr("id", "friend-"+friendId);
                                 $(invited).attr("title", addInfo[friendId]['name']);
-                                $(invited).css("background-image", "url('"+addInfo[friendId]['avatar']+"')");
+                                //$(invited).css("background-image", "url('"+addInfo[friendId]['avatar']+"')");
                                 $("#participantList").prepend(invited);
                                 $(invited).fadeIn();
                             }

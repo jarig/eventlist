@@ -16,20 +16,20 @@ class CreatePartyForm(ModelForm):
         party = self.save(commit=False)
         party.author = author
         party.save()
-
         #save invited members
+        authorMember = PartyMember(party=party, user=author, role=PartyMember.ROLE.OWNER, invitedBy=None)
+        authorMember.save()
         for inv in invited:
+            if inv == "": continue
             pm = PartyMember(party=party, user=Account(pk=inv), role=PartyMember.ROLE.INVITED, invitedBy=author)
-            if inv == author.pk:
-                pm.role= PartyMember.ROLE.OWNER
             #TODO bulk save
             pm.save()
 
-        for form in schedulesFormSet:
-            form.party = party
-        schedulesFormSet.save()
-
-        return self.save()
+        schedules  = schedulesFormSet.save(commit=False)
+        for schedule in schedules:
+            schedule.party = party
+            schedule.save()
+        return party
 
 class PartyScheduleFormSet(BaseModelFormSet):
     pass
@@ -58,7 +58,7 @@ class CustomPartyScheduleForm(ModelForm):
     }))
 
     def clean_location(self):
-        return Address(pk=self.cleaned_data['location'])
+        return self.cleaned_data['location']
 
     class Meta:
         model = PartySchedule

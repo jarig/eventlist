@@ -5,9 +5,9 @@
 {% block includes %}
     {{ block.super }}
     <link href="{{ STATIC_URL }}common/less/manage.less" rel="stylesheet/less" type="text/css">
+    <link href="{{ STATIC_URL }}css/messaging.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{{ STATIC_URL }}js/messaging_core.js"></script>
 {% endblock %}
-
 
 {% block content %}
     <div class="restHeader">
@@ -21,13 +21,22 @@
             </ul>
         </div>
     </div>
-
     <div class="container-fluid">
-        {% for message in messages %}
-            <div class="row-fluid">
-                <div class="row-fluid"><strong>{{ message.author }}</strong></div>
+        {% for message in my_messages %}
+            <div class="row-fluid message_feed_header">
                 <div class="row-fluid">
-                    {{ message }}
+                    <a href="{% url messaging.views.sendMessageTo user=message.author.pk %}">
+                        <strong>{{ message.author }}</strong>
+                    </a>
+                </div>
+                <div class="span10">
+                    {{ message|truncatewords:25 }}
+                </div>
+                <div class="float-right message-actions">
+                    <i class="icon-share"></i> <a href="#">Reply</a>
+                </div>
+                <div class="clear"></div>
+                <div class="read-narrow-button" rel="tooltip" title="Read">
                 </div>
             </div>
         {% endfor %}

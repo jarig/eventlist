@@ -166,6 +166,7 @@
     text-decoration: none;
     text-align: center;
     cursor: pointer;
+    height: 100%;
 }
 #rightColumnToggleBar:hover
 {

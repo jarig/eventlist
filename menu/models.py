@@ -42,7 +42,7 @@ class Menu:
                     "enabled": self.user.is_authenticated()
                 },
                 {
-                "title": ugettext("Invitations"),
+                "title": ugettext("Parties"),
                 "url": reverse("party.views.manage"),
                 "active": False,
                 "enabled": self.user.is_authenticated()
