@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load static %}
+
+<div class="modal" id="moduleChooser" title="{% trans 'Choose module' %}">
+    <div class="modal-header">{% trans "Available Modules" %}</div>
+    <div id="modules" class="modal-body">
+            <div class="span5">
+                {% for module in modules %}
+                    <div class="row-fluid modulePreview">
+                        <div class="moduleLogo thumbnail" style="background-image: url('{{ module.logo }}');">
+                        </div>
+                        <div class="span7">
+                            <div class="moduleName" id="name">{{ module.name }}</div>
+                            <div class="moduleDescr" id="descr">{{ module.descr }} {{ module.path }}</div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                {% endfor %}
+            </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button">Close</button>
+    </div>
+</div>

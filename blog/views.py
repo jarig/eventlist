@@ -13,7 +13,9 @@ from django.template.context import RequestContext
 #choose in which blog to create event
 from django.utils.translation import ugettext as _
 from blog.forms import NewBlogForm
-from blog.models import Blog, BlogStyle, BlogAccess, BlogModule
+from blog.models import Blog, BlogStyle, BlogAccess
+from blog_modules.forms import ModuleParameterForm, ModuleParameterFormSet
+from blog_modules.models import Module, ModuleParameter
 from common.forms import AddressForm
 from common.models import Country, Address
 from menu.models import Menu
@@ -30,37 +32,20 @@ def manage(request):
                                 context_instance=RequestContext(request)
                               )
 
-def renderBlog(request, style='default',blog=None, page=None, mode=None, attr=None):
+def renderBlog(request, style='default', blog=None, page=None, mode=None, attr=None):
     #render blog page
     if attr is None: attr = {}
-    attr["mode"] = mode
-    attr['accessLevel'] = 0
+    if page is None or page == "": page = "general"
     if blog is not None:
         style = unicode(blog.style)
-        attr['accessLevel'] = blog.blogaccess_set.get(user=request.user).access
-        attr['blogId'] = blog.id
-    elif mode == 'create':
-        attr['accessLevel'] = BlogAccess.OWNER
+        attr['blogId'] = blog.pk
 
     attr["page"] = page
-    if page is None or page == '':
-        page = 'general'
-        attr["page"] = ''
-
+    attr["blog"] = blog
+    attr["mode"] = mode
+    attr["style"] = style
     attr["accessLevels"] = BlogAccess.accessLevelConstants
-
-    #generate menu
-    menu = Menu(RequestContext(request))
-    if mode != 'create': #view or edit
-        if mode == 'edit' and attr['accessLevel'] >= BlogAccess.ADMIN:
-            menu.addItem('Settings','blog.views.'+mode, viewArgs=[blog.id,'settings'])
-        menu.addItem('General','blog.views.'+mode, viewArgs=[blog.id,''])
-        menu.addItem('Events','blog.views.'+mode, viewArgs=[blog.id,'events'])
-    else:#create
-        menu.addItem('General','blog.views.create')
-        
-    attr["menu"] = menu.getMenu()
-    return render_to_response("blog/"+style+"/"+page+".html",
+    return render_to_response("blog/%s/%s/%s.html" % (style, mode, page),
                               attr,
                               context_instance=RequestContext(request)
                               )
@@ -71,18 +56,26 @@ def view(request, blogId, page=None):
         blog = Blog.objects.get(pk=blogId)
     except Blog.DoesNotExist:
         raise Http404
-    
-    return renderBlog(request, blog=blog, mode='view', page=page, attr={"blog":blog})
+
+    #generate menu
+    menu = Menu(RequestContext(request))
+    menu.addItem('General','blog.views.view', viewArgs=[blog.id,''])
+    menu.addItem('Events','blog.views.view', viewArgs=[blog.id,'events'])
+
+    return renderBlog(request, blog=blog, page=page, mode='view',
+        attr={
+                "menu": menu.getMenu()
+            })
 
 @login_required
 @permission_required("publisher.publish")
 def edit(request, blogId, page=None):
     try:
         blog = Blog.objects.get(pk=blogId)
-        if not BlogAccess.objects.filter(Q(blog=blog) & Q(user=request.user) &
-                                         (Q(access__gte=BlogAccess.PUBLISHER))).exists():
+        accessLevel = blog.blogaccess_set.get(user=request.user).access
+        if not accessLevel >= BlogAccess.PUBLISHER:
             raise Blog.DoesNotExist(_("You don't have permission to edit this blog"))
-    except Blog.DoesNotExist:
+    except Blog.DoesNotExist or BlogAccess.DoesNotExist:
         raise Http404
 
     AdrFormSet = modelformset_factory(Address, form=AddressForm, can_delete=True, extra=0)
@@ -95,53 +88,65 @@ def edit(request, blogId, page=None):
             return HttpResponseRedirect(reverse('blog.views.edit',kwargs={'blogId':blogId,'page':page}))
     else:
         blogForm = NewBlogForm(instance=blog)
-        addr = blog.addresses.all()
+        addr = blog.addresses.all().select_related('country','city')
         if len(addr):
             adrFormSet = AdrFormSet(queryset=addr)
         else:
             AdrFormSet.extra = 1
             adrFormSet = AdrFormSet(queryset=blog.addresses.none(),
-                                    initial=[{'country': Country.objects.get(name='Estonia').pk}])
-    
-    return renderBlog(request,
-                      blog=blog,
-                      page=page,
-                      mode="edit",
-                      attr={
-                            "blogForm": blogForm,
-                            "adrFormSet": adrFormSet
-                           })
+                                    initial=[{'country': Country.objects.get(name='Estonia').pk}])#TODO select dynamically
+
+    menu = Menu(RequestContext(request))
+    if accessLevel > BlogAccess.PUBLISHER:
+        menu.addItem('Settings','blog.views.edit', viewArgs=[blog.id,'settings'])
+    menu.addItem('General','blog.views.edit', viewArgs=[blog.id,''])
+    menu.addItem('Events','blog.views.edit', viewArgs=[blog.id,'events'])
+
+    return renderBlog(request, blog=blog, page=page, mode='edit', attr={
+            "adrFormSet": adrFormSet,
+            "blogForm": blogForm,
+            "menu": menu.getMenu(),
+            "accessLevel": accessLevel
+            })
 
 @login_required
 @permission_required("publisher.publish")
 def create(request):
-    blogStyle = ''
     AdrFormSet = formset_factory(AddressForm, can_delete=True, can_order=True,extra=0)
+    ModuleFormSet = formset_factory(ModuleParameterForm, formset=ModuleParameterFormSet, can_delete=True, extra=0)
+
     if request.method == "POST":
         blogForm = NewBlogForm(request.POST, request.FILES)
         adrFormSet = AdrFormSet(request.POST)
+        moduleFormSet = ModuleFormSet(request.POST, prefix="modules")
         if blogForm.is_valid() and adrFormSet.is_valid():
             nBlog = blogForm.submit_blog(request, adrFormSet)
             messages.success(request, _("You've successfully created new blog!"))
             return HttpResponseRedirect(reverse("blog.views.edit", kwargs={"blogId": nBlog.id, "page":""}))
     else:
-        defStyle = BlogStyle.objects.filter(default=True)
-        if len(defStyle): blogStyle = defStyle[0]
-        blogForm = NewBlogForm(initial={'style':  blogStyle})
+        blogForm = NewBlogForm(initial={'style':  'default'})
         adrFormSet = AdrFormSet(initial=[{'country': Country.objects.get(name='Estonia').pk}])
-    
+        moduleFormSet = ModuleFormSet(prefix="modules")
+
+    menu = Menu(RequestContext(request))
+    menu.addItem('General','blog.views.create')
+
     return renderBlog(request,
                       mode="create",
+                      style='default',
                       attr={
                         "blogForm": blogForm,
-                        "adrFormSet": adrFormSet
+                        "adrFormSet": adrFormSet,
+                        "menu": menu.getMenu(),
+                        "moduleFormSet": moduleFormSet,
+                        "accessLevel": BlogAccess.OWNER
                            })
 
 
 @login_required
 @permission_required("publisher.publish")
 def getAvailableModules(request):
-    modules = BlogModule.objects.all()
+    modules = Module.objects.all()
     json_serializer = json.Serializer()
     data= json_serializer.serialize(modules, ensure_ascii=False, use_natural_keys=True)
     return HttpResponse(data)

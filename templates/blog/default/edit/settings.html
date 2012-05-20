@@ -1,0 +1,19 @@
+{% extends 'blog/default/design.html' %}
+{% load i18n %}
+
+
+{% block includes %}
+    {{ block.super }}
+    <link href="{{ STATIC_PREFIX }}common/less/manage.less" rel="stylesheet/less" type="text/css">
+{% endblock %}
+
+{% block blogContent %}
+    <div class='managementHeader'>
+        <h1>{% trans 'Settings' %}</h1>
+        <div class='subMenu'>
+            <ul>
+                <li><a href="#" class="manageButton">Privacy</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

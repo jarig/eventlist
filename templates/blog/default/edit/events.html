@@ -1,0 +1,12 @@
+{% extends 'blog/default/view/events.html' %}
+{% load static %}
+{% load field_renderer %}
+{% load i18n %}
+
+
+{% block includes %}
+   {{ block.super }}
+   <link href="{{ STATIC_URL }}css/blogs_create.css" rel="stylesheet" type="text/css">
+   <script type="text/javascript" src="{{ STATIC_URL }}blogs_default/js/create_event.js"></script>
+   <link href="{{ STATIC_URL }}blogs_default/css/create.css" rel="stylesheet" type="text/css">
+{% endblock %}

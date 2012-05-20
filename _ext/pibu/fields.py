@@ -28,7 +28,7 @@ class ImagePreviewFieldFile(ImageFieldFile):
     url = property(_get_url)
 
     def save(self, name, content, save=True):
-        name = self.field.generate_filename(self.instance, content.name) + "."+self.field.format
+        name = self.field.generate_filename(self.instance, content.name) + ".jpeg" #dummy format
         srcPath = self.storage.path(name)
         oldPath = content.name
         fp = content

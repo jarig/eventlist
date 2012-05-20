@@ -15,9 +15,13 @@
     cursor: default;
 }
 
+.blogNameHeader
+{
+    margin-top: 0;
+}
+
 .blogNameHeader input
 {
-    border: none;
     width: 99%;
 }
 

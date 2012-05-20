@@ -3,12 +3,14 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils import simplejson
+from account.models import Account
 from messaging.forms import SendMessageForm
 from messaging.models import Message
 
 
 def messagingReceived(request):
     messages = request.user.received_messages.filter(status__lte=Message.STATUS.DELETED_CORRESPONDENT).select_related("author").order_by('-sent')[:20]
+
 
     return render_to_response("messaging/messaging_received.html",
             {

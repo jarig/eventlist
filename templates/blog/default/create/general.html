@@ -1,4 +1,4 @@
-{% extends 'blog/default/design.html' %}
+{% extends 'blog/default/view/general.html' %}
 {% load i18n %}
 {% load field_renderer %}
 
@@ -9,6 +9,7 @@
    <script src="{{ STATIC_URL }}address/address.js" type="text/javascript"></script>
    <link href="{{ STATIC_URL }}blogs_default/css/create.css" rel="stylesheet" type="text/css">
    <link href="{{ STATIC_URL }}css/blogs_address.css" rel="stylesheet" type="text/css">
+   <script src="{{ STATIC_URL }}js/blog_module.js" type="text/javascript"></script>
    {% include 'includes/pagination.inc' %}
    {% include 'includes/googlemaps.inc' %}
 {% endblock %}
@@ -17,7 +18,7 @@
 {% block scripts %}
     {{ block.super }}
     <script type="text/javascript">
-        {% if blogForm and accessType >= accessTypes.ADMIN %}
+        {% if accessType >= accessTypes.ADMIN %}
             BlogForm.initCreate();
 
             $('.addressForm').rest_Address("init", '{% url common.views.getCities %}',
@@ -44,73 +45,78 @@
 {% endblock %}
 
 
+{% block logoSrc %}
+    {% if blogForm %}
+        {% field blogForm.logo "render=preview" %}
+    {% endif %}
+{% endblock %}
 
 {% block logoBottom %}
-    {% if blogForm %}
-        {% field blogForm.logo "render=upload" %}
-    {% endif %}
+    {% field blogForm.logo "render=upload" %}
 {% endblock logoBottom%}
 
 
 {% block formDefinition %}
-        {% if blogForm and accessLevel >= accessLevels.ADMIN  %}
-        <form id="blogData"
-              {% if blogForm.instance.id %}
-              action="{% url blog.views.edit  blogForm.instance.id None %}"
-              {% else %}
-              action="{% url blog.views.create %}"
-              {% endif %}
-        enctype="multipart/form-data" method="POST">
-        <input type="hidden" id="blog_id" value="{{ blogForm.instance.id }}">
-        {{ blogForm.logo }}
-        <div class="buttonPane">
-            <span><a href="{% url blog.views.manage %}">{{"<< Back"|escape}}</a></span>
-            <span>
-            <a href="#" onclick="BlogForm.submit('#blogData');">
-                {% if blogForm.instance.id %}
-                    {% trans 'Save' %}
-                {% else %}
-                    {% trans 'Create' %}
-                {% endif %}
-            </a>
-            </span>
-
-            {% if blogForm.instance.id %}
+        {% if accessLevel >= accessLevels.ADMIN  %}
+            <form id="blogData"
+                  {% if blogForm.instance.id %}
+                  action="{% url blog.views.edit  blogForm.instance.id None %}"
+                  {% else %}
+                  action="{% url blog.views.create %}"
+                  {% endif %}
+            enctype="multipart/form-data" method="POST">
+            <input type="hidden" id="blog_id" value="{{ blogForm.instance.id }}">
+            {{ moduleFormSet.management_form }}
+            <div class="hide">{{ moduleFormSet }}</div>
+            {{ blogForm.logo }}
+            <div class="buttonPane">
+                <span><a href="{% url blog.views.manage %}">{{"<< Back"|escape}}</a></span>
                 <span>
-                    <a href="{% url blog.views.view  blogForm.instance.id page %}" target="_blank">View Blog</a>
+                <a href="#" onclick="BlogForm.submit('#blogData');" class="btn">
+                    {% if blogForm.instance.id %}
+                        {% trans 'Save' %}
+                    {% else %}
+                        {% trans 'Create' %}
+                    {% endif %}
+                </a>
                 </span>
-            {% endif %}
 
-            <div style="float:right; ">
-                <a href="#">Blog Style</a> |
-                {% field blogForm.style 'class=input-small' %}
+                {% if blogForm.instance.id %}
+                    <span>
+                        <a href="{% url blog.views.view  blogForm.instance.id '' %}" target="_blank" class="btn">View Blog</a>
+                    </span>
+                {% endif %}
+
+                <div style="float:right; ">
+                    Blog Style |
+                    {% field blogForm.style 'class=input-small' %}
+                </div>
             </div>
-        </div>
         {% endif %}
 {% endblock %}
 
 {% block blogNameHeader %}
-    {% if blogForm and accessLevel >= accessLevels.ADMIN %}
-        <div class="divButton blogNameHeader">
+    {% if accessLevel >= accessLevels.ADMIN %}
+        <div class="blogNameHeader">
             {% field blogForm.name 'title=Blog Name' 'class=blogNameHeader wideinput'%}
         </div>
         <div class="errors">
             {{ blogForm.name.errors }}
         </div>
     {% else %}
-        <div class="blogNameHeader">
-            <div class='blogNameHeader'>{{ blog.name }}</div>
-        </div>
+        {{ block.super }}
     {% endif %}
 {% endblock %}
 
-{% block blogHeaderImages %}
-    <!--div class="divButton" onclick="" style="line-height: 60px;">
-        <h3>Add here few images</h3>
-    </div-->
+{% block blogModule_2 %}
+    <div style="height: 70px">
+        {% include "blog_module/configure.html" with style=style position=2 moduleMap=moduleFormSet.moduleMap %}
+    </div>
 {% endblock %}
 
 {% block blogModule_1 %}
+    {% include "blog_module/configure.html" with style=style position=1 moduleMap=moduleFormSet.moduleMap %}
+
     {% if adrFormSet %}
         <div class="addressesHeader">
             <a href="#" id="showMap">
@@ -132,55 +138,40 @@
 {% endblock %}
 
 {% block blogDescription %}
-    {% if blogForm and accessLevel >= accessLevels.ADMIN %}
-        <div class="divButton" style="line-height: 60px;">
+    {% if accessLevel >= accessLevels.ADMIN %}
+        <div style="line-height: 60px;">
             {% field blogForm.description 'title=Add short description of your blog' 'class=blogDescription'%}
         </div>
         <div class="errors">
             {{ blogForm.description.errors }}
         </div>
     {% else %}
-        {# view mode #}
-        <div class="blogDescription" >
-            <p>
-                {{ blog.description|escape|linebreaksbr }}
-            </p>
-        </div>
+        {{ block.super }}
     {% endif %}
 {% endblock %}
 
 
 {% block blogFacilities %}
-
-    {% if blogForm and accessLevel >= accessLevels.ADMIN %}
+    {% if accessLevel >= accessLevels.ADMIN %}
         <div class="formField">
             <div class="fieldLabel">{% trans 'Facilities' %}:</div>
             <div class="fieldInput">
                 {{ blogForm.facilities }}
             </div>
             <div class="fieldRight">
-                <a href="#" id="addNewBlogType">Add New</a>
+                <button id="addNewBlogType" class="btn btn-small" type="button">Suggest new facility</button>
             </div>
             <div class="fieldError errors">
                 {{ blogForm.facilities.errors }}
             </div>
         </div>
     {% else %}
-        {# if in view mode #}
-        {% for type in blog.facilities.all %}
-            <div class="blogType">
-                {{ type.name }}
-            </div>
-        {% endfor %}
+        {{ block.super }}
     {% endif %}
 {% endblock %}
 
 
-{% block blogNews %}
-    <div id="blogNews">
-        News Here
-        {{ blogForm.errors }}
-    </div>
+{% block blogNewsSection %}
 {% endblock %}
 
 

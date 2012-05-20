@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'messaging',
     'common',
     'event',
+    'blog_modules',
     'blog',
     'menu',
     'account',

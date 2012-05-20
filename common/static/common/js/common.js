@@ -37,18 +37,14 @@ var CommonGUI =
     loadingWindow: '',
     showLoading: function()
     {
-        CommonGUI.loadingWindow = $('<div></div>');
-        $(CommonGUI.loadingWindow).dialog({
-            title: "Loading...",
-            height: "80",
-            width: "150",
-            resizable: false,
-            modal: true
-        });
+        CommonGUI.loadingWindow = $('<div class="modal"><div class="modal-body progress progress-striped active"><div class="bar" style="width: 100%;"></div></div></div>');
+        $(CommonGUI.loadingWindow).css("top","80%");
+        $(".modal-body",CommonGUI.loadingWindow).css("margin-bottom","0");
+        $(CommonGUI.loadingWindow).modal({keyboard: false});
     },
     hideLoading: function()
     {
-        $(CommonGUI.loadingWindow).dialog("close");
+        $(CommonGUI.loadingWindow).modal('hide');
         $(CommonGUI.loadingWindow).remove();
     }
 };

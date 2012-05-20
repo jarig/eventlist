@@ -1,0 +1,26 @@
+{% extends 'blog/default/design.html' %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+{% load field_renderer %}
+{% load i18n %}
+
+
+{% block includes %}
+   {{ block.super }}
+   <link href="{{ STATIC_PREFIX }}blogs_default/css/event.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block blogContent %}
+    <div class="span11" id='eventContentBox'>
+        <div class="blogSectionName">
+            Events:
+        </div>
+        <div class="eventList">
+            Events here
+        </div>
+    </div>
+{% endblock %}
+
+{% block hiddenContent %}
+
+{% endblock %}

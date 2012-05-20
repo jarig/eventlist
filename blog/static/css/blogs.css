@@ -45,7 +45,8 @@
 .blogInfoContent
 {
     float:left;
-    border: solid #e6e6fa 1px;
+    border-left: solid #e6e6fa 1px;
+    padding-left: 3%;
     width:100%;
 }
 .blogContent
@@ -100,10 +101,5 @@
     margin-top: 5px;
 }
 /* Details*/
-
-.addressForm
-{
-    width: 80%;
-}
 
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^ */

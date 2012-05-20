@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^party/', include('party.urls')),
     url(r'^blog/', include('blog.urls')),
+    url(r'^blog_modules/', include('blog_modules.urls')),
     url(r'^accounts/', include('account.urls')),
     url(r'^search/', include('search.urls')),
     url(r'^publisher/', include('publisher.urls')),

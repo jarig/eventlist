@@ -3,8 +3,9 @@
 
 {% block includes %}
    {{ block.super }}
-   <link href="{{ STATIC_PREFIX }}blogs_default/css/blogs.css" rel="stylesheet" type="text/css">
+   <link href="{{ STATIC_URL }}blogs_default/css/blogs.css" rel="stylesheet" type="text/css">
    {% include "jquery.multiselect.html" %}
+   {# include modules css #}
 {% endblock %}
 
 
@@ -13,12 +14,7 @@
         <div id="generalLogo">
             <div id="logoWrapper">
                 {% block logoSrc %}
-                    {% if blogForm %}
-                        {% field blogForm.logo "render=preview" %}
-                    {% endif %}
-                    {% if blog %}
-                        <img src='{{ blog.logo.url }}'/>
-                    {% endif %}
+                    {% include "blog/default/includes/logo.html" %}
                 {% endblock %}
             </div>
             <div class='logoBottom'>
@@ -52,36 +48,28 @@
             {% endblock %}
         </div>
 
-        <div id="blogContent">
-                    <table style="width:100%;">
-                    <tr>
-                        <td colspan="2">
-                        <div class="blogSection" >
-                            {% block blogNameHeader%}
-                            
-                            {% endblock %}
-                        </div>
-
-                        <!--div class="blogTopImages">
+        <div id="blogContent" class="span11">
+                    <div class="row-fluid">
                             <div class="blogSection" >
-                                {% block blogHeaderImages %}
-                                
+                                {% block blogNameHeader%}
+
                                 {% endblock %}
                             </div>
-                        </div-->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="250px" style="vertical-align: top;">
+                            {% block blogModule_2 %}
+                            {% endblock %}
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span4">
                             <div class="generalInfoLeftColumn">
-                                <div class="blogSection"  >
+                                <div class="blogSection" >
+
                                     {% block blogModule_1 %}
                                         
                                     {% endblock %}
                                 </div>
                             </div>
-                        </td>
-                        <td style="vertical-align: top;">
+                        </div>
+                        <div class="span8">
                             <div class="blogInfoContent">
                                     <div class="blogSection"  >
                                         {% block blogDescription %}
@@ -95,27 +83,22 @@
                                                 {% endblock %}
                                      </div>
                             </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="vertical-align: top">
+                        </div>
+                    </div>
+                    <div class="row-fluid"></div>
+                    <div class="row-fluid">
+                        <div class="blogSection">
+                        {% block blogNewsSection %}
+                            <div class="blogSectionName">News</div>
+                            {% block blogNews %}
 
-                        </td>
-                    </tr>
-                    <tr >
-                        <td colspan="2" style="vertical-align: top;">
-                            <div class="blogSection">
-                                <div class="blogSectionName">News</div>
-                                {% block blogNews %}
-                                
-                                {% endblock %}
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                            {% endblock %}
+                        {% endblock %}
+                        </div>
+                    </div>
+        </div>
                 {% block formEnd %}
                 
                 {% endblock %}
-            </div>
 </div>
 {% endblock blogContent %}
