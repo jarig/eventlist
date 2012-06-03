@@ -1,5 +1,9 @@
+import hashlib
+from django import template
 from django.conf import settings
 from django.db import models
+from django.http import HttpResponse
+from django.template.base import resolve_variable
 from blog.models import Blog, BlogStyle
 
 class Module(object):
@@ -14,42 +18,46 @@ class Module(object):
     type = ""
     hash = None #generated hash = __class__.name*secret
 
-    @staticmethod
-    def render():
-        #render for editing/creation/view of module
+
+    def content(self, context):
         pass
 
-    def path(self):
-        #TODO change to hash
-        return self.__class__.__name__
+    def render(self, context):
+        context["user"] = resolve_variable('user', context)
+        return HttpResponse(self.content(context))
 
     def __unicode__(self):
         return unicode(self.name)
 
+class Dummy(Module):
+    name = "Dummy"
+    descr = "Dummy"
+    type = Module.TYPE.FREE
+    hash = hashlib.md5("Dummy").hexdigest()
+
+    def content(self, context):
+        t = template.loader.get_template('modules/dummy/index.html')
+        return t.render(context)
 
 class ImageSlider(Module):
     name = "Image Slider"
     #logo = ""
-    descr = "Shows slide images"
+    descr = "Shows slide images"#TODO use lazy ugettext
     type = Module.TYPE.FREE
+    hash = hashlib.md5("ImageSlider").hexdigest()
 
-    @staticmethod
-    def render():
-        pass
-
-
-def generate_module_hashes():
-    #generate hashes and form hash map for instant access
-    pass
+    def content(self,context):
+        t = template.loader.get_template('modules/image_slider/index.html')
+        return t.render(context)
 
 #store params per blog
 class ModuleParameter(models.Model):
     #module parameters
     blog = models.ForeignKey(Blog, related_name='modules', editable=False)
     style = models.ForeignKey(BlogStyle, related_name='modules', editable=False)
-    module = models.CharField(max_length=16) #path to module (modules hash)
+    module = models.CharField(max_length=32) #path to module (modules hash)
     position = models.PositiveSmallIntegerField(db_index=True)
-    parameters = models.TextField()
+    parameters = models.TextField(blank=True)
 
     class Meta:
         unique_together = ('blog','module','style',)

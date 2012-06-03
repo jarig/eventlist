@@ -1,7 +1,7 @@
 {# style - current blog style #}
 {# position - module position #}
-{# moduleMap - hash map : md5(style*position)=modules_hash #}
-
+{# moduleMap - hash map : {position:modules_hash} #}
+{% load module_renderer %}
 
 <div class="row-fluid">
     <div class="btn-group">
@@ -13,16 +13,18 @@
             <li> Module Name </li>
             <li>
                 <a href="#"
-                   onclick="return BlogModule.showModuleList('{% url blog_modules.views.getModuleList style=style position=position %}');" >
+                   onclick="return BlogModule.showModuleList('{% url blog_modules.views.getModuleList style=style position=position %}',
+                                                             '{% url blog_modules.views.renderModule %}',
+                                                             '{{ position }}','{{ moduleFormSet.prefix }}');" >
                 <i class="icon-plus"></i>Add module</a>
             </li>
             <li><a href="#"><i class="icon-wrench"></i>Settings</a></li>
-            <li><a href="#"><i class="icon-minus"></i>Remove Module</a></li>
+            <li><a href="#" onclick="return BlogModule.removeModule('{{ moduleFormSet.prefix }}',
+                    '{{ position }}');"><i class="icon-minus">
+            </i>Remove Module</a></li>
         </ul>
     </div>
-    <div class="row-fluid" id="moduleContent">
-        Test
-        {{ moduleMap }}
-        {# TODO add custom tag that will insert correct module #}
+    <div class="row-fluid" id="module-{{ position }}">
+        {% blogModule moduleFormSet.moduleMap position %}
     </div>
 </div>

@@ -10,16 +10,17 @@ class ModuleParameterForm(ModelForm):
 
 
 class ModuleParameterFormSet(BaseFormSet):
-    #TODO form hash map: md5(style*position)=module_hash
+    #TODO form hash map: style+position=module_hash
     def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None,
                  initial=None, error_class=ErrorList):
         super(ModuleParameterFormSet, self).__init__(data, files, auto_id, prefix,
             initial, error_class)
         self.moduleMap = {}
 
-    def _construct_form(self, i, **kwargs):
-        form = super(ModuleParameterFormSet, self)._construct_form(i, **kwargs)
+    def clean(self):
+        super(ModuleParameterFormSet, self).clean()
         if self.is_bound:
-            if form.is_valid():
-                self.moduleMap[form.cleaned_data["style"]+form.cleaned_data["position"]] = form.cleaned_data["module"]
-        return form
+            for form in self.forms:
+                    if form.is_valid():
+                        if form.cleaned_data.has_key("module") and not form.cleaned_data.get('DELETE', False):
+                                self.moduleMap[form.cleaned_data["position"]] = form.cleaned_data["module"]

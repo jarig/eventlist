@@ -39,6 +39,7 @@
                    }
                    return false;
                 });
+                $('{{ moduleFormSet.prefix }}').ajaxSimpleForm();
             });//TODO move to class
         {% endif %}
     </script>
@@ -67,7 +68,19 @@
             enctype="multipart/form-data" method="POST">
             <input type="hidden" id="blog_id" value="{{ blogForm.instance.id }}">
             {{ moduleFormSet.management_form }}
-            <div class="hide">{{ moduleFormSet }}</div>
+            {{ moduleFormSet.errors }}
+            {{ moduleFormSet.moduleMap }}
+            <div class="hide" id="moduleForms">
+                <div id="{{ moduleFormSet.prefix }}-empty_form">
+                    {{ moduleFormSet.empty_form }}
+                </div>
+                {% for form in moduleFormSet.forms %}
+                    <div {% if not form.DELETE.value %} id="modules-{{ form.position.value }}" {% endif %}
+                            class="_{{ moduleFormSet.prefix }}">
+                        {{ form }}
+                    </div>
+                {% endfor %}
+            </div>
             {{ blogForm.logo }}
             <div class="buttonPane">
                 <span><a href="{% url blog.views.manage %}">{{"<< Back"|escape}}</a></span>
@@ -109,32 +122,14 @@
 {% endblock %}
 
 {% block blogModule_2 %}
-    <div style="height: 70px">
-        {% include "blog_module/configure.html" with style=style position=2 moduleMap=moduleFormSet.moduleMap %}
+    <div style="min-height: 70px">
+        {% include "blog_module/configure.html" with style=style position=2 moduleFormSet=moduleFormSet %}
     </div>
 {% endblock %}
 
 {% block blogModule_1 %}
-    {% include "blog_module/configure.html" with style=style position=1 moduleMap=moduleFormSet.moduleMap %}
+    {% include "blog_module/configure.html" with style=style position=1 moduleFormSet=moduleFormSet %}
 
-    {% if adrFormSet %}
-        <div class="addressesHeader">
-            <a href="#" id="showMap">
-                Map</a>
-        </div>
-        <div class="addresses" id="addresses">
-            {% for form in adrFormSet %}
-                <div id="{{ forloop.counter }}" class="addressForm">
-                    {% include 'event_address.html' with address=form %}
-                </div>
-            {% endfor %}
-            {{ adrFormSet.management_form }}
-            <!--div class="button"><a href="#">Add More</a></div-->
-            <!--div id="paginator"></div-->
-        </div>
-        <div id="googleMap" style="width: 100%; height: 200px; border: 1px #e6e6fa solid; display:none;">
-        </div>
-    {% endif %}
 {% endblock %}
 
 {% block blogDescription %}
@@ -170,6 +165,26 @@
     {% endif %}
 {% endblock %}
 
+{% block blogAddress %}
+    {% if adrFormSet %}
+        <div class="addressesHeader">
+            <a href="#" id="showMap">
+                Map</a>
+        </div>
+        <div class="addresses" id="addresses">
+            {% for form in adrFormSet %}
+                <div id="{{ forloop.counter }}" class="addressForm">
+                    {% include 'event_address.html' with address=form %}
+                </div>
+            {% endfor %}
+            {{ adrFormSet.management_form }}
+            <!--div class="button"><a href="#">Add More</a></div-->
+            <!--div id="paginator"></div-->
+        </div>
+        <div id="googleMap" style="width: 100%; height: 200px; border: 1px #e6e6fa solid; display:none;">
+        </div>
+    {% endif %}
+{% endblock %}
 
 {% block blogNewsSection %}
 {% endblock %}

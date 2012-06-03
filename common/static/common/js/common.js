@@ -277,6 +277,7 @@ jQuery.cachedHtml = function(url, options) {
                 }
             });
             if ( last != null ) last.after(form);
+            else baseIdent.append(form);
 
             form.fadeIn();
             methods.updateIndex(form, parseInt(managementForm["totalForms"].val()));

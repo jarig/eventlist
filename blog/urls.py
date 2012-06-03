@@ -6,5 +6,4 @@ urlpatterns = patterns('blog.views',
     url(r'^(?P<blogId>\d+)/edit/(?P<page>\w*)', 'edit'),
     url(r'^(?P<blogId>\d+)/(?P<page>\w*)', 'view'),
     url(r'^getBlogAddress', 'getBlogAddress'),
-    url(r'^getAvailableModules','getAvailableModules'),
 )

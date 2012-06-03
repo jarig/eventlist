@@ -6,7 +6,8 @@
     <div id="modules" class="modal-body">
             <div class="span5">
                 {% for module in modules %}
-                    <div class="row-fluid modulePreview">
+                    <div class="row-fluid modulePreview _blogModule">
+                        <input type="hidden" value="{{ module.hash }}" id="moduleHash">
                         <div class="moduleLogo thumbnail" style="background-image: url('{{ module.logo }}');">
                         </div>
                         <div class="span7">
@@ -19,6 +20,6 @@
             </div>
     </div>
     <div class="modal-footer">
-        <button type="button">Close</button>
+        <button type="button" class="btn" data-dismiss="modal">Close</button>
     </div>
 </div>

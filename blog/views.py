@@ -13,9 +13,8 @@ from django.template.context import RequestContext
 #choose in which blog to create event
 from django.utils.translation import ugettext as _
 from blog.forms import NewBlogForm
-from blog.models import Blog, BlogStyle, BlogAccess
+from blog.models import Blog, BlogAccess
 from blog_modules.forms import ModuleParameterForm, ModuleParameterFormSet
-from blog_modules.models import Module, ModuleParameter
 from common.forms import AddressForm
 from common.models import Country, Address
 from menu.models import Menu
@@ -119,7 +118,7 @@ def create(request):
         blogForm = NewBlogForm(request.POST, request.FILES)
         adrFormSet = AdrFormSet(request.POST)
         moduleFormSet = ModuleFormSet(request.POST, prefix="modules")
-        if blogForm.is_valid() and adrFormSet.is_valid():
+        if blogForm.is_valid() and adrFormSet.is_valid() and moduleFormSet.is_valid():
             nBlog = blogForm.submit_blog(request, adrFormSet)
             messages.success(request, _("You've successfully created new blog!"))
             return HttpResponseRedirect(reverse("blog.views.edit", kwargs={"blogId": nBlog.id, "page":""}))
@@ -142,14 +141,6 @@ def create(request):
                         "accessLevel": BlogAccess.OWNER
                            })
 
-
-@login_required
-@permission_required("publisher.publish")
-def getAvailableModules(request):
-    modules = Module.objects.all()
-    json_serializer = json.Serializer()
-    data= json_serializer.serialize(modules, ensure_ascii=False, use_natural_keys=True)
-    return HttpResponse(data)
 
 @login_required
 @permission_required("publisher.publish")
