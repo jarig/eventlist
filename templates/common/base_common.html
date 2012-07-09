@@ -41,10 +41,17 @@
                 {% if request.session.mode == 'publish' %}
                     <li><a href="{% url event.views.credit %}" title="Publish!">{% trans "Publish!" %}</a></li>
                 {% else %}
-                    <li><a href="{% url search.views.findPlace %}" title="Find Where To Rest!">{% trans "Rest!" %}</a></li>
+                    <li><a href="{% url search.views.findPlace %}" title="Find Where To Rest!">
+                        <i class="icon-glass"></i>
+                        {% trans "Rest!" %}</a></li>
                 {% endif %}
-                <li><a href="{% url search.views.findPlace %}">{% trans "Find Place" %}</a></li>
-                <li><a href="{% url search.views.findPeople %}">{% trans "Find People" %}</a></li>
+                <li><a href="{% url search.views.findPlace %}">
+                    <i class="icon-picture"></i>
+                    {% trans "Find Place" %}</a></li>
+                <li>
+                    <a href="{% url search.views.findPeople %}">
+                        <i class="icon-user"></i>
+                    {% trans "Find People" %}</a></li>
 
                 <li class="divider"></li>
                 <li><a href="#">Separated link</a></li>

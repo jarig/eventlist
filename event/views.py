@@ -2,11 +2,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
 from django.forms.models import  modelformset_factory
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.translation import ugettext as _
-from common.models import Address
+from account.models import Account
 from event.forms import EventForm, EventScheduleForm, EventScheduleFormSet
 from event.models import Event, EventSchedule, EventGo
 from party.forms import CreatePartyForm
@@ -38,7 +38,7 @@ def credit(request, event=None):
     if request.method == "POST":
         eventForm = EventForm(request.user, request.POST, request.FILES,instance=event)
         eventSchedules = eventScheduleFormSet(request.POST,
-                                              queryset=schedules)
+                                              queryset=schedules, prefix="eventForm")
         if eventForm.is_valid() and eventSchedules.is_valid():
             newEvent = eventForm.saveEvent(request, eventSchedules)
             messages.success(request, _("Event successfully created"))
@@ -48,6 +48,7 @@ def credit(request, event=None):
         eventForm = EventForm(request.user, instance=event)
         eventSchedules = eventScheduleFormSet(
             queryset=schedules,
+            prefix="eventForm"
         )
 
     return render_event(request, {
@@ -55,6 +56,23 @@ def credit(request, event=None):
                                     "eventForm": eventForm
                                  })
     pass
+
+
+
+def view_schedule(request,scheduleId):
+    try:
+        schedule = EventSchedule.objects.select_related('event').get(pk=scheduleId)
+        friends = Account.objects.filter(pk__in=EventGo.objects.filter(eventSchedule=schedule).values("user"))[:11]
+    except EventSchedule.DoesNotExist:
+        return HttpResponseNotFound(_("Such event doesn't exist"))
+
+    return render_to_response("event/events_view_schedule.html",
+        {
+            "schedule": schedule,
+            "friends": friends
+        },
+        context_instance=RequestContext(request)
+    )
 
 def manage(request):
     myEvents = Event.objects.filter(author=request.user)
@@ -66,7 +84,7 @@ def manage(request):
                               )
 
 
-
+#show main events
 def main(request):
     createPartyFormSample = None
     goes = "0"
@@ -86,7 +104,7 @@ def main(request):
                                                 (%s) AS `goes`
                                                 FROM  %s EE,
                                                 (SELECT * FROM %s SC GROUP BY %s ORDER BY dateFrom DESC) as SCH
-                                                WHERE EE.id=SCH.%s """ % (
+                                                WHERE EE.id=SCH.%s ORDER BY SCH.dateFrom DESC""" % (
                                                                           goes,
                                                                           Event._meta.db_table,
                                                                           EventSchedule._meta.db_table,

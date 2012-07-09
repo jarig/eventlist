@@ -55,8 +55,8 @@ class ImagePreviewFieldFile(ImageFieldFile):
         self._size = newResizedImage.size
         self._committed = True
 
-        # Save the object because it has changed, unless save is False
         if save:
+            # Save the object because it has changed, unless save is False
             self.instance.save()
 
 
@@ -78,13 +78,16 @@ class ImagePreviewModelField(models.ImageField):
             raise ValidationError(_("Uploaded image exceeds maximum size - %s" % utils.prettySize(self.max_size)))
         pass
 
+    def save_form_data(self, instance, data):
+        if data.name.lower().find(settings.MEDIA_TEMP_URL.lower()): data = None
+        super(ImagePreviewModelField,self).save_form_data(instance,data)
+
     def formfield(self, **kwargs):
         defaults = {'form_class': ImagePreviewField}
         if 'initial' in kwargs:
             defaults['required'] = False
         defaults.update(kwargs)
         return super(ImagePreviewModelField, self).formfield(**defaults)
-
 
 # image field with preview before submit functionality
 class ImagePreviewField(ImageField):
@@ -101,7 +104,6 @@ class ImagePreviewField(ImageField):
             return super(ImagePreviewField, self).to_python(fp)
         except Exception:
             raise ValidationError(self.error_messages['invalid_image'])
-
 
     def clean(self, data, initial=None):
         if data is not None and not data.find(settings.MEDIA_URL):

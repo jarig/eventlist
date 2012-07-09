@@ -7,5 +7,6 @@ urlpatterns = patterns('event.views',
     url(r'go/(?P<eventSchId>\d+)$', 'go'),
     url(r'unGo/(?P<eventSchId>\d+)$', 'unGo'),
     url(r'searchEvent', 'searchEvent'),
+    url(r'(?P<scheduleId>\d+)$', 'view_schedule'),
     url(r'^$', 'main'),
 )

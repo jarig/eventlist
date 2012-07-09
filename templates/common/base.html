@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 {% load static %}
 {% load i18n %}
+{% load compress %}
 {% get_static_prefix as STATIC_PREFIX %}
 
 {% block dummyBlock %}
@@ -9,10 +10,9 @@
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
+    {% compress css %}
     <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap-responsive.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-
-    <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap_v2.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
     <link href="{{ STATIC_PREFIX }}common/plugins/jqueryUI/css/custom-theme/jquery-ui-1.8.17.custom.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
@@ -21,8 +21,9 @@
     <link href="{{ STATIC_PREFIX }}css/menu_login.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}css/menu_topmenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}css/menu_submenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+    {% endcompress %}
 
-
+    {% compress js %}
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery.cookie.js"></script>
@@ -36,25 +37,27 @@
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/init.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}js/menu_login.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}js/accounts.js"></script>
-
+    {% endcompress %}
 
     <!-- Plugins -->
     <link href="{{ STATIC_PREFIX }}common/plugins/chosen/chosen.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/chosen/chosen.jquery.min.js"></script>
-
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/ajax-django-form/ajax-django-form.js"></script>
 
     <link href="{{ STATIC_PREFIX }}css/menu_sidemenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
+
 
     {% if request.session.mode == 'publish' %}
         <link href="{{ STATIC_PREFIX }}css/base_publisher.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     {% endif %}
 
 
+
     {% block includes %}
 
     {% endblock %}
 
-    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/less/less-1.2.2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/less/less-1.3.0.min.js"></script>
     <title>{% block title %}Rest{% endblock %}</title>
 </head>
 
@@ -80,20 +83,20 @@
 
         <div id="header">
             <div class="wrapper">
-                <div class="navbar topMenu">
-                    <div class="navbar-inner">
+                <div class="topMenu" style="width: 100%">
+                    <div class="topMenu-inner">
                         <div class="container-custom">
                             <!--a class="brand" href="#">
                                 REST
                             </a-->
-                            <div class="nav-collapse">
+                            <div class="topMenu-collapse">
                                 {% block topmenu %}
-                                    <ul class="nav">
+                                    <ul class="topMenu-nav">
                                         {% block topmenu_left %}
 
                                         {% endblock %}
                                     </ul>
-                                    <ul class="nav pull-right">
+                                    <ul class="topMenu-nav float-right">
                                         {% block topmenu_right %}
                                                 <li>
                                                     <div id="signin" class="topButton">
@@ -108,7 +111,6 @@
                                                         {%  endif %}
                                                     </div>
                                                 </li>
-                                                <li class="divider-vertical"></li>
                                             {% block topmenu_right_actions %}
                                             {% endblock topmenu_right_actions %}
                                         {% endblock topmenu_right %}
@@ -122,11 +124,11 @@
                 {% block userButtons %}
                 {% endblock userButtons %}
             </div>
-            <div class="navbar">
-                <div class="navbar-inner">
+            <div class="topMenu">
+                <div class="topMenu-inner">
                     <div class="container-custom">
-                        <div class="nav-collapse">
-                            <ul class="nav">
+                        <div class="topMenu-collapse">
+                            <ul class="topMenu-nav">
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="icon-flag"></i>{% trans "Language" %}

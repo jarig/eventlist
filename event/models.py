@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+import time
 from _ext.pibu.fields import ImagePreviewModelField
 from account.models import Account
 from blog.models import Blog
@@ -20,13 +21,14 @@ class EventActivity(models.Model):
 
 
 def event_logo_name(instance, filename):
-    return "event/logo/%d_main_logo" % int(instance.pk)
+    return "event/logo/main_logo_%d" % int(time.time())
 #
 class Event(models.Model):
     name = models.CharField(max_length=255)
     author = models.ForeignKey(Account)
-    logo = ImagePreviewModelField(upload_to=event_logo_name,)
-    blogs = models.ManyToManyField(Blog) # blogs/pages on which this event is published
+    logo = ImagePreviewModelField(upload_to=event_logo_name,max_height=300, max_width=300)
+    # blogs/pages on which this event is published, derive from EventSchedule blog fields
+    blogs = models.ManyToManyField(Blog, blank=True, null=True, editable=False)
     activities = models.ManyToManyField(EventActivity, blank=True, null=True) #event activities/actions
     organizers = models.ManyToManyField(Organization) # organizations that are responsible for this event
     descr = models.TextField() #event description (with BB code)

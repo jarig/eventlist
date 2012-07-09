@@ -22,6 +22,6 @@ def renderModule(request, moduleHash=None):
         moduleHash = request.GET.get("moduleHash",0)
     if INSTALLED_MODULES.has_key(moduleHash):
         module = INSTALLED_MODULES[moduleHash]
-        return module.render(RequestContext(request))
+        return module.render(request)
     else:
         return HttpResponseNotFound("Such module doesn't exist")

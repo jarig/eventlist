@@ -135,6 +135,8 @@ INSTALLED_APPS = (
     'publisher',
     'album',
     'organization',
+    'widget_tweaks',
+    'compressor',
     'south',
 )
 

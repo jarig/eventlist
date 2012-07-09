@@ -1,0 +1,61 @@
+{% load field_renderer %}
+{% load i18n %}
+
+<div class="eventSchedule well"
+     {% if id %}
+        id="{{ schForm.prefix }}-{{ id }}"
+     {% else %}
+        id="{{ schForm.prefix }}"
+     {% endif %}
+        >
+    {{ schForm.id }}
+    {{ schForm.DELETE.as_hidden }}
+    <input id="schedulePrefix" name="{{ schForm.prefix }}" type="hidden">
+    <a class="close" action-bind='closeButton'>&times;</a>
+    <div class="eventDates">
+        <div class="control-group {% if schForm.dateFrom.errors or schForm.timeFrom.errors %}error{% endif %}">
+            <label class="control-label" >{% trans "Event starts" %}</label>
+            <div class="controls">
+                {% field schForm.dateFrom 'class=dateFrom span4'%}
+                {% field schForm.timeFrom 'class=eventTime span3' %}
+                <span class="help-inline">{{ schForm.dateFrom.errors|join:" " }}</span>
+                <span class="help-inline">{{ schForm.timeFrom.errors|join:" " }}</span>
+            </div>
+        </div>
+        <div class="control-group {% if schForm.dateTo.errors or schForm.dateTo.errors %}error{% endif %}">
+            <label class="control-label" >{% trans "Event ends" %}</label>
+            <div class="controls">
+                {% field schForm.dateTo 'class=dateTo span4' %}
+                {% field schForm.timeTo 'class=eventTime span3' %}
+                <span class="help-inline">{{ schForm.dateTo.errors|join:" " }}</span>
+                <span class="help-inline">{{ schForm.timeTo.errors|join:" " }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="blogSelection">
+        {{ schForm.blog }}
+        <!--div class="button"></div-->
+    </div>
+    <div class="loading"></div>
+    {{ schForm.address }} {# address id #}
+    <div class="address eventAddress" id="eventAddress">
+        <div class="address blogAddress" id="blogAddress"
+                {% if schForm.blogAddress %}
+             style="display: block"
+                {% else %}
+             style="display: none"
+                {% endif %}
+                >
+            {% include "event/includes/event_address.html" with address=schForm.blogAddress %}
+        </div>
+        <div class="address customAddress" id="customAddress"
+                {% if schForm.blogAddress %}
+             style="display: none"
+                {% endif %}
+                >
+            <input type="hidden" name="addressPrefix" id="addressPrefix" value="{{ schForm.customAddressForm.prefix }}">
+            {% include "event/includes/event_address.html" with address=schForm.customAddressForm %}
+        </div>
+    </div>
+    {{ schForm.addressForm.errors }}
+</div>

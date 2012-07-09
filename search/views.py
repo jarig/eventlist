@@ -1,9 +1,5 @@
-from django import template
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse, resolve
 from django.db.models.query_utils import Q
-from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from account.models import Account
@@ -30,14 +26,14 @@ def findParty(request):
 @login_required
 def findPeople(request):
     users = None
-
+    friendsList = None
     if request.GET:
         searchForm = SearchPeopleForm(request.GET)
         if searchForm.is_valid():
             search = searchForm.cleaned_data["search"]
             user = request.user
-            users = Account.objects.only('first_name','last_name','id','avatar','sex','age').filter(~Q(pk=user) &
-                                           ~Q(pk__in=user.friends.all().values_list('friend', flat=True))).filter(Q(first_name__icontains=search) |
+            friendsList = [i[0] for i in request.user.friends.all().values_list("pk")]
+            users = Account.objects.only('first_name','last_name','id','avatar','sex','age').filter(~Q(pk=user)).filter(Q(first_name__icontains=search) |
                                            Q(last_name__icontains=search)).order_by('-rating')[:20]
         pass
     else:
@@ -47,6 +43,7 @@ def findPeople(request):
             {#data here
              "subMenuItems": generateMenu(request),
              "searchForm": searchForm,
+             "friendsList": friendsList,
              "users": users,
         },
         context_instance=RequestContext(request)

@@ -12,7 +12,7 @@ class Party(models.Model):
     logo = ImagePreviewModelField(upload_to="party/logo/", null=True, blank=True)
     description = models.TextField(blank=True, default='')
     #party options
-    closed=models.BooleanField(default=True)#if opened, then logo should exist
+    closed=models.BooleanField(default=True)#if opened, then logo, description should exist
     #
     created=models.DateTimeField(auto_now_add=True, editable=False)
 

@@ -22,9 +22,6 @@ class EventForm(ModelForm):
     class Meta:
         exclude = ('rating','created','participants','author')
         model = Event
-        widgets = {
-            'blogs': forms.SelectMultiple(attrs={'placeholder':'Select Event Place'})
-        }
         
     def saveEvent(self, request, eventSchedules):
         #print "Saving event"
@@ -32,9 +29,9 @@ class EventForm(ModelForm):
         newEvent.author = request.user
         newEvent.save()
         
-        #for schedule in eventSchedules.forms:
-        #    blogId = schedule.cleaned_data["blog"]
-        #    if blogId is not None: newEvent.blogs.add(blogId)
+        for schedule in eventSchedules.forms:
+            blogId = schedule.cleaned_data["blog"]
+            if blogId is not None: newEvent.blogs.add(blogId) #add blogs
         self.save_m2m() #save manyToMany rls
 
         eventSchedules.saveSchedules(newEvent)

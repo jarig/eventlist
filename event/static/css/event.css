@@ -125,6 +125,7 @@
 {
     font-size: 15px;
     padding: 5px;
+    margin-top: 5px;
 }
 
 .sectionHeader:hover
@@ -205,7 +206,7 @@
 
 .eventLogo
 {
-    width: 256px;
+    width: 237px;
     height: 178px;
 }
 

@@ -174,7 +174,7 @@
         <div class="addresses" id="addresses">
             {% for form in adrFormSet %}
                 <div id="{{ forloop.counter }}" class="addressForm">
-                    {% include 'event_address.html' with address=form %}
+                    {% include 'event/includes/event_address.html' with address=form %}
                 </div>
             {% endfor %}
             {{ adrFormSet.management_form }}

@@ -6,32 +6,15 @@ var CreateEvent =
     {
         $(function()
         {
-            $("input").labelify({ labelledClass: "helpLabel" });
+
             $("textarea").labelify({ labelledClass: "helpLabel" });
+            CreateEvent.initMultiSelect("#id_organizers");
             CreateEvent.initMultiSelect("#id_activities","Select Event Activities");
-            //CreateEvent.initSelect("#id_blogs","Select Event Locations");
-            $("#id_blogs").chosen();
-            $("#id_organizers").chosen();
-            
-            CreateEvent.initSchedules();
         });
-    },
-    initSchedules: function()
-    {
-        var schedules = $('.eventSchedule');
-        for(var i=0; i< schedules.length; i++)
-        {
-            var sch = schedules[i];
-            CreateEvent.initSchedule(sch);
-        }
     },
     initSchedule: function(schedule)
     {
-        //clear date plugin
-        var dClear = $( ".hasDatepicker", schedule);
-        for (var i=0; i<dClear.length; i++)
-            $(dClear[i]).removeClass("hasDatepicker");
-        
+        $("input", schedule).labelify({ labelledClass: "helpLabel" });//reinit labelify
         var dates = $( ".dateFrom, .dateTo",schedule ).datepicker({
                 changeMonth: true,
                 numberOfMonths: 1,
@@ -60,7 +43,7 @@ var CreateEvent =
 
 
         //id_form-0-blog
-        var prefix = $("#schedulePrefix",schedule).val();
+        var prefix = $("#schedulePrefix",schedule).attr("name");
         var blogFieldId = "#id_"+prefix+"-blog";
         $(blogFieldId, schedule).chosen();
         $(blogFieldId, schedule).change(function(eventObj)
@@ -84,9 +67,6 @@ var CreateEvent =
                 }
                 $("#customAddress",schedule).hide();
                 $("#blogAddress", schedule).html("Loading...");
-                //var adrTempl = $("#blogAddress", schedule).show();
-                var adrTempl = $("#blogAddressTemplate", schedule).clone().attr("id","address-for-"+blogId);
-                adrTempl = $("#blogAddress", schedule).html($(adrTempl).html());
                 
                 $(".loading", schedule).html("Loading...");
                 $.ajax({
@@ -97,12 +77,15 @@ var CreateEvent =
                     success: function(resp)
                     {
                       $(".loading", schedule).html("");
+                      $("#blogAddress",schedule).show();
+                      var adrTempl = $("#blogAddressTemplate").clone();
                       //add address div
-                      var resp = eval("("+resp+")");
+                      resp = eval("("+resp+")");
                       if (resp.length > 0)
                       {//id_form-1-address
                         $("#id_"+prefix+"-address",schedule).val(resp[0]["pk"]);
                         Address.fillAddress(adrTempl, resp[0]);
+                        $("#blogAddress",schedule).html(adrTempl.html());
                         Common.DEBUG(resp[0]);
                       } else
                         $("#blogAddress", schedule).html("No addresses available");
@@ -111,62 +94,19 @@ var CreateEvent =
             }
         });
         var selectedOpts = $(blogFieldId + " :selected", schedule);
-        for(i=0; i< selectedOpts.length; i++)
+        for(var i=0; i< selectedOpts.length; i++)
         {
             var blogId = $(selectedOpts[i]).val();
             if (blogId == "" || blogId <= 0)
                 $("#eventAddress",schedule).rest_Address("init", $('#getCityURL').val());
                 //$(blogFieldId, schedule).change();
         }
+
         return schedule;
     },
-    addSchedule: function(toClone, insertTo)
+    addSchedule: function(formPrefix, insertTo)
     {
-        var clone = $(toClone).clone();
-        //reset data
-        var formPrefix = $("#schedulePrefix",clone).val();
-        $("#id_"+formPrefix+"-id",clone).remove();
-        var inputs = $('input,select',clone);
-        var prefixPattern=new RegExp('(.*)(\\d+)$','i');
-        var prefixId = prefixPattern.exec(formPrefix)[1];
-        var totalForms = $('#id_form-TOTAL_FORMS').val();
-        $('#id_form-TOTAL_FORMS').val(parseInt(totalForms)+1);
-        var currentFormId = parseInt(totalForms);// 1 based id
-        var currentPrefix = prefixId+currentFormId+"";
-        $("#schedulePrefix",clone).val(currentPrefix);
-        $(clone).attr("id","schedule-"+currentPrefix);
-        //id_form-2-id
-
-        
-        //clear plugins
-        $(".chzn-container", clone).remove();
-        var chosenDone = $(".chzn-done", clone);
-        for(var i=0; i<chosenDone.length; i++)
-        {
-            $(chosenDone[i]).removeClass('chzn-done');
-            $(chosenDone[i]).show();
-        }
-        $("input", clone).labelify({ labelledClass: "helpLabel" });//reinit labelify
-
-        for(var i=0; i<inputs.length; i++)
-        {
-            var inputId = $(inputs[i]).attr("id");
-            var name = $(inputs[i]).attr("name");
-            if ( typeof inputId != "undefined" && inputId.indexOf(formPrefix) >= 0)
-            {// if this input has formPrefix in id
-                var newId = inputId.replace(formPrefix, currentPrefix);
-                var newName = name.replace(formPrefix, currentPrefix);
-                $(inputs[i]).attr("id",newId);
-                $(inputs[i]).attr("name",newName);
-            }
-        }// forloop
-
-        $(clone).hide();
-        $(insertTo).prepend(clone);
-        $(clone).slideDown('slow');
-        var schedule = CreateEvent.initSchedule(clone);
-        var blogFieldId = "#id_"+formPrefix+"-blog";
-        $(blogFieldId, schedule).change();
+        $(formPrefix).ajaxSimpleForm("add",insertTo, {"append":false});
         return false;
     },
     addAddresses:function(adrObjects, belongsTo)
@@ -191,25 +131,6 @@ var CreateEvent =
             $(address).show();
             $("#eventAddresses").trigger("change");
         }
-    },
-    initSelect: function(id, text)
-    {
-        //$(id).chosen();
-        $(id).multiselect(
-               {
-                   header: "",
-                   noneSelectedText: text,
-                   selectedList: 1,
-                   "multiple": false,
-                   multiselectclick: function(event, ui)
-                   {
-
-                   },
-                   beforeopen: function()
-                   {
-                       $(".ui-multiselect-menu").css("width",$(".ui-multiselect").width());
-                   }
-           }).multiselectfilter();
     },
     initMultiSelect: function(id, text)
     {

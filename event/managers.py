@@ -4,6 +4,7 @@ import event
 
 
 class EventManager(models.Manager):
+
     def latest_schedules(self, limit=None):
         if limit is not None: limit = " LIMIT %d " % limit
         else: limit = ""

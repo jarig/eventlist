@@ -1,0 +1,28 @@
+/*
+*  Describes style for different kind of boxes
+*/
+
+.clear_box
+{
+    border-bottom: #f0f0f0 solid 1px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.loopHeightClass (@index) when (@index > 0) {
+
+	// create the actual css selector, example will result in
+	// .myclass_30, .myclass_28, .... , .myclass_1
+	(~".height_@{index}") {
+		// your resulting css
+	    height: @index*10px;
+	}
+
+	// next iteration
+	.loopHeightClass(@index - 1);
+}
+// end the loop when index is 0
+.loopHeightClass (0) {}
+
+@heights: 20;
+.loopHeightClass (@heights);

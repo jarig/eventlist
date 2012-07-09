@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 from django.http import HttpResponse
 from django.template.base import resolve_variable
+from django.template.context import RequestContext
 from blog.models import Blog, BlogStyle
 
 class Module(object):
@@ -22,8 +23,10 @@ class Module(object):
     def content(self, context):
         pass
 
-    def render(self, context):
+    def render(self, request):
+        context = RequestContext(request)
         context["user"] = resolve_variable('user', context)
+        context["position"] = request.GET.get("position","")
         return HttpResponse(self.content(context))
 
     def __unicode__(self):
