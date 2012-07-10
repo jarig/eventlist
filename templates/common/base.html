@@ -99,7 +99,7 @@
                                     <ul class="topMenu-nav float-right">
                                         {% block topmenu_right %}
                                                 <li>
-                                                    <div id="signin" class="topButton">
+                                                    <div id="signin">
                                                         {% if not user.is_authenticated %}
                                                             <a href="#" onclick="Accounts.openLoginBox(); return false;">{% trans "Sign in" %}</a>
                                                         {% else %}

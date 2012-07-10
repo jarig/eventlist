@@ -1,4 +1,5 @@
 # Create your views here.
+from django.db.models.query_utils import Q
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
@@ -9,7 +10,12 @@ from messaging.models import Message
 
 
 def messagingReceived(request):
-    messages = request.user.received_messages.filter(status__lte=Message.STATUS.DELETED_CORRESPONDENT).select_related("author").order_by('-sent')[:20]
+    messages = Message.objects.raw("""SELECT MM.*,AU.* FROM messaging_message MM LEFT JOIN messaging_message MM2 ON
+                                      MM.author_id=MM2.author_id AND MM.sent < MM2.sent,
+                                      auth_user as AU
+                                      WHERE MM2.id is NULL and MM.to_id=%s and AU.id=MM.author_id
+                                   """
+                                   , [request.user.pk])
 
 
     return render_to_response("messaging/messaging_received.html",

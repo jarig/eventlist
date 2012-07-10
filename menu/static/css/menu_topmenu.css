@@ -1,29 +1,13 @@
 
 .topButton {
-	float: right;
-	bottom: 0;
-	min-width: 100px;
-	text-align:center;
-	vertical-align: middle;
-	margin: 0 0 0 0;
-    line-height: 12px;
-    height: 30px;
+
 }
 .topButton a {
-    margin: 0 0 0 0;
-	display: block;
-	width: auto;
-	padding-top: 7px;
-    padding-bottom: 10px;
-	text-decoration: none;
-	text-align:center;
-	color:black;
 
 }
 
 .topButton a:hover {
-	background-color: #069;
-	color:white;
+    background-color: #f7f7f7;
 }
 
 

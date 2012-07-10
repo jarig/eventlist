@@ -115,6 +115,8 @@
     min-height: 5px;
 }
 
+
+/* Event */
 .eventOrganizers
 {
     border-top: solid #e6e6fa 1px;
@@ -156,6 +158,10 @@
 {
 
 }
+
+
+
+/* //////////////////////////////// */
 
 .blogSelection select
 {

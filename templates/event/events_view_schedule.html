@@ -35,7 +35,7 @@
                         </div>
                         <div class="eventLeftSection">
                             <div class="sectionHeader">Your friends: </div>
-                            {% if friends <= 1 %}
+                            {% if friends|length <= 1 %}
                                 <p>No friends attend this event yet.</p>
                                 <a href="#">Invite them!</a>
                             {% else %}
@@ -60,36 +60,37 @@
                         </div>
                     </div>
                     <div class="span8">
-                        <div class="clear_box height_18">
+                        <div class="clear_box height_17">
                             {{ schedule.event.descr }}
                         </div>
-                        <div id="eventActionButtons" class="float-right">
-                            <div class="btn btn-small">Go</div>
-                            <div class="btn btn-small">Invite</div>
-                        </div>
-                        <div class="row-fluid" style="vertical-align: top;">
-                            <div class="span12">
-                                <div class="eventActivities">
-                                    {% for activity in schedule.event.activities.all %}
-                                        {{ activity }}
-                                    {% endfor %}
-                                </div>
+                        <div class="span12">
+                            <div class="span7 eventActivities">
+                                {% for activity in schedule.event.activities.all %}
+                                    <span class="badge badge-info">{{ activity }}</span>
+                                {% endfor %}
                             </div>
-
+                            <div id="eventActionButtons" class="float-right">
+                                <div class="btn btn-small">Go</div>
+                                <div class="btn btn-small">Invite</div>
+                            </div>
+                        </div>
+                        <div class="span10"></div>
+                        <div class="row-fluid" style="vertical-align: top;">
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <div class="row-fluid sectionHeader sectionHeaderHighlight">
-                                        <div class="span9">
-                                            Schedule:
-                                        </div>
-                                        <div class="span3">
+                                    <div class="row-fluid">
+                                        <div class="span12 clear_header_box">
+                                        <p>
+                                            <strong>When:</strong>
+                                            {{ schedule.dateFrom }}
+                                            {% if schedule.dateTo %}
+                                                - {{ schedule.dateTo }}
+                                            {% endif %}
+                                        </p>
                                         </div>
                                     </div>
                                     <div class="eventSchedules" id="eventSchedules">
-                                        {{ schedule.dateFrom }}
-                                        {% if schedule.dateTo %}
-                                            {{ schedule.dateTo }}
-                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>

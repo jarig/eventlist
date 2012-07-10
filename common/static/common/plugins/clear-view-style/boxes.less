@@ -2,6 +2,39 @@
 *  Describes style for different kind of boxes
 */
 
+//set border with @radius
+.border-radius (@radius) {
+  border-radius: @radius;
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+  border-color: #e6e6fa;
+}
+//set box shadow
+.box-shadow (@x: 0, @y: 0px, @blur: 1px, @color: #d1d1d1) {
+  box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  -webkit-box-shadow: @arguments;
+}
+
+.box_highlight
+{
+
+}
+.clear_header_box
+{
+    padding: 0 5px 0 5px;
+    .border-radius (1px);
+    .box-shadow(1px, 1px, 3px, #bababa);
+    line-height: 25px;
+    p{
+        margin: 1px;
+    }
+    :hover
+    {
+        cursor:default;
+    }
+}
+
 .clear_box
 {
     border-bottom: #f0f0f0 solid 1px;

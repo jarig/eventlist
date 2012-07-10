@@ -8,19 +8,17 @@
 {% block topmenu_left %}
     {% if request.session.mode == 'publish' %}
             <li >
-                <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Publications" %}</a>
+                <a href="#" onclick="" class="topButton">{% trans "Publications" %}</a>
             </li>
-            <li class="divider-vertical"></li>
             <li>
-                <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Statistics" %}</a>
+                <a href="#" onclick="" class="topButton">{% trans "Statistics" %}</a>
             </li>
     {% else %}
-            <li >
-                <a href="/" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Events" %}</a>
+            <li class="topButton">
+                <a href="/" onclick="" >{% trans "Events" %}</a>
             </li>
-            <li class="divider-vertical"></li>
-            <li>
-                <a href="#" onclick="" style="padding-left: 10px; padding-right: 10px;">{% trans "Recent events" %}</a>
+            <li class="topButton">
+                <a href="#" onclick="" >{% trans "Recent events" %}</a>
             </li>
     {% endif %}
 {% endblock topmenu_left %}
@@ -39,20 +37,21 @@
             </a>
             <ul class="dropdown-menu">
                 {% if request.session.mode == 'publish' %}
-                    <li><a href="{% url event.views.credit %}" title="Publish!">{% trans "Publish!" %}</a></li>
+                    <li><a href="{% url event.views.credit %}" title="Publish!">
+                        <i class="icon-calendar"></i>
+                        {% trans "Create Event!" %}</a></li>
                 {% else %}
                     <li><a href="{% url search.views.findPlace %}" title="Find Where To Rest!">
                         <i class="icon-glass"></i>
                         {% trans "Rest!" %}</a></li>
+                    <li><a href="{% url search.views.findPlace %}">
+                        <i class="icon-picture"></i>
+                        {% trans "Find Place" %}</a></li>
+                    <li>
+                        <a href="{% url search.views.findPeople %}">
+                            <i class="icon-user"></i>
+                        {% trans "Find People" %}</a></li>
                 {% endif %}
-                <li><a href="{% url search.views.findPlace %}">
-                    <i class="icon-picture"></i>
-                    {% trans "Find Place" %}</a></li>
-                <li>
-                    <a href="{% url search.views.findPeople %}">
-                        <i class="icon-user"></i>
-                    {% trans "Find People" %}</a></li>
-
                 <li class="divider"></li>
                 <li><a href="#">Separated link</a></li>
             </ul>

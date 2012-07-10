@@ -25,15 +25,20 @@
         {% for message in my_messages %}
             <div class="row-fluid message_feed_header">
                 <div class="row-fluid">
-                    <a href="{% url messaging.views.sendMessageTo user=message.author.pk %}">
-                        <strong>{{ message.author }}</strong>
+                    <a href="#">
+                        <strong>{{ message.first_name }} {{ message.last_name }}</strong>
                     </a>
                 </div>
-                <div class="span10">
+                <div class="span2">
+                    <p style="margin-top: 5px;">
+                        <span class="label label-info" >{{ message.sent|date:"m/d H:i" }}</span>
+                    </p>
+                </div>
+                <div class="span7">
                     {{ message|truncatewords:25 }}
                 </div>
                 <div class="float-right message-actions">
-                    <i class="icon-share"></i> <a href="#">Reply</a>
+                    <i class="icon-share"></i> <a href="{% url messaging.views.sendMessageTo user=message.author_id %}">Reply</a>
                 </div>
                 <div class="clear"></div>
                 <div class="read-narrow-button" rel="tooltip" title="Read">
