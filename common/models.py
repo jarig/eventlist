@@ -45,7 +45,13 @@ class Address(models.Model):
         return self.name
 
     def __unicode__(self):
-        return "%s, %s, %s, %s" % (self.name, self.street, self.country, self.city)
+        output = ""
+        if self.country: output += "%s "% self.country
+        if self.city: output += "%s " % self.city
+        if self.street: output += "%s " % self.street
+        if self.name: output += "%s " % self.name
+
+        return output
 
 class Language(models.Model):
     code = models.CharField(max_length=3, primary_key=True)

@@ -17,7 +17,10 @@ def account_logo_name(instance, filename):
 
 def _account_logo_name(pk):
     storage = DefaultStorage()
-    return storage.url("avatar/%d_avatar.jpeg" % int(pk))
+    avatar = "avatar/%d_avatar.jpeg" % int(pk)
+    if storage.exists(avatar):
+        return storage.url(avatar)
+    return None
 
 class Account(User):
     class SEX:

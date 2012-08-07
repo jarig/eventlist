@@ -61,7 +61,7 @@ def credit(request, event=None):
 
 def view_schedule(request,scheduleId):
     try:
-        schedule = EventSchedule.objects.select_related('event').get(pk=scheduleId)
+        schedule = EventSchedule.objects.select_related('event','address').get(pk=scheduleId)
         friends = Account.objects.filter(pk__in=EventGo.objects.filter(eventSchedule=schedule).values("user"))[:11]
     except EventSchedule.DoesNotExist:
         return HttpResponseNotFound(_("Such event doesn't exist"))

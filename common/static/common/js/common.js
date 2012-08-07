@@ -75,7 +75,7 @@ var GoogleMaps = {
         geocoder.geocode( { 'address': address}, function(results, status) {
               if (status == google.maps.GeocoderStatus.OK)
               {
-                var zoom = results[0].address_components.length*3;
+                var zoom = Math.round(Math.log(results[0].address_components.length*50)*2.5);
                 GoogleMaps.map.setCenter(results[0].geometry.location);
                 GoogleMaps.map.setZoom(zoom);
                 if (typeof(putMarker) == "boolean" &&  putMarker)
