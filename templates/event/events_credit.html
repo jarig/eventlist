@@ -32,6 +32,11 @@
 {% endblock %}
 
 {% block content %}
+    <div class="row-fluid">
+        <div class="form-actions-top">
+            <button type="button" onclick="CreateEvent.submitForm('#eventDataForm');return false;" class="btn btn-small btn-primary">Submit</button>
+        </div>
+    </div>
     <div class="createEventContainer">
         <form id="eventDataForm"
               {%  if eventForm.instance.pk %}
@@ -41,11 +46,8 @@
               {% endif %}
               method="POST"
               enctype="multipart/form-data"
-              class="form-horizontal">
+              class="form-inline">
             <div class="publishedBlog" id="publishedBlog">
-            </div>
-            <div class="buttonPane">
-                <a href="#" onclick="CreateEvent.submitForm('#eventDataForm');return false;">Submit</a>
             </div>
             <div>
 

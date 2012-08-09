@@ -27,8 +27,10 @@
 {% endblock %}
 
 {% block content %}
-    <div class="buttonPane">
-        <a href="#" onclick="Common.submitForm('#orgForm');" >Submit</a>
+    <div class="row-fluid">
+        <div class="form-actions-top">
+            <button type="button" onclick="Common.submitForm('#orgForm');" class="btn btn-small btn-primary">Submit</button>
+        </div>
     </div>
     <form
             id='orgForm'
@@ -38,54 +40,67 @@
                 action="{% url organization.views.credit%}"
             {% endif %}
             method="POST"
-            enctype="multipart/form-data">
-        <table width="100%" >
-        <tr>
-            <td colspan="2">
-                <div class="divButton orgName">
-                    {% field  orgForm.name 'title=Organization name' %}
+            enctype="multipart/form-data"
+
+            >
+        <div class="span12">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="divButton orgName">
+                        {% field  orgForm.name 'title=Organization name' 'class=wideinput' %}
+                    </div>
+                    <!--div class='subMenu'>
+                        <ul>
+                            <li><a href="#" class="manageButton">General</a></li>
+                            <li><a href="#" class="manageButton">Find Page</a></li>
+                            <li><a href="#" class="manageButton">Register Organizer</a></li>
+                        </ul>
+                    </div-->
                 </div>
-                <!--div class='subMenu'>
-                    <ul>
-                        <li><a href="#" class="manageButton">General</a></li>
-                        <li><a href="#" class="manageButton">Find Page</a></li>
-                        <li><a href="#" class="manageButton">Register Organizer</a></li>
-                    </ul>
-                </div-->
-            </td>
-        </tr>
-        <tr style="vertical-align: top">
-            <td>
-                <div class="logo">
-                    {% field orgForm.logo %}
-                    {% field orgForm.logo "render=preview"%}
+            </div>
+            <div class="row-fluid">
+                <div class="span5">
+                    <div class="logo">
+                        {% field orgForm.logo %}
+                        <div>
+                            {% field orgForm.logo "render=preview" %}
+                        </div>
+                    </div>
+                    <div class="errors">
+                        {{ orgForm.logo.errors }}
+                    </div>
+                    <div class="logoControl">
+                        {% field orgForm.logo "render=upload"%}
+                    </div>
                 </div>
-                <div class="errors">
-                    {{ orgForm.logo.errors }}
+                <div class="span7">
+                    <div class="row-fluid">
+                        <div class="address" id="address">
+                            {% include 'common_address.html' with address=adrForm %}
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span5">
+                            <label>Business Code</label>
+                            {% field  orgForm.businessCode "class=input-medium" %}
+                        </div>
+                        <div class="span7">
+                            <label>Phone</label>
+                            {{ orgForm.phone }}
+                        </div>
+                    </div>
                 </div>
-                <div class="logoControl">
-                    {% field orgForm.logo "render=upload"%}
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="divButton orgDescr">
+                        {% field orgForm.description 'title=Description' %}
+                    </div>
                 </div>
-            </td>
-            <td>
-                <div class="address" id="address">
-                    {% include 'common_address.html' with address=adrForm %}
-                </div>
-                <label>Business Code</label>
-                {{ orgForm.businessCode }}
-                <label>Phone</label>
-                {{ orgForm.phone }}
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div class="divButton orgDescr">
-                    {% field orgForm.description 'title=Description' %}
-                </div>
-            </td>
-        </tr>
-        </table>
+            </div>
+        </div>
     </form>
+
     {{ orgForm.errors }}
     {{ adrForm.errors }}
 {% endblock %}

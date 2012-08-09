@@ -174,16 +174,18 @@
                         </div>
                         <div id="content_container" class="span9">
                             <div  class="fillSpace">
-                                <div class="messages">
-                                {% block messages %}
-                                    {% for message in messages %}
-                                            <div class="alert fade in alert-{{ message.tags }}">
-                                                <a class="close" data-dismiss="alert" href="#">×</a>
-                                                {{ message }}
-                                            </div>
-                                        {% endfor %}
-                                    {% endblock %}
-                                </div>
+                                {% if messages %}
+                                    <div class="messages">
+                                    {% block messages %}
+                                        {% for message in messages %}
+                                                <div class="alert fade in alert-{{ message.tags }}">
+                                                    <a class="close" data-dismiss="alert" href="#">×</a>
+                                                    {{ message }}
+                                                </div>
+                                            {% endfor %}
+                                        {% endblock %}
+                                    </div>
+                                {% endif %}
                                 {% block content %}
                                 {% endblock %}
                             </div>
