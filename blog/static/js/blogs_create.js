@@ -7,8 +7,6 @@ var BlogForm =
        $(function()
        { //dom ready
            $("input[type=submit]","#createBlogBox").button();
-           $("input").labelify({ labelledClass: "helpLabel" });
-           $("textarea").labelify({ labelledClass: "helpLabel" });
            //types select
            $("#id_facilities").chosen();
        });

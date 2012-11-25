@@ -12,9 +12,9 @@
     var methods = {
         init : function()
         {
-            formIdent = this.selector;
-            formPrefix = options["prefix"];
-            emptyFormId = options["emptyFormId"];
+            formIdent = this.selector;//class of div wrapper around form
+            formPrefix = options["prefix"];//prefix of form
+            emptyFormId = options["emptyFormId"];//empty form instance
             managementForm["totalForms"] = $("input[name='"+formPrefix+"-TOTAL_FORMS']");
             managementForm["initialForms"] = $("input[name='"+formPrefix+"-INITIAL_FORMS']");
             managementForm["maxNum"]= $("input[name='"+formPrefix+"-MAX_NUM_FORMS']");
@@ -75,7 +75,8 @@
         add: function( addTo, opts )
         {
             var addOptions ={ hidden: false, append: true};
-            $.extend(addOptions, opts);
+            if ( typeof opts != "undefined ")
+                $.extend(addOptions, opts);
             if ( typeof managementForm["maxNum"].val() != "undefined" &&
                 parseInt(managementForm["totalForms"].val()) >=
                     parseInt(managementForm["maxNum"].val()) ) return false;
@@ -92,7 +93,7 @@
             options.onAdd(form);
             methods.initForm(form);
             managementForm["totalForms"].val(parseInt(managementForm["totalForms"].val())+1);
-            return form;
+            return $(form);
         },
         updateIndex: function(form, nIndex)
         {
@@ -125,7 +126,7 @@
         // Method calling logic
         if ( methods[method] )
         {
-            if (typeof opts == "object")
+            if (typeof opts === "object")
                 $.extend(options, opts);
             return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
         } else if ( typeof method === 'object')

@@ -173,6 +173,7 @@ var Party =
                                 item.fields.street + "/" + item.fields.cityArea + "</a>" )
                 .appendTo( ul );
         };
+        $("[name$='-location_text']", form).addClass($("[name$='-location']", form).attr("class"));
     },
     compareForms: function(formData, form2)
     {

@@ -1,0 +1,14 @@
+{% load i18n %}
+{% load extra %}
+
+<div class="row-fluid party-list-item">
+    <div class="span10">
+        Participants: {{ mship.partyMembers.length }}
+    </div>
+    <div class="span1 party-list-actions">
+        {% if mship.role >= mship.ROLE.MODERATOR %}
+            <a href="{% url party.views.edit party=mship.party.pk %}">{% trans "Edit" %}</a>
+        {% endif %}
+    </div>
+
+</div>

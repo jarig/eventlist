@@ -53,10 +53,43 @@ a {
 	color: #006699;
 }
 
+
+.divButton
+{
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    border: solid #e6e6fa 1px;
+    margin-bottom: 3px;
+}
+
+.divButton input
+{
+    border: none;
+}
+.divButton textarea
+{
+    border: none;
+}
+
+.divButton:hover
+{
+    background-color: #e6e6fa;
+}
+
+
 .noBorder
 {
     border: none;
 }
+
+.vertical-light-divider
+{
+    border-left: solid 1px lavender;
+    width: 1px;
+}
+
 .hidden
 {
     display: none;
@@ -76,6 +109,22 @@ a {
 {
     float: right;
 }
+.flipv-background
+{
+    -moz-transform: scaleY(-1);
+    -o-transform: scaleY(-1);
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+}
+
+.shadow-box
+{
+    -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 1px 7px rgba(0, 0, 0, 0.35);
+
+}
+
 .btn-narrow
 {
     padding: 3px;

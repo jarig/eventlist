@@ -18,15 +18,15 @@
         </div>
         <div class="eventButtons">
             <div class="likes-block">
-                <a href="?hash=event_{{ eventSchedule.event_id }}" class="like l-fb">
+                <a href="{% url event.views.view_schedule scheduleId=eventSchedule.pk %}" class="like l-fb">
                     <i class="l-ico"></i>
                     <span class="l-count"></span>
                 </a>
-                <a href="?hash=event_{{ eventSchedule.event_id }}" class="like l-vk">
+                <a href="{% url event.views.view_schedule scheduleId=eventSchedule.pk %}" class="like l-vk">
                     <i class="l-ico"></i>
                     <span class="l-count"></span>
                 </a>
-                <a href="?hash=event_{{ eventSchedule.event_id }}" class="like l-tw">
+                <a href="{% url event.views.view_schedule scheduleId=eventSchedule.pk %}" class="like l-tw">
                     <i class="l-ico"></i>
                     <span class="l-count"></span>
                 </a>
@@ -38,63 +38,15 @@
             <div class="eventButton">
                     <a href="#" class="partyButton ifGoes" {% if not eventSchedule.goes %} style="display: none" {% endif %} id="unGoButton">{% trans "I don't go"%}</a>
                     <a href="#" class="partyButton ifNotGo" {% if eventSchedule.goes %} style="display: none" {% endif %} id="goButton">{% trans "I'll go"%}</a>
-                    <form action="{% url event.views.unGo eventSchId=eventSchedule.pk %}" method="POST" id="unGoForm" class="hidden"></form>
             </div>
-
             <div class="eventButton ifGoes {% if not eventSchedule.goes %}hidden{% endif %}" >
-                    <a href="#"  class="partyButton partyInviteButton">{% trans "Invite!"%}</a>
+                    <a href="#" class="partyButton partyInviteButton">{% trans "Invite!"%}</a>
             </div>
         {% endif %}
-        <div class="eventButton">
-            <a href="#">{% trans "Comments"%}</a>
-        </div>
+        <!--div class="eventButton">
+        </div-->
     </div>
 
-
-    <!-- Party window -->
-    <div class="partyWindow" id="partyWindow-{{ eventSchedule.id }}">
-        <input value="{% url party.views.invitationList eventSchedule.id %}" id="invitationURL" type="hidden">
-        <div class="partyWindowContent">
-            <div class="partySubTitle">
-                <span>{% trans "Party Suggestions" %}</span>
-                <div class="partyCloseButton">
-                    <a href="#" class="noBorder ui-widget-header ui-dialog-titlebar-close ui-corner-all" role="button">
-                        <span class="ui-icon ui-icon-closethick">close</span>
-                    </a>
-                </div>
-            </div>
-            <div class="partySuggestions">
-                <!--div class="partySubTitle">Top 5 party suggestions</div-->
-                <div class="partySuggestionContainer">
-                    <ul class="thumbnails">
-                        {% for i in 012345|make_list %}
-                            <li class="span2">
-                                <a href="#" class="thumbnail">
-                                   <img src="http://placehold.it/70x70" alt="">
-                                </a>
-                             </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            <div class="partyCreateSlogan">
-                <div class="partySubTitle" id="partyStatus" >
-                    <div class="createPartyButton float-left">
-                        <a href="#" class="ifNotGo" id="createPartyButton">{% trans "Go with Own Party!" %}</a>
-                        <div class="hidden ifGoes" id="partyCreatedMessage">{% trans " " %}</div>
-                    </div>
-                    <div class="editPartyButton float-left hidden ifGoes">
-                        <a href="#" class="partyInviteButton">{% trans "Invite people!" %}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="partyWindowControls">
-            <div class="nub"></div>
-        </div>
-        <div class="hidden">
-            <form action="{% url event.views.go eventSchId=eventSchedule.pk %}" method="POST" id="createSimpleParty" class="hidden">
-            </form>
-        </div>
-    </div>
+    <!-- Party invitation popup -->
+    {% include 'party/includes/party_invite_popup.html' %}
 </div>

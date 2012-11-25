@@ -45,10 +45,11 @@
 
 
 {% block blogFacilities %}
+
     {% for type in blog.facilities.all %}
-        <div class="blogType">
+        <span class="label label-info">
             {{ type.name }}
-        </div>
+        </span>
     {% endfor %}
 {% endblock %}
 

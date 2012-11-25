@@ -6,11 +6,13 @@
 {% block includes %}
     {{ block.super }}
     <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/event_schedule.css" rel="stylesheet" type="text/css">
     {% compress css %}
     <link href="{{ STATIC_URL }}address/css/address.less" rel="stylesheet/less" type="text/css">
     <link href="{{ STATIC_URL }}common/plugins/clear-view-style/boxes.less" rel="stylesheet/less" type="text/css">
     {% endcompress %}
     <script type="text/javascript" src="{{ STATIC_URL }}address/address.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/party_event.js"></script>
     {% include 'includes/googlemaps.inc' %}
 {% endblock %}
 
@@ -18,6 +20,7 @@
     {{ block.super }}
     <script type="text/javascript">
     $(function(){
+        PartyEvent.init($(".eventContainer"), true, "{{ schedule.goes }}");
         GoogleMaps.init('#googleMap');
         GoogleMaps.moveToAddress("{{ schedule.address }}", true);
     });
@@ -28,9 +31,20 @@
     <div class="eventContainer">
             <div class="row-fluid" >
                 <div class="row-fluid">
-                    <div class="span12">
+                    <div class="span8">
                         <div class="eventName">
                             <h2>{{ schedule.event.name }}</h2>
+                        </div>
+                    </div>
+                    <div id="eventActionButtons" class="eventActionButtons span4">
+                        <div class="btn btn-small partyButton ifGoes" {% if not schedule.goes %} style="display: none" {% endif %} id="unGoButton">{% trans "I don't go"%}</div>
+                        <div class="btn btn-small partyButton ifNotGo" {% if schedule.goes %} style="display: none" {% endif %} id="goButton">{% trans "I'll go"%}</div>
+                        <div class="btn btn-small partyInviteButton ifGoes">
+                            {% trans "Invite" %}
+                        </div>
+                        <div class="btn btn-small">
+                            <span class="icon-shopping-cart"></span>
+                            Buy Tickets
                         </div>
                     </div>
                 </div>
@@ -44,7 +58,7 @@
                         <div class="eventLeftSection">
                             {% if friends|length <= 1 %}
                                 <p>No friends attend this event yet.</p>
-                                <a href="#">Invite them!</a>
+                                <a href="#" class="partyInviteButton ifGoes">Invite them!</a>
                             {% else %}
                                 <div class="sectionHeader">{% trans "Friends that goes to the event" %}: </div>
                                 <div class="span12">
@@ -58,7 +72,9 @@
                                 {% endfor %}
                                 </div>
                                 <div class="clear"></div>
-                                <a href="#">Invite more!</a>
+                                <a href="#">
+                                    {% trans "Invite more!" %}
+                                </a>
                             {% endif %}
                         </div>
                         <div class="eventLeftSection">
@@ -80,18 +96,10 @@
                             {{ schedule.event.descr }}
                         </div>
                         <div class="span12">
-                            <div class="span7 eventActivities">
+                            <div class="span12 eventActivities">
                                 {% for activity in schedule.event.activities.all %}
                                     <span class="badge badge-info">{{ activity }}</span>
                                 {% endfor %}
-                            </div>
-                            <div id="eventActionButtons" class="float-right">
-                                <div class="btn btn-small">Go</div>
-                                <div class="btn btn-small">Invite</div>
-                                <div class="btn btn-small">
-                                    <span class="icon-shopping-cart"></span>
-                                    Buy Tickets
-                                </div>
                             </div>
                         </div>
                         <div class="span10"></div>
@@ -109,16 +117,20 @@
                                         </p>
                                         </div>
                                     </div>
+                                    {% if schedule.blog %}
                                     <div class="row-fluid">
                                         <div class="span12 clear_header_box">
                                             <p>
                                                 <strong>Where:</strong>
+                                                <a href="{% url blog.views.view blogId=schedule.blog.pk %}"><b>{{ schedule.blog }}</b></a>
+                                                <br/>
                                                 {{ schedule.address }}
                                             </p>
                                             <div id="googleMap" style="width: 100%; height: 200px; border: 1px #e6e6fa solid;">
                                             </div>
                                         </div>
                                     </div>
+                                    {% endif %}
                                     <div class="row-fluid">
                                         <div class="span12 clear_header_box">
                                             <p>
@@ -135,5 +147,11 @@
                     </div>
                 </div>
             </div>
+        <!-- end of event-container -->
+
+        <!-- Party Invite  Popup -->
+        {% include 'party/includes/party_invite_popup.html' with eventSchedule=schedule %}
     </div>
+
+
 {% endblock %}

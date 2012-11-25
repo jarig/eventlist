@@ -48,7 +48,7 @@
             {% endblock %}
         </div>
 
-        <div id="blogContent" class="span11">
+        <div id="blogContent" class="span12">
                     <div class="row-fluid">
                             <div class="blogSection" >
                                 {% block blogNameHeader%}
@@ -58,17 +58,17 @@
                             {% block blogModule_2 %}
                             {% endblock %}
                     </div>
-                    <div class="row-fluid">
+                    <div class="row-fluid" style="margin-top: 10px;">
                         <div class="span4">
                             <div class="generalInfoLeftColumn">
                                 <div class="blogSection" >
-
-                                    {% block blogModule_1 %}
-                                        
+                                    {% block blogAddress %}
                                     {% endblock %}
                                 </div>
                             </div>
                         </div>
+                        <!--div class="vertical-light-divider float-left" style="height: 80px">
+                        </div-->
                         <div class="span8">
                             <div class="blogInfoContent">
                                     <div class="blogSection"  >
@@ -86,16 +86,11 @@
                         </div>
                     </div>
                     <div class="row-fluid">
-                        {% block blogAddress %}
-                        {% endblock %}
                     </div>
-                    <div class="row-fluid">
+                    <div class="row-fluid" style="margin-top: 10px;">
                         <div class="blogSection">
-                        {% block blogNewsSection %}
-                            <div class="blogSectionName">News</div>
-                            {% block blogNews %}
+                        {% block blogModule_1 %}
 
-                            {% endblock %}
                         {% endblock %}
                         </div>
                     </div>

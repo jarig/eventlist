@@ -23,10 +23,7 @@
     padding-left: 2%;
     width: 95%;
     border: solid 1px #eeeef0;
-}
-.generalInfoLeftColumn
-{
-
+    min-height: 120px;
 }
 
 .blogLogo

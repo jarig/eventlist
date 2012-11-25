@@ -82,6 +82,16 @@ class EventGo(models.Model):
     class Meta:
         unique_together = ('eventSchedule', 'user')
 
+    @staticmethod
+    def getGoesStatement(user):
+        if not user or user.is_anonymous(): return 0
+        goes = "SELECT 1 FROM dual WHERE EXISTS ( SELECT id FROM %s WHERE %s=%d and %s=SCH.`id` LIMIT 1)" %\
+               ( EventGo._meta.db_table,
+                 EventGo.user.field.column,
+                 user.pk,
+                 EventGo.eventSchedule.field.column)
+        return goes
+
 # event comments
 class Comment(models.Model):
     COMMENT_TYPE = (

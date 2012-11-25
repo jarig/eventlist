@@ -1,5 +1,5 @@
 from django.forms.formsets import BaseFormSet
-from django.forms.models import ModelForm
+from django.forms.models import ModelForm, BaseModelFormSet
 from django.forms.util import ErrorList
 from blog_modules.models import ModuleParameter
 
@@ -8,6 +8,29 @@ class ModuleParameterForm(ModelForm):
     class Meta:
         model = ModuleParameter
 
+    def saveModule(self, blog):
+        if self.cleaned_data["DELETE"]:
+            #delete module
+            self.instance.delete()
+            return None
+        module = self.save(commit=False)
+        module.blog = blog
+        module.style = blog.style
+        module.save()
+        return module
+
+class ModuleParameterModelFormSet(BaseModelFormSet):
+
+    def __init__(self,  *args, **kwargs):
+        super(ModuleParameterModelFormSet, self).__init__(*args, **kwargs)
+        self.moduleMap = {}
+        for form in self.forms:
+            if form.instance.module:
+                self.moduleMap[form.instance.position] = form.instance.module
+
+    def saveModules(self, blog):
+        for form in self.forms:
+            form.saveModule(blog)
 
 class ModuleParameterFormSet(BaseFormSet):
     #TODO form hash map: style+position=module_hash

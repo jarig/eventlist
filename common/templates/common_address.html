@@ -1,25 +1,15 @@
 
-<div class="adr_country">
-    <label class="desc" for="id_country">Country</label>
-    {{ address.country }}
-</div>
-<div class="adr_city">
-    <label class="desc" for="id_city">City</label>
-    {{ address.city }}
-</div>
-<div class="adr_cityArea">
-    <label class="desc" for="id_cityArea">City Area</label>
-    {{ address.cityArea }}
-</div>
-<div class="adr_county">
-    <label class="desc" for="id_county">County</label>
-    {{ address.county }}
-</div>
-<div class="adr_street">
-    <label class="desc" for="id_street">Street</label>
-    {{ address.street }}
-</div>
-<div class="adr_postalCode">
-    <label class="desc" for="id_postalCode">Postal Code</label>
-    {{ address.postalCode }}
-</div>
+
+<address>
+    <strong>{{ address.county }} {{ address.street }}</strong><br/>
+    {{ address.city }}  {{ address.postalCode }}<br/>
+    {{ address.country }}<br/>
+    {% if address.phone %}
+        <abbr title="Phone">P:</abbr>
+    {% endif %}
+</address>
+
+<address>
+    <strong>Official web-site</strong><br>
+    <a href="#">first.last@gmail.com</a>
+</address>

@@ -1,8 +1,12 @@
 var BlogModule =
 {
-    showModuleList: function(url, renderUrl, position, formPrefix)
+    showModuleList: function(url, renderUrl, position, formPrefix, toHide, toShow)
     {
         CommonGUI.showLoading();
+        if ( typeof toHide == "undefined")
+            toHide = "";
+        if ( typeof toShow == "undefined")
+            toShow = "";
         $.loadComponent(url,[
             //resources here
         ],{},function(data)
@@ -30,14 +34,17 @@ var BlogModule =
                             BlogModule.removeModule(formPrefix, position);
                         }catch(e){Common.DEBUG(e);}
                         //add formset form
-                        var form = $(formPrefix).ajaxSimpleForm("add","#moduleForms", true);
+                        var form = $(formPrefix).ajaxSimpleForm("add","#moduleForms");
                         $(form).attr("id","modules-"+position);
                         //fill form
-                        $("[name$=module]",$(form)).val(moduleHash);
+                        $("[name$=module]",form).val(moduleHash);
                         $("[name$=position]",form).val(position);
                         $("[name$=parameters]",form).val("");
+
                         $("#module-"+position).html(data);
                         $(popup).modal('hide');
+                        $(toHide).hide();
+                        $(toShow).show();
                     }
                 });
             });

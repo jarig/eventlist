@@ -60,9 +60,13 @@ def credit(request, event=None):
 
 
 def view_schedule(request,scheduleId):
+    #TODO reduce queries
     try:
-        schedule = EventSchedule.objects.select_related('event','address').get(pk=scheduleId)
-        friends = Account.objects.filter(pk__in=EventGo.objects.filter(eventSchedule=schedule).values("user"))[:11]
+        schedule = EventSchedule.objects.select_related('event','address','blog').get(pk=scheduleId)
+        schedule.goes = EventGo.objects.filter(eventSchedule=schedule, user=request.user).exists()
+        friends = []
+        if request.user.is_authenticated():
+            friends = request.user.friends.filter(pk__in=EventGo.objects.all().values("user"))
     except EventSchedule.DoesNotExist:
         return HttpResponseNotFound(_("Such event doesn't exist"))
 
@@ -94,18 +98,13 @@ def main(request):
                 "author":request.user
             }
         )
-        goes = "SELECT 1 FROM dual WHERE EXISTS ( SELECT id FROM %s WHERE %s=%d and %s=SCH.`id`)" %\
-               ( EventGo._meta.db_table,
-                 EventGo.user.field.column,
-                 request.user.pk,
-                 EventGo.eventSchedule.field.column)
 
     eventSchedules = EventSchedule.objects.raw("""select EE.*, SCH.*,
                                                 (%s) AS `goes`
                                                 FROM  %s EE,
                                                 (SELECT * FROM %s SC GROUP BY %s ORDER BY dateFrom DESC) as SCH
                                                 WHERE EE.id=SCH.%s ORDER BY SCH.dateFrom DESC""" % (
-                                                                          goes,
+                                                                          EventGo.getGoesStatement(request.user),
                                                                           Event._meta.db_table,
                                                                           EventSchedule._meta.db_table,
                                                                           EventSchedule.event.field.column,

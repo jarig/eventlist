@@ -1,5 +1,6 @@
 {% load widget_tweaks %}
 {% load field_renderer %}
+{% load i18n %}
 
 <div class="restAddress">
     {% if address.name.value %}
@@ -20,11 +21,11 @@
     {% endif %}
 
     <div class="control-group">
-        <div class="adr_country control">
+        <div class="adr_country control" style="margin-bottom: 10px">
             {{ address.country }}
             <span class="help-inline">{{ address.country.errors|join:" " }}</span>
         </div>
-        <div class="adr_city control">
+        <div class="adr_city control" style="margin-bottom: 10px">
             {{ address.city }}
             <span class="help-inline">{{ address.city.errors|join:" " }}</span>
         </div>

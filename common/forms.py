@@ -1,5 +1,6 @@
 from django import forms
 from django.forms.models import ModelForm
+from django.utils.translation import ugettext
 from common.models import Address, Country, City
 
 class AddressForm(ModelForm):
@@ -21,16 +22,19 @@ class AddressForm(ModelForm):
     class Meta:
         model = Address
         widgets = {
-            'street': forms.TextInput(attrs={'title':'Street'}),
-            'county': forms.TextInput(attrs={'title':'County'}),
-            'cityArea': forms.TextInput(attrs={'title':'City Area'}),
-            'postalCode': forms.TextInput(attrs={'title':'Postal Code'}),
+            'street': forms.TextInput(attrs={'title':'Street',
+                                             'placeholder':ugettext("Street")
+            }),
+            'county': forms.TextInput(attrs={'title':'County',
+                                             'placeholder':ugettext("County")
+            }),
+            'cityArea': forms.TextInput(attrs={'title':'City Area',
+                                               'placeholder':ugettext("City Area")
+            }),
+            'postalCode': forms.TextInput(attrs={'title':'Postal Code',
+                                                 'placeholder':ugettext("Postal Code")
+            }),
         }
-    
-#    def save(self, commit=True):
-#        super(AddressForm, self).save(commit)
-        
-
     def saveAddress(self, request):
         
         return self.save()

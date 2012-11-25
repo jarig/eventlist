@@ -71,8 +71,11 @@ var GoogleMaps = {
     },
     moveToAddress: function(address, putMarker)
     {
+        Common.DEBUG("Moving to address:"+address);
         geocoder = new google.maps.Geocoder();
-        geocoder.geocode( { 'address': address}, function(results, status) {
+        geocoder.geocode( { 'address': address },
+            function(results, status)
+            {
               if (status == google.maps.GeocoderStatus.OK)
               {
                 var zoom = Math.round(Math.log(results[0].address_components.length*50)*2.5);
@@ -87,12 +90,13 @@ var GoogleMaps = {
               } else {
                 Common.DEBUG(status);
               }
-       });
+            }
+        );
     },
     moveAndMark: function(address)
     {
         GoogleMaps.removeAllMarkers();
-        //var location = GoogleMaps.moveToAddress(address, true);
+        GoogleMaps.moveToAddress(address, true);
     },
     putMarker: function(location)
     {

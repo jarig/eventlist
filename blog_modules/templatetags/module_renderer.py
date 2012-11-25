@@ -23,6 +23,9 @@ class RenderBlogModule(template.Node):
         except VariableDoesNotExist:
             return ''
 
+@register.filter
+def isModuleIncluded(map, position):
+    return isinstance(map,dict) and map.has_key(position)
 
 def blogModule(parser, token):
     contents = token.split_contents()
@@ -31,3 +34,4 @@ def blogModule(parser, token):
     return RenderBlogModule(map, position)
 
 register.tag('blogModule', blogModule)
+register.tag('isModuleIncluded', blogModule)

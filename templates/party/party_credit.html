@@ -63,16 +63,16 @@
                 <div class="sectionHeader float-left">
                 </div>
                 <div class="btn-group float-right" id="partyScheduleMenu">
-                    <a class="btn btn-small btn-info" id="addCustomScheduleButton" href="#">
+                    <!--a class="btn btn-small btn-info" id="addCustomScheduleButton" href="#">
                         <i class="icon-plus"></i>
-                        {% trans "Add Event" %}
-                    </a>
+                        {#% trans "Add Event" %#}
+                    </a-->
                     <!--button class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown">
                         <span class="caret">
                         </span>
                     </button>
                     <ul class="dropdown-menu">
-                        <input type="hidden" id="searchEventURL" value="{% url event.views.searchEvent %}">
+                        <input type="hidden" id="searchEventURL" value="{#% url event.views.searchEvent %#}">
                         <li><a href="#" id="searchEventButton">Find Event</a></li>
                         <li><a href="#">External Event</a></li>
                     </ul-->
@@ -80,27 +80,30 @@
             </div>
             <div id="scheduleForms" action-bind="ajaxForm">
             {% for partySchedule in customPartyScheduleFormSet reversed %}
-                <div class="row-fluid partySchedule well">
+                <div class="row-fluid partySchedule">
                     <input id="is_bound" value="{{ partySchedule.is_bound }}" type="hidden">
                     {{ partySchedule.id }}
                     {{ partySchedule.DELETE.as_hidden }}
                     {{ partySchedule.ORDER.as_hidden }}
-                    <div class="row-fluid">
-                        <a class="close" action-bind="closeButton">&times;</a>
+                    <div сlass="row-fluid">
+                        <div class="span12 controls">
+                            {% field  partySchedule.location "class=span12" %}
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="span4">
-                            {% field  partySchedule.location "class=span4" %}
+                    <div class="row-fluid">
+                        <div id="editable" class="span12 controls controls-row">
+                            {% field partySchedule.dateFrom "class=span2" %}
+                            {% field partySchedule.timeFrom "class=span2" %}
+                            {% field partySchedule.timeTo "class=span2" %}
+                            {% field partySchedule.dateTo "class=span2" %}
+                            {% field partySchedule.eventSchedule %}
+                            {% field partySchedule.url %}
                         </div>
-                        <div id="editable" class="span4">
-                            {% field partySchedule.eventSchedule "class=span4" %}
-                            {% field partySchedule.url "class=span4" %}
-                            {% field partySchedule.dateFrom "class=span4" %}
-                            {% field partySchedule.timeFrom "class=span4" %}
-                            {% field partySchedule.dateTo "class=span4" %}
-                            {% field partySchedule.timeTo "class=span4" %}
+                    </div>
+                    <div сlass="row-fluid">
+                        <div class="span12 controls">
+                            <textarea rows="6" cols="5" class="span12" placeholder="Event Description"></textarea>
                         </div>
-                        <textarea rows="3" cols="5" class="span3" placeholder="Event Description"></textarea>
                     </div>
                 </div>
             {% endfor %}

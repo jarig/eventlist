@@ -45,10 +45,15 @@
 .blogInfoContent
 {
     float:left;
-    border-left: solid #e6e6fa 1px;
     padding-left: 3%;
     width:100%;
 }
+
+.generalInfoLeftColumn
+{
+
+}
+
 .blogContent
 {
     width: 100%;

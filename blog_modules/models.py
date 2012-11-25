@@ -58,7 +58,7 @@ class ModuleParameter(models.Model):
     #module parameters
     blog = models.ForeignKey(Blog, related_name='modules', editable=False)
     style = models.ForeignKey(BlogStyle, related_name='modules', editable=False)
-    module = models.CharField(max_length=32) #path to module (modules hash)
+    module = models.CharField(max_length=32) #path to module (module hash)
     position = models.PositiveSmallIntegerField(db_index=True)
     parameters = models.TextField(blank=True)
 

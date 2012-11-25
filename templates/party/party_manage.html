@@ -29,19 +29,7 @@
     <div class="container-fluid">
         <div class="row-fluid">
             {% for mship in partyMembership %}
-                <div class="row-fluid party-list-item">
-                        <div class="span7">
-                        {% for member in mship.partyMembers %}
-                            <div style="background-image: url({{ member.user.pk|user_avatar }})"
-                                 class="party-member-thumb float-left"></div>
-                        {% endfor %}
-                        </div>
-                        <div class="party-list-actions float-right">
-                            {% if mship.role == mship.ROLE.OWNER %}
-                                <a href="{% url party.views.edit party=mship.party.pk %}">{% trans "Edit" %}</a>
-                            {% endif %}
-                        </div>
-                </div>
+                {% include 'party/includes/party_thumb_list_item.html' %}
             {% endfor %}
         </div>
     </div>

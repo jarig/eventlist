@@ -6,7 +6,7 @@
         init: function(cityURL, onChange)
         {
             var $this = $(this);
-            $('.adr_country select',$this).chosen(),
+            $('.adr_country select',$this).chosen();
             $('.adr_country select',$this).change(function(event, ui){
                 var targetVal = $(event.target).val();
                 methods.initCities($this, cityURL, targetVal);
@@ -29,7 +29,7 @@
                     onChange();
             });
             $('.adr_country select',$this).change();
-            $("input",$this).labelify();
+            //$("input",$this).labelify();
         },
         initCities: function ($this, url,countryId)
         {

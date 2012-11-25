@@ -8,18 +8,31 @@
 
 var PartyEvent =
 {
-    init: function()
+    init: function(rootElement, revertPopup, goes)
     {
         $(function()
         {
-            $(".event-container").each(function()
+            $(rootElement).each(function()
             {
                 var $this = $(this);
                 $('#goButton',$this).click(function()
                 {
-                    $('.partyWindow', $this).rest_Party("showPartyWindow", $this);
+                    $('.partyWindow', $this).rest_Party("showPartyWindow", $this, null, revertPopup);
                     return false;
                 });
+                if (typeof goes != "undefined")
+                {
+                    if (goes == "True")
+                    {
+                        $('.ifGoes',$this).show();
+                        $('.ifNotGo',$this).hide();
+                    }else
+                    {
+                        $('.ifGoes',$this).hide();
+                        $('.ifNotGo',$this).show();
+                        Common.DEBUG("do not go");
+                    }
+                }
                 $("#unGoButton",$this).click(function()
                 {
                     $.post($("#unGoForm", $this).attr("action"),
@@ -77,8 +90,36 @@ var PartyEvent =
                     });
             return false;
         },
-        showPartyWindow: function(container, onCloseMethod)
+        createSimpleParty: function(url, data, callback)
         {
+            var $this= $(this);
+            $.post(
+                url,
+                data,
+                function(data, textStatus)
+                {
+                    Common.DEBUG(JSON.stringify(data));
+                    try
+                    {
+                        var eData = Common.eval(data);
+                        if (eData.id > 0)
+                        {
+                            if ( typeof callback == 'function' )
+                                callback(eData);
+                        }
+                    }catch(e)
+                    {
+                        Common.DEBUG(e);
+                    }
+                }
+            );
+            return this;
+        },
+        showPartyWindow: function(container, onCloseMethod, upsideDown)
+        {
+            if (typeof upsideDown == "undefined")
+                upsideDown = false;
+            Common.DEBUG(upsideDown);
             var $this= $(this);
             var button = $("#goButton",container);
             var data = $this.data('showPartyWindow');
@@ -97,7 +138,7 @@ var PartyEvent =
             }
             //alert(data.showPartyWindow['initialized']);
             $this.show();
-            var coord = $(button).offset();
+            var buttonCoord = $(button).offset();
             $this.width(450);
             $('a[role="button"]',$this).hover(
                 function(eO)
@@ -112,39 +153,37 @@ var PartyEvent =
             $('a[role="button"]',$this).click(
                 function() { $this.rest_Party('hide'); return false; }
             );
-            $this.css({top: coord.top-($this.height()+5),
-                          left: coord.left - ($this.width()-$(button).width())});
+            var nubOffset = 45;
+            var top = buttonCoord.top-($this.height()+5);
+            if (upsideDown)
+            {
+                $("#topNub").show();
+                $("#bottomNub").hide();
+                top += $this.height()+5+$(button).outerHeight();
+            }
+            $this.css({top: top,
+                       left: (buttonCoord.left +$(button).outerWidth()/2) - ($this.width() - nubOffset) });
             $this.show();
+            //$('body').click(function(){$this.hide(); delete this;});
             $(".createPartyButton", $this).click(function()
             {
-                $.post($("#createSimpleParty",$this).attr("action"),
-                       $("#createSimpleParty",$this).serialize(),
-                        function(data, textStatus)
-                        {
-                            Common.DEBUG(JSON.stringify(data));
-                            try
-                            {
-                                var data = Common.eval(data);
-                                if (data.id > 0)
-                                {
-                                    $("#partyStatus", $this).addClass("partyCreated");
-                                    $("#partyCreatedMessage", $this).show();
-                                    $("#createPartyButton", $this).hide();
-                                    $(".editPartyButton", $this).removeClass("hidden");
-                                    $(".createPartyButton", $this).unbind("click");
-                                    $('.ifGoes',container).show();
-                                    $('.ifNotGo',container).hide();
-                                    $('.ifGoes',$this).show();
-                                    $('.ifNotGo',$this).hide();
-                                }
-                            }catch(e)
-                            {
-                                Common.DEBUG(e);
-                            }
-                        }
-                );
+                var url = $("#createSimpleParty",$this).attr("action");
+                var data = $("#createSimpleParty",$this).serialize();
+                //create simple party
+                methods.createSimpleParty(url, data, function(eData){
+                    $("#partyStatus", $this).addClass("partyCreated");
+                    $("#partyCreatedMessage", $this).show();
+                    $("#createPartyButton", $this).hide();
+                    $(".editPartyButton", $this).removeClass("hidden");
+                    $(".createPartyButton", $this).unbind("click");
+                    $('.ifGoes',container).show();
+                    $('.ifNotGo',container).hide();
+                    $('.ifGoes',$this).show();
+                    $('.ifNotGo',$this).hide();
+                });
                 return false;
             });
+            return this;
         }
     };
     $.fn.rest_Party = function(method)

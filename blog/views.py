@@ -3,7 +3,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.serializers import json
 from django.core.urlresolvers import reverse
-from django.db.models.query_utils import Q
 from django.forms.formsets import formset_factory
 from django.forms.models import modelformset_factory
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -14,7 +13,8 @@ from django.template.context import RequestContext
 from django.utils.translation import ugettext as _
 from blog.forms import NewBlogForm
 from blog.models import Blog, BlogAccess
-from blog_modules.forms import ModuleParameterForm, ModuleParameterFormSet
+from blog_modules.forms import ModuleParameterForm, ModuleParameterFormSet, ModuleParameterModelFormSet
+from blog_modules.models import ModuleParameter
 from common.forms import AddressForm
 from common.models import Country, Address
 from menu.models import Menu
@@ -78,14 +78,18 @@ def edit(request, blogId, page=None):
         raise Http404
 
     AdrFormSet = modelformset_factory(Address, form=AddressForm, can_delete=True, extra=0)
+    ModuleFormSet = modelformset_factory(ModuleParameter, form=ModuleParameterForm, formset=ModuleParameterModelFormSet, can_delete=True, extra=0)
     if request.method == "POST":
         blogForm = NewBlogForm(request.POST, request.FILES, instance=blog)
         adrFormSet = AdrFormSet(request.POST, queryset=blog.addresses.all())
-        if blogForm.is_valid() and adrFormSet.is_valid():
+        moduleFormSet = ModuleFormSet(request.POST, prefix="modules", queryset=blog.modules.all())
+        if blogForm.is_valid() and adrFormSet.is_valid() and moduleFormSet.is_valid():
             blogForm.submit_blog(request,adrFormSet)
+            moduleFormSet.saveModules(blog)
             messages.success(request, _("Changes successfully saved!"))
             return HttpResponseRedirect(reverse('blog.views.edit',kwargs={'blogId':blogId,'page':page}))
     else:
+        moduleFormSet = ModuleFormSet(prefix="modules", queryset=blog.modules.all())
         blogForm = NewBlogForm(instance=blog)
         addr = blog.addresses.all().select_related('country','city')
         if len(addr):
@@ -105,6 +109,7 @@ def edit(request, blogId, page=None):
             "adrFormSet": adrFormSet,
             "blogForm": blogForm,
             "menu": menu.getMenu(),
+            "moduleFormSet": moduleFormSet,
             "accessLevel": accessLevel
             })
 

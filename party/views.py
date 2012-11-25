@@ -130,7 +130,6 @@ def invitationList(request, eventScheduleId):
             exclude = request.POST.getlist("exclude[]",[])
         #TODO take only mutual friends
         friendships = request.user.friends.all().extra(select={'date_added': "account_friendship.date_added"}).order_by("-date_added")
-        print friendships.query
         try:
             party = Party.objects.get(schedules__eventSchedule=eventScheduleId, author=request.user)
             pMembers = party.members.filter(~Q(user = request.user)).select_related('user')
