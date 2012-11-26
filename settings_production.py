@@ -23,6 +23,15 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(REST_BASE_PATH,'media/')
 STATIC_ROOT = os.path.join(REST_BASE_PATH,'static/')
 
+CACHES = {
+    #'default': {
+    #    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    #    'LOCATION': 'unique-snowflake'
+    #}
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+}
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
