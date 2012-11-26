@@ -7,10 +7,10 @@
     {{ block.super }}
     <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
     <link href="{{ STATIC_URL }}css/event_schedule.css" rel="stylesheet" type="text/css">
-    {% compress css %}
+
     <link href="{{ STATIC_URL }}address/css/address.less" rel="stylesheet/less" type="text/css">
     <link href="{{ STATIC_URL }}common/plugins/clear-view-style/boxes.less" rel="stylesheet/less" type="text/css">
-    {% endcompress %}
+
     <script type="text/javascript" src="{{ STATIC_URL }}address/address.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/party_event.js"></script>
     {% include 'includes/googlemaps.inc' %}
