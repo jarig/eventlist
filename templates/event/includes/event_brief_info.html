@@ -2,18 +2,30 @@
 <div class="event-container" id="event_{{ eventSchedule.id }}">
     <div class="event-data">
         {{ event.pk }}
-        <h2><a href="{% url event.views.view_schedule scheduleId=eventSchedule.pk %}">{{ eventSchedule.name }}</a></h2>
-        {{ eventSchedule.dateFrom }}
-        <div class="summary">
-            <div class="briefLogoBox">
-                <div class="briefEventLogo thumbnail">
-                    {% if eventSchedule.logo %}
-                        <img src="{{ MEDIA_URL }}{{ eventSchedule.logo }}"/>
-                    {% endif %}
+        <div class="row-fluid">
+            <div class="span1">
+                <div class="date-icon" style="margin-left: 20px">
+                    <p title="{{ eventSchedule.dateFrom}}">{{ eventSchedule.dateFrom|date:"d" }}
+                        <span>{{ eventSchedule.dateFrom|date:"M" }}</span>
+                    </p>
                 </div>
             </div>
-            <div class="briefEventDescr">
-                    {{ eventSchedule.descr|truncatewords_html:200|safe }}
+            <div class="span11" style="padding-left: 10px">
+                <h2><a href="{% url event.views.view_schedule scheduleId=eventSchedule.pk %}">{{ eventSchedule.name }}</a></h2>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="summary span12">
+                <div class="briefLogoBox">
+                    <div class="briefEventLogo thumbnail">
+                        {% if eventSchedule.logo %}
+                            <img src="{{ MEDIA_URL }}{{ eventSchedule.logo }}"/>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="briefEventDescr">
+                        {{ eventSchedule.descr|truncatewords_html:200|safe }}
+                </div>
             </div>
         </div>
         <div class="eventButtons">

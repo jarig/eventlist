@@ -32,6 +32,14 @@ class ModuleParameterModelFormSet(BaseModelFormSet):
         for form in self.forms:
             form.saveModule(blog)
 
+    def clean(self):
+        super(ModuleParameterModelFormSet, self).clean()
+        if self.is_bound:
+            for form in self.forms:
+                if form.is_valid():
+                    if form.cleaned_data.has_key("module") and not form.cleaned_data.get('DELETE', False):
+                        self.moduleMap[form.cleaned_data["position"]] = form.cleaned_data["module"]
+
 class ModuleParameterFormSet(BaseFormSet):
     #TODO form hash map: style+position=module_hash
     def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None,

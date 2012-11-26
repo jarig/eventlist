@@ -47,7 +47,13 @@ class Blog(models.Model):
     style = models.ForeignKey(BlogStyle, default=1)
     facilities = models.ManyToManyField(FacilityType, blank=True, null=True)
     addresses = models.ManyToManyField(Address, blank=True, null=True)
-    
+
+    #integration with 3rd party socials
+    #FourSquare
+    #fq_venue_id = models.CharField(max_length=255, blank=True, null=True)
+
+    #
+
     def __unicode__(self):
         return self.name
 
@@ -74,10 +80,13 @@ class BlogAccess(models.Model):
 
 def getMaxPermission(blog, user):
         if blog is None or user is None: return -1
-        bAccesses = blog.blogaccess_set.filter(user=user)
-        maxIndex = -1 #has no permissions
-        for bAccess in bAccesses:
-            if bAccess.access > maxIndex:
-                maxIndex = bAccess.access
-        return maxIndex
+        bAccesses = blog.blogaccess_set.filter(user=user).order_by('-access')
+        if bAccesses:
+            return bAccesses[0]
+        return -1
+        #maxIndex = -1 #has no permissions
+        #for bAccess in bAccesses:
+        #    if bAccess.access > maxIndex:
+        #        maxIndex = bAccess.access
+        #return maxIndex
 

@@ -92,10 +92,10 @@ var Address =
             var area = $(formId+' .adr_cityArea input');
             var street = $(formId+' .adr_street input');
             var searchText = "";
-            if ($(country).val() != 0) searchText += $(country).html();
-            if ($(city).val() != 0) searchText += ","+$(city).html();
-            if ($(area).val() != $(area).attr("title")) searchText += ","+$(area).val();
-            if ($(street).val() != $(street).attr("title")) searchText += ","+$(street).val();
+            if (typeof $(country).val() != "undefined") searchText += $(country).html();
+            if (typeof $(city).val() != "undefined") searchText += ","+$(city).html();
+            if ($(area).val() != "") searchText += ","+$(area).val();
+            if ($(street).val() != "") searchText += ","+$(street).val();
             callback(searchText);
         });
     },

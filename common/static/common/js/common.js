@@ -78,6 +78,7 @@ var GoogleMaps = {
             {
               if (status == google.maps.GeocoderStatus.OK)
               {
+                Common.DEBUG(results[0].address_components);
                 var zoom = Math.round(Math.log(results[0].address_components.length*50)*2.5);
                 GoogleMaps.map.setCenter(results[0].geometry.location);
                 GoogleMaps.map.setZoom(zoom);
@@ -342,3 +343,55 @@ jQuery.cachedHtml = function(url, options) {
 
     };
 })( jQuery );
+
+var Effects =
+{
+    fold_up: function (button, upperBox, bottomBox)
+    {
+        $(button).bind('click', function()
+        {
+            var persp, rotX, height;
+            if ($(button).data('opened'))
+            {
+                persp = "1000px";
+                rotX = 90;
+                height = '0px';
+                $(button).data('opened',false);
+            }else
+            {
+                persp = "1000px";
+                rotX = 0;
+                height = '100px';
+                $(upperBox).transition({
+                    perspective: "1000px",
+                    rotateX: '-90deg',
+                    height: 0
+                },0);
+                $(bottomBox).transition({
+                    perspective: "1000px",
+                    rotateX: '90deg',
+                    height: 0
+                },0);
+                $(upperBox).show();
+                $(bottomBox).show();
+                $(button).data('opened',true);
+            }
+            $(upperBox).transition({
+                perspective: persp,
+                rotateX: rotX*-1+'deg',
+                height: height
+            }, 500, 'ease', function() {
+                if ( $(this).height() == 0 )
+                    $(this).hide();
+            });
+            $(bottomBox).transition({
+            perspective: persp,
+            rotateX: rotX+'deg',
+            height: height
+            }, 500, 'ease', function() {
+                if ( $(this).height() == 0 )
+                    $(this).hide();
+            });
+        });
+    }
+};

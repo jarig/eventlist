@@ -30,10 +30,13 @@ class NewBlogForm(ModelForm):
 
         return newBlog
 
-
     class Meta:
         model = Blog
         exclude = ('managers','rating','priority','type')
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder':'Blog Name'}),
+            'description': forms.Textarea(attrs={'placeholder':'Description'})
+        }
         
 
         

@@ -30,6 +30,14 @@
 {% endblock %}
 
 {% block blogModule_1 %}
+    {{ blog.modules.all }}
+{% endblock %}
+
+{% block blogModule_2 %}
+
+{% endblock %}
+
+{% block blogAddress %}
     {% for address in blog.addresses.all %}
         {% include "common_address.html" %}
     {% endfor %}

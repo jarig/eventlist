@@ -14,8 +14,25 @@
         <h1>{% trans 'Page Management' %}</h1>
         <div class='subMenu'>
             <ul>
-                <li><a href="{% url blog.views.create %}" class="manageButton">Create Page</a></li>
-                <li><a href="{% url blog.views.create %}" class="manageButton">Find Page</a></li>
+                <li>
+                    <a href="{% url blog.views.create %}" class="manageButton">
+                        <i class="icon-book" ></i>
+                        Create Page
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="manageButton">
+                        <!--img src="https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_16x16.png"
+                             style="vertical-align: text-top;"-->
+                        <i class="icon-chevron-down"></i>
+                        Import from Foursquare</a>
+                </li>
+                <li>
+                    <a href="#" class="manageButton">
+                        <i class="icon-search"></i>
+                        Find Page
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
