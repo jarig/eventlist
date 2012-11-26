@@ -43,7 +43,6 @@ TEMPLATE_DIRS = (
     os.path.join(REST_APP_PATH, 'templates'),
 )
 
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
