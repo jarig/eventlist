@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 {% load static %}
 {% load i18n %}
-{% load compressed %}
 {% get_static_prefix as STATIC_PREFIX %}
 
 {% block dummyBlock %}
@@ -10,7 +9,7 @@
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-    {% compressed_css 'compressed_css'%}
+
     <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap-responsive.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
@@ -21,9 +20,7 @@
     <link href="{{ STATIC_PREFIX }}css/menu_login.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}css/menu_topmenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}css/menu_submenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-    {% endcompressed_css %}
 
-    {% compressed_js 'compressed_scripts'%}
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery.cookie.js"></script>
@@ -37,7 +34,7 @@
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/init.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}js/menu_login.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}js/accounts.js"></script>
-    {% endcompressed_js %}
+
 
     <!-- Plugins -->
     <link href="{{ STATIC_PREFIX }}common/plugins/chosen/chosen.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
