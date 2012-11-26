@@ -10,7 +10,7 @@
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-    {% compressed_css %}
+    {% compressed_css 'compressed_css'%}
     <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     <link href="{{ STATIC_PREFIX }}common/plugins/bootstrap/css/bootstrap-responsive.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
 
@@ -23,7 +23,7 @@
     <link href="{{ STATIC_PREFIX }}css/menu_submenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     {% endcompressed_css %}
 
-    {% compressed_js %}
+    {% compressed_js 'compressed_scripts'%}
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/js/jquery.cookie.js"></script>
