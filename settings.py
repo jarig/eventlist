@@ -136,7 +136,7 @@ INSTALLED_APPS = (
     'album',
     'organization',
     'widget_tweaks',
-    'compressor',
+    'compress',
     'south',
 )
 
