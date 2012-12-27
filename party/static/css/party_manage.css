@@ -1,0 +1,25 @@
+
+.party-list
+{
+    margin-left: 15px;
+}
+
+.party-list-actions
+{
+    margin: 5px;
+}
+
+.party-list-item
+{
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background: url('//ssl.gstatic.com/s2/oz/images/events/event-card_texture.png');
+    border: 1px solid rgb(230, 230, 230);
+    margin-bottom: 18px;
+    height: 110px;
+}
+.party-logo-thumb
+{
+    height: 110px;
+}

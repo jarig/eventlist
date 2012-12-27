@@ -113,7 +113,6 @@
 	width:100%; 
 	margin: 0;
 	padding: 0;
-	border-bottom: 1px #EEEEEE solid;
 	clear: both;
 	float: left;
 }
@@ -179,7 +178,7 @@
 	vertical-align: top;
 	padding-left: 0px;
     border-left: dotted #f5f5dc 1px;
-    width: 203px;
+    /*width: 203px;*/
     /*display: block;*/
 }
 

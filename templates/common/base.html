@@ -44,8 +44,6 @@
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/jquery-transit/jquery.transit.min.js"></script>
 
     <link href="{{ STATIC_PREFIX }}css/menu_sidemenu.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
-
-
     {% if request.session.mode == 'publish' %}
         <link href="{{ STATIC_PREFIX }}css/base_publisher.css" media="screen" rel="stylesheet" title="CSS" type="text/css" />
     {% endif %}
@@ -55,6 +53,9 @@
     {% block includes %}
 
     {% endblock %}
+
+    <!-- Global Overrides -->
+    <link href="{{ STATIC_PREFIX }}common/css/plugin-overrides.css" media="screen" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript" src="{{ STATIC_PREFIX }}common/plugins/less/less-1.3.0.min.js"></script>
     <title>{% block title %}Rest{% endblock %}</title>
@@ -163,7 +164,7 @@
                 <div id="content" class="fillSpace">
                 {% block contentHeader %}
                 {% endblock %}
-                <div id="contentTable" class="container-fluid">
+                <div id="contentTable">
                     <div class="row-fluid">
                         <div id="column_left" class="span3">
                             <div class="fillSpace">
@@ -192,7 +193,7 @@
                         <!--div id="rightColumnToggleBar" class="span1" onclick="BaseGUI.toggleRightColumn();">
                             <p><img src="{{ STATIC_PREFIX }}common/images/base/base_toggleArrow.png"></p>
                         </div-->
-                        <div id="column_right" class="span2">
+                        <div id="column_right" class="span3">
                             <div class="fillSpace">
                                 {% block rightcolumn %}
                                 {% endblock %}

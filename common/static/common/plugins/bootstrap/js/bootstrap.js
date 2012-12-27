@@ -1372,7 +1372,7 @@
  /* BUTTON PLUGIN DEFINITION
   * ======================== */
 
-  $.fn.button = function (option) {
+  $.fn.bsbutton = function (option) {
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('button')
@@ -1383,11 +1383,11 @@
     })
   }
 
-  $.fn.button.defaults = {
+  $.fn.bsbutton.defaults = {
     loadingText: 'loading...'
   }
 
-  $.fn.button.Constructor = Button
+  $.fn.bsbutton.Constructor = Button
 
 
  /* BUTTON DATA-API
@@ -1397,7 +1397,7 @@
     $('body').on('click.button.data-api', '[data-toggle^=button]', function ( e ) {
       var $btn = $(e.target)
       if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
-      $btn.button('toggle')
+      $btn.bsbutton('toggle')
     })
   })
 

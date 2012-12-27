@@ -2,11 +2,11 @@ from django.db import transaction
 from account.models import Account
 from event.models import EventSchedule
 from event.views import _go
-from party.models import PartySchedule, PartyMember, Party
+from party.models import PartyMember, Party
 
 
 def createPartyForEvent(user, eventScheduleId):
-    eventSch = EventSchedule.objects.get(pk=eventScheduleId)
+    eventSch = EventSchedule.objects.select_related('event').get(pk=eventScheduleId)
     #check that it doesnt exist already
     parties = Party.objects.filter(schedules__eventSchedule=eventScheduleId, author=user).all()
     if len(parties):
@@ -17,7 +17,8 @@ def createPartyForEvent(user, eventScheduleId):
             pass
     _go(user,eventSch)
     party = Party.objects.create(author=user)
-    partySched = PartySchedule.objects.create(party=party,
+    partySched = Party.objects.create(party=party,
+                                                name=eventSch.event.name,
                                                 location=eventSch.address,
                                                 dateFrom=eventSch.dateFrom,
                                                 timeFrom=eventSch.timeFrom,

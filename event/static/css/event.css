@@ -379,6 +379,12 @@
 
 /* Event Fast Search */
 
+.advancedSearch
+{
+    margin-left: 3px;
+}
+
+
 .fastsearch
 {
     width: 100%;
@@ -397,4 +403,5 @@
     padding-right: 0;
     width: 100%;
     margin-bottom: 0;
+    background: rgb(247, 247, 247) url(../search/searchfield.sign.png) no-repeat 98% center;
 }

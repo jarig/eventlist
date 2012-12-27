@@ -136,8 +136,7 @@ INSTALLED_APPS = (
     'album',
     'organization',
     'widget_tweaks',
-    'compressor',
-    'south',
+    'south'
 )
 
 # A sample logging configuration. The only tangible logging

@@ -4,7 +4,7 @@ import sys
 import settings
 
 class Command(BaseCommand):
-    help = 'Convert all apps to south'
+    help = 'Create Schema Migrations for all apps'
 
     def _is_project_app(self, app_name):
         return not 'django' in app_name and not 'south' in app_name

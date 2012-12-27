@@ -49,6 +49,10 @@ def findPeople(request):
         context_instance=RequestContext(request)
     )
 
+def fastSearch(request):
+
+    pass
+
 def generateMenu(request):
     menu = Menu(RequestContext(request))
     menu.addItem('Place','search.views.findPlace')

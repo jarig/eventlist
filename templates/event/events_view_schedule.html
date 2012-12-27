@@ -1,6 +1,5 @@
 {% extends 'event/events.html' %}
 {% load i18n %}
-{% load compress %}
 {% load extra %}
 
 {% block includes %}
@@ -56,11 +55,14 @@
                             </div>
                         </div>
                         <div class="eventLeftSection">
+                            <div class="sectionHeader">{%  trans "Friends" %}:</div>
                             {% if friends|length <= 1 %}
-                                <p>No friends attend this event yet.</p>
-                                <a href="#" class="partyInviteButton ifGoes">Invite them!</a>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li>
+                                        <a href="#" class="partyInviteButton ifGoes">Invite friends to this event!</a>
+                                    </li>
+                                </ul>
                             {% else %}
-                                <div class="sectionHeader">{% trans "Friends that goes to the event" %}: </div>
                                 <div class="span12">
                                 {% for friend in friends %}
                                     {% if friend != request.user %}
@@ -79,8 +81,11 @@
                         </div>
                         <div class="eventLeftSection">
                             <div class="sectionHeader">Parties: </div>
-                            <p>No party suggestions for this event yet.</p>
-                            <a href="#">Create one!</a>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li>
+                                    <a href="#">Create Party</a>
+                                </li>
+                            </ul>
                         </div>
                         <div class="eventLeftSection">
                             <div class="sectionHeader">Organizers: </div>

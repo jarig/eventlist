@@ -3,7 +3,7 @@ from django.forms.models import ModelForm, BaseModelFormSet
 from _ext.autocomplete import fields
 from account.models import Account
 from common.models import Address
-from party.models import Party, PartySchedule, PartyMember
+from party.models import Party, PartyMember
 
 class CreatePartyForm(ModelForm):
     #invited = forms.MultiValueField()
@@ -11,7 +11,7 @@ class CreatePartyForm(ModelForm):
     class Meta:
         model = Party
 
-    def saveParty(self, author, schedulesFormSet, invited):
+    def saveParty(self, author, invited):
 
         party = self.save(commit=False)
         party.author = author
@@ -25,10 +25,6 @@ class CreatePartyForm(ModelForm):
             #TODO bulk save
             pm.save()
 
-        schedules  = schedulesFormSet.save(commit=False)
-        for schedule in schedules:
-            schedule.party = party
-            schedule.save()
         return party
 
 class PartyScheduleFormSet(BaseModelFormSet):
@@ -39,7 +35,7 @@ class EventPartyScheduleForm(ModelForm):
     dateFrom = forms.DateField(input_formats=['%d/%m/%Y'], widget=forms.HiddenInput)
 
     class Meta:
-        model = PartySchedule
+        model = Party
         widgets = {
             'timeFrom': forms.HiddenInput()
         }
@@ -61,7 +57,7 @@ class CustomPartyScheduleForm(ModelForm):
         return self.cleaned_data['location']
 
     class Meta:
-        model = PartySchedule
+        model = Party
         widgets = {
             'timeFrom': forms.TimeInput(format='%H:%M', attrs={'placeholder':'Time From'}),
             'timeTo': forms.TimeInput(format='%H:%M', attrs={'placeholder':'Time To'})

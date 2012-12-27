@@ -3,11 +3,12 @@ from django.db import models
 from django.utils.translation import ugettext_lazy
 from account.models import Account
 from _ext.pibu.fields import ImagePreviewModelField
+from blog.models import Blog
 from common.models import Address, Language
 from event.models import Event, EventSchedule
 
 class Party(models.Model):
-    name = models.CharField(max_length=255, null=True, blank=True) #same as event name by default
+    name = models.CharField(max_length=255, editable=False) #same as event name by default
     author = models.ForeignKey(Account, related_name='authorOfParties', editable=False)
     logo = ImagePreviewModelField(upload_to="party/logo/", null=True, blank=True)
     description = models.TextField(blank=True, default='')
@@ -16,21 +17,21 @@ class Party(models.Model):
     #
     created=models.DateTimeField(auto_now_add=True, editable=False)
 
-    def __unicode__(self):
-        return unicode(self.name)
-
-# party schedules == activity plans
-class PartySchedule(models.Model):
-    party = models.ForeignKey(Party, related_name='schedules', editable=False)
-    location = models.ForeignKey(Address, verbose_name='Gathering Place') #gathering place
-    eventSchedule = models.ForeignKey(EventSchedule, null=True, blank=True, related_name='partySchedules')
+    eventSchedule = models.ForeignKey(EventSchedule, null=True, blank=True)
     url = models.URLField(verify_exists=False, null=True, blank=True)
     dateFrom = models.DateField(null=True, blank=True) #date when party starts/gathers
     timeFrom = models.TimeField(null=True, blank=True)
     dateTo = models.DateField(null=True, blank=True) #date when party ends
     timeTo = models.TimeField(null=True, blank=True)
-    description = models.TextField(max_length=1024, blank=True, default='')
-    pass
+
+    #autofilled fields ( for optimization )
+    event = models.ForeignKey(Event, editable=False, null=True, blank=True)
+    blog = models.ForeignKey(Blog, null=True, blank=True, editable=False)
+    address = models.ForeignKey(Address, editable=False, null=True, blank=True)
+
+
+    def __unicode__(self):
+        return unicode(self.name)
 
 class PartyMember(models.Model):
     class ROLE:

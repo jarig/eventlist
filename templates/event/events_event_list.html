@@ -1,0 +1,23 @@
+{% extends 'event/events_main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block includes %}
+    {{ block.super }}
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    {% for event in events %}
+        <div class="span8">
+            <a href="{% url event.views.credit event=event.pk %}">{{ event.name }}</a>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block hiddenContent %}
+
+{% endblock%}

@@ -1,6 +1,7 @@
 {% extends 'event/events.html' %}
 {% load i18n %}
 {% load static %}
+{% load  widget_tweaks %}
 
 {% block includes %}
     {{ block.super }}
@@ -24,22 +25,28 @@
 
 {% block content %}
     <div class="fastsearch">
-        <input type="text" title="{% trans "Search" %}" class="wideinput" placeholder="{% trans "Search" %}">
+        <form method="GET">
+        <div class="searchInput">
+            {{ fastSearchForm.search|add_class:"wideinput" }}
+        </div>
         <div class="advancedSearch">
-            <div id="box1" style="border: 1px solid #999;
+            <div id="box1" style="border: 1px solid #cdcdcd;
                                                   border-bottom: 1px solid #cecee2;
                                                     border-top: none;
                                                     display: none;
                                                     width:100%;
-                                                    height: 100px;
-                                                    overflow:hidden;"><h1>You are invited!</h1>
+                                                    height: 50px;
+                                                    overflow:hidden;">
+                Price, Location, Terms, Visits num., facilities, rating
+                friends goes, dates,
             </div>
-            <div id="box2" style="border: 1px solid #999;
+            <div id="box2" style="border: 1px solid #cdcdcd;
                                                     border-top: none;
                                                     width: 100%;
                                                     display: none;
-                                                    height: 100px;
-                                                    overflow:hidden;"><h2>Come to the event</h2>
+                                                    height: 0;
+                                                    overflow:hidden;">
+                selected
             </div>
         </div>
         <div class="tabbable tabs-below" style="padding-right: 6px;
@@ -49,20 +56,26 @@
             </div>
             <ul class="nav nav-tabs" style="margin-bottom: 0; border-top: 0">
                 <li class="active">
-                    <a href="#A" data-toggle="tab">Section 1</a>
+                    <a href="#event" data-toggle="tab">{%  trans "Event" %}</a>
                 </li>
                 <li>
-                    <a href="#A" data-toggle="tab">Section 2</a>
+                    <a href="#place" data-toggle="tab">{% trans "Place" %}</a>
                 </li>
                 <li class="pull-right">
-                    <a href="#"  id='advancedSearchButton'>Advanced</a>
+
+                    <a href="#"  id='advancedSearchButton'>
+                        <!--span class="icon-ok"></span--> Advanced
+                    </a>
                 </li>
             </ul>
         </div>
+        </form>
     </div>
-    {% for eventSchedule in eventSchedules %}
-        {% include "event/includes/event_brief_info.html" %}
-    {% endfor %}
+    {% block events %}
+        {% for eventSchedule in eventSchedules %}
+            {% include "event/includes/event_brief_info.html" %}
+        {% endfor %}
+    {% endblock %}
 
 {% endblock content %}
 

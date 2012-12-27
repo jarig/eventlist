@@ -1,14 +1,14 @@
 {% extends 'party/party.html' %}
 {% load i18n %}
 {% load static %}
-{% get_static_prefix as STATIC_PREFIX %}
 {% load menu_builder %}
 {% load extra %}
 
 {% block includes %}
     {{ block.super }}
-    <link href="{{ STATIC_PREFIX }}common/less/manage.less" rel="stylesheet/less" type="text/css">
+    <link href="{{ STATIC_URL }}common/less/manage.less" rel="stylesheet/less" type="text/css">
     <link href="{{ STATIC_URL }}css/party.css" rel="stylesheet" type="text/css">
+    <link href="{{ STATIC_URL }}css/party_manage.css" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
@@ -26,12 +26,10 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row-fluid">
-            {% for mship in partyMembership %}
-                {% include 'party/includes/party_thumb_list_item.html' %}
-            {% endfor %}
-        </div>
+    <div class="party-list">
+        {% for mship in partyMembership %}
+            {% include 'party/includes/party_thumb_list_item.html' %}
+        {% endfor %}
     </div>
 
 {% endblock %}

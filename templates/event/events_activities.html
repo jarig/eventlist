@@ -1,0 +1,23 @@
+{% extends 'event/events_main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block includes %}
+    {{ block.super }}
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    {% for activity in eventActivities %}
+        <div class="span4">
+            <a href="{% url event.views.showActivityCategory activityName=activity.name %}">{{ activity.name }}</a>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block hiddenContent %}
+
+{% endblock%}

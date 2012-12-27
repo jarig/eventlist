@@ -20,11 +20,11 @@
         ">
             <label class="control-label" >{% trans "Event dates" %}</label>
             <div class="controls">
-                {% field schForm.dateFrom 'class=dateFrom input-medium'%}
+                {% field schForm.dateFrom 'class=dateFrom span3'%}
                 {% field schForm.timeFrom 'class=eventTime input-small' %}
                 <span>-</span>
                 {% field schForm.timeTo 'class=eventTime input-small' %}
-                {% field schForm.dateTo 'class=dateTo input-medium' %}
+                {% field schForm.dateTo 'class=dateTo span3' %}
             </div>
             <p class="help-block">
                 {{ schForm.dateFrom.errors|join:" " }}

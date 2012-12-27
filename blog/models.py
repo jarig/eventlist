@@ -2,6 +2,7 @@ from django.db import models
 from account.models import Account
 from _ext.pibu.fields import ImagePreviewModelField
 from common.models import Address
+import time
 
 class FacilityType(models.Model):
     #blog types ( bar/cafe/cinema )
@@ -29,7 +30,7 @@ class BlogStyle(models.Model):
         return self.name
 
 def blog_logo_name(instance, filename):
-    return "blog/logo/%d_main_logo" % int(instance.pk)
+    return "blog/logo/%d_main_logo" % int(time.time())
 
 
 class Blog(models.Model):
@@ -50,7 +51,7 @@ class Blog(models.Model):
 
     #integration with 3rd party socials
     #FourSquare
-    #fq_venue_id = models.CharField(max_length=255, blank=True, null=True)
+    fq_venue_id = models.CharField(max_length=255, blank=True, null=True)
 
     #
 
@@ -77,6 +78,11 @@ class BlogAccess(models.Model):
         unique_together = ('blog','user','access',)
 
 
+class BlogTip(models.Model):
+    blog = models.ForeignKey(Blog, editable=False)
+    author = models.ForeignKey(Account, editable=False)
+    text = models.TextField(default="")
+    created = models.DateTimeField(auto_now_add=True)
 
 def getMaxPermission(blog, user):
         if blog is None or user is None: return -1

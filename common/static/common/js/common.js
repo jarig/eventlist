@@ -350,18 +350,26 @@ var Effects =
     {
         $(button).bind('click', function()
         {
-            var persp, rotX, height;
+            var persp, rotX, upperHeight, bottomHeight;
+            if ( ! $(button).data('fold_up_init') )
+            {
+                $(button).data('fold_up_init', {
+                    "upperHeight": $(upperBox).height(),
+                    "bottomHeight": $(bottomBox).height()
+                })
+            }
             if ($(button).data('opened'))
             {
                 persp = "1000px";
                 rotX = 90;
-                height = '0px';
+                upperHeight = bottomHeight = '0px';
                 $(button).data('opened',false);
             }else
             {
                 persp = "1000px";
                 rotX = 0;
-                height = '100px';
+                upperHeight = $(button).data('fold_up_init')["upperHeight"] +"px";
+                bottomHeight = $(button).data('fold_up_init')["bottomHeight"] + "px";
                 $(upperBox).transition({
                     perspective: "1000px",
                     rotateX: '-90deg',
@@ -379,7 +387,7 @@ var Effects =
             $(upperBox).transition({
                 perspective: persp,
                 rotateX: rotX*-1+'deg',
-                height: height
+                height: upperHeight
             }, 500, 'ease', function() {
                 if ( $(this).height() == 0 )
                     $(this).hide();
@@ -387,7 +395,7 @@ var Effects =
             $(bottomBox).transition({
             perspective: persp,
             rotateX: rotX+'deg',
-            height: height
+            height: bottomHeight
             }, 500, 'ease', function() {
                 if ( $(this).height() == 0 )
                     $(this).hide();

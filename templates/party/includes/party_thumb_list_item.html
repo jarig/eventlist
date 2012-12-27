@@ -1,14 +1,62 @@
 {% load i18n %}
 {% load extra %}
 
-<div class="row-fluid party-list-item">
-    <div class="span10">
-        Participants: {{ mship.partyMembers.length }}
-    </div>
-    <div class="span1 party-list-actions">
-        {% if mship.role >= mship.ROLE.MODERATOR %}
-            <a href="{% url party.views.edit party=mship.party.pk %}">{% trans "Edit" %}</a>
-        {% endif %}
-    </div>
 
+<div class="row-fluid party-list-item">
+    <div eventid="{{ mship.party.pk }}" class="span12">
+        <div class="span2">
+            <div class="span12">
+                {% if mship.party.logo %}
+                    <img src="{{ mship.party.logo.url }}"
+                         class="party-logo-thumb">
+                {% else %}
+                    <img src="{{ STATIC_URL }}common/images/logoStub.png"
+                         class="party-logo-thumb">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="span7">
+            <div class="span12">
+                <a href="#" target="_top" data-tooltip="Посмотреть описание">
+                    {% if mship.party.name  %}
+                        {{ mship.party.name }}
+                    {% else %}
+                        {% trans "Party without name" %}
+                    {% endif %}
+                </a>
+            </div>
+            <div class="span12">
+                <span class="icon-calendar" title="{% trans 'Date' %}"></span>
+                {{ mship.party.dateFrom }}
+                Вс, Июль 1, 5:30 PM EEST
+                {% if mship.party.dateTo %}
+                    - {{ mship.party.dateTo }}
+                {% endif %}
+            </div>
+            <div class="span12">
+                <span class="icon-road" title="{% trans 'Place' %}"></span>
+                <a href="https://maps.google.com/maps/place?q=&hl={{ LANGUAGE_CODE }}"
+                   target="_blank"> {{ mship.party.address }}</a>
+                <a href="https://maps.google.com/maps/place?q=&hl={{ LANGUAGE_CODE }}"
+                   target="_blank"> {{ mship.party.blog }}</a>
+            </div>
+            <div class="row-fluid">
+                <div class="span7">
+                    <div class="W3DgQb"></div>
+                    {% trans "Присутствовали" %}: {{ mship.partyMembers.length }}
+                </div>
+            </div>
+        </div>
+        <div class="pull-right span2" style="text-align: center">
+            {% if mship.role >= mship.ROLE.MODERATOR %}
+                <div class="btn btn-link">
+                    <a href="{% url party.views.edit party=mship.party.pk %}">{% trans "Edit" %}</a>
+                </div>
+                <div class="btn btn-link">
+                    <a href="#">{% trans "Delete" %}</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </div>

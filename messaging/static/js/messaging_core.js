@@ -11,7 +11,6 @@ var Messaging =
         $(function()
         {
             $(".read-narrow-button").tooltip();
-            var $this = $(this);
             $('#createMessageButton').click(function()
             {
                 var msgURL = $(this).attr("action-data");
@@ -43,7 +42,8 @@ var Messaging =
                         )
                         .error(function(data) {
                                 var errorData = Common.eval(data["responseText"]);
-                                for (var errorKey in errorData)
+                                var errorKey;
+                                for (errorKey in errorData)
                                 {
                                     var error = errorData[errorKey];
                                     var parent = $("#id_"+errorKey,$form).parents(".control-group");
@@ -55,8 +55,18 @@ var Messaging =
                     });
                 });
                 return false;
+
+            });//create message button click
+
+            //read actions
+            $.each("._messageContainer",function(){
+                var $this = $(this);
+                $(".read-narrow-button", $this).click(function()
+                {
+                });
             });
-        });
+
+        });// DOM init
     }
 };
 

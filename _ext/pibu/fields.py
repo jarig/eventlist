@@ -28,28 +28,27 @@ class ImagePreviewFieldFile(ImageFieldFile):
     url = property(_get_url)
 
     def save(self, name, content, save=True):
-        name = self.field.generate_filename(self.instance, content.name) + ".jpeg" #dummy format
+        #content === self, i.e ImagePreviewFieldFile instance
+        name = self.field.generate_filename(self.instance, content.name) + "." + self.field.format #dummy format
         srcPath = self.storage.path(name)
-        oldPath = content.name
-        fp = content
-
+        tempPath = content.name
         setattr(self.instance, self.field.name, name)
+        #modifies content toString output
         self.name = name
-        if oldPath.lower().find(settings.MEDIA_TEMP_URL.lower()): return #if not found or not in beginning
-        if unicode(srcPath).lower() == unicode(oldPath).lower(): return
-
-
-        newResizedImage = self.storage.open(self.name, mode='wb')
+        if tempPath.lower().find(settings.MEDIA_TEMP_URL.lower()): return #if not found or not in beginning
+        if unicode(srcPath).lower() == unicode(tempPath).lower(): return
+        newResizedImage = self.storage.open(name, mode='wb')
         #TODO optimization save image in memory if small
         #resizedImageContent = StringIO()
-        img = Image.open(content.file)
+        img = Image.open(tempPath)
         img.thumbnail((
             self.field.max_width,
             self.field.max_height
             ), Image.ANTIALIAS)
         img.save(newResizedImage, format=self.field.format)
-        fp.close()
-        self.storage.delete(oldPath) #delete temp. file
+        self.close()
+        newResizedImage.close()
+        self.storage.delete(tempPath) #delete temp. file
 
         # Update the filesize cache
         self._size = newResizedImage.size
@@ -60,12 +59,13 @@ class ImagePreviewFieldFile(ImageFieldFile):
             self.instance.save()
 
 
+
 class ImagePreviewModelField(models.ImageField):
     attr_class = ImagePreviewFieldFile
     def __init__(self, max_height=settings.IMAGE_MAX_HEIGHT,
                        max_width=settings.IMAGE_MAX_WIDTH,
                        max_size=settings.IMAGE_MAX_SIZE,
-                       format='JPEG',
+                       format='PNG',
                        stub_file=settings.IMAGE_STUB_FILE, *args, **kwargs):
         self.max_height, self.max_width, self.max_size, self.format = max_height, max_width, max_size*1024, format
         self.stub_file = stub_file
@@ -101,7 +101,9 @@ class ImagePreviewField(ImageField):
             if data in validators.EMPTY_VALUES: return None
             storage = DefaultStorage()
             fp = storage.open(data)
-            return super(ImagePreviewField, self).to_python(fp)
+            print "ToPython: %s" % fp
+            super(ImagePreviewField, self).to_python(fp).close()
+            return fp #return closed file handler
         except Exception:
             raise ValidationError(self.error_messages['invalid_image'])
 

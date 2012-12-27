@@ -9,6 +9,10 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/messaging_core.js"></script>
 {% endblock %}
 
+{% block scripts %}
+
+{% endblock %}
+
 {% block content %}
     <div class="restHeader">
         <div class="headerName"><h1>{% trans "Messages" %}</h1></div>
@@ -23,7 +27,7 @@
     </div>
     <div class="container-fluid">
         {% for message in my_messages %}
-            <div class="row-fluid message_feed_header">
+            <div class="row-fluid message_feed_header _messageContainer" id="feed_{{ message.pk }}">
                 <div class="row-fluid">
                     <a href="#">
                         <strong>{{ message.first_name }} {{ message.last_name }}</strong>
@@ -41,7 +45,7 @@
                     <i class="icon-share"></i> <a href="{% url messaging.views.sendMessageTo user=message.author_id %}">Reply</a>
                 </div>
                 <div class="clear"></div>
-                <div class="read-narrow-button" rel="tooltip" title="Read">
+                <div class="read-narrow-button" rel="tooltip" title="Read" action-data="{{ message.pk }}">
                 </div>
             </div>
         {% endfor %}
