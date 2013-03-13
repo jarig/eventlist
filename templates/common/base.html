@@ -209,7 +209,7 @@
                 <div class="infoColumn">
                     <p>
                     {% if user.is_authenticated %}
-                        <a href="{% url account.views.logoutProfile %}">{% trans "Sign out"%}</a>
+                        <a href="{% url 'account.views.logoutProfile' %}">{% trans "Sign out"%}</a>
                     {% else %}
                         <a href="#" onclick="Accounts.openLoginBox();">{% trans "Sign in"%}</a>
                     {% endif %}
@@ -218,7 +218,7 @@
                 <div class="infoColumn">
                     {% if user.is_authenticated %}
                         {% if not perms.publisher %}
-                            <p><a href="{% url publisher.views.publisherRequest %}">Become Publisher</a></p>
+                            <p><a href="{% url 'publisher.views.publisherRequest' %}">Become Publisher</a></p>
                         {% endif %}
                     {% endif %}
                     <p><a href="#">Invest</a></p>
@@ -250,12 +250,12 @@
     {% if perms.publisher %}
         <div class="sideSwitcher">
              <div class="sideSwitchButton">
-                 <a href="{% url common.views.userMode %}">
+                 <a href="{% url 'common.views.userMode' %}">
                      <img src="{{ STATIC_PREFIX }}common/images/base/base_profileSwitch.png">
                  </a>
              </div>
              <div class="sideSwitchButton">
-                 <a href="{% url common.views.publisherMode %}" >
+                 <a href="{% url 'common.views.publisherMode' %}" >
                      <img src="{{ STATIC_PREFIX }}common/images/base/base_publisherSwitch.png">
                  </a>
              </div>

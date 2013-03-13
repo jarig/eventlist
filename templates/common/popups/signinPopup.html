@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-                <form id="extLoginForm" action="{% url account.views.extLoginProfile %}" method="POST" class="hidden">
+                <form id="extLoginForm" action="{% url 'account.views.extLoginProfile' %}" method="POST" class="hidden">
                     <input name="lastName" type="hidden">
                     <input name="firstName" type="hidden">
                     <input name="uid" type="hidden">
@@ -47,7 +47,7 @@
             </div>
             <div class="tab-pane" id="signinTab">
                 <div class="well">
-                    <form id="nativeLoginForm" class="form-horizontal" action="{% url account.views.nativeLogin %}" method="POST">
+                    <form id="nativeLoginForm" class="form-horizontal" action="{% url 'account.views.nativeLogin' %}" method="POST">
                         <div class="control-group" >
                             <label class="control-label">{% trans "Username" %}</label>
                             <div class="controls">
@@ -78,7 +78,7 @@
             </div>
             <div class="tab-pane" id="registerTab">
                 <div class="well" style="margin-bottom: 5px;">
-                    <form id="registerForm" class="form-horizontal" action="{% url account.views.register %}" method="POST">
+                    <form id="registerForm" class="form-horizontal" action="{% url 'account.views.register' %}" method="POST">
                         <div class="control-group" id="rUsername">
                             <label class="control-label">{% trans "Username" %}</label>
                             <div class="controls">

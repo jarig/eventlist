@@ -25,7 +25,7 @@ class PreviewImageInput(HiddenInput):
         return mark_safe(u'<a href="#" onclick="%s;">%s' % ( uploadAction, uploadText) + u'</a>')
 
     def _format_value(self, value):
-        value = DefaultStorage().url(value)
+        value = DefaultStorage().url(str(value))
         return value
 
     def render(self, name, value, attrs=None):

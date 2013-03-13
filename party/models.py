@@ -18,7 +18,7 @@ class Party(models.Model):
     created=models.DateTimeField(auto_now_add=True, editable=False)
 
     eventSchedule = models.ForeignKey(EventSchedule, null=True, blank=True)
-    url = models.URLField(verify_exists=False, null=True, blank=True)
+    url = models.URLField(null=True, blank=True)
     dateFrom = models.DateField(null=True, blank=True) #date when party starts/gathers
     timeFrom = models.TimeField(null=True, blank=True)
     dateTo = models.DateField(null=True, blank=True) #date when party ends

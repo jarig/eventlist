@@ -127,7 +127,7 @@
                                         <div class="span12 clear_header_box">
                                             <p>
                                                 <strong>Where:</strong>
-                                                <a href="{% url blog.views.view blogId=schedule.blog.pk %}"><b>{{ schedule.blog }}</b></a>
+                                                <a href="{% url 'blog.views.view' blogId=schedule.blog.pk %}"><b>{{ schedule.blog }}</b></a>
                                                 <br/>
                                                 {{ schedule.address }}
                                             </p>

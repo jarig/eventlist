@@ -15,7 +15,7 @@
         <div class='subMenu'>
             <ul>
                 <li>
-                    <a href="{% url blog.views.create %}" class="manageButton">
+                    <a href="{% url 'blog.views.create' %}" class="manageButton">
                         <i class="icon-book" ></i>
                         Create Page
                     </a>
@@ -30,7 +30,7 @@
                             <h3><img src="https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_16x16.png"
                                      style="vertical-align: text-top;"> Import venue from FourSquare</h3>
                         </div>
-                        <form action="{% url blog.views.importFromFoursquare %}" method="GET">
+                        <form action="{% url 'blog.views.importFromFoursquare' %}" method="GET">
                         <div class="modal-body">
                             <input name="fqVenueId" type="text" class="input-xlarge" placeholder="Venue ID">
                         </div>
@@ -54,7 +54,7 @@
         {% for blog in myBlogs %}
             <div class="boxedItem" style="background-image: url('{{ blog.logo.url }}')">
                 <div class="itemName">{{ blog.name }}</div>
-                <a href="{% url blog.views.edit blog.id None%}" class="manageButton"></a>
+                <a href="{% url 'blog.views.edit' blog.id None%}" class="manageButton"></a>
             </div>
         {% endfor %}
     </div>

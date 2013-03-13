@@ -13,7 +13,7 @@
             </div>
             <div class="span11" style="padding-left: 10px">
                 <h2>
-                    <a href="{% url event.views.view_schedule scheduleId=eventSchedule.pk %}">{{ eventSchedule.name }}</a>
+                    <a href="{% url 'event.views.view_schedule' scheduleId=eventSchedule.pk %}">{{ eventSchedule.name }}</a>
                     {% if eventSchedule.started %}
                         <span class="label" style="vertical-align: text-top; line-height: 23px" title="{% trans 'This event has already started' %}">Started</span>
                     {% endif %}
@@ -36,15 +36,15 @@
         </div>
         <div class="eventButtons">
             <div class="likes-block">
-                <a href="{% url event.views.view_schedule scheduleId=eventSchedule.pk %}" class="like l-fb">
+                <a href="{% url 'event.views.view_schedule' scheduleId=eventSchedule.pk %}" class="like l-fb">
                     <i class="l-ico"></i>
                     <span class="l-count"></span>
                 </a>
-                <a href="{% url event.views.view_schedule scheduleId=eventSchedule.pk %}" class="like l-vk">
+                <a href="{% url 'event.views.view_schedule' scheduleId=eventSchedule.pk %}" class="like l-vk">
                     <i class="l-ico"></i>
                     <span class="l-count"></span>
                 </a>
-                <a href="{% url event.views.view_schedule scheduleId=eventSchedule.pk %}" class="like l-tw">
+                <a href="{% url 'event.views.view_schedule' scheduleId=eventSchedule.pk %}" class="like l-tw">
                     <i class="l-ico"></i>
                     <span class="l-count"></span>
                 </a>

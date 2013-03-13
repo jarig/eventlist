@@ -13,7 +13,7 @@
 {% block content %}
     {% for event in events %}
         <div class="span8">
-            <a href="{% url event.views.credit event=event.pk %}">{{ event.name }}</a>
+            <a href="{% url 'event.views.credit' event=event.pk %}">{{ event.name }}</a>
         </div>
     {% endfor %}
 {% endblock %}

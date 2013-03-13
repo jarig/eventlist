@@ -1,8 +1,8 @@
 {% load i18n %}
 <!-- Party window -->
 <div class="partyWindow" id="partyWindow-{{ eventSchedule.id }}">
-    <input value="{% url party.views.invitationList eventSchedule.pk %}" id="invitationURL" type="hidden">
-    <form action="{% url event.views.unGo eventSchId=eventSchedule.pk %}" method="POST" id="unGoForm" class="hidden"></form>
+    <input value="{% url 'party.views.invitationList' eventSchedule.pk %}" id="invitationURL" type="hidden">
+    <form action="{% url 'event.views.unGo' eventSchId=eventSchedule.pk %}" method="POST" id="unGoForm" class="hidden"></form>
     <div class="partyWindowControls hidden" id="topNub">
         <div class="nub flipv-background"></div>
     </div>
@@ -44,7 +44,7 @@
         <div class="nub"></div>
     </div>
     <div class="hidden">
-        <form action="{% url event.views.go eventSchId=eventSchedule.pk %}" method="POST" id="createSimpleParty" class="hidden">
+        <form action="{% url 'event.views.go' eventSchId=eventSchedule.pk %}" method="POST" id="createSimpleParty" class="hidden">
         </form>
     </div>
 </div>

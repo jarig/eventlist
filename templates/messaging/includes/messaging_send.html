@@ -3,7 +3,7 @@
 {% load field_renderer %}
 
 <div id="sendMessagePopup" class="modal">
-    <form method="POST" id="sendMessageForm" action="{% url messaging.views.sendMessageTo %}">
+    <form method="POST" id="sendMessageForm" action="{% url 'messaging.views.sendMessageTo' %}">
         <div class="modal-header">
             <button class="close" data-dismiss="modal">×</button>
             <div class="float-left">

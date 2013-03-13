@@ -11,7 +11,7 @@
         <h1>Become Publisher!</h1>
         <h4>Description</h4>
         <div class="requestForm">
-            <form action="{% url publisher.views.publisherRequest %}" method="POST">
+            <form action="{% url 'publisher.views.publisherRequest' %}" method="POST">
                 {{ requestForm.requestMessage }}
                 <div class="errors">
                     {{ requestForm.requestMessage.errors }}

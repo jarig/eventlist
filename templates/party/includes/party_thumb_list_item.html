@@ -51,7 +51,7 @@
         <div class="pull-right span2" style="text-align: center">
             {% if mship.role >= mship.ROLE.MODERATOR %}
                 <div class="btn btn-link">
-                    <a href="{% url party.views.edit party=mship.party.pk %}">{% trans "Edit" %}</a>
+                    <a href="{% url 'party.views.edit' party=mship.party.pk %}">{% trans "Edit" %}</a>
                 </div>
                 <div class="btn btn-link">
                     <a href="#">{% trans "Delete" %}</a>

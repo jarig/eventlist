@@ -22,7 +22,7 @@
 {% block scripts %}
     <script type="text/javascript">
         OrganizationCreate.init();
-        Address.init('#address','{% url common.views.getCities %}','');
+        Address.init('#address','{% url 'common.views.getCities' %}','');
     </script>
 {% endblock %}
 
@@ -35,9 +35,9 @@
     <form
             id='orgForm'
             {% if orgForm.instance.pk %}
-                action="{% url organization.views.credit orgForm.instance.pk %}"
+                action="{% url 'organization.views.credit' orgForm.instance.pk %}"
             {% else %}
-                action="{% url organization.views.credit%}"
+                action="{% url 'organization.views.credi't%}"
             {% endif %}
             method="POST"
             enctype="multipart/form-data"

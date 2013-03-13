@@ -42,18 +42,18 @@
             </a>
             <ul class="dropdown-menu">
                 {% if request.session.mode == 'publish' %}
-                    <li><a href="{% url event.views.credit %}" title="Publish!">
+                    <li><a href="{% url 'event.views.credit' %}" title="Publish!">
                         <i class="icon-calendar"></i>
                         {% trans "Create Event!" %}</a></li>
                 {% else %}
-                    <li><a href="{% url search.views.findPlace %}" title="Find Where To Rest!">
+                    <li><a href="{% url 'search.views.findPlace' %}" title="Find Where To Rest!">
                         <i class="icon-glass"></i>
                         {% trans "Rest!" %}</a></li>
-                    <li><a href="{% url search.views.findPlace %}">
+                    <li><a href="{% url 'search.views.findPlace' %}">
                         <i class="icon-picture"></i>
                         {% trans "Find Place" %}</a></li>
                     <li>
-                        <a href="{% url search.views.findPeople %}">
+                        <a href="{% url 'search.views.findPeople' %}">
                             <i class="icon-user"></i>
                         {% trans "Find People" %}</a></li>
                 {% endif %}
@@ -78,20 +78,20 @@
                 </div>
                 <div id="profileInfo">
                     <div id="name">{{ user.first_name }} {{ user.last_name }}</div>
-                    <div id="profileLink"><a href="{% url account.views.edit %}">{% trans "Edit Profile" %}</a></div>
+                    <div id="profileLink"><a href="{% url 'account.views.edit' %}">{% trans "Edit Profile" %}</a></div>
                 </div>
             </div>
         </div>
     {% endif %}
     {% if request.session.mode == 'publish' %}
             <div class="sideMenuItem">
-                <a href="{% url blog.views.manage %}">{% trans "Pages" %}</a>
+                <a href="{% url 'blog.views.manage' %}">{% trans "Pages" %}</a>
             </div>
             <div class="sideMenuItem">
-                <a href="{% url organization.views.manage %}">{% trans "Organizations" %}</a>
+                <a href="{% url 'organization.views.manage' %}">{% trans "Organizations" %}</a>
             </div>
             <div class="sideMenuItem">
-                <a href="{% url event.views.manage %}">{% trans "Events" %}</a>
+                <a href="{% url 'event.views.manage' %}">{% trans "Events" %}</a>
             </div>
     {% else %}
         {% sidemenu %}

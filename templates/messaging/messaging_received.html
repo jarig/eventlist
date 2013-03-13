@@ -19,7 +19,7 @@
         <div class="subMenu">
             <ul>
                 <li>
-                    <a href="#" action-data="{% url messaging.views.sendMessageTo %}"
+                    <a href="#" action-data="{% url 'messaging.views.sendMessageTo' %}"
                        id="createMessageButton">Create</a>
                 </li>
             </ul>
@@ -42,7 +42,7 @@
                     {{ message|truncatewords:25 }}
                 </div>
                 <div class="float-right message-actions">
-                    <i class="icon-share"></i> <a href="{% url messaging.views.sendMessageTo user=message.author_id %}">Reply</a>
+                    <i class="icon-share"></i> <a href="{% url 'messaging.views.sendMessageTo' user=message.author_id %}">Reply</a>
                 </div>
                 <div class="clear"></div>
                 <div class="read-narrow-button" rel="tooltip" title="Read" action-data="{{ message.pk }}">

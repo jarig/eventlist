@@ -40,9 +40,9 @@
     <div class="createEventContainer">
         <form id="eventDataForm"
               {%  if eventForm.instance.pk %}
-                action="{% url event.views.credit eventForm.instance.pk %}"
+                action="{% url 'event.views.credit' eventForm.instance.pk %}"
               {% else %}
-                action="{% url event.views.credit %}"
+                action="{% url 'event.views.credit' %}"
               {% endif %}
               method="POST"
               enctype="multipart/form-data"
@@ -122,9 +122,9 @@
 
                         <div class="row-fluid">
                             <div class="span12">
-                                <input type="hidden" value="{% url blog.views.getBlogAddress %}" id="getBlogAddressURL">
-                                <input type="hidden" value="{% url common.views.getAddress %}" id="getAddressURL">
-                                <input type="hidden" value="{% url common.views.getCities %}" id="getCityURL">
+                                <input type="hidden" value="{% url 'blog.views.getBlogAddress' %}" id="getBlogAddressURL">
+                                <input type="hidden" value="{% url 'common.views.getAddress' %}" id="getAddressURL">
+                                <input type="hidden" value="{% url 'common.views.getCities' %}" id="getCityURL">
                                 <div class="row-fluid sectionHeader sectionHeaderHighlight">
                                     <div class="span9">
                                         Event Schedules:

@@ -27,7 +27,7 @@
 {% block content %}
         <div class="row-fluid span11">
         <form method="POST" class="form-horizontal">
-            <input type="hidden" value="{% url common.views.findAddress %}" id="findAddressUrl">
+            <input type="hidden" value="{% url 'common.views.findAddress' %}" id="findAddressUrl">
             <!--div class="row-fluid party-privacy-button">
                 <img src="{{ STATIC_URL }}images/party_open_icon.png" style="vertical-align: middle;">
                 <span>Open This Party</span>
@@ -95,7 +95,7 @@
                 </button>
             <div class="float-right">
                 <a class="btn btn-small btn-info"
-                   href="#{% url party.views.invitationList 0 %}"
+                   href="#{% url 'party.views.invitationList' 0 %}"
                    id="inviteParticipantButton">
                     <span class="icon-plus" style="font-style: italic;"></span>
                     {% trans "Invite Friends" %}

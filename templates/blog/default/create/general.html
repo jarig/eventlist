@@ -22,7 +22,7 @@
             $(function()
             {
                 //GoogleMaps.init('#googleMap');
-                $('.addressForm').rest_Address("init", '{% url common.views.getCities %}',
+                $('.addressForm').rest_Address("init", '{% url 'common.views.getCities' %}',
                         function()
                         {
                             Address.refreshGoogleMap('.addressForm', GoogleMaps.moveAndMark);
@@ -66,9 +66,9 @@
         {% if accessLevel >= accessLevels.ADMIN  %}
             <form id="blogData"
                   {% if blogForm.instance.id %}
-                  action="{% url blog.views.edit  blogForm.instance.id None %}"
+                  action="{% url 'blog.views.edit'  blogForm.instance.id None %}"
                   {% else %}
-                  action="{% url blog.views.create %}"
+                  action="{% url 'blog.views.create' %}"
                   {% endif %}
             enctype="multipart/form-data" method="POST">
             <input type="hidden" id="blog_id" value="{{ blogForm.instance.id }}">
@@ -87,7 +87,7 @@
             </div>
 
             <div class="form-actions-top">
-                <span><a href="{% url blog.views.manage %}">{{"<< Back"|escape}}</a></span>
+                <span><a href="{% url 'blog.views.manage' %}">{{"<< Back"|escape}}</a></span>
                 <span>
                 <a href="#" onclick="BlogForm.submit('#blogData');" class="btn">
                     {% if blogForm.instance.id %}
@@ -100,7 +100,7 @@
 
                 {% if blogForm.instance.id %}
                     <span>
-                        <a href="{% url blog.views.view  blogForm.instance.id '' %}" target="_blank" class="btn">View Blog</a>
+                        <a href="{% url 'blog.views.view'  blogForm.instance.id '' %}" target="_blank" class="btn">View Blog</a>
                     </span>
                 {% endif %}
 

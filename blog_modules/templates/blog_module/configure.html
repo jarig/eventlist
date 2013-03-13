@@ -15,8 +15,8 @@
                 <li> Module Name </li>
                 <li>
                     <a href="#"
-                       onclick="return BlogModule.showModuleList('{% url blog_modules.views.getModuleList style=style position=position %}',
-                                                                 '{% url blog_modules.views.renderModule %}',
+                       onclick="return BlogModule.showModuleList('{% url 'blog_modules.views.getModuleList' style=style position=position %}',
+                                                                 '{% url 'blog_modules.views.renderModule' %}',
                                                                  '{{ position }}','{{ moduleFormSet.prefix }}');" >
                     <i class="icon-plus"></i>Add module</a>
                 </li>
@@ -33,8 +33,8 @@
     <div class="row-fluid {% if moduleFormSet.moduleMap|isModuleIncluded:position %} hidden {% endif %}" id="moduleAdd-{{ position }}">
 
         <ul class="nav nav-tabs nav-stacked" style="text-align: center">
-            <li><a href="#" onclick="return BlogModule.showModuleList('{% url blog_modules.views.getModuleList style=style position=position %}',
-                    '{% url blog_modules.views.renderModule %}',
+            <li><a href="#" onclick="return BlogModule.showModuleList('{% url 'blog_modules.views.getModuleList' style=style position=position %}',
+                    '{% url 'blog_modules.views.renderModule' %}',
                     '{{ position }}','{{ moduleFormSet.prefix }}',
                     '#moduleAdd-{{ position }}',
                     '#moduleEdit-{{ position }}');">Add Module</a></li>
