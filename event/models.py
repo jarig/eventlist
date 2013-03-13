@@ -1,4 +1,5 @@
 import datetime
+import uuid
 from django.db import models
 import time
 from _ext.pibu.fields import ImagePreviewModelField
@@ -23,7 +24,7 @@ class EventActivity(models.Model):
 
 #todo invalidate cache
 def event_logo_name(instance, filename):
-    return "event/logo/main_logo_%d" % int(time.time())
+    return "event/logo/main_logo_%s" % uuid.uuid4()
 #
 class Event(models.Model):
     name = models.CharField(max_length=255)
@@ -53,14 +54,17 @@ class EventSchedule(models.Model):
     timeFrom = models.TimeField(default='00:00')
     dateTo = models.DateField(null=True, blank=True, default=datetime.date.today) #date when event ends
     timeTo = models.TimeField(default='00:00', null=True, blank=True)
+    #enterTillTime = models.DateTimeField(default=datetime.date.today) # datetime till customer can enter the event, by default should be the same as dateFrom
+    shortDescription = models.CharField(max_length=1024, default='', blank=True)
+
     address = models.ForeignKey(Address, null=True, related_name='eventSchedules') #location where this event is held
     blog = models.ForeignKey(Blog, null=True, blank=True, default=None, related_name='eventSchedules') # blog's address
     created = models.DateTimeField(auto_now_add=True) #date created
 
     def __unicode__(self):
-        return ("%s %s") % (self.event.name, self.dateFrom.strftime('%d/%m/%Y'))
+        return "%s %s %s" % (self.event.name, self.dateFrom.strftime('%d/%m/%Y'), self.timeFrom.strftime("%H:%M"))
 
-# Terms to be applied for each eventSchedule, can be none
+# Terms to be applied for each event, can be none
 class EventTerms(models.Model):
     class Conditions:
         AGE = 'A'
@@ -69,11 +73,11 @@ class EventTerms(models.Model):
         (Conditions.AGE,u'age'),
         (Conditions.PRICE,u'price'),
     )
-    eventSchedule = models.ForeignKey(EventSchedule, editable=False, related_name='terms')
+    event = models.ForeignKey(Event, editable=False, related_name='terms')
     type = models.CharField(choices=_CONDITIONS, max_length=2, default=Conditions.PRICE)
     min_value = models.IntegerField(null=True, blank=True)
     max_value = models.IntegerField(null=True, blank=True)
-    classifier = models.CharField(max_length=255,default='',blank=True) #aux. data for term ( like currency, age, etc. )
+    classifier = models.CharField(max_length=255,default='',blank=True) #aux. data for term ( like currency, measure units, etc. )
 
 # table to record 'goes' for each event schedule
 # TODO add go for event
@@ -118,3 +122,14 @@ class Invite(models.Model):
 
     class Meta:
         unique_together = ('event', 'user', 'person')
+
+
+class GroupFeaturedEvents(models.Model):
+    """
+        Grouped featured events table for optimization
+        Events from this table appears on the main page in groups
+    """
+    activity = models.ForeignKey(EventActivity)
+    event = models.ForeignKey(Event)
+    eventSchedule = models.ForeignKey(EventSchedule)
+    pass

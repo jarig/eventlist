@@ -15,10 +15,15 @@
             </li>
     {% else %}
             <li class="topButton">
-                <a href="/" onclick="" >{% trans "Popular Events" %}</a>
+                <a href="/" onclick="" >{% trans "Featured Events" %}</a>
             </li>
+            {% if user.is_authenticated %}
+                <li class="topButton">
+                    <a href="/" onclick="" >{% trans "My Event Feed" %}</a>
+                </li>
+            {% endif %}
             <li class="topButton">
-                <a href="#" onclick="" >{% trans "Recent events" %}</a>
+                <a href="#" onclick="" >{% trans "Event Categories" %}</a>
             </li>
     {% endif %}
 {% endblock topmenu_left %}

@@ -32,7 +32,7 @@ class Account(User):
     )
     user = models.OneToOneField(User,editable=False, related_name='profile')
     identity = models.CharField(max_length=128, default="",editable=False)
-    provider = models.CharField(max_length=128, default="",editable=False)
+    provider = models.CharField(max_length=128, default="nt",editable=False)
     rating = models.FloatField(default=0,editable=False)
     avatar = ImagePreviewModelField(upload_to=account_logo_name, max_width=164, blank=True, null=True, max_length=255, default='')
     sex = models.CharField(max_length=1, choices=_SEX, null=True, blank=True)
