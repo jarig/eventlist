@@ -64,7 +64,9 @@ def view_schedule(request,scheduleId):
     #TODO reduce queries
     try:
         schedule = EventSchedule.objects.select_related('event','address','blog').get(pk=scheduleId)
-        schedule.goes = EventGo.objects.filter(eventSchedule=schedule, user=request.user).exists()
+        schedule.goes = False
+        if request.user.is_authenticated():
+            schedule.goes = EventGo.objects.filter(eventSchedule=schedule, user=request.user).exists()
         friends = []
         if request.user.is_authenticated():
             friends = request.user.friends.filter(pk__in=EventGo.objects.all().values("user"))
@@ -112,8 +114,8 @@ def main(request):
     eventSchedules = EventSchedule.objects.raw("""select EE.*, SCH.*,
                                                 (%s) AS `goes`
                                                 FROM  %s EE,
-                                                (SELECT * FROM %s SC WHERE dateFrom >= NOW() ORDER BY dateFrom ) as SCH
-                                                WHERE EE.id=SCH.%s and %s ORDER BY SCH.dateFrom""" % (
+                                                (SELECT *, (dateFrom <= NOW()) as started FROM %s SC WHERE dateTo >= NOW() ORDER BY started, dateFrom ) as SCH
+                                                WHERE EE.id=SCH.%s and %s ORDER BY SCH.started, SCH.dateFrom""" % (
                                                                           EventGo.getGoesStatement(request.user),
                                                                           Event._meta.db_table,
                                                                           EventSchedule._meta.db_table,

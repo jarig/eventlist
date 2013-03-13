@@ -1,9 +1,17 @@
 from unittest import TestCase
+from _ext.foursquare import settings
+from _ext.foursquare.models import Foursquare
 
 class SimpleTest(TestCase):
-    def setUpClass(self):
-        self.testVenueId = "40a55d80f964a52020f31ee3"
+    def setUp(self):
+        self.api = Foursquare(
+            client_id=settings.CLIENT_ID,
+            client_secret=settings.CLIENT_SECRET
+        )
+        self.testVenueId = "4b51ca4ef964a520ac5527e3"
         pass
 
-    def testGetVenueTips(self):
-        self.assertEqual(1 + 1, 2)
+    def testGetVenueInfo(self):
+        response = self.api.venues(self.testVenueId)
+        print response["venue"]["name"]
+        pass

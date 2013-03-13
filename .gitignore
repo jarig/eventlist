@@ -1,6 +1,7 @@
 *.idea
 .idea
 *.pyc
+*.log
 /fabfile.py
 media/*
 !media/common

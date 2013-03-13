@@ -7,4 +7,5 @@ urlpatterns = patterns('blog.views',
     url(r'^(?P<blogId>\d+)/(?P<page>\w*)', 'view'),
     url(r'^(?P<blogId>\d+)/', 'view'),
     url(r'^getBlogAddress', 'getBlogAddress'),
+    url(r'^foursquare/import', 'importFromFoursquare'),
 )

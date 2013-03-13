@@ -21,11 +21,25 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="manageButton">
-                        <!--img src="https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_16x16.png"
-                             style="vertical-align: text-top;"-->
+                    <a href="#fqImportPopup" class="manageButton" data-toggle="modal">
                         <i class="icon-chevron-down"></i>
                         Import from Foursquare</a>
+                    <div class="modal hide fade" id="fqImportPopup">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h3><img src="https://playfoursquare.s3.amazonaws.com/press/logo/poweredByFoursquare_16x16.png"
+                                     style="vertical-align: text-top;"> Import venue from FourSquare</h3>
+                        </div>
+                        <form action="{% url blog.views.importFromFoursquare %}" method="GET">
+                        <div class="modal-body">
+                            <input name="fqVenueId" type="text" class="input-xlarge" placeholder="Venue ID">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" >Import</button>
+                            <button class="btn" data-dismiss="modal">Close</button>
+                        </div>
+                        </form>
+                    </div>
                 </li>
                 <li>
                     <a href="#" class="manageButton">
