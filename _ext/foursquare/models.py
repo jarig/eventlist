@@ -19,8 +19,6 @@ import urllib
 # 3rd party libraries that might not be present during initial install
 #  but we need to import for the version #
 from _ext import httplib2
-#for verification
-import certifi
 
 try:
     import poster

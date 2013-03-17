@@ -23,7 +23,7 @@
                 </li>
             {% endif %}
             <li class="topButton">
-                <a href="#" onclick="" >{% trans "Event Categories" %}</a>
+                <a href="{% url 'event.views.byActivity' %}" onclick="" >{% trans "Event Categories" %}</a>
             </li>
     {% endif %}
 {% endblock topmenu_left %}

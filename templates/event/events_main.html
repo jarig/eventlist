@@ -24,53 +24,9 @@
 {% endblock %}
 
 {% block content %}
-    <div class="fastsearch">
-        <form method="GET">
-        <div class="searchInput">
-            {{ fastSearchForm.search|add_class:"wideinput" }}
-        </div>
-        <div class="advancedSearch">
-            <div id="box1" style="border: 1px solid #cdcdcd;
-                                                  border-bottom: 1px solid #cecee2;
-                                                    border-top: none;
-                                                    display: none;
-                                                    width:100%;
-                                                    height: 50px;
-                                                    overflow:hidden;">
-                Price, Location, Terms, Visits num., facilities, rating
-                friends goes, dates,
-            </div>
-            <div id="box2" style="border: 1px solid #cdcdcd;
-                                                    border-top: none;
-                                                    width: 100%;
-                                                    display: none;
-                                                    height: 0;
-                                                    overflow:hidden;">
-                selected
-            </div>
-        </div>
-        <div class="tabbable tabs-below" style="padding-right: 6px;
-                                                padding-left: 6px;
-                                                border-top: none;">
-            <div class="tab-content">
-            </div>
-            <ul class="nav nav-tabs" style="margin-bottom: 0; border-top: 0">
-                <li class="active">
-                    <a href="#event" data-toggle="tab">{%  trans "Event" %}</a>
-                </li>
-                <li>
-                    <a href="#place" data-toggle="tab">{% trans "Place" %}</a>
-                </li>
-                <li class="pull-right">
+    {# event search form #}
+    {%  include "event/includes/event_fast_search_field.html" %}
 
-                    <a href="#"  id='advancedSearchButton'>
-                        <!--span class="icon-ok"></span--> Advanced
-                    </a>
-                </li>
-            </ul>
-        </div>
-        </form>
-    </div>
     {% block events %}
         {% for eventSchedule in eventSchedules %}
             {% include "event/includes/event_brief_info.html" %}

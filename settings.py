@@ -7,7 +7,7 @@ ADMINS = (
 )
 
 MANAGERS = ()
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'staging.rest.ee', 'staging.rest.ee:8080']
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -45,7 +45,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.abspath(".")+'/static',
+    os.path.abspath(os.path.dirname(__name__)) + '/compiled',
 )
 
 # List of finder classes that know how to find static files in
@@ -145,7 +145,7 @@ INSTALLED_APPS = (
 # the site admins on every HTTP 500 error.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
-LOG_FOLDER =  os.environ.get("REST_LOG_FOLDER",".")
+LOG_FOLDER =  os.environ.get("REST_LOG_FOLDER","./logs")
 
 LOGGING = {
     'version': 1,
@@ -155,10 +155,16 @@ LOGGING = {
             'format' : '%(asctime)s :: %(levelname)s :: %(name)s :: %(message)s'
         }
     },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
+            'class': 'django.utils.log.AdminEmailHandler',
+            'filters': ['require_debug_false']
         },
         'rest_import_event_log': {
             'level': 'ERROR',

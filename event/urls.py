@@ -10,6 +10,7 @@ urlpatterns = patterns('event.views',
     url(r'(?P<scheduleId>\d+)$', 'view_schedule'),
     url(r'^activities/(?P<activityName>\w+)$', 'showActivityCategory'),
     url(r'^activities$', 'byActivity'),
+    url(r'^groups$', 'showEventGroups'),
     url(r'^$', 'main'),
 
 )
