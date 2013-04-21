@@ -7,7 +7,7 @@ ADMINS = (
 )
 
 MANAGERS = ()
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'staging.rest.ee', 'staging.rest.ee:8080']
+ALLOWED_HOSTS = ['*','localhost', '127.0.0.1', 'staging.rest.ee', 'staging.rest.ee:8080']
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -28,6 +28,10 @@ LANGUAGES = (
     ('et', 'Estonian'),
     ('ru', 'Russian'),
     ('en', 'English'),
+)
+
+LOCALE_PATHS = (
+    os.path.join(os.path.dirname(__name__), "locale"),
 )
 
 SITE_ID = 1

@@ -17,14 +17,17 @@
             <li class="topButton">
                 <a href="/" onclick="" >{% trans "Featured Events" %}</a>
             </li>
+            <li class="topButton">
+                <a href="/" onclick="" >{% trans "Trending Places" %}</a>
+            </li>
+            <li class="topButton">
+                <a href="{% url 'event.views.showEventGroups' %}" onclick="" >{% trans "Event Categories" %}</a>
+            </li>
             {% if user.is_authenticated %}
                 <li class="topButton">
                     <a href="/" onclick="" >{% trans "My Event Feed" %}</a>
                 </li>
             {% endif %}
-            <li class="topButton">
-                <a href="{% url 'event.views.byActivity' %}" onclick="" >{% trans "Event Categories" %}</a>
-            </li>
     {% endif %}
 {% endblock topmenu_left %}
 

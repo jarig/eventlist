@@ -388,7 +388,7 @@
 .fastsearch
 {
     width: 100%;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     margin-top: 9px;
     margin-left: 5px;
 }
@@ -404,4 +404,8 @@
     width: 100%;
     margin-bottom: 0;
     background: rgb(247, 247, 247) url(../search/searchfield.sign.png) no-repeat 98% center;
+}
+.chosenSearchCriteria
+{
+    padding-top: 7px;
 }

@@ -87,8 +87,8 @@
             </div>
 
             <div class="form-actions-top">
-                <span><a href="{% url 'blog.views.manage' %}">{{"<< Back"|escape}}</a></span>
                 <span>
+                <a  class="btn" href="{% url 'blog.views.manage' %}"><i class="icon-chevron-left"></i>Back</a>
                 <a href="#" onclick="BlogForm.submit('#blogData');" class="btn">
                     {% if blogForm.instance.id %}
                         {% trans 'Save' %}
@@ -104,8 +104,8 @@
                     </span>
                 {% endif %}
 
-                <div style="float:right; ">
-                    Blog Style |
+                <div class="input-prepend pull-right">
+                    <span class="add-on">Blog style</span>
                     {% field blogForm.style 'class=input-small' %}
                 </div>
             </div>

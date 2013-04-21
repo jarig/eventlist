@@ -8,6 +8,7 @@ from event.models import Event, EventSchedule
 from django import forms
 from organization.models import Organization
 
+
 class EventForm(ModelForm):
     organizers = forms.ModelMultipleChoiceField(Organization.objects.none(),
                                                 cache_choices=True,

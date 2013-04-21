@@ -37,7 +37,7 @@
             {% if orgForm.instance.pk %}
                 action="{% url 'organization.views.credit' orgForm.instance.pk %}"
             {% else %}
-                action="{% url 'organization.views.credi't%}"
+                action="{% url 'organization.views.credit' %}"
             {% endif %}
             method="POST"
             enctype="multipart/form-data"

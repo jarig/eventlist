@@ -8,7 +8,7 @@ from django.template.context import RequestContext
 from django.utils.translation import ugettext as _
 from account.models import Account
 from event.forms import EventForm, EventScheduleForm, EventScheduleFormSet
-from event.models import Event, EventSchedule, EventGo, EventActivity
+from event.models import Event, EventSchedule, EventGo, EventActivity, EventGroup
 from party.forms import CreatePartyForm
 from search.forms import FastSearchForm
 
@@ -101,7 +101,7 @@ def main(request):
             }
         )
 
-    search = "1=1" #search statement
+    search = "1=1"  # search statement
     params = []
     if request.GET:
         fastSearchForm = FastSearchForm(request.GET)
@@ -169,16 +169,23 @@ def showActivityCategory(request, activityName):
 
 def showEventGroups(request):
     """
+        Show events in groups
     """
     if request.GET:
         fastSearchForm = FastSearchForm(request.GET)
         if fastSearchForm.is_valid():
             #fastSearchForm.cleaned_data["search"]
             pass
+        #redirect to /event page
     else:
         fastSearchForm = FastSearchForm()
 
-    groups = [1,2,3,4,5,6]
+    #get groups
+    groups = EventGroup.objects.filter(featured=False)
+    for group in groups:
+        events = Event.objects.filter(activities__group=group)[:3]
+        group.events = events
+
     return render_to_response("event/events_event_groups.html",
                               {
                                   "groups": groups,

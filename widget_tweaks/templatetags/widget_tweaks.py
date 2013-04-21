@@ -2,6 +2,16 @@ import re
 from django.template import Library, Node, Variable, TemplateSyntaxError
 register = Library()
 
+intMatch = re.compile("^\d+$")
+
+@register.filter(name='verbose_name')
+def verbose_name(bf):
+    """
+        Returns the display value of a BoundField.
+    """
+    data = bf.data
+    if intMatch.match(data): data = int(data)
+    return dict(bf.field.choices).get(data, '')
 
 def silence_without_field(fn):
     def wrapped(field, attr):
