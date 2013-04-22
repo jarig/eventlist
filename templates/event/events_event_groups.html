@@ -6,21 +6,21 @@
     {{ block.super }}
     <link href="{{ STATIC_URL }}less/event_group.less" rel="stylesheet/less" type="text/css">
     <script type="text/javascript" src="{{ STATIC_URL }}js/event_categories.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
 {% endblock %}
 
 {% block scripts %}
     {{ block.super }}
     <script type="text/javascript">
-    $(function(){
-        $(".live-tile").activeTile({
-            dataSourceFunction: function( tile )
-            {
-                //console.log("Getting data");
-            }
-        });
+    $(function()
+    {
+        Search.init();
+        $(".live-tile").activeTile();
         $(".event_group").click(function()
         {
-           console.log("Cat. clicked");
+            var groupPk = $(this).attr("action-data");
+            Search.addCriteria("category",groupPk);
+            Search.run();
         });
     });
     </script>
@@ -28,13 +28,16 @@
 
 {% block content %}
     {% include "event/includes/event_fast_search_field.html" %}
-    <div class="row-fluid">
-        <h3>Categories</h3>
+    <div class="row-fluid" style="margin-bottom: 3px;
+                                  margin-top: -10px;
+                                  z-index: -1;">
+        <span class="grayOutHeader">Categories</span>
     </div>
     <div class="event_group_container">
         <div class="row-fluid">
         {% for group in groups %}
             <div class="span6 event_group"
+                 action-data="{{ group.pk }}"
                  style="margin-left: 1%">
                 <div class="caption row-fluid">
                     {{ group.name }}

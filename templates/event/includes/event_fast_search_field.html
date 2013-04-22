@@ -2,8 +2,9 @@
 {% load static %}
 {% load widget_tweaks %}
 
+
 <div class="fastsearch">
-    <form method="GET">
+    <form method="GET" id="fastSearch">
         <div class="searchInput">
             {{ fastSearchForm.search|add_class:"wideinput" }}
         </div>
@@ -41,8 +42,9 @@
                     <div class="chosenSearchCriteria">
                         {% for field in fastSearchForm %}
                             {% if field.value %}
-                                <span class="label label-info" title="{{ field.label }}">
-                                    {{ field|verbose_name }} <a href="#">&times;</a>
+                                <span class="label label-info criteria" title="{{ field.label }}">
+                                    {{ field|verbose_name }}
+                                    <a href="#" action-data="{{ field.name }}">&times;</a>
                                 </span>
                             {% endif %}
                         {% endfor %}

@@ -49,6 +49,15 @@ h6 {
 	margin-top: 0px;
     padding: 0;
 }
+
+.grayOutHeader
+{
+    color: rgba(243, 243, 243, 0.42);
+    font-weight: 600;
+    font-size: 55px;
+    font-family: Segoe UI, sans-serif
+}
+
 a {
 	color: #006699;
 }
