@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="span4">
                                     <div class="span12">
-                                        <span >{{ event.name }}</span>
+                                        <span >{{ event.name|truncatechars:12 }}</span>
                                     </div>
                                     <div class="span12">
                                         <span>{{ event.descr|truncatewords:10 }}</span>

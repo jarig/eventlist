@@ -21,6 +21,7 @@ class EventGroup(models.Model):
 
     def __unicode__(self):
         return self.name
+
     pass
 
 
@@ -66,6 +67,9 @@ class Event(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)  # date event created
     participants = models.PositiveIntegerField(default=0, editable=False) # number of participants, help num (not exact)
     confirmed = models.BooleanField(editable=False, default=True)  # event confirmed by blog/page admins
+    #TODO: event signals
+    #latestSchedule = models.ForeignKey("EventSchedule", null=True, editable=False, default=None,
+    #                                   blank=True)  # automatically populated by signal cron job
 
     objects = EventManager()
 
@@ -75,10 +79,19 @@ class Event(models.Model):
 
 # Event may have many schedules
 class EventSchedule(models.Model):
+    class STATUS:
+        PENDING = 1
+        IN_PROGRESS = 2
+        PASSED = 3
+    STATUS_CHOICES = (
+        (STATUS.PENDING, "Pending"),
+        (STATUS.IN_PROGRESS, "In Progress"),
+        (STATUS.PASSED, "Passed"),
+    )
     event = models.ForeignKey(Event, editable=False, related_name='schedules')
     dateFrom = models.DateField(default=datetime.date.today)  # date when event starts
     timeFrom = models.TimeField(default='00:00')
-    dateTo = models.DateField(null=True, blank=True, default=datetime.date.today) #date when event ends
+    dateTo = models.DateField(null=True, blank=True, default=datetime.date.today)  # date when event ends
     timeTo = models.TimeField(default='00:00', null=True, blank=True)
     # datetime till customer can enter the event, by default should be the same as dateFrom
     #enterTillTime = models.DateTimeField(default=datetime.date.today)
@@ -87,6 +100,7 @@ class EventSchedule(models.Model):
     address = models.ForeignKey(Address, null=True, related_name='eventSchedules')  # location where this event is held
     blog = models.ForeignKey(Blog, null=True, blank=True, default=None, related_name='eventSchedules')  # blog's address
     created = models.DateTimeField(auto_now_add=True)  # date created
+    #isActive = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, blank=True, null=True, editable=False)
 
     def __unicode__(self):
         return "%s %s %s" % (self.event.name, self.dateFrom.strftime('%d/%m/%Y'), self.timeFrom.strftime("%H:%M"))
@@ -116,7 +130,7 @@ class EventGo(models.Model):
     eventSchedule = models.ForeignKey(EventSchedule, editable=False)
     #event = models.ForeignKey(EventSchedule, editable=False) # for performance
     user = models.ForeignKey(Account, editable=False, related_name='goesOnEvents')
-    created = models.DateTimeField(auto_now_add=True) #go created
+    created = models.DateTimeField(auto_now_add=True)  # go created
 
     class Meta:
         unique_together = ('eventSchedule', 'user')

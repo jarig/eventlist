@@ -106,11 +106,17 @@ def main(request):
     if request.GET:
         fastSearchForm = FastSearchForm(request.GET)
         if fastSearchForm.is_valid():
-            search = "EE.name LIKE %(searchToken)s "
-            params = {'searchToken': '%' + fastSearchForm.cleaned_data["search"] + '%'}
+            if fastSearchForm.cleaned_data["search"]:
+                search = "EE.name LIKE %(searchToken)s "
+                params = {
+                    'searchToken': '%' + fastSearchForm.cleaned_data["search"] + '%',
+                }
+            if fastSearchForm.cleaned_data["category"]:
+                search += ""
     else:
         fastSearchForm = FastSearchForm()
-
+    #TODO: add isActive check
+    #eventSchedules = EventSchedule.objects.all().select_related("event")
     eventSchedules = EventSchedule.objects.raw("""select EE.*, SCH.*,
                                                 (%s) AS `goes`
                                                 FROM  %s EE,
@@ -175,7 +181,7 @@ def showEventGroups(request):
         fastSearchForm = FastSearchForm(request.GET)
         if fastSearchForm.is_valid():
             #fastSearchForm.cleaned_data["search"]
-            pass
+            return main(request)
         #redirect to /event page
     else:
         fastSearchForm = FastSearchForm()
