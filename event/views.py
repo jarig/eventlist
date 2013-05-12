@@ -101,33 +101,33 @@ def main(request):
             }
         )
 
-    search = "1=1"  # search statement
-    params = []
+    search = "1=1 "  # search statement
+    params = {}
     if request.GET:
         fastSearchForm = FastSearchForm(request.GET)
         if fastSearchForm.is_valid():
             if fastSearchForm.cleaned_data["search"]:
-                search = "EE.name LIKE %(searchToken)s "
-                params = {
-                    'searchToken': '%' + fastSearchForm.cleaned_data["search"] + '%',
-                }
+                search += "AND EE.name LIKE %(searchToken)s "
+                params['searchToken'] = '%' + fastSearchForm.cleaned_data["search"] + '%'
             if fastSearchForm.cleaned_data["category"]:
-                search += ""
+                search += "AND EEA.event_id=EE.id AND EEA.eventactivity_id=EA.id AND EA.group_id=%(category)s "
+                params['category'] = fastSearchForm.cleaned_data["category"].pk
     else:
         fastSearchForm = FastSearchForm()
-    #TODO: add isActive check
-    #eventSchedules = EventSchedule.objects.all().select_related("event")
+    #TODO: optimization, add isActive check instead of dateFrom checks
     eventSchedules = EventSchedule.objects.raw("""select EE.*, SCH.*,
                                                 (%s) AS `goes`
-                                                FROM  %s EE,
+                                                FROM  %s EE, %s EEA, %s EA,
                                                 (SELECT *, (dateFrom <= NOW()) as started FROM %s SC WHERE dateTo >= NOW() ORDER BY started, dateFrom ) as SCH
                                                 WHERE EE.id=SCH.%s and %s ORDER BY SCH.started, SCH.dateFrom""" % (
         EventGo.getGoesStatement(request.user),
         Event._meta.db_table,
+        "event_event_activities",
+        "event_eventactivity",
         EventSchedule._meta.db_table,
         EventSchedule.event.field.column,
         search), params=params)
-
+    #print eventSchedules.query
     return render_to_response("event/events_main.html",
                               {
                                   "eventSchedules": eventSchedules,

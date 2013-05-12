@@ -19,12 +19,24 @@ var Search =
         var tag = $("[name='"+name+"']", "#"+Search.options["id"]);
         if ( tag[0].tagName.toLowerCase() == "select")
         {
-            console.log($("option[value='"+value+"'",$(tag)));
             $("option[value='"+value+"']",$(tag)).attr("selected", "selected");
         }
     },
     run: function()
     {
-        $("#"+Search.options["id"]).submit();//submit form
+        var searchForm = $("#"+Search.options["id"]);
+        searchForm.submit(function()
+            {
+                $('select, input', this).each(function()
+                {
+                    if($(this).val()=='')
+                    {
+                        $(this).attr('disabled','disabled');
+                    }
+                });
+                return true;
+            }
+        );
+        searchForm.submit();//submit form
     }
 };

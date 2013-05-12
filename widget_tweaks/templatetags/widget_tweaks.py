@@ -11,7 +11,9 @@ def verbose_name(bf):
     """
     data = bf.data
     if intMatch.match(data): data = int(data)
-    return dict(bf.field.choices).get(data, '')
+    if hasattr(bf.field, "choices"):
+        return dict(bf.field.choices).get(data, '')
+    return data
 
 def silence_without_field(fn):
     def wrapped(field, attr):

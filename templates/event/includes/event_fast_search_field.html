@@ -43,7 +43,8 @@
                     <div class="chosenSearchCriteria">
                         {% for field in fastSearchForm %}
                             {% if field.value %}
-                                <span class="label label-info criteria" title="{{ field.label }}">
+                                <span class="label label-info criteria" title="{{ field.label }}"
+                                        style="margin-left: 7px;">
                                     {{ field|verbose_name }}
                                     <a href="#" action-data="{{ field.name }}">&times;</a>
                                 </span>
