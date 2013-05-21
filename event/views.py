@@ -102,6 +102,7 @@ def main(request):
         )
 
     search = "1=1 "  # search statement
+    addTables = ""
     params = {}
     if request.GET:
         fastSearchForm = FastSearchForm(request.GET)
@@ -110,6 +111,7 @@ def main(request):
                 search += "AND EE.name LIKE %(searchToken)s "
                 params['searchToken'] = '%' + fastSearchForm.cleaned_data["search"] + '%'
             if fastSearchForm.cleaned_data["category"]:
+                addTables += "event_event_activities EEA, event_eventactivity EA"
                 search += "AND EEA.event_id=EE.id AND EEA.eventactivity_id=EA.id AND EA.group_id=%(category)s "
                 params['category'] = fastSearchForm.cleaned_data["category"].pk
     else:
@@ -117,13 +119,12 @@ def main(request):
     #TODO: optimization, add isActive check instead of dateFrom checks
     eventSchedules = EventSchedule.objects.raw("""select EE.*, SCH.*,
                                                 (%s) AS `goes`
-                                                FROM  %s EE, %s EEA, %s EA,
+                                                FROM  %s EE, %s
                                                 (SELECT *, (dateFrom <= NOW()) as started FROM %s SC WHERE dateTo >= NOW() ORDER BY started, dateFrom ) as SCH
                                                 WHERE EE.id=SCH.%s and %s ORDER BY SCH.started, SCH.dateFrom""" % (
         EventGo.getGoesStatement(request.user),
         Event._meta.db_table,
-        "event_event_activities",
-        "event_eventactivity",
+        addTables + ("," if addTables else ""),
         EventSchedule._meta.db_table,
         EventSchedule.event.field.column,
         search), params=params)
@@ -137,7 +138,7 @@ def main(request):
                               context_instance=RequestContext(request)
     )
 
-
+'''Archived
 def byActivity(request):
     """
         Show all confirmed event activities
@@ -171,7 +172,7 @@ def showActivityCategory(request, activityName):
                               context_instance=RequestContext(request)
     )
     pass
-
+'''
 
 def showEventGroups(request):
     """

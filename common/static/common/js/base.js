@@ -20,13 +20,16 @@ var Base =
                                     {
                                         $(this).parents("form").submit();
                                     });
-            var headers = {}
+            var headers = {};
             if (typeof csrf != "undefined" && csrf != null)
                 headers["X-CSRFToken"] = csrf;
             $.ajaxSetup(
             {
                 "headers": headers
             });
+            //fade out messages
+            // messages timeout for 10 sec
+            $('.alert-success').delay(5000).fadeOut('slow');
         });
     },
     toggle_profileBox: function(profileContainer)
