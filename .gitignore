@@ -1,8 +1,11 @@
 *.idea
 .idea
+.project
+.pydevproject
 *.pyc
 *.log
-/fabfile.py
+/rest/fabfile.py
 media/*
 !media/common
 migrations/
+/solr/rest/data/
