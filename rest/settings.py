@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'rest',
     '_ext.pibu',
     'party',
     'messaging',
@@ -144,6 +145,9 @@ INSTALLED_APPS = (
     'south',
     'event_importers'
 )
+
+USER_MAIN_VIEW = "event.views.showEventGroups"
+PUBLISHER_MAIN_VIEW = "blog.views.manage"
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -226,4 +230,4 @@ if os.environ.has_key("PRODUCTION"):
 else:
     print >> sys.stdout, "Developer Mode"
     TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.debug',) + TEMPLATE_CONTEXT_PROCESSORS
-    from settings_dev import  *
+    from settings_dev import *

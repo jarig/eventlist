@@ -60,7 +60,7 @@ class SuperKinodSource(EventSource):
             logger.info("Event name: %s" % eventName)
             try:
                 #try to get such event from DB
-                #TODO: perform fuzzy search using difflib.SequenceMatcher
+                #TODO: perform fuzzy search using SOLR
                 event = Event.objects.get(name=eventName)
                 logger.info("Found existing event: %s" % event.name)
             except Event.DoesNotExist:

@@ -3,6 +3,8 @@ from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from django.views.generic import RedirectView
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -34,6 +36,6 @@ if settings.DEBUG:
         url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
             'document_root': settings.MEDIA_ROOT,
         }),
-        url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to',
-                {'url': settings.MEDIA_URL+'common/favicon.ico'}),
+        url(r'^favicon\.ico$',
+            RedirectView.as_view(url=settings.MEDIA_URL+'common/favicon.ico')),
    )

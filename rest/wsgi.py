@@ -1,7 +1,7 @@
 import sys
 import os
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'rest.settings'
 
 if os.environ['REST_BASE_PATH'] not in sys.path:
     sys.path.append(os.environ['REST_BASE_PATH'])

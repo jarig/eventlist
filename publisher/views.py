@@ -50,6 +50,7 @@ def publisherRequest(request):
 @transaction.commit_on_success
 def acceptRequest(request, reqIds):
     user = request.user
+    #TODO: take referer from next var in REQUEST object
     referer = request.META["HTTP_REFERER"]
     requestIds = reqIds.split(",")
     if user.is_superuser:

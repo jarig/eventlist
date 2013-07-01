@@ -31,22 +31,28 @@ class ImagePreviewFieldFile(ImageFieldFile):
         #content === self, i.e ImagePreviewFieldFile instance
         name = self.field.generate_filename(self.instance, content.name) + "." + self.field.format #dummy format
         srcPath = self.storage.path(name)
+        if hasattr(content, "close") and not content.closed:
+            content.close()
         tempPath = content.name
         setattr(self.instance, self.field.name, name)
         #modifies content toString output
         self.name = name
         if tempPath.lower().find(settings.MEDIA_TEMP_URL.lower()): return #if not found or not in beginning
         if unicode(srcPath).lower() == unicode(tempPath).lower(): return
+        if not os.path.exists(os.path.dirname(self.storage.path(name))):
+            os.makedirs(os.path.dirname(self.storage.path(name)))
         newResizedImage = self.storage.open(name, mode='wb')
         #TODO optimization save image in memory if small
         #resizedImageContent = StringIO()
-        img = Image.open(tempPath)
+        tempPathFp = open(tempPath, "rb")
+        img = Image.open(tempPathFp)
         img.thumbnail((
             self.field.max_width,
             self.field.max_height
             ), Image.ANTIALIAS)
         img.save(newResizedImage, format=self.field.format)
         self.close()
+        tempPathFp.close()
         newResizedImage.close()
         self.storage.delete(tempPath) #delete temp. file
 
@@ -57,7 +63,6 @@ class ImagePreviewFieldFile(ImageFieldFile):
         if save:
             # Save the object because it has changed, unless save is False
             self.instance.save()
-
 
 
 class ImagePreviewModelField(models.ImageField):
@@ -89,6 +94,7 @@ class ImagePreviewModelField(models.ImageField):
         defaults.update(kwargs)
         return super(ImagePreviewModelField, self).formfield(**defaults)
 
+
 # image field with preview before submit functionality
 class ImagePreviewField(ImageField):
     widget = PreviewImageInput # Default widget to use when rendering this type of Field.
@@ -103,7 +109,7 @@ class ImagePreviewField(ImageField):
             fp = storage.open(data)
             print "ToPython: %s" % fp
             super(ImagePreviewField, self).to_python(fp).close()
-            return fp #return closed file handler
+            return fp  # return closed file handler
         except Exception:
             raise ValidationError(self.error_messages['invalid_image'])
 

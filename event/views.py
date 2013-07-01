@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.core.cache import get_cache
 from django.core.urlresolvers import reverse
 from django.forms.models import modelformset_factory
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
@@ -92,7 +93,7 @@ def manage(request):
 
 
 #show main events
-def main(request):
+def showEvents(request):
     createPartyFormSample = None
     if request.user.is_authenticated():
         createPartyFormSample = CreatePartyForm(
@@ -174,6 +175,7 @@ def showActivityCategory(request, activityName):
     pass
 '''
 
+
 def showEventGroups(request):
     """
         Show events in groups
@@ -182,15 +184,20 @@ def showEventGroups(request):
         fastSearchForm = FastSearchForm(request.GET)
         if fastSearchForm.is_valid():
             #fastSearchForm.cleaned_data["search"]
-            return main(request)
+            return showEvents(request)
         #redirect to /event page
     else:
         fastSearchForm = FastSearchForm()
 
     #get groups
+    cache = get_cache("longMem")
     groups = EventGroup.objects.filter(featured=False)
     for group in groups:
-        events = Event.objects.filter(activities__group=group)[:3]
+        events = cache.get("group_thumb_event_%s" % group.pk)
+        if events is None or not len(events):
+            #TODO: group filtering doesn't work
+            events = Event.objects.filter(activities__group=group)[:3]
+            cache.set("group_thumb_event_%s" % group.pk, events, 60*30)  # 30min
         group.events = events
 
     return render_to_response("event/events_event_groups.html",
@@ -201,6 +208,7 @@ def showEventGroups(request):
                               context_instance=RequestContext(request)
     )
     pass
+
 # ========= AJAX views ============
 @login_required
 def go(request, eventSchId):
@@ -223,14 +231,4 @@ def _go(user, eventSch):
 def _unGo(user, eventSchId):
     EventGo.objects.filter(eventSchedule=eventSchId, user=user).delete()
     return True
-
-
-def searchEvent(request):
-    events = Event.objects.latest_schedules(limit=10)
-    return render_to_response("event_search.html",
-                              {
-                                  'events': events
-                              },
-                              context_instance=RequestContext(request)
-    )
     # ======= AJAX views END ==========

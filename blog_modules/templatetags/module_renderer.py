@@ -1,6 +1,6 @@
 from django import template
 from django.template.base import VariableDoesNotExist
-from rest.blog_modules.settings import INSTALLED_MODULES
+from blog_modules.settings import INSTALLED_MODULES
 register = template.Library()
 
 class RenderBlogModule(template.Node):

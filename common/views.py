@@ -1,4 +1,5 @@
 # Create your views here.
+from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.serializers import json
 from django.core.urlresolvers import reverse
@@ -9,11 +10,11 @@ from common.models import City, Address
 
 def index(request):
     if not request.session.has_key('mode'):
-        request.session["mode"] = "user" #set user mode if not set
+        request.session["mode"] = "user"  # set user mode if not set
     if request.session["mode"] == "user":
-        return HttpResponseRedirect(reverse('event.views.main'))
+        return HttpResponseRedirect(reverse(settings.USER_MAIN_VIEW))
     if request.session["mode"] == "publish":
-        return HttpResponseRedirect(reverse('blog.views.manage'))
+        return HttpResponseRedirect(reverse(settings.PUBLISHER_MAIN_VIEW))
     pass
 
 def switchMode(request, mode, defaultView):
@@ -27,7 +28,7 @@ def switchMode(request, mode, defaultView):
         # save last mode page
         request.session[request.session["mode"]]["lastPage"] = referer
     except KeyError:
-        request.session[request.session["mode"]] = {'lastPage':referer}
+        request.session[request.session["mode"]] = {'lastPage': referer}
     if request.session.has_key(mode) and request.session[mode]:
         # redirect to current mode last page
         request.session["mode"] = mode
@@ -40,11 +41,11 @@ def switchMode(request, mode, defaultView):
 @login_required
 @permission_required("publisher.publish")
 def publisherMode(request):
-    return switchMode(request, 'publish', 'blog.views.manage')
+    return switchMode(request, 'publish', settings.PUBLISHER_MAIN_VIEW)
 
 
 def userMode(request):
-    return switchMode(request, 'user', 'event.views.main')
+    return switchMode(request, 'user', settings.USER_MAIN_VIEW)
 
 def getCities(request):
     countryId = request.REQUEST.get("country",0)

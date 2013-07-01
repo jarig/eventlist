@@ -9,9 +9,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'eventlist',                      # Or path to database file if using sqlite3.
         'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': 'q1',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'PASSWORD': 'q1w2e3',                  # Not used with sqlite3.
+        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -32,10 +32,14 @@ TEMPLATE_DIRS = (
 )
 
 CACHES = {
-    #'default': {
-    #    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    #    'LOCATION': 'unique-snowflake'
-    #}
+    #TODO: use memcached
+    'longMem': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'shortMem': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'eden'
+    },
     'default': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }

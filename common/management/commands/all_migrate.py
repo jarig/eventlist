@@ -1,7 +1,10 @@
 from subprocess import call
-from django.core.management.base import BaseCommand
 import sys
-import settings
+
+from django.core.management.base import BaseCommand
+
+from rest import settings
+
 
 class Command(BaseCommand):
     help = 'Create Schema Migrations for all apps'

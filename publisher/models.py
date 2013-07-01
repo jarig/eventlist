@@ -4,14 +4,19 @@ from django.db import models
 from account.models import Account
 
 class PublisherRequest(models.Model):
+
+    class STATUS:
+        REQUESTED = u"R"
+        ACCEPTED = u"A"
+        DECLINED = u"D"
     STATUSES= (
-        (u'R',u'requested'),
-        (u'A',u'accepted'),
-        (u'D',u'declined'),
+        (STATUS.REQUESTED,u'requested'),
+        (STATUS.ACCEPTED,u'accepted'),
+        (STATUS.DECLINED,u'declined'),
     )
     user = models.OneToOneField(Account)
     message = models.TextField()
-    status = models.CharField(choices=STATUSES, default='R', max_length=1)
+    status = models.CharField(choices=STATUSES, default=STATUS.REQUESTED, max_length=1)
     dateAdded = models.DateTimeField(auto_now_add=True) #date event created
 
     #create permissions

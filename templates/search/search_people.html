@@ -40,7 +40,7 @@
                         {% if user.pk not in friendsList  %}
                             <li action-bind="addToFriends">
                                 <a href="{% url 'account.views.addFriend' user=user.pk %}">
-                                    <i class="icon-fire"></i>{% trans "Add to my Chums list" %}
+                                    <i class="icon-fire"></i>{% trans "Add to friend list" %}
                                 </a>
                                 <div class="hide" id="action-success">
                                         <span class="label label-success">{% trans "Added to friend list" %}</span>

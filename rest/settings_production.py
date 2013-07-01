@@ -24,10 +24,13 @@ MEDIA_ROOT = os.path.join(REST_BASE_PATH,'media/')
 STATIC_ROOT = os.path.join(REST_BASE_PATH,'static/')
 
 CACHES = {
-    #'default': {
-    #    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    #    'LOCATION': 'unique-snowflake'
-    #}
+    'longMem': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'shortMem': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'eden'
+    },
     'default': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }

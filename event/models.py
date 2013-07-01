@@ -1,7 +1,6 @@
 import datetime
 import uuid
 from django.db import models
-import time
 from _ext.pibu.fields import ImagePreviewModelField
 from account.models import Account
 from blog.models import Blog
@@ -65,6 +64,7 @@ class Event(models.Model):
     descr = models.TextField()  # event description (with BB code)
     rating = models.FloatField(default=0, editable=False)  # event rating
     created = models.DateTimeField(auto_now_add=True, editable=False)  # date event created
+    modified = models.DateTimeField(auto_now=True, editable=False, default=datetime.datetime.now)  # date event modified
     participants = models.PositiveIntegerField(default=0, editable=False) # number of participants, help num (not exact)
     confirmed = models.BooleanField(editable=False, default=True)  # event confirmed by blog/page admins
     #TODO: event signals
@@ -100,6 +100,7 @@ class EventSchedule(models.Model):
     address = models.ForeignKey(Address, null=True, related_name='eventSchedules')  # location where this event is held
     blog = models.ForeignKey(Blog, null=True, blank=True, default=None, related_name='eventSchedules')  # blog's address
     created = models.DateTimeField(auto_now_add=True)  # date created
+    modified = models.DateTimeField(auto_now=True, editable=False, default=datetime.datetime.now)  # date schedule modified
     #isActive = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, blank=True, null=True, editable=False)
 
     def __unicode__(self):
@@ -122,6 +123,8 @@ class EventTerms(models.Model):
     max_value = models.IntegerField(null=True, blank=True)
     classifier = models.CharField(max_length=255, default='',
                                   blank=True) #aux. data for term ( like currency, measure units, etc. )
+    modified = models.DateTimeField(auto_now_add=True, auto_now=True, editable=False,
+                                    default=datetime.datetime.now)  # date schedule modified
 
 
 # table to record 'goes' for each event schedule

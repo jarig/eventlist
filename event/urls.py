@@ -6,9 +6,8 @@ urlpatterns = patterns('event.views',
     url(r'manage$', 'manage'),
     url(r'go/(?P<eventSchId>\d+)$', 'go'),
     url(r'unGo/(?P<eventSchId>\d+)$', 'unGo'),
-    url(r'searchEvent', 'searchEvent'),
     url(r'(?P<scheduleId>\d+)$', 'view_schedule'),
     url(r'^groups$', 'showEventGroups'),
-    url(r'^$', 'main'),
-
+    url(r'^events$', 'showEvents'),
+    url(r'^$', 'showEventGroups'),
 )

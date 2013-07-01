@@ -27,8 +27,12 @@
     </div>
     <div id="items_container">
         {% for org in myOrgs %}
-            <div class="boxedItem">
-                <a href="{% url 'organization.views.credit' org.id %}" class="manageButton">{{ org.name }}</a>
+            <div class="boxedItem"
+                    {% if org.logo %}
+                    style="background-image: url('{{ org.logo.url }}'); background-position: center;"
+                    {% endif %}>
+                <div class="itemName">{{ org.name }}</div>
+                <a href="{% url 'organization.views.credit' org.id %}" class="manageButton"></a>
             </div>
         {% endfor %}
     </div>
