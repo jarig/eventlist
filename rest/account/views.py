@@ -3,6 +3,7 @@ import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.files.storage import DefaultStorage, default_storage
 from django.core.serializers import json
 from django.core.urlresolvers import reverse
 from django.db.models.query_utils import Q
@@ -71,7 +72,10 @@ def extLoginProfile(request):
             user = authenticate(provider=userInfo["provider"], identity=userInfo["uid"],request=request)
             if user is not None:
                 login(request, user)
-                updateUserData(user, userInfo["firstName"],userInfo["lastName"]) #update basic info
+                avatarURL = None
+                if not default_storage.exists(user.avatar):
+                    avatarURL = userInfo["photo"]
+                updateUserData(user, userInfo["firstName"],userInfo["lastName"], avatarURL)  # update basic info
                 messages.success(request,_("You've successfully logged in!"))
                 return HttpResponseRedirect(next)
             else:

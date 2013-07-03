@@ -2,26 +2,37 @@
     <dataSource driver="com.mysql.jdbc.Driver" url="jdbc:mysql://127.0.0.1/eventlist" user="root" password="q1w2e3" />
     <document>
         <entity name="event" query="select * from event_event"
+				deltaImportQuery="select * from event_event where ID=='${dih.delta.id}'"
                 deltaQuery="select id from event_event where modified > '${dataimporter.last_index_time}'">
-
-            <entity name="schedule"  
-                    query="select id, dateFrom, timeFrom, dateTo, timeTo, shortDescription from event_eventschedule where event_id='${event.id}'"
+			<field column="id" name="pk" />
+			
+            <entity name="schedules"  
+                    query="select id from event_eventschedule where event_id='${event.id}'"
                     deltaQuery="select event_id from event_eventschedule where modified > '${dataimporter.last_index_time}'"
                     parentDeltaQuery="select id from event_event where id=${schedule.event_id}">
-                <field name="schedules" column="dateFrom" />
+					<entity name="schedule"
+							query="select dateFrom, timeFrom, dateTo, timeTo, shortDescription from event_eventschedule where id='${schedules.id}'">
+					</entity>
             </entity>
             
-            <!--entity name="item_category"
-                    query="select CATEGORY_ID from item_category where ITEM_ID='${item.ID}'"
-                    deltaQuery="select ITEM_ID, CATEGORY_ID from item_category where last_modified > '${dataimporter.last_index_time}'"
-                    parentDeltaQuery="select ID from item where ID=${item_category.ITEM_ID}">
-                <entity name="category"
-                        query="select DESCRIPTION from category where ID = '${item_category.CATEGORY_ID}'"
+            <entity name="event_activities"
+					pk="eventactivity_id, event_id"
+                    query="select eventactivity_id from event_event_activities where event_id=${event.id}"
+                    deltaQuery="select event_id, eventactivity_id from event_event_activities where last_modified > '${dataimporter.last_index_time}'"
+                    parentDeltaQuery="select id from event_event where ID=${event_activities.event_id}">
+                <entity name="activity"
+                        query="select * from event_eventactivity where id = ${event_activities.eventactivity_id}"
                         deltaQuery="select ID from category where last_modified > '${dataimporter.last_index_time}'"
                         parentDeltaQuery="select ITEM_ID, CATEGORY_ID from item_category where CATEGORY_ID=${category.ID}">
-                    <field column="description" name="cat" />
+                    <field column="name" name="activities" />
+					<entity name="groups"
+                        query="select * from event_eventgroup where id = ${activity.group_id}"
+                        deltaQuery="select ID from category where last_modified > '${dataimporter.last_index_time}'"
+                        parentDeltaQuery="select ITEM_ID, CATEGORY_ID from item_category where CATEGORY_ID=${category.ID}">
+						<field column="name" name="groups" />
+					</entity>
                 </entity>
-            </entity-->
+            </entity>
         </entity>
     </document>
 </dataConfig>

@@ -4,4 +4,4 @@ Required external modules:
 * MySQL-Python
 * South
 * PIL (Win -  PIL-1.1.7.win32-py2.7.exe)
-* SolrPy
+* PySolr

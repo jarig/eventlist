@@ -256,28 +256,23 @@
        best performance.
    -->
 
-   <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
+   <field name="pk" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
+   <field name="id" type="string" indexed="true" stored="false"/>
    <field name="name" type="text" indexed="true" stored="true"/>
+   <field name="activities" type="text" indexed="true" stored="true" multiValued="true"/>
+   <field name="groups" type="text" indexed="true" stored="true" multiValued="true"/>
+   
    <field name="logo" type="string" indexed="false" stored="true" />
    <field name="descr" type="text" indexed="true" stored="true" />
+   <field name="shortDescription" type="text" indexed="true" stored="true" />
    <field name="rating" type="integer" indexed="true" stored="true" default="0"/>
    <field name="created" type="date" indexed="true" stored="true" default="0"/>
-   <field name="schedules" type="date" indexed="true" stored="true" multiValued="true"/>
+   <field name="dateFrom" type="date" indexed="true" stored="true"/>
+   <field name="dateTo" type="date" indexed="true" stored="true"/>
    
    <field name="nameSort" type="string" indexed="true" stored="false"/>
    <field name="alphaNameSort" type="alphaOnlySort" indexed="true" stored="false"/>
-   <field name="manu" type="text" indexed="true" stored="true" omitNorms="true"/>
-   <field name="cat" type="text_ws" indexed="true" stored="true" multiValued="true" omitNorms="true" termVectors="true" />
-   <field name="features" type="text" indexed="true" stored="true" multiValued="true"/>
-   <field name="includes" type="text" indexed="true" stored="true"/>
-
-   <field name="weight" type="sfloat" indexed="true" stored="true"/>
-   <field name="price"  type="sfloat" indexed="true" stored="true"/>
-   <!-- "default" values can be specified for fields, indicating which
-        value should be used if no value is specified when adding a document.
-     -->
-   <field name="popularity" type="sint" indexed="true" stored="true" default="0"/>
-   <field name="inStock" type="boolean" indexed="true" stored="true"/>
+   <field name="schedule" type="text" indexed="true" stored="true" multiValued="true"/>
 
    <!-- Some sample docs exists solely to demonstrate the spellchecker
         functionality, this is the only field they container.

@@ -155,6 +155,8 @@ PUBLISHER_MAIN_VIEW = "blog.views.manage"
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOG_FOLDER =  os.environ.get("REST_LOG_FOLDER","./logs")
+if not os.path.exists(LOG_FOLDER):
+    os.makedirs(LOG_FOLDER)
 
 LOGGING = {
     'version': 1,
