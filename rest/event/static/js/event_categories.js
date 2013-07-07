@@ -19,49 +19,31 @@ $.fn.activeTile = function( options )
         delay: 5,
         randomRange: 5 //in seconds
     }, options);
-
+    console.log("activating live tiles");
     //make tiles active
     this.each(function()
     {
         var $this = $(this);
-        var allDivs = $this.children("div");
+        var slides = $this.find(".metro-slide-content");
         var delay = Math.random()*settings["randomRange"] + settings["delay"];
-        if ( allDivs.length > 0 )
+        if ( slides.length > 0 )
         {
-            //hide all divs except first one
-            for( var i=1; i< allDivs.length; i++)
-                $(allDivs[i]).hide().css("opacity", 0);
-            $this.data("currentDivNum", 0);
-
-            setInterval(function()
-            {
-                if ( typeof settings["dataSourceFunction"] === "function" )
-                    settings["dataSourceFunction"]($this);
-                //
-                var currentDivNum = $this.data("currentDivNum");
-                var currentDiv = allDivs[currentDivNum];
-                var nextDivNum = (currentDivNum+1) % allDivs.length;
-                var nextDiv = allDivs[ nextDivNum ];
-                //TODO: add configurable animations
-                //hide current div and show next one
-                $(currentDiv).transition({
-                    //perspective: '100px',
-                    //rotateY: '180deg',
-                    opacity: 0
-                    //easing: 'snap',
-                    //duration: 200
-                });
-                $(currentDiv).hide();
-                $(nextDiv).show();
-                $(nextDiv).transition({
-                    //perspective: '100px',
-                    //rotateY: '180deg',
-                    opacity: 100
-                    //easing: 'snap',
-                    //duration: 200
-                });
-                $this.data("currentDivNum", nextDivNum);
-            }, delay*1000);
+            var $firstSlide = $(slides[0]);
+            var slideHeight = $firstSlide.height(); //assume the same for all of them
+            $this.data("offset", 0);
+            (function($this, slideHeight, $firstSlide, slideLength){
+                setInterval(function()
+                {
+                    var currentOffset = $this.data("offset");
+                    currentOffset -= slideHeight;
+                    currentOffset %= slideHeight*slideLength;
+                    $this.data("offset", currentOffset);
+                    console.log("Offset " + currentOffset);
+                    $firstSlide.transition({
+                        marginTop: currentOffset + "px"
+                    });
+                }, delay * 1000);
+            })($this, slideHeight, $firstSlide, slides.length);
         }
     });
 };

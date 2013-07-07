@@ -22,7 +22,7 @@
         {% for evObj in myEvents %}
             <div class="boxedItem"
                  {% if evObj.logo %}
-                    style="background-image: url('{{ evObj.logo.url }}')"
+                    style="background-image: url('{{ evObj.logo.url }}'); background-size: cover;"
                  {% endif %}
                  >
                 <div class="itemName">{{ evObj.name }}</div>

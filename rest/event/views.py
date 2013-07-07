@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.translation import ugettext as _
+from haystack.query import SearchQuerySet
 from account.models import Account
 from event.forms import EventForm, EventScheduleForm, EventScheduleFormSet
 from event.models import Event, EventSchedule, EventGo, EventActivity, EventGroup
@@ -93,7 +94,7 @@ def manage(request):
 
 
 #show main events
-def showEvents(request):
+def showEvents_old(request):
     createPartyFormSample = None
     if request.user.is_authenticated():
         createPartyFormSample = CreatePartyForm(
@@ -115,6 +116,9 @@ def showEvents(request):
                 addTables += "event_event_activities EEA, event_eventactivity EA"
                 search += "AND EEA.event_id=EE.id AND EEA.eventactivity_id=EA.id AND EA.group_id=%(category)s "
                 params['category'] = fastSearchForm.cleaned_data["category"].pk
+                #TODO: use elasticSearch
+            events = SearchQuerySet().filter(groups=fastSearchForm.cleaned_data["category"].name).models(Event)
+            print "Elastic events: %s" % events
     else:
         fastSearchForm = FastSearchForm()
     #TODO: optimization, add isActive check instead of dateFrom checks
@@ -130,6 +134,9 @@ def showEvents(request):
         EventSchedule.event.field.column,
         search), params=params)
     #print eventSchedules.query
+
+
+
     return render_to_response("event/events_main.html",
                               {
                                   "eventSchedules": eventSchedules,
@@ -139,41 +146,34 @@ def showEvents(request):
                               context_instance=RequestContext(request)
     )
 
-'''Archived
-def byActivity(request):
-    """
-        Show all confirmed event activities
-    """
-    activities = EventActivity.objects.filter(parent=None, confirmed=True)
-    return render_to_response("event/events_activities.html",
-                              {
-                                  "eventActivities": activities,
-                              },
-                              context_instance=RequestContext(request)
-    )
 
+def showEvents(request):
+    #TODO: change to class based view
+    eventSchedules = None
+    createPartyFormSample = None
+    if request.user.is_authenticated():
+        createPartyFormSample = CreatePartyForm(
+            initial={
+                "author": request.user
+            }
+        )
+    if request.GET:
+        fastSearchForm = FastSearchForm(request.GET)
+        if fastSearchForm.is_valid():
+            events = fastSearchForm.search()
+            print "Elastic events: %s" % events
+    else:
+        fastSearchForm = FastSearchForm()
 
-def showActivityCategory(request, activityName):
-    """
-        Show events with certain type of activity involved.
-    """
-    events = Event.objects.raw("""select EE.* from %(activityM2MTable)s  EEA, %(eventTable)s EE, %(eventActivityTable)s EACT
-                                 WHERE EEA.%(m2mEventId)s=EE.id and EEA.%(m2mActivityId)s=EACT.id and EACT.name=%(activityName)s""" %
-                               {'activityM2MTable': Event.activities.through._meta.db_table,
-                                'eventTable': Event._meta.db_table,
-                                'eventActivityTable': EventActivity._meta.db_table,
-                                'm2mEventId': Event.activities.through.event.field.column,
-                                'm2mActivityId': Event.activities.through.eventactivity.field.column,
-                                'activityName': '%s'},
-                               params=(activityName,))
-    return render_to_response("event/events_event_list.html",
+    return render_to_response("event/events_main.html",
                               {
-                                  "events": events,
+                                  "eventSchedules": eventSchedules,
+                                  "createPartyFormSample": createPartyFormSample,
+                                  "fastSearchForm": fastSearchForm
                               },
                               context_instance=RequestContext(request)
     )
     pass
-'''
 
 
 def showEventGroups(request):
@@ -195,7 +195,6 @@ def showEventGroups(request):
     for group in groups:
         events = cache.get("group_thumb_event_%s" % group.pk)
         if events is None or not len(events):
-            #TODO: group filtering doesn't work
             events = Event.objects.filter(activities__group=group)[:3]
             cache.set("group_thumb_event_%s" % group.pk, events, 60*30)  # 30min
         group.events = events

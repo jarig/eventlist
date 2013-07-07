@@ -112,7 +112,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.contrib.messages.context_processors.messages',
 )
-
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr'
+    },
+}
 
 SOUTH_AUTO_FREEZE_APP = True
 
@@ -129,6 +134,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'rest',
     '_ext.pibu',
+    'haystack',
     'party',
     'messaging',
     'common',

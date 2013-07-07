@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 {% load static %}
 {% load i18n %}
+{% load extra %}
 
 {% get_static_prefix as STATIC_PREFIX %}
 
@@ -137,7 +138,8 @@
                                         {# request.LANGUAGE_CODE #}
                                         <ul class="dropdown-menu">
                                             {% for lang in LANGUAGES %}
-                                                <li><a href="#" onclick="$('#langForm-{{ lang.0 }}').submit();">
+                                                <li><a href="#"
+                                                       onclick="$('#langForm-{{ lang.0 }}').submit();">
                                                     {{ lang.1 }}</a>
                                                 </li>
                                                 <form id="langForm-{{ lang.0 }}" action="/i18n/setlang/" method="post" class="hidden">
@@ -178,7 +180,8 @@
                                     <div class="messages">
                                     {% block messages %}
                                         {% for message in messages %}
-                                                <div class="alert fade in alert-{{ message.tags }}">
+                                                <div class="alert fade in alert-{{ message.tags }}"
+                                                     style="margin-top: 5px;">
                                                     <a class="close" data-dismiss="alert" href="#">×</a>
                                                     {{ message }}
                                                 </div>
@@ -274,7 +277,8 @@
         {% block debug %}{% endblock %}
 
         <div class="sql">
-            {{ sql_queries|length }} queries
+            {{ sql_queries|length }} queries,
+            {{ sql_queries|flatten_arrayOfDict:"time"|sum_array }} total time taken
             {% for query in sql_queries %}
                 <div class="query">
                     <div>Time: {{ query.time }}</div>

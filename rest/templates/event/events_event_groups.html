@@ -5,6 +5,7 @@
 {% block includes %}
     {{ block.super }}
     <link href="{{ STATIC_URL }}less/event_group.less" rel="stylesheet/less" type="text/css">
+    <link href="{{ STATIC_URL }}common/plugins/my-metro/my-metro.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="{{ STATIC_URL }}js/event_categories.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/search.js"></script>
 {% endblock %}
@@ -15,7 +16,7 @@
     $(function()
     {
         Search.init();
-        $(".live-tile").activeTile();
+        $(".metro-live-tile").activeTile();
         $(".event_group").click(function()
         {
             var groupPk = $(this).attr("action-data");
@@ -35,35 +36,25 @@
     </div>
     <div class="event_group_container">
         <div class="row-fluid">
+        <div class="span12 hidden"></div>
         {% for group in groups %}
-            <div class="span6 event_group"
-                 action-data="{{ group.pk }}"
-                 style="margin-left: 1%">
-                <div class="caption row-fluid">
-                    {{ group.name }}
-                </div>
-                <div class="popular_events row-fluid">
-                    <div class="span2"></div>
-                    <div class="live-tile span8 pull-right">
+            <div class="metro-live-tile span5" action-data="{{ group.pk }}">
+                <div class="metro-body">
+                    <div class="metro-slides">
                         {% for event in group.events %}
-                            <div class="span12">
-                                <div class="span8"
-                                     style="background-image: url('{{ event.logo.url }}');
-                                            background-size: contain;
-                                            background-repeat: no-repeat;
-                                            width: 100px; height: 100px;">
+                            <div class="metro-slide-content">
+                                <a target="_blank" class="metro-slide-header-link" href="#">
+                                    {{ event.name|truncatechars:12 }}
+                                </a>
+                                <div class="metro-slide-thumbnail">
+                                    <img src="{{ event.logo.url }}">
                                 </div>
-                                <div class="span4">
-                                    <div class="span12">
-                                        <span >{{ event.name|truncatechars:12 }}</span>
-                                    </div>
-                                    <div class="span12">
-                                        <span>{{ event.descr|truncatewords:10 }}</span>
-                                    </div>
-                                </div>
+                                <p>{{ event.descr|truncatewords:10 }}</p>
                             </div>
                         {% endfor %}
                     </div>
+                    <span class="metro-tile-label" data-bind="html: label">{{ group.name }}</span>
+                    <span class="metro-tile-counter" data-bind="html: counter"></span>
                 </div>
             </div>
         {% endfor %}

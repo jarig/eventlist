@@ -67,9 +67,6 @@ class Event(models.Model):
     modified = models.DateTimeField(auto_now=True, editable=False, default=datetime.datetime.now)  # date event modified
     participants = models.PositiveIntegerField(default=0, editable=False) # number of participants, help num (not exact)
     confirmed = models.BooleanField(editable=False, default=True)  # event confirmed by blog/page admins
-    #TODO: event signals
-    #latestSchedule = models.ForeignKey("EventSchedule", null=True, editable=False, default=None,
-    #                                   blank=True)  # automatically populated by signal cron job
 
     objects = EventManager()
 

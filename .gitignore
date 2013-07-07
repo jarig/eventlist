@@ -9,3 +9,4 @@ media/*
 !media/common
 migrations/
 /solr/rest/data/
+/elasticsearch/data/

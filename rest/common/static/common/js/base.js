@@ -28,7 +28,7 @@ var Base =
                 "headers": headers
             });
             //fade out messages
-            // messages timeout for 10 sec
+            // messages timeout for 5 sec
             $('.alert-success').delay(5000).fadeOut('slow');
         });
     },
