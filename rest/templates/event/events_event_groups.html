@@ -36,15 +36,15 @@
     </div>
     <div class="event_group_container">
         <div class="row-fluid">
-        <div class="span12 hidden"></div>
         {% for group in groups %}
-            <div class="metro-live-tile span5" action-data="{{ group.pk }}">
+            {% if forloop.counter0|divisibleby:"2" %}<div class="row-fluid">{% endif %}
+            <div class="metro-live-tile event_group span6" action-data="{{ group.pk }}">
                 <div class="metro-body">
                     <div class="metro-slides">
                         {% for event in group.events %}
                             <div class="metro-slide-content">
                                 <a target="_blank" class="metro-slide-header-link" href="#">
-                                    {{ event.name|truncatechars:12 }}
+                                    {{ event.name|truncatechars:16 }}
                                 </a>
                                 <div class="metro-slide-thumbnail">
                                     <img src="{{ event.logo.url }}">
@@ -57,6 +57,7 @@
                     <span class="metro-tile-counter" data-bind="html: counter"></span>
                 </div>
             </div>
+            {% if forloop.counter|divisibleby:"2" or forloop.last %}</div>{% endif %}
         {% endfor %}
         </div>
     </div>

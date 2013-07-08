@@ -190,6 +190,7 @@ def showEventGroups(request):
         fastSearchForm = FastSearchForm()
 
     #get groups
+
     cache = get_cache("longMem")
     groups = EventGroup.objects.filter(featured=False)
     for group in groups:
