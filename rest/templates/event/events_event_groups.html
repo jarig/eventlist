@@ -38,7 +38,7 @@
         <div class="row-fluid">
         {% for group in groups %}
             {% if forloop.counter0|divisibleby:"2" %}<div class="row-fluid">{% endif %}
-            <div class="metro-live-tile event_group span6" action-data="{{ group.pk }}">
+            <div class="metro-live-tile event_group {{ group.name|lower }} span6" action-data="{{ group.pk }}">
                 <div class="metro-body">
                     <div class="metro-slides">
                         {% for event in group.events %}
