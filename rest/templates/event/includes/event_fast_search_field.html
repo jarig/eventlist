@@ -14,14 +14,34 @@
                                                     border-top: none;
                                                     display: none;
                                                     width:100%;
-                                                    height: 60px;
+                                                    height: 100px;
                                                     padding: 7px 2px 2px 0;
                                                     overflow:hidden;">
-                <div class="input-prepend">
-                    <span class="add-on">{% trans "Category" %}</span>
-                    {{ fastSearchForm.category|add_class:"span2" }}
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="control-group">
+                            <div class="input-prepend">
+                                <span class="add-on">{% trans "Category" %}</span>
+                                {{ fastSearchForm.category }}
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="input-prepend">
+                                <span class="add-on">{% trans "Activities" %}</span>
+                                {{ fastSearchForm.activities }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="control-group span5">
+                            <div class="input-prepend">
+                                <span class="add-on">{% trans "City" %}</span>
+                                {{ fastSearchForm.city }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                Price, Location, Terms, Visits num., facilities, rating
+                Location, Terms, Visits num., facilities, rating
                 friends goes, dates,
             </div>
             <div id="box2" style="border: 1px solid #cdcdcd;
@@ -45,7 +65,7 @@
                             {% if field.value %}
                                 <span class="label label-info criteria" title="{{ field.label }}"
                                         style="margin-left: 7px;">
-                                    {{ field|verbose_name }}
+                                    {{ field.label }}: {{ field|verbose_name }}
                                     <a href="#" action-data="{{ field.name }}">&times;</a>
                                 </span>
                             {% endif %}
@@ -59,7 +79,14 @@
                     <a href="#place" data-toggle="tab">{% trans "Place" %}</a>
                 </li-->
                 <li class="pull-right">
-
+                    <button type="submit" class="btn btn-warning" id='searchButton'
+                            style="border-top-left-radius: 0;
+                                   border-top-right-radius: 0;
+                                   height: 37px;">
+                        <span class="icon-search"></span> Search
+                    </button>
+                </li>
+                <li class="pull-right">
                     <a href="#"  id='advancedSearchButton'>
                         <!--span class="icon-ok"></span--> Advanced
                     </a>

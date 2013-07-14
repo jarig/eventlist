@@ -1,6 +1,8 @@
 import logging
 import tempfile
 import datetime
+from haystack.inputs import Raw
+from haystack.query import SearchQuerySet
 from _ext import httplib2
 from _ext.bs3.BeautifulSoup import BeautifulSoup
 from account.models import Account
@@ -15,7 +17,7 @@ class EventSource(object):
     def __init__(self, baseURL):
         logger.info("Initializing %s" % baseURL)
         self.baseURL = baseURL
-        self.http  = httplib2.Http(disable_ssl_certificate_validation=True)
+        self.http = httplib2.Http(disable_ssl_certificate_validation=True)
 
 
     def importEvents(self, dateFrom=None, dateTo=None):
@@ -58,12 +60,12 @@ class SuperKinodSource(EventSource):
         for movie in movieList:
             eventName = movie.find("span", attrs={"class":"result_h"}).contents[0].strip()
             logger.info("Event name: %s" % eventName)
-            try:
-                #try to get such event from DB
-                #TODO: perform fuzzy search using SOLR
-                event = Event.objects.get(name=eventName)
+            #try to get such event from SOLR DB
+            querySet = SearchQuerySet().models(EventSchedule).filter(name=Raw("%s~0.9" % eventName))
+            if len(querySet):
+                event = querySet[0].object.event
                 logger.info("Found existing event: %s" % event.name)
-            except Event.DoesNotExist:
+            else:
                 logger.info("New event")
                 event = Event()
                 event.name = eventName

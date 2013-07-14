@@ -15,7 +15,7 @@ class EventActivityInline(admin.TabularInline):
 
 
 class EventGroupAdminForm(forms.ModelForm):
-    activities = forms.ModelMultipleChoiceField(EventActivity.objects.all())
+    activities = forms.ModelMultipleChoiceField(EventActivity.objects.filter(parent__isnull=True))
 
     def __init__(self, *args, **kwargs):
         super(EventGroupAdminForm, self).__init__(*args, **kwargs)

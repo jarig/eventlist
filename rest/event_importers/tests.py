@@ -20,7 +20,7 @@ class ImportTest(TestCase):
         events = source.importEvents(datetime.date.today()+datetime.timedelta(days=1))
         self.assertTrue(len(events)> 0)
         for event in events:
-            self.assertTrue(len(event.name) > 0) #every event should have name
+            self.assertTrue(len(event.name) > 0)  # every event should have name
             print event.name
             print event.descr
             print event.logo

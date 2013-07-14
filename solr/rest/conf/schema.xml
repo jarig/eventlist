@@ -146,15 +146,25 @@
     <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false"/>
 
 
-    <field name="groups" type="text_en" indexed="true" stored="true" multiValued="true" />
-
-    <field name="activities" type="text_en" indexed="true" stored="true" multiValued="true" />
+    <field name="rating" type="float" indexed="true" stored="true" multiValued="false" />
 
     <field name="name" type="text_en" indexed="true" stored="true" multiValued="false" />
 
     <field name="descr" type="text_en" indexed="true" stored="true" multiValued="false" />
 
+    <field name="activities" type="text_en" indexed="true" stored="true" multiValued="true" />
+
     <field name="text" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="dateTimeFrom" type="date" indexed="true" stored="true" multiValued="false" />
+
+    <field name="dateTimeTo" type="date" indexed="true" stored="true" multiValued="false" />
+
+    <field name="groups" type="text_en" indexed="true" stored="true" multiValued="true" />
+
+    <field name="logo_s" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="actuality" type="float" indexed="true" stored="false" multiValued="false" />
 
   </fields>
 

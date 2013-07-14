@@ -19,7 +19,6 @@ $.fn.activeTile = function( options )
         delay: 5,
         randomRange: 5 //in seconds
     }, options);
-    console.log("activating live tiles");
     //make tiles active
     this.each(function()
     {
@@ -38,7 +37,6 @@ $.fn.activeTile = function( options )
                     currentOffset -= slideHeight;
                     currentOffset %= slideHeight*slideLength;
                     $this.data("offset", currentOffset);
-                    console.log("Offset " + currentOffset);
                     $firstSlide.transition({
                         marginTop: currentOffset + "px"
                     });

@@ -30,7 +30,7 @@ class EventActivity(models.Model):
     icon = models.ImageField(upload_to="event/event_type/icon/", blank=True, default='')
     thumbnail = models.ImageField(upload_to="event/event_type/thumb/", blank=True, default='')
     thumbnail_128 = models.ImageField(upload_to="event/event_type/thumb128/", blank=True, default='')
-    parent = models.ForeignKey('EventActivity', blank=True, null=True, editable=False)  # not null if subcategory
+    parent = models.ForeignKey('EventActivity', blank=True, null=True)  # not null if subcategory
     confirmed = models.BooleanField(default=False)
     # only ones that has parent=null may be attached to a group
     group = models.ForeignKey(EventGroup, blank=True, null=True,
@@ -65,7 +65,8 @@ class Event(models.Model):
     rating = models.FloatField(default=0, editable=False)  # event rating
     created = models.DateTimeField(auto_now_add=True, editable=False)  # date event created
     modified = models.DateTimeField(auto_now=True, editable=False, default=datetime.datetime.now)  # date event modified
-    participants = models.PositiveIntegerField(default=0, editable=False) # number of participants, help num (not exact)
+    participants = models.PositiveIntegerField(default=0,
+                                               editable=False)  # number of participants, help num (not exact)
     confirmed = models.BooleanField(editable=False, default=True)  # event confirmed by blog/page admins
 
     objects = EventManager()
@@ -95,10 +96,22 @@ class EventSchedule(models.Model):
     shortDescription = models.CharField(max_length=1024, default='', blank=True)
 
     address = models.ForeignKey(Address, null=True, related_name='eventSchedules')  # location where this event is held
-    blog = models.ForeignKey(Blog, null=True, blank=True, default=None, related_name='eventSchedules')  # blog's address
+    blog = models.ForeignKey(Blog, null=True,
+                             blank=True, default=None, related_name='eventSchedules')  # if attached to a blog/page
     created = models.DateTimeField(auto_now_add=True)  # date created
-    modified = models.DateTimeField(auto_now=True, editable=False, default=datetime.datetime.now)  # date schedule modified
+    modified = models.DateTimeField(auto_now=True,
+                                    editable=False, default=datetime.datetime.now)  # date schedule modified
     #isActive = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, blank=True, null=True, editable=False)
+
+    @property
+    def isPastDue(self):
+        """
+            Event past or in progress
+        """
+        today = datetime.date.today()
+        if self.dateFrom < today:
+            return True
+        return False
 
     def __unicode__(self):
         return "%s %s %s" % (self.event.name, self.dateFrom.strftime('%d/%m/%Y'), self.timeFrom.strftime("%H:%M"))

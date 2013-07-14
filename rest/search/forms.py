@@ -1,7 +1,8 @@
 from django import forms
 from django.utils.translation import gettext
 from haystack.forms import SearchForm
-from event.models import EventGroup, Event
+from common.models import Country
+from event.models import EventGroup, Event, EventActivity
 
 
 class SearchPeopleForm(forms.Form):
@@ -22,9 +23,37 @@ class FastSearchForm(SearchForm):
                                       empty_label=gettext("Any"),
                                       required=False,
                                       cache_choices=True)
+    maxPrice = forms.IntegerField(required=False,
+                                  widget=forms.TextInput(attrs=dict(placeholder='Maximum price',
+                                                                    title='Maximum price')))
+    activities = forms.ModelChoiceField(queryset=EventActivity.objects.none(),
+                                        empty_label=gettext("Any"),
+                                        required=False,
+                                        cache_choices=True)
+    city = forms.ModelChoiceField(queryset=Country.objects.all(),
+                                  empty_label=gettext("Any"),
+                                  required=False,
+                                  cache_choices=True)
+
+    def __init__(self, *args, **kwargs):
+        super(FastSearchForm, self).__init__(*args, **kwargs)
+        self.fields['activities'].choices = self.activities_as_choices()
+
+    def activities_as_choices(self):
+        activities = []
+        for activity in EventActivity.objects.filter(parent__isnull=True):
+            subActivities = []
+            for sub_activity in EventActivity.objects.filter(parent=activity):
+                subActivities.append([sub_activity.pk, sub_activity.name])
+
+            new_category = [activity.name, subActivities]
+            activities.append(new_category)
+
+        return activities
 
     def search(self):
         sqs = self.searchqueryset.models(Event)
+        #self.load_all = True
 
         if not self.is_valid():
             return self.no_query_found()
@@ -34,6 +63,8 @@ class FastSearchForm(SearchForm):
 
         if self.cleaned_data['category']:
             sqs = sqs.filter(groups=str(self.cleaned_data['category']))
+        sqs = sqs.filter(actuality__gt=0).order_by("actuality")
+        #sqs = sqs.all()[:1]  # limit amount of results
 
         if self.load_all:
             sqs = sqs.load_all()

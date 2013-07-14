@@ -1,3 +1,4 @@
+import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.cache import get_cache
@@ -135,8 +136,6 @@ def showEvents_old(request):
         search), params=params)
     #print eventSchedules.query
 
-
-
     return render_to_response("event/events_main.html",
                               {
                                   "eventSchedules": eventSchedules,
@@ -149,7 +148,7 @@ def showEvents_old(request):
 
 def showEvents(request):
     #TODO: change to class based view
-    eventSchedules = None
+    eventSchedules = []
     createPartyFormSample = None
     if request.user.is_authenticated():
         createPartyFormSample = CreatePartyForm(
@@ -160,8 +159,7 @@ def showEvents(request):
     if request.GET:
         fastSearchForm = FastSearchForm(request.GET)
         if fastSearchForm.is_valid():
-            events = fastSearchForm.search()
-            print "Elastic events: %s" % events
+            eventSchedules = fastSearchForm.search()
     else:
         fastSearchForm = FastSearchForm()
 

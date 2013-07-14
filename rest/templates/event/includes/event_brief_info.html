@@ -2,21 +2,17 @@
 
 <div class="event-container" id="event_{{ eventSchedule.id }}">
     <div class="event-data">
-        {{ event.pk }}
         <div class="row-fluid">
             <div class="span1">
                 <div class="date-icon" style="margin-left: 20px">
-                    <p title="{{ eventSchedule.dateFrom}}">{{ eventSchedule.dateFrom|date:"d" }}
-                        <span>{{ eventSchedule.dateFrom|date:"M" }}</span>
+                    <p title="{{ eventSchedule.dateTimeFrom}}">{{ eventSchedule.dateTimeFrom|date:"d" }}
+                        <span>{{ eventSchedule.dateTimeFrom|date:"M" }}</span>
                     </p>
                 </div>
             </div>
             <div class="span11" style="padding-left: 10px">
                 <h2>
                     <a href="{% url 'event.views.view_schedule' scheduleId=eventSchedule.pk %}">{{ eventSchedule.name }}</a>
-                    {% if eventSchedule.started %}
-                        <span class="label" style="vertical-align: text-top; line-height: 23px" title="{% trans 'This event has already started' %}">Started</span>
-                    {% endif %}
                 </h2>
             </div>
         </div>
@@ -63,9 +59,6 @@
         {% endif %}
         <!--div class="eventButton">
         </div-->
-        {% if eventSchedule.dateFrom <= today and eventSchedule.dateTo >= today %}
-            Event has already started
-        {% endif %}
     </div>
 
     <!-- Party invitation popup -->
