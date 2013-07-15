@@ -30,7 +30,8 @@ class EventActivity(models.Model):
     icon = models.ImageField(upload_to="event/event_type/icon/", blank=True, default='')
     thumbnail = models.ImageField(upload_to="event/event_type/thumb/", blank=True, default='')
     thumbnail_128 = models.ImageField(upload_to="event/event_type/thumb128/", blank=True, default='')
-    parent = models.ForeignKey('EventActivity', blank=True, null=True)  # not null if subcategory
+    # not null if subcategory
+    parent = models.ForeignKey('EventActivity', blank=True, null=True, related_name="subActivities")
     confirmed = models.BooleanField(default=False)
     # only ones that has parent=null may be attached to a group
     group = models.ForeignKey(EventGroup, blank=True, null=True,

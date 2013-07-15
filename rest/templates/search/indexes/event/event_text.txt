@@ -1,2 +1,2 @@
-{{ object.event.name }}
-{{ object.event.descr }}
+{{ object.name }}
+{{ object.descr }}

@@ -14,20 +14,20 @@
                                                     border-top: none;
                                                     display: none;
                                                     width:100%;
-                                                    height: 100px;
+                                                    height: 200px;
                                                     padding: 7px 2px 2px 0;
                                                     overflow:hidden;">
-                <div class="row-fluid">
+                <div class="row-fluid form-horizontal">
                     <div class="span6">
                         <div class="control-group">
-                            <div class="input-prepend">
-                                <span class="add-on">{% trans "Category" %}</span>
+                            <label class="control-label span3">{% trans "Category" %}:</label>
+                            <div class="controls span3">
                                 {{ fastSearchForm.category }}
                             </div>
                         </div>
                         <div class="control-group">
-                            <div class="input-prepend">
-                                <span class="add-on">{% trans "Activities" %}</span>
+                            <label class="control-label span3" >{% trans "Activities" %}:</label>
+                            <div class="controls span3">
                                 {{ fastSearchForm.activities }}
                             </div>
                         </div>

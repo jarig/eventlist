@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import gettext
 from haystack.forms import SearchForm
+from haystack.inputs import Raw
 from common.models import Country
 from event.models import EventGroup, Event, EventActivity
 
@@ -27,7 +28,6 @@ class FastSearchForm(SearchForm):
                                   widget=forms.TextInput(attrs=dict(placeholder='Maximum price',
                                                                     title='Maximum price')))
     activities = forms.ModelChoiceField(queryset=EventActivity.objects.none(),
-                                        empty_label=gettext("Any"),
                                         required=False,
                                         cache_choices=True)
     city = forms.ModelChoiceField(queryset=Country.objects.all(),
@@ -40,10 +40,11 @@ class FastSearchForm(SearchForm):
         self.fields['activities'].choices = self.activities_as_choices()
 
     def activities_as_choices(self):
-        activities = []
-        for activity in EventActivity.objects.filter(parent__isnull=True):
+        #TODO: cache for a long time
+        activities = [["", gettext("Any")]]
+        for activity in EventActivity.objects.filter(parent__isnull=True).select_related("subActivities"):
             subActivities = []
-            for sub_activity in EventActivity.objects.filter(parent=activity):
+            for sub_activity in activity.subActivities.all():
                 subActivities.append([sub_activity.pk, sub_activity.name])
 
             new_category = [activity.name, subActivities]
@@ -59,7 +60,7 @@ class FastSearchForm(SearchForm):
             return self.no_query_found()
 
         if self.cleaned_data['qText']:
-            sqs = sqs.filter(category=self.cleaned_data['qText'])
+            sqs = sqs.filter(text=Raw("%s~0.5" % self.cleaned_data['qText']))
 
         if self.cleaned_data['category']:
             sqs = sqs.filter(groups=str(self.cleaned_data['category']))
