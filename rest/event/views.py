@@ -188,13 +188,12 @@ def showEventGroups(request):
         fastSearchForm = FastSearchForm()
 
     #get groups
-
     cache = get_cache("longMem")
     groups = EventGroup.objects.filter(featured=False)
     for group in groups:
         events = cache.get("group_thumb_event_%s" % group.pk)
         if events is None or not len(events):
-            events = Event.objects.filter(activities__group=group)[:3]
+            events = SearchQuerySet().models(Event).filter(groups=group.name).order_by("actuality")[:5]
             cache.set("group_thumb_event_%s" % group.pk, events, 60*30)  # 30min
         group.events = events
 

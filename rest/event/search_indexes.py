@@ -28,7 +28,7 @@ class EventIndex(indexes.SearchIndex, indexes.Indexable):
         return [activity.name for activity in obj.activities.all()]
 
     def prepare_groups(self, obj):
-        return [activity.group.name for activity in obj.activities.all().select_related("group")]
+        return [activity.parent.group.name for activity in obj.activities.filter(parent__isnull=False).select_related("parent", "group")]
 
     def prepare(self, obj):
         super(EventIndex, self).prepare(obj)

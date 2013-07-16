@@ -86,7 +86,7 @@ def updateUserData(user, firstName, lastName, avatarURL = None, gender=None):
         img_temp.write(urllib2.urlopen(avatarURL).read())
         img_temp.flush()
         storage = DefaultStorage()
-        name = storage.save(os.path.join(pibu_settings.MEDIA_TEMP_URL,
+        name = storage.save(os.path.join(pibu_settings.MEDIA_TEMP_PATH,
                                          account_logo_name(user, "avatar")), File(img_temp))
         img_temp.close()
         user.avatar.save(

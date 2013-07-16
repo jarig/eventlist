@@ -1,12 +1,14 @@
 import logging
 import tempfile
 import datetime
-from haystack.inputs import Raw
+import uuid
+from haystack.inputs import Raw, Clean
 from haystack.query import SearchQuerySet
 from _ext import httplib2
 from _ext.bs3.BeautifulSoup import BeautifulSoup
+from _ext.pibu.settings import IMAGE_STUB_FILE, MEDIA_TEMP_PATH
 from account.models import Account
-from blog.models import Blog
+from blog.models import Blog, BlogAccess
 from event.models import Event, EventActivity, event_logo_name, EventSchedule
 import urllib
 
@@ -17,6 +19,7 @@ class EventSource(object):
     def __init__(self, baseURL):
         logger.info("Initializing %s" % baseURL)
         self.baseURL = baseURL
+        self.superUser = Account.objects.filter(is_superuser=True)[0]  # take first super user
         self.http = httplib2.Http(disable_ssl_certificate_validation=True)
 
 
@@ -61,7 +64,7 @@ class SuperKinodSource(EventSource):
             eventName = movie.find("span", attrs={"class":"result_h"}).contents[0].strip()
             logger.info("Event name: %s" % eventName)
             #try to get such event from SOLR DB
-            querySet = SearchQuerySet().models(EventSchedule).filter(name=Raw("%s~0.9" % eventName))
+            querySet = SearchQuerySet().models(EventSchedule).filter(name=Raw("'%s'~0.6" % eventName.replace(":","\\:")))
             if len(querySet):
                 event = querySet[0].object.event
                 logger.info("Found existing event: %s" % event.name)
@@ -75,10 +78,10 @@ class SuperKinodSource(EventSource):
 
                 #download thumb to temp dir and assign thumbnail to event
                 logoUrl = movie.table.tr.td.find("div", attrs={"class":"eventImageDiv"}).find("img")["src"]
-                tmpFile = tempfile.gettempdir()+"/logo.jpg"
+                tmpFile = MEDIA_TEMP_PATH+"/%s_logo.jpg" % uuid.uuid4()
                 urllib.urlretrieve(logoUrl, tmpFile)
                 logger.info("Saving logo: %s" % event.logo)
-                event.logo.save(event_logo_name(None,None)+".jpg",open(tmpFile))
+                event.logo.save(event_logo_name(None,None)+".jpg", open(tmpFile))
 
                 #save event
                 event.save()
@@ -117,14 +120,16 @@ class SuperKinodSource(EventSource):
                     blog = Blog.objects.get(name=pageName)
                     logger.info("Found blog with name: %s" % blog)
                 except Blog.DoesNotExist:
+                    blog = Blog.objects.create(name=pageName, logo=IMAGE_STUB_FILE)
+                    BlogAccess.objects.create(blog=blog,user=self.account, access=BlogAccess.OWNER)
                     logger.info("Couldn't find blog with name: %s" % pageName)
                     pass
                 tableTchedules = scheduleDiv.div.findAll("table")
                 for sch in tableTchedules:
                     startDate = sch.tr.th.b.string.strip()
                     scheduleLanguage = ""
-                    if len(sch.tr.th.contents) > 0:
-                        scheduleLanguage = sch.tr.th.contents[1].strip()
+                    if len(sch.tr.th.contents) > 2:
+                        scheduleLanguage = sch.tr.th.contents[2].strip()
                     logger.info("Start date: %s" % startDate)
                     times = sch.findAll("tr")[1].findAll("td")
                     for time in times:
@@ -133,6 +138,7 @@ class SuperKinodSource(EventSource):
                         eventSchedule = EventSchedule()
                         eventSchedule.shortDescription = "%(lang)s " % { 'lang': scheduleLanguage }
                         dateFrom = datetime.datetime.strptime(startDate+ " "+time, "%d.%m.%Y %H:%M")
+                        eventSchedule.blog = blog
                         eventSchedule.dateFrom = dateFrom
                         eventSchedule.timeFrom = datetime.time(hour=dateFrom.hour, minute=dateFrom.minute)
                         #derive session end

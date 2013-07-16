@@ -37,7 +37,7 @@ class ImagePreviewFieldFile(ImageFieldFile):
         setattr(self.instance, self.field.name, name)
         #modifies content toString output
         self.name = name
-        if tempPath.lower().find(settings.MEDIA_TEMP_URL.lower()): return #if not found or not in beginning
+        if tempPath.lower().find(settings.MEDIA_TEMP_PATH.lower()): return #if not found or not in beginning
         if unicode(srcPath).lower() == unicode(tempPath).lower(): return
         if not os.path.exists(os.path.dirname(self.storage.path(name))):
             os.makedirs(os.path.dirname(self.storage.path(name)))
@@ -84,7 +84,7 @@ class ImagePreviewModelField(models.ImageField):
         pass
 
     def save_form_data(self, instance, data):
-        if data.name.lower().find(settings.MEDIA_TEMP_URL.lower()): data = None
+        if data.name.lower().find(settings.MEDIA_TEMP_PATH.lower()): data = None
         super(ImagePreviewModelField,self).save_form_data(instance,data)
 
     def formfield(self, **kwargs):

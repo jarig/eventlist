@@ -47,7 +47,7 @@
                                     {{ event.name|truncatechars:16 }}
                                 </a>
                                 <div class="metro-slide-thumbnail">
-                                    <img src="{{ event.logo.url }}">
+                                    <img src="{{ MEDIA_URL }}{{ event.logo }}">
                                 </div>
                                 <p>{{ event.descr|truncatewords:10 }}</p>
                             </div>

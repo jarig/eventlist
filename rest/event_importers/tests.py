@@ -17,7 +17,7 @@ class ImportTest(TestCase):
         Tests that events from superkinod.ee can be imported
         """
         source = SuperKinodSource()
-        events = source.importEvents(datetime.date.today()+datetime.timedelta(days=1))
+        events = source.importEvents(datetime.date.today() + datetime.timedelta(days=1))
         self.assertTrue(len(events)> 0)
         for event in events:
             self.assertTrue(len(event.name) > 0)  # every event should have name

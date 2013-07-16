@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django import forms
-from event.models import EventActivity, EventGroup
+from event.models import EventActivity, EventGroup, Event
 
+
+class EventAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Event, EventAdmin)
 
 class EventActivityAdmin(admin.ModelAdmin):
     pass
