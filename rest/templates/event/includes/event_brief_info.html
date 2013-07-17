@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="event-container" id="event_{{ eventSchedule.id }}">
+<div class="event-container" id="event_{{ eventSchedule.earliestSchedulePk }}">
     <div class="event-data">
         <div class="row-fluid">
             <div class="span1">
@@ -12,7 +12,7 @@
             </div>
             <div class="span11" style="padding-left: 10px">
                 <h2>
-                    <a href="{% url 'event.views.view_schedule' scheduleId=eventSchedule.pk %}">{{ eventSchedule.name }}</a>
+                    <a href="{% url 'event.views.view_schedule' scheduleId=eventSchedule.earliestSchedulePk %}">{{ eventSchedule.name }}</a>
                 </h2>
             </div>
         </div>

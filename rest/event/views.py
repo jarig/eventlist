@@ -94,58 +94,7 @@ def manage(request):
     )
 
 
-#show main events
-def showEvents_old(request):
-    createPartyFormSample = None
-    if request.user.is_authenticated():
-        createPartyFormSample = CreatePartyForm(
-            initial={
-                "author": request.user
-            }
-        )
-
-    search = "1=1 "  # search statement
-    addTables = ""
-    params = {}
-    if request.GET:
-        fastSearchForm = FastSearchForm(request.GET)
-        if fastSearchForm.is_valid():
-            if fastSearchForm.cleaned_data["search"]:
-                search += "AND EE.name LIKE %(searchToken)s "
-                params['searchToken'] = '%' + fastSearchForm.cleaned_data["search"] + '%'
-            if fastSearchForm.cleaned_data["category"]:
-                addTables += "event_event_activities EEA, event_eventactivity EA"
-                search += "AND EEA.event_id=EE.id AND EEA.eventactivity_id=EA.id AND EA.group_id=%(category)s "
-                params['category'] = fastSearchForm.cleaned_data["category"].pk
-                #TODO: use elasticSearch
-            events = SearchQuerySet().filter(groups=fastSearchForm.cleaned_data["category"].name).models(Event)
-            print "Elastic events: %s" % events
-    else:
-        fastSearchForm = FastSearchForm()
-    #TODO: optimization, add isActive check instead of dateFrom checks
-    eventSchedules = EventSchedule.objects.raw("""select EE.*, SCH.*,
-                                                (%s) AS `goes`
-                                                FROM  %s EE, %s
-                                                (SELECT *, (dateFrom <= NOW()) as started FROM %s SC WHERE dateTo >= NOW() ORDER BY started, dateFrom ) as SCH
-                                                WHERE EE.id=SCH.%s and %s ORDER BY SCH.started, SCH.dateFrom""" % (
-        EventGo.getGoesStatement(request.user),
-        Event._meta.db_table,
-        addTables + ("," if addTables else ""),
-        EventSchedule._meta.db_table,
-        EventSchedule.event.field.column,
-        search), params=params)
-    #print eventSchedules.query
-
-    return render_to_response("event/events_main.html",
-                              {
-                                  "eventSchedules": eventSchedules,
-                                  "createPartyFormSample": createPartyFormSample,
-                                  "fastSearchForm": fastSearchForm
-                              },
-                              context_instance=RequestContext(request)
-    )
-
-
+#show events/search results
 def showEvents(request):
     #TODO: change to class based view
     eventSchedules = []
@@ -193,7 +142,7 @@ def showEventGroups(request):
     for group in groups:
         events = cache.get("group_thumb_event_%s" % group.pk)
         if events is None or not len(events):
-            events = SearchQuerySet().models(Event).filter(groups=group.name).order_by("actuality")[:5]
+            events = SearchQuerySet().models(Event).filter(groups=group.name).order_by("actuality")[:3]
             cache.set("group_thumb_event_%s" % group.pk, events, 60*30)  # 30min
         group.events = events
 

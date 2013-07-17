@@ -24,12 +24,7 @@ class FastSearchForm(SearchForm):
                                       empty_label=gettext("Any"),
                                       required=False,
                                       cache_choices=True)
-    maxPrice = forms.IntegerField(required=False,
-                                  widget=forms.TextInput(attrs=dict(placeholder='Maximum price',
-                                                                    title='Maximum price')))
-    activities = forms.ModelChoiceField(queryset=EventActivity.objects.none(),
-                                        required=False,
-                                        cache_choices=True)
+    activities = forms.ChoiceField(required=False)
     city = forms.ModelChoiceField(queryset=Country.objects.all(),
                                   empty_label=gettext("Any"),
                                   required=False,
@@ -45,7 +40,7 @@ class FastSearchForm(SearchForm):
         for activity in EventActivity.objects.filter(parent__isnull=True).select_related("subActivities"):
             subActivities = []
             for sub_activity in activity.subActivities.all():
-                subActivities.append([sub_activity.pk, sub_activity.name])
+                subActivities.append([sub_activity.name, sub_activity.name])
 
             new_category = [activity.name, subActivities]
             activities.append(new_category)
@@ -61,6 +56,10 @@ class FastSearchForm(SearchForm):
 
         if self.cleaned_data['qText']:
             sqs = sqs.filter(text=Raw("%s~0.5" % self.cleaned_data['qText']))
+
+        if self.cleaned_data['activities']:
+            print self.cleaned_data['activities']
+            sqs = sqs.filter(activities=self.cleaned_data['activities'])
 
         if self.cleaned_data['category']:
             sqs = sqs.filter(groups=str(self.cleaned_data['category']))

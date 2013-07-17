@@ -12,7 +12,7 @@ def verbose_name(bf):
     data = bf.data
     if intMatch.match(data): data = int(data)
     if hasattr(bf.field, "choices"):
-        return dict(bf.field.choices).get(data, '')
+        return dict(bf.field.choices).get(data, data)
     return data
 
 def silence_without_field(fn):

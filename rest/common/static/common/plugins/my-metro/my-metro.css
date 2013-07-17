@@ -72,12 +72,15 @@
 
 .metro-slide-thumbnail
 {
-    margin: 10px 5px 2px 0;
+    margin: 6px 5px 2px 0;
     float: left;
     width: 120px;
     clear: both;
 }
-
+.metro-slide-thumbnail img
+{
+    max-height: 95px;
+}
 
 
 .metro-pink-tile

@@ -18,6 +18,7 @@ class EventIndex(indexes.SearchIndex, indexes.Indexable):
 
     dateTimeFrom = indexes.DateTimeField(null=True)
     dateTimeTo = indexes.DateTimeField(null=True)
+    earliestSchedulePk = indexes.IntegerField(null=True, index_fieldname="schedPk_i", indexed=False)
 
     actuality = indexes.FloatField(stored=False, default=0)  # how much time left till an event begins
 
@@ -37,6 +38,7 @@ class EventIndex(indexes.SearchIndex, indexes.Indexable):
         if len(theEarliestSchedule):
             theEarliestSchedule = theEarliestSchedule[0]
             diff = (datetime.datetime.combine(theEarliestSchedule.dateFrom, theEarliestSchedule.timeFrom) - today)
+            self.prepared_data["schedPk_i"] = theEarliestSchedule.pk
             self.prepared_data["actuality"] = diff.days + (float(diff.seconds) / 86400.0)
             self.prepared_data["dateTimeFrom"] = datetime.datetime.combine(theEarliestSchedule.dateFrom,
                                                                            theEarliestSchedule.timeFrom)
