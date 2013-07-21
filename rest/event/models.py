@@ -24,7 +24,7 @@ class EventGroup(models.Model):
     pass
 
 
-# activities(categories) available for events
+# activities available for events/event types
 class EventActivity(models.Model):
     name = models.CharField(max_length=128)
     icon = models.ImageField(upload_to="event/event_type/icon/", blank=True, default='')

@@ -10,5 +10,6 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         #import Forum-cinemas movies
         superKinodSource = SuperKinodSource()
-        superKinodSource.importEvents(datetime.date.today() + datetime.timedelta(days=1))
+        imported = superKinodSource.importEvents(datetime.date.today() + datetime.timedelta(days=1))
+        print "Events imported: %s" % len(imported)
         pass

@@ -56,6 +56,8 @@ class FastSearchForm(SearchForm):
 
         if self.cleaned_data['qText']:
             sqs = sqs.filter(text=Raw("%s~0.5" % self.cleaned_data['qText']))
+        else:
+            sqs = sqs.filter(actuality__gt=0).order_by("actuality")
 
         if self.cleaned_data['activities']:
             print self.cleaned_data['activities']
@@ -63,7 +65,7 @@ class FastSearchForm(SearchForm):
 
         if self.cleaned_data['category']:
             sqs = sqs.filter(groups=str(self.cleaned_data['category']))
-        sqs = sqs.filter(actuality__gt=0).order_by("actuality")
+
         #sqs = sqs.all()[:1]  # limit amount of results
 
         if self.load_all:
