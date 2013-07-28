@@ -66,7 +66,7 @@ class FastSearchForm(SearchForm):
         if self.cleaned_data['category']:
             sqs = sqs.filter(groups=str(self.cleaned_data['category']))
 
-        #sqs = sqs.all()[:1]  # limit amount of results
+        #sqs = sqs.all()[offset:toShow]  # limit amount of results
 
         if self.load_all:
             sqs = sqs.load_all()

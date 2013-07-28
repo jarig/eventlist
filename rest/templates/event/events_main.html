@@ -28,6 +28,38 @@
     {%  include "event/includes/event_fast_search_field.html" %}
 
     {% block events %}
+        {% if eventSchedules %}
+            <div class="pagination pagination-small">
+                <ul>
+                    {% if eventSchedules.has_previous %}
+                    <li>
+                        <a href="{{ pageLessUrlPath }}&page={{ eventSchedules.previous_page_number }}">Prev</a>
+                    {% else %}
+                    <li class="disabled">
+                        <a href="#">Prev</a>
+                    {% endif %}
+                    </li>
+                    {% for pageNum in eventSchedules.paginator.page_range %}
+                        {% if eventSchedules.number == pageNum %}
+                        <li class="active">
+                            <a href="#">{{ pageNum }}</a>
+                        {% else %}
+                        <li>
+                            <a href="{{ pageLessUrlPath }}&page={{ pageNum }}">{{ pageNum }}</a>
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                    {% if eventSchedules.has_next %}
+                    <li>
+                        <a href="{{ pageLessUrlPath }}&page={{ eventSchedules.next_page_number }}">Next</a>
+                    {% else %}
+                    <li class="disabled">
+                        <a href="#" >Next</a>
+                    {% endif %}
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
         {% for eventSchedule in eventSchedules %}
             {% include "event/includes/event_brief_info.html" %}
         {% endfor %}

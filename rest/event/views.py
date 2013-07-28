@@ -1,7 +1,9 @@
 import datetime
+import re
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.cache import get_cache
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
 from django.forms.models import modelformset_factory
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
@@ -97,7 +99,7 @@ def manage(request):
 #show events/search results
 def showEvents(request):
     #TODO: change to class based view
-    eventSchedules = []
+    eventSchedules = None
     createPartyFormSample = None
     if request.user.is_authenticated():
         createPartyFormSample = CreatePartyForm(
@@ -109,11 +111,23 @@ def showEvents(request):
         fastSearchForm = FastSearchForm(request.GET)
         if fastSearchForm.is_valid():
             eventSchedules = fastSearchForm.search()
+            paginator = Paginator(eventSchedules, 10)
+            page = request.GET.get('page')
+            try:
+                eventSchedules = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                eventSchedules = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range (e.g. 9999), deliver last page of results.
+                eventSchedules = paginator.page(paginator.num_pages)
     else:
         fastSearchForm = FastSearchForm()
 
+    pageLessUrlPath = re.sub("&?page=\d+","", request.get_full_path())
     return render_to_response("event/events_main.html",
                               {
+                                  "pageLessUrlPath": pageLessUrlPath,
                                   "eventSchedules": eventSchedules,
                                   "createPartyFormSample": createPartyFormSample,
                                   "fastSearchForm": fastSearchForm
