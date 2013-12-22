@@ -4,9 +4,7 @@
 .pydevproject
 *.pyc
 *.log
-/rest/fabfile.py
 media/*
 !media/common
-migrations/
 /solr/rest/data/
 /elasticsearch/data/

@@ -3,6 +3,7 @@ from _ext.pibu.fields import ImagePreviewModelField
 from account.models import Account
 from common.models import Address
 
+
 class Organization(models.Model):
     name = models.CharField(max_length=256)
     logo = ImagePreviewModelField(upload_to='organization/logo/', max_width=160)
@@ -17,6 +18,7 @@ class Organization(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class OrgAccess(models.Model):
     ROLE1 = 10
     ROLE2 = 20
@@ -29,5 +31,6 @@ class OrgAccess(models.Model):
     member = models.ForeignKey(Account)
     organization = models.ForeignKey(Organization)
     level = models.PositiveSmallIntegerField(choices=LEVELS)
+
     class Meta:
         unique_together = ('member','organization','level',)

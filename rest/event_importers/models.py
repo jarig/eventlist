@@ -1,8 +1,10 @@
 import logging
+import re
 import tempfile
 import datetime
 import uuid
 from haystack.inputs import Raw, Clean
+from haystack.management.commands import update_index
 from haystack.query import SearchQuerySet
 from _ext import httplib2
 from _ext.bs3.BeautifulSoup import BeautifulSoup
@@ -13,6 +15,7 @@ from event.models import Event, EventActivity, event_logo_name, EventSchedule
 import urllib
 
 logger = logging.getLogger(__name__)
+
 
 class EventSource(object):
 
@@ -61,12 +64,13 @@ class SuperKinodSource(EventSource):
         movieList = soup.findAll("div", attrs={ "class" : "result" } )
         events = []
         for movie in movieList:
+            update_index.Command().handle(age=1)
             eventName = movie.find("span", attrs={"class":"result_h"}).contents[0].strip()
             logger.info("Event name: %s" % eventName)
             #try to get such event from SOLR DB
-            querySet = SearchQuerySet().models(EventSchedule).filter(name=Raw("'%s'~0.6" % eventName.replace(":","\\:")))
+            querySet = SearchQuerySet().models(Event).filter(name=Raw('"%s"~0.6' % eventName))
             if len(querySet):
-                event = querySet[0].object.event
+                event = querySet[0].object
                 logger.info("Found existing event: %s" % event.name)
             else:
                 logger.info("New event")

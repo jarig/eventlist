@@ -28,7 +28,7 @@
     {%  include "event/includes/event_fast_search_field.html" %}
 
     {% block events %}
-        {% if eventSchedules %}
+        {% if eventSchedules and eventSchedules.paginator.count > 1 %}
             <div class="pagination pagination-small">
                 <ul>
                     {% if eventSchedules.has_previous %}

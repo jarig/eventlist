@@ -26,7 +26,7 @@ var Messaging =
                         $(data).remove();
                     });
                     var $form = $("#sendMessageForm",popup);
-                    $("#id_to", popup).chosen();
+                    $("#id_to", popup).autocomplete({source: Messaging.getFriends});
                     $("#sendMessageButton", popup).click(function()
                     {
                         var $this = $(this);
@@ -67,8 +67,10 @@ var Messaging =
             });
 
         });// DOM init
+    },
+    getFriends: function(request, process)
+    {
+        console.log(request.term);
+        process(['test', 'aaaa', 'bbb']);
     }
 };
-
-//run when included
-Messaging.initActions();

@@ -1,10 +1,8 @@
 # Create your views here.
-from django.db.models.query_utils import Q
+import json
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from django.utils import simplejson
-from account.models import Account
 from messaging.forms import SendMessageForm
 from messaging.models import Message
 
@@ -31,9 +29,9 @@ def sendMessageTo(request, user=None):
         msgForm = SendMessageForm(request.user, request.POST)
         if msgForm.is_valid():
             msg = msgForm.saveMessage(request.user)
-            return HttpResponse(simplejson.dumps(msg.pk),'application/json')
+            return HttpResponse(json.dumps(msg.pk),'application/json')
         else:
-            return HttpResponse(simplejson.dumps(msgForm.errors),'application/json',status=403)
+            return HttpResponse(json.dumps(msgForm.errors),'application/json',status=403)
     else:
         msgForm = SendMessageForm(request.user, initial={'to':user})
 

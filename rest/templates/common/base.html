@@ -99,7 +99,7 @@
                                     </ul>
                                     <ul class="topMenu-nav float-right">
                                         {% block topmenu_right %}
-                                                <li>
+                                                <li class="topButton">
                                                     <div id="signin">
                                                         {% if not user.is_authenticated %}
                                                             <a href="#" onclick="Accounts.openLoginBox(); return false;">{% trans "Sign in" %}</a>
@@ -130,22 +130,22 @@
                     <div class="container-custom">
                         <div class="topMenu-collapse">
                             <ul class="topMenu-nav">
-                                <li class="dropdown">
+                                <li class="topButton dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <i class="icon-flag"></i>{% trans "Language" %}
                                         <b class="caret"></b>
                                     </a>
-                                        {# request.LANGUAGE_CODE #}
                                         <ul class="dropdown-menu">
-                                            {% for lang in LANGUAGES %}
+                                            {% get_language_info_list for LANGUAGES as languages %}
+                                            {% for lang in languages %}
                                                 <li><a href="#"
-                                                       onclick="$('#langForm-{{ lang.0 }}').submit();">
-                                                    {{ lang.1 }}</a>
+                                                       onclick="$('#langForm-'+'{{ lang.code }}').submit();">
+                                                    {{ lang.name_local }}</a>
                                                 </li>
-                                                <form id="langForm-{{ lang.0 }}" action="/i18n/setlang/" method="post" class="hidden">
+                                                <form id="langForm-{{ lang.code }}" action="{% url 'set_language' %}" method="post" class="hidden">
                                                     {% csrf_token %}
                                                     <input name="next" type="hidden" value="{{ request.path }}" />
-                                                    <input name="language" value="{{ lang.0 }}" type="hidden">
+                                                    <input name="language" value="{{ lang.code }}" type="hidden">
                                                 </form>
                                             {% endfor %}
                                         </ul>
@@ -159,6 +159,12 @@
             {% block header %}
             {% endblock %}
         </div>
+
+<div class="leftBar">
+    {% block leftBar %}
+    {% endblock %}
+</div>
+
 <div class="wrapper">
     <div id="container" class="container-fluid">
         <div id="container_wrap1">
@@ -234,7 +240,7 @@
             </div>
             <div style="position: relative; width: 380px; margin: auto; ">
                 <p style="text-align: center;"><span lang="ru">Все права защищены(?).</span>
-                <span lang="ru">Пишите, жалуйтесь - </span>
+                <span lang="ru">Пишите - </span>
                 <a href="mailto:contact@rest.ee">contact@rest.ee</a></p>
             </div>
         </div>

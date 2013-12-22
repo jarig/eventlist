@@ -1,5 +1,6 @@
 # Django settings for Rest project.
 import os
+import sys
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -20,9 +21,14 @@ INTERNAL_IPS = ('127.0.0.1',
                 'localhost',)
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
+ROOT_PATH = os.path.abspath(".")
 MEDIA_ROOT = os.path.abspath(".")+'/media/'
 STATIC_ROOT = os.path.abspath(".")+'/static/'
 
+SOLR_DISTRIB = "E:\\Apps\\solr-4.3.1\\example"
+SOLR_HOME = os.path.join(ROOT_PATH, "../solr")
+
+sys.path.append(os.path.join(ROOT_PATH, "_ext"))
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 

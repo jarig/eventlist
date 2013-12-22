@@ -1,7 +1,7 @@
 import datetime
 from haystack import indexes
 from haystack.fields import MultiValueField
-from event.models import EventSchedule, Event
+from event.models import Event
 
 
 class EventIndex(indexes.SearchIndex, indexes.Indexable):
@@ -55,3 +55,6 @@ class EventIndex(indexes.SearchIndex, indexes.Indexable):
 
     def load_all_queryset(self):
         return self.get_model().all()
+
+    def get_updated_field(self):
+        return "modified"

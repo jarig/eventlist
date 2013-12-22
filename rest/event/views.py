@@ -1,4 +1,3 @@
-import datetime
 import re
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -7,13 +6,12 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
 from django.forms.models import modelformset_factory
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.template.context import RequestContext
 from django.utils.translation import ugettext as _
 from haystack.query import SearchQuerySet
-from account.models import Account
 from event.forms import EventForm, EventScheduleForm, EventScheduleFormSet
-from event.models import Event, EventSchedule, EventGo, EventActivity, EventGroup
+from event.models import Event, EventSchedule, EventGo, EventGroup
 from party.forms import CreatePartyForm
 from search.forms import FastSearchForm
 
@@ -32,7 +30,8 @@ def credit(request, event=None):
     extraSchedule = 1
     if event is not None:
         event = Event.objects.select_related('blogs').get(pk=event)
-        if event.author != request.user:#TODO check organization group
+        if event.author != request.user:
+            # TODO check organization group
             raise Event.DoesNotExist(_("You don't have permission to edit this event"))
         schedules = EventSchedule.objects.filter(event=event)
         if len(schedules):
@@ -124,7 +123,7 @@ def showEvents(request):
     else:
         fastSearchForm = FastSearchForm()
 
-    pageLessUrlPath = re.sub("&?page=\d+","", request.get_full_path())
+    pageLessUrlPath = re.sub("&?page=\d+", "", request.get_full_path())
     return render_to_response("event/events_main.html",
                               {
                                   "pageLessUrlPath": pageLessUrlPath,
@@ -146,7 +145,7 @@ def showEventGroups(request):
         if fastSearchForm.is_valid():
             #fastSearchForm.cleaned_data["search"]
             return showEvents(request)
-        #redirect to /event page
+            #redirect to /event page
     else:
         fastSearchForm = FastSearchForm()
 
@@ -157,7 +156,7 @@ def showEventGroups(request):
         events = cache.get("group_thumb_event_%s" % group.pk)
         if events is None or not len(events):
             events = SearchQuerySet().models(Event).filter(groups=group.name).order_by("actuality")[:3]
-            cache.set("group_thumb_event_%s" % group.pk, events, 60*30)  # 30min
+            cache.set("group_thumb_event_%s" % group.pk, events, 60 * 30)  # 30min
         group.events = events
 
     return render_to_response("event/events_event_groups.html",
@@ -168,6 +167,11 @@ def showEventGroups(request):
                               context_instance=RequestContext(request)
     )
     pass
+
+
+def showEventsFeed(request):
+    return render(request, "event/events_feed.html")
+
 
 # ========= AJAX views ============
 @login_required

@@ -3,12 +3,12 @@ from django.forms.models import ModelForm
 from account.models import Account
 from messaging.models import Message, gen_feed_hash
 
+
 class SendMessageForm(ModelForm):
-    to = forms.ModelChoiceField(queryset=Account.objects.none(),empty_label="")
+    to = forms.CharField()
 
     def __init__(self, user, *args, **kwargs):
         super(SendMessageForm, self).__init__(*args, **kwargs)
-        self.fields['to'].queryset = user.friends.all()
 
     class Meta:
         model = Message

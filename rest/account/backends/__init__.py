@@ -13,7 +13,7 @@ class CustomModelBackend(ModelBackend):
         except Account.DoesNotExist:
             return None
 
-    def get_group_permissions(self, user_obj):
+    def get_group_permissions(self, user_obj, obj=None):
         """
         Returns a set of permission strings that this user has through his/her
         groups.

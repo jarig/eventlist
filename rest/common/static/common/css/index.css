@@ -7,13 +7,9 @@
 }
 
 #container {
-	margin: 0 auto;
-	margin-top: 0;
-	padding: 0 0 0 0;
-	clear:both;
-	background-position: left top;
-	background-attachment: scroll;
-    background-color: #FFFFFF;
+    margin: 0 auto;
+    padding: 0 0 0 0;
+    background: #FFFFFF scroll left top;
     min-height: 600px;
     border-top: none;
     float: left;
@@ -88,6 +84,26 @@
 .sideSwitchButton a:hover
 {
     background-color: #b0c4de;
+}
+
+.leftBar
+{
+    width: 12.5%;
+    float: left;
+}
+
+.leftBarButtonContainer
+{
+     float: left;
+     display: block;
+     position: relative;
+     margin-top: 100px;
+     width: 100%;
+}
+
+.leftBarButtonContainer button
+{
+    padding-right: 5px;
 }
 
 .fillSpace

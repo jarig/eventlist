@@ -7,32 +7,32 @@
         <div class="modal-header">
             <button class="close" data-dismiss="modal">×</button>
             <div class="float-left">
-                <h3>Message to</h3>
+                <h3>New message</h3>
             </div>
-                <div class="control-group span4 float-left">
-                    {% if friend %}
-                        {{ friend }}
-                    {% else %}
-                        {% field msgForm.to "class=span3" "data-placeholder=Choose friend" %}
-                    {% endif %}
-                </div>
             <div class="clear"></div>
         </div>
         <div class="modal-body">
-                <div class="row-fluid">
-                    <div class="control-group">
-                        <label class="control-label">{% trans "Header" %}</label>
-                        <div class="controls">
-                            {% field msgForm.subject "class=span11" "placeholder=Subject" %}
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">{% trans "Message" %}</label>
-                        <div class="controls">
-                            {% field msgForm.text "class=span11" %}
-                        </div>
+            <div class="row-fluid">
+                <div class="control-group">
+                    {% if friend %}
+                        {{ friend }}
+                    {% else %}
+                        {% field msgForm.to "class=span11" "placeholder=Enter friend's name" %}
+                    {% endif %}
+                </div>
+                <div class="control-group hidden">
+                    <label class="control-label">{% trans "Header" %}</label>
+                    <div class="controls">
+                        {% field msgForm.subject "class=span11" "placeholder=Subject" %}
                     </div>
                 </div>
+                <div class="control-group">
+                    <label class="control-label">{% trans "Message" %}</label>
+                    <div class="controls">
+                        {% field msgForm.text "class=span11" %}
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
     <div class="modal-footer">

@@ -26,7 +26,8 @@
             "thumbnail":"",
             "confirmed":true,
             "name":"cinema",
-            "icon":""
+            "icon":"",
+            "group": 1
         }
     },
     {
@@ -37,6 +38,33 @@
             "confirmed":true,
             "name":"exhibition",
             "icon":""
+        }
+    },
+    {
+        "pk": 1,
+        "model": "event.eventgroup",
+        "fields": {
+            "featured": false,
+            "popularity": 0,
+            "name": "Cinema"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "event.eventgroup",
+        "fields": {
+            "featured": false,
+            "popularity": 0,
+            "name": "Club"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "event.eventgroup",
+        "fields": {
+            "featured": false,
+            "popularity": 0,
+            "name": "Culture"
         }
     }
 ]

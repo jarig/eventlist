@@ -6,44 +6,48 @@
     <div id="signInTabs">
 
         <ul class="nav nav-tabs">
-            <li class="active" ><a href="#socialLoginTab" data-toggle="tab">Social Login</a></li>
+            <li class="active" >
+                <a href="#socialLoginTab" data-toggle="tab"><i class="icon-th" ></i> Social Login</a>
+            </li>
             <li><a href="#signinTab" data-toggle="tab">Sign In</a></li>
             <li><a href="#registerTab" data-toggle="tab">Register</a></li>
         </ul>
 
         <div class="tab-content">
             <div class="tab-pane active" id="socialLoginTab">
-                <div class="forSignin" id="fbSignin">
-                    <div id="fbLoggedIn" onclick="Facebook.login(); return false;">
-                        <div class="signinAvatar" id="fbSignAvatar">
-                            <img src="{{ STATIC_PREFIX }}common/images/fbLogoBig.png" style="width: 120px; height: 120px;">
-                        </div>
-                        <div class="signName" id="fbSignName">
-                            Facebook
-                        </div>
-                    </div>
-                </div>
-                <div class="forSignin" id="vkSignin">
-                    <div id="vkLoggedIn" onclick="Vkontakte.login(); return false;">
-                        <div class="signinAvatar" id="vkSignAvatar" >
-                            <img src="{{ STATIC_PREFIX }}common/images/vkLogoBig.jpg" style="width: 120px; height: 120px;">
-                        </div>
-                        <div class="signName" id="vkSignName">
-                            {% trans "Vkontakte" %}
+                <div class="row-fluid" style="">
+                    <div class="forSignin" id="fbSignin">
+                        <div id="fbLoggedIn" onclick="Facebook.login(); return false;">
+                            <div class="signinAvatar" id="fbSignAvatar">
+                                <img src="{{ STATIC_PREFIX }}common/images/fbLogoBig.png" style="width: 120px; height: 120px;">
+                            </div>
+                            <div class="signName" id="fbSignName">
+                                Facebook
+                            </div>
                         </div>
                     </div>
+                    <div class="forSignin" id="vkSignin">
+                        <div id="vkLoggedIn" onclick="Vkontakte.login(); return false;">
+                            <div class="signinAvatar" id="vkSignAvatar" >
+                                <img src="{{ STATIC_PREFIX }}common/images/vkLogoBig.jpg" style="width: 120px; height: 120px;">
+                            </div>
+                            <div class="signName" id="vkSignName">
+                                {% trans "Vkontakte" %}
+                            </div>
+                        </div>
+                    </div>
+                    <form id="extLoginForm" action="{% url 'account.views.extLoginProfile' %}" method="POST" class="hidden">
+                        <input name="lastName" type="hidden">
+                        <input name="firstName" type="hidden">
+                        <input name="uid" type="hidden">
+                        <input name="nickName" type="hidden">
+                        <input name="photo" type="hidden">
+                        <input name="provider" type="hidden">
+                        <input name="accessToken" type="hidden">
+                        <input name="signedRequest" type="hidden">
+                        <input name="next" value="{{ request.get_full_path }}" type="hidden">
+                    </form>
                 </div>
-                <form id="extLoginForm" action="{% url 'account.views.extLoginProfile' %}" method="POST" class="hidden">
-                    <input name="lastName" type="hidden">
-                    <input name="firstName" type="hidden">
-                    <input name="uid" type="hidden">
-                    <input name="nickName" type="hidden">
-                    <input name="photo" type="hidden">
-                    <input name="provider" type="hidden">
-                    <input name="accessToken" type="hidden">
-                    <input name="signedRequest" type="hidden">
-                    <input name="next" value="{{ request.get_full_path }}" type="hidden">
-                </form>
             </div>
             <div class="tab-pane" id="signinTab">
                 <div class="well">

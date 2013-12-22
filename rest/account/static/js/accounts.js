@@ -17,8 +17,9 @@ var Accounts =
     {
         $("#signinPopup").dialog({
             "title": "Login",
-            height: '500',
-            width: "540",
+            height: '600',
+            width: "640",
+            resizable: false,
             modal: true });
         return false;
     },

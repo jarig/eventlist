@@ -1,0 +1,36 @@
+{% extends 'event/events.html' %}
+{% load i18n %}
+{% load static %}
+{% load  widget_tweaks %}
+
+{% block includes %}
+    {{ block.super }}
+    <link href="{{ STATIC_URL }}common/js/social/likeButtons/buttons.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{ STATIC_URL }}common/js/social/likeButtons/buttons.js"></script>
+    <link href="{{ STATIC_URL }}css/event.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/party_event.js"></script>
+    <link href="{{ STATIC_URL }}less/party_event.less" rel="stylesheet/less" type="text/css">
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(function()
+        {
+            PartyEvent.init($('.event-container'));
+            $('.like').socialButton();
+            Effects.fold_up($('#advancedSearchButton'), '#box1','#box2');
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    {# event search form #}
+    {%  include "event/includes/event_fast_search_field.html" %}
+
+
+
+{% endblock content %}
+
+{% block hiddenContent %}
+
+{% endblock%}
