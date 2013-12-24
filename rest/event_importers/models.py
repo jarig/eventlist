@@ -1,9 +1,9 @@
 import logging
-import re
-import tempfile
 import datetime
 import uuid
-from haystack.inputs import Raw, Clean
+from django.utils.translation import ugettext_lazy
+from common.utils import createAddress
+from haystack.inputs import Raw
 from haystack.management.commands import update_index
 from haystack.query import SearchQuerySet
 from _ext import httplib2
@@ -24,7 +24,6 @@ class EventSource(object):
         self.baseURL = baseURL
         self.superUser = Account.objects.filter(is_superuser=True)[0]  # take first super user
         self.http = httplib2.Http(disable_ssl_certificate_validation=True)
-
 
     def importEvents(self, dateFrom=None, dateTo=None):
         pass
@@ -100,7 +99,7 @@ class SuperKinodSource(EventSource):
                                 activity = EventActivity.objects.get(name=genre)
                             except EventActivity.DoesNotExist:
                                 activity = EventActivity()
-                                activity.name = genre
+                                activity.name = ugettext_lazy(genre)
                                 activity.parent = self.parentCinemaActivity
                                 activity.save()
                             event.activities.add(activity)
@@ -125,11 +124,13 @@ class SuperKinodSource(EventSource):
                     logger.info("Found blog with name: %s" % blog)
                 except Blog.DoesNotExist:
                     blog = Blog.objects.create(name=pageName, logo=IMAGE_STUB_FILE)
+                    blogAddress = createAddress("Estonia", "Tallinn", "")
+                    blog.addresses.add(blogAddress)
                     BlogAccess.objects.create(blog=blog,user=self.account, access=BlogAccess.OWNER)
                     logger.info("Couldn't find blog with name: %s" % pageName)
                     pass
-                tableTchedules = scheduleDiv.div.findAll("table")
-                for sch in tableTchedules:
+                tableSchedules = scheduleDiv.div.findAll("table")
+                for sch in tableSchedules:
                     startDate = sch.tr.th.b.string.strip()
                     scheduleLanguage = ""
                     if len(sch.tr.th.contents) > 2:

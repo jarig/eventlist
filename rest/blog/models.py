@@ -38,13 +38,13 @@ class Blog(models.Model):
         (u'RR',u'regular'),
         (u'GD',u'gold')
     )
-    managers = models.ManyToManyField(Account, through='BlogAccess') #indicates which users has access to blog
+    managers = models.ManyToManyField(Account, through='BlogAccess')  # indicates which users has access to blog
     name = models.CharField(max_length=64)
     description = models.TextField(default="")
     logo = ImagePreviewModelField(upload_to=blog_logo_name, max_width=150)
-    type = models.CharField(max_length=2, choices=BLOG_TYPE, default='RR') #type of the blog
-    priority = models.PositiveIntegerField(default=0) #priorty of blog during search
-    rating = models.PositiveIntegerField(default=0) #blogs rating
+    type = models.CharField(max_length=2, choices=BLOG_TYPE, default='RR')  # type of the blog
+    priority = models.PositiveIntegerField(default=0)  # priorty of blog during search
+    rating = models.PositiveIntegerField(default=0)  # blogs rating
     style = models.ForeignKey(BlogStyle, default=1)
     facilities = models.ManyToManyField(FacilityType, blank=True, null=True)
     addresses = models.ManyToManyField(Address, blank=True, null=True)
@@ -57,6 +57,7 @@ class Blog(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 #which users has access to this blog
 class BlogAccess(models.Model):
@@ -74,6 +75,7 @@ class BlogAccess(models.Model):
     blog = models.ForeignKey(Blog)
     user = models.ForeignKey(Account)
     access = models.PositiveSmallIntegerField()
+
     class Meta:
         unique_together = ('blog','user','access',)
 

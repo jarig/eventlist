@@ -1,16 +1,24 @@
 """
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
+    Test basic search functionality
 """
+from datetime import datetime
+import hashlib
 
 from django.test import TestCase
+from search.models import SearchRequest
 
 
 class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+    def test_search_request_creation(self):
+        searchRequest = SearchRequest()
+        searchRequest.request = "{country:'1', city:'2'}"
+        searchRequest.save()
+        self.assertTrue(searchRequest.token == hashlib.md5(searchRequest.request).hexdigest())
+        pass
+
+    def test_search_request_ttl(self):
+        searchRequest = SearchRequest()
+        searchRequest.request = "{country:'1', city:'2'}"
+        searchRequest.save()
+        self.assertTrue(searchRequest.ttl > datetime.now())
+        pass

@@ -2,6 +2,8 @@ from exceptions import KeyError
 import re
 from django.core.files.storage import DefaultStorage
 from django.forms.models import model_to_dict
+from common.models import Address, Country, City
+
 
 def urlToPath(url):
     return DefaultStorage().path(url)
@@ -65,3 +67,13 @@ def prettySize(size):
             continue
         else:
             return "%d %s" % (round(size/float(lim/2**10),2), suf)
+
+
+def createAddress(country, city, street, name=None, cityArea=None, county=None, postalCode=None):
+    address = Address(name=name, cityArea=cityArea, county=county, postalCode=postalCode, street=street)
+    country = Country.objects.get(name=country)
+    city = City.objects.get(name=city, country=country)
+    address.country = country
+    address.city = city
+    address.save()
+    return address

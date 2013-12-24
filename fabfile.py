@@ -40,6 +40,8 @@ def prepare_node():
     sudo("pip install South==0.8.1")
     sudo("pip install pil==1.1.7")
     sudo("pip install pysolr==3.1.0")
+    #sudo("pip install django-pipeline")
+    #sudo("pip install yuglify")
     pass
 
 

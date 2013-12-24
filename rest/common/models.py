@@ -27,7 +27,7 @@ class City(models.Model):
         return self.name
 
 class Address(models.Model):
-    name = models.CharField(max_length=255, default='', blank=True) #location name
+    name = models.CharField(max_length=255, default='', blank=True)  # location name
     country = models.ForeignKey(Country)
     city = models.ForeignKey(City)
     cityArea = models.CharField(max_length=128, default='', blank=True)
